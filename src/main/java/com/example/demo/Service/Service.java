@@ -1,5 +1,5 @@
 package com.example.demo.Service;
 
-public interface GroupService {
+public class Service {
 
 }
