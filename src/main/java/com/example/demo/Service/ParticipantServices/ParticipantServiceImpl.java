@@ -22,13 +22,15 @@ public class ParticipantServiceImpl implements ParticipantService{
         return (List<Participant>) participantRepo.findAll();
     }
 
+
+
     @Override
     public String addParticipant(Participant newParticipant) {
 
         Optional<Participant> participant = participantRepo.findByUserId(newParticipant.getUserId());
         Optional<Group> grp=grpRepo.findById(newParticipant.getGroupId());
 
-        if(grp.isPresent() && !grp.get().isGroupStatus()) {
+        if(grp.isPresent() && grp.get().isGroupStatus()) {
             if (participant.isPresent() ) {
 
                 if(!participant.get().isStatus()) {
@@ -37,6 +39,7 @@ public class ParticipantServiceImpl implements ParticipantService{
                     newParticipant.increseParticipationCount();
                     newParticipant.setStatus(grp.get().isGroupStatus());
                     participantRepo.save(newParticipant);
+                    return "Participant added to group "+grp.get().getGroupName();
                 }
 
                 else{
@@ -50,7 +53,7 @@ public class ParticipantServiceImpl implements ParticipantService{
         else{
              return "check Group details";
         }
-       return null;
+
     }
 
     @Override

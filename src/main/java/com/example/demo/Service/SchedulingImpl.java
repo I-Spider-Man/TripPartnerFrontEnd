@@ -1,9 +1,11 @@
 package com.example.demo.Service;
 
 import com.example.demo.Model.Group;
+import com.example.demo.Model.Participant;
 import com.example.demo.Repository.GroupRepository;
 import com.example.demo.Repository.ParticipantRepository;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.Part;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -64,6 +66,8 @@ public class SchedulingImpl implements Scheduling{
                 grp.setGroupStatus(false);
                 activeGrpId.remove(grp.getGroupId());
                 notActiveGrpId.add(grp.getGroupId());
+                List<Participant> allParticipants= participantRepository.findAllByGroupId(grp.getGroupId());
+                allParticipants.forEach(participant -> participant.setStatus(false));
             }
         });
 
