@@ -20,7 +20,7 @@ public class Group {
 	private Integer eventId;
 	private Integer spotId;
 	private String about;
-	private boolean groupStatus;
+	private boolean groupStatus = true;
 	private Integer participantsLimit;
 	
 	public Integer getGroupId() {
@@ -63,7 +63,6 @@ public class Group {
 		return groupStatus;
 	}
 	public void setGroupStatus(boolean groupStatus) {
-		System.out.println(groupStatus);
 		this.groupStatus = groupStatus;
 	}
 	public Integer getParticipantsLimit() {

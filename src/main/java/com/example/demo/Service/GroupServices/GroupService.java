@@ -8,6 +8,5 @@ public interface GroupService {
 	List<Group> getAllGroups();
 	String addGroup(Group newGroup);
 	Group getGroupById(Integer grpId);
-	void setGroupInactive();
-	Group getGroupByOrganizerId(Integer orgId);
+		Group getGroupByOrganizerId(Integer orgId);
 }
