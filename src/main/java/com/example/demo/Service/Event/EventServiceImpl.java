@@ -33,4 +33,10 @@ public class EventServiceImpl implements EventService{
             return "Event with id "+eventId+" not present in database";
         }
     }
+
+    @Override
+    public Event getEventById(Integer eventId) {
+        Optional<Event> event=eventRepository.findById(eventId);
+        return event.orElse(null);
+    }
 }

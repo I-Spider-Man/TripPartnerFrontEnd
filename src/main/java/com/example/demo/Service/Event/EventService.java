@@ -8,4 +8,5 @@ public interface EventService {
     List<Event> getAllEvents();
     String addEvent(Event newEvent);
     String deleteEvent(Integer eventId);
+    Event getEventById(Integer eventId);
 }

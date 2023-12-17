@@ -33,17 +33,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean removeUserById(Integer userId) {
-		User user=getUserById(userId);
-		if(user!=null) {
-			userRepo.deleteById(userId);
-			return true;
-		}else {
-			return false;
-		}
-	}
-	
-	@Override
 	public User getByUserName(String userName) {
 		return userRepo.findByUserName(userName).get();
 	}
