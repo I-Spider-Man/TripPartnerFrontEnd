@@ -47,7 +47,7 @@ public class ParticipantServiceImpl implements ParticipantService{
                 }
             } else {
                 participantRepo.save(newParticipant);
-                return "participant added successfully to the grp ";
+                return "participant added successfully to the group "+grp.get().getGroupName();
             }
         }
         else{
