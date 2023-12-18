@@ -13,7 +13,7 @@ public class User {
 	private String userName;
 	private String userEmail;
 	private String aboutUser;
-	private boolean sysAdmin;
+	private boolean sysAdmin=false;
 	private String userPassword;
 	
 	public User() {

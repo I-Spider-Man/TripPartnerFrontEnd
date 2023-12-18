@@ -4,12 +4,11 @@ import com.example.demo.Model.*;
 import com.example.demo.Service.Admin.AdminService;
 import com.example.demo.Service.Event.EventService;
 import com.example.demo.Service.TouristSpot.TouristSpotService;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/Admin")
 public class AdminController {

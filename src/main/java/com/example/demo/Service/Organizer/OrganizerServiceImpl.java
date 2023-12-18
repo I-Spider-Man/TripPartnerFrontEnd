@@ -23,7 +23,7 @@ public class OrganizerServiceImpl implements OrganizerService{
     }
 
     @Override
-    public String addOrganizer(Organizer newOrganizer, Group newGroup) {
+    public Group addOrganizer(Organizer newOrganizer, Group newGroup) {
         Optional<Organizer> organizer=organizerRepository.findByUserId(newOrganizer.getUserId());
         if(organizer.isPresent()){
             if(!organizer.get().isOrganizerStatus()){
@@ -34,10 +34,10 @@ public class OrganizerServiceImpl implements OrganizerService{
                 organizerRepository.save(newOrganizer);
                 newGroup.setOrganizerId(newOrganizer.getOrganizerId());
                 groupService.addGroup(newGroup);
-                return "Success";
+                return newGroup;
             }
             else {
-                return "organizer already organizing "+groupService.getGroupByOrganizerId(organizer.get().getOrganizerId());
+                return null;//"organizer already organizing "+groupService.getGroupByOrganizerId(organizer.get().getOrganizerId());
             }
         }
         else {
@@ -46,7 +46,7 @@ public class OrganizerServiceImpl implements OrganizerService{
             organizerRepository.save(newOrganizer);
             newGroup.setOrganizerId(newOrganizer.getOrganizerId());
             groupService.addGroup(newGroup);
-            return  "Success OrganizerId :"+newOrganizer.getOrganizerId()+" GroupId : "+newGroup.getGroupId();
+            return  newGroup;
         }
     }
 }

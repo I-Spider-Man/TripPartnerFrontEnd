@@ -8,6 +8,7 @@ public interface UserService {
 	List<User> getAllUser();
 	User getUserById(Integer userId);
 	boolean addUser(User user);
-	User getByUserName(String userName);
+	List<User> getAllByUserName(String userName);
+	User getByUserEmail(String userEmail);
 	boolean checkUser(String userEmail);
 }

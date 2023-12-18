@@ -1,6 +1,7 @@
 package com.example.demo.Service.UserServices;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,10 +33,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	@Override
-	public User getByUserName(String userName) {
-		return userRepo.findByUserName(userName).get();
-	}
+	
 	
 	public boolean checkUser(String userEmail) {
 		
@@ -44,6 +42,15 @@ public class UserServiceImpl implements UserService {
 		}else {
 			return false;
 		}
+	}
+	@Override
+	public User getByUserEmail(String userEmail) {
+		Optional<User> user=userRepo.findByUserEmail(userEmail);
+		return user.orElse(null);
+	}
+	@Override
+	public List<User> getAllByUserName(String userName) {
+		return userRepo.findAllByUserName(userName);
 	}
 
 }

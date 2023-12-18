@@ -17,8 +17,8 @@ public class Group {
 	private LocalDate dateFrom;
 	private LocalDate dateTo;
 	private Integer organizerId;
-	private Integer eventId;
-	private Integer spotId;
+	private String eventName;
+	private String spotName;
 	private String about;
 	private boolean groupStatus = true;
 	private Integer participantsLimit;
@@ -41,17 +41,17 @@ public class Group {
 	public void setOrganizerId(Integer organizerId) {
 		this.organizerId = organizerId;
 	}
-	public Integer getEventId() {
-		return eventId;
+	public String getEventName() {
+		return eventName;
 	}
-	public void setEventId(Integer eventId) {
-		this.eventId = eventId;
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
 	}
-	public Integer getSpotId() {
-		return spotId;
+	public String getSpotName() {
+		return spotName;
 	}
-	public void setSpotId(Integer spotId) {
-		this.spotId = spotId;
+	public void setSpotName(String spotName) {
+		this.spotName = spotName;
 	}
 	public String getAbout() {
 		return about;
@@ -83,14 +83,14 @@ public class Group {
 	public void setDateTo(LocalDate dateTo) {
 		this.dateTo = dateTo;
 	}
-	public Group(Integer groupId, String groupName, Integer organizerId, Integer eventId, Integer spotId, String about,
+	public Group(Integer groupId, String groupName, Integer organizerId, String eventName, String spotName, String about,
 			boolean groupStatus, Integer participantsLimit, LocalDate dateFrom, LocalDate dateTo) {
 		super();
 		this.groupId = groupId;
 		this.groupName = groupName;
 		this.organizerId = organizerId;
-		this.eventId = eventId;
-		this.spotId = spotId;
+		this.eventName = eventName;
+		this.spotName = spotName;
 		this.about = about;
 		this.groupStatus = groupStatus;
 		this.participantsLimit = participantsLimit;

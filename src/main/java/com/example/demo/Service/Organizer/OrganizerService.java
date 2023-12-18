@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface OrganizerService {
     List<Organizer> getAllOrganizer();
-    String addOrganizer(Organizer newOrganizer, Group newGroup);
+    Group addOrganizer(Organizer newOrganizer, Group newGroup);
     //String addParticipantToGroup();
 }

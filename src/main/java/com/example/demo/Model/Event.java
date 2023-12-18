@@ -2,7 +2,13 @@ package com.example.demo.Model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+@Entity
 public class Event {
+	@Id
+	@GeneratedValue
     private Integer eventId;
     private String eventName;
     private String location;

@@ -3,6 +3,8 @@ package com.example.demo.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,19 +28,25 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public String addUser(@RequestBody User newUser) {
+	public ResponseEntity<String> addUser(@RequestBody User newUser) {
 		if(userServ.addUser(newUser)) {
-			return "success User with id: "+newUser.getUserId()+" is registered";
+			return ResponseEntity.status(HttpStatus.CREATED).body("User with id: " + newUser.getUserId() + " is registered");
 		}else {
-			return "User mail already exists";
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("User mail already exists");
 		}
-		
 	}
 	
-	@GetMapping("name/{userName}")
-	public User getUserByName(@PathVariable String userName) {
-		return userServ.getByUserName(userName);
-	}
-	
-	
+	 @GetMapping("email/{userEmail}")
+	    public ResponseEntity<User> getUserByEmail(@PathVariable String userEmail) {
+	        User user = userServ.getByUserEmail(userEmail);
+	        if (user != null) {
+	            return ResponseEntity.ok(user);
+	        } else {
+	            return ResponseEntity.notFound().build();
+	        }
+}
+	 @GetMapping("name/{userName}")
+	 public List<User> getAllUserByUserName(@PathVariable String userName){
+		 return userServ.getAllByUserName(userName);
+	 }
 }
