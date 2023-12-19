@@ -25,7 +25,6 @@ public class SMTP_mailService {
 		mimeMessageHelper.setSubject(Subject);
 		mimeMessageHelper.setText(message);
 		javaMailSender.send(mimeMessage);
-		
 	}
 	public void sendOTPService(String mail) {
 		String otp=generateOtp();

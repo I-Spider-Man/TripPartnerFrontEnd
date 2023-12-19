@@ -6,8 +6,9 @@ import com.example.demo.Model.Group;
 
 public interface GroupService {
 	List<Group> getAllGroups();
+	
 	String addGroup(Group newGroup);
 	String removeGroupById(Integer groupId);
 	Group getGroupById(Integer grpId);
-		Group getGroupByOrganizerId(Integer orgId);
+	Group getGroupByOrganizerId(Integer orgId);
 }

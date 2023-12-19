@@ -85,4 +85,8 @@ public class AdminController {
     public String removeTouristSpot(@PathVariable Integer spotId){
         return adminService.removeTouristSpotById(spotId);
     }
+    @DeleteMapping("/organizers/{organizerId}")
+    public String removeOrganizer(@PathVariable Integer organizerId) {
+    	return adminService.removeOrganizerById(organizerId);
+    }
 }
