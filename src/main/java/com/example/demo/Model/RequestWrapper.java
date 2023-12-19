@@ -1,5 +1,6 @@
 package com.example.demo.Model;
 
+
 public class RequestWrapper {
 	private Organizer organizer;
 	private Group group;

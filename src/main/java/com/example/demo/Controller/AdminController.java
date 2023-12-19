@@ -14,9 +14,7 @@ import java.util.List;
 public class AdminController {
     @Autowired
     private AdminService adminService;
-    @Autowired
-    private OrganizerService organizerService;
-
+    
     @PostMapping("/events")
     public String addEvent(@RequestBody Event newEvent){
         return adminService.addEvent(newEvent);
@@ -70,8 +68,6 @@ public class AdminController {
     public TouristSpot getSpotById(@PathVariable Integer spotId){
         return adminService.getSpotById(spotId);
     }
-
-
     @DeleteMapping("/users/{userId}")
     public String removeUser(@PathVariable Integer userId){
         return adminService.removeUserById(userId);

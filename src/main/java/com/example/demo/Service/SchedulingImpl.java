@@ -56,7 +56,7 @@ public class SchedulingImpl implements Scheduling{
     }
 
     @Override
-    @Scheduled(fixedRate=7000) //(cron=0 0 0 * * *)
+    @Scheduled(cron="0 0 0 * * *")
     public void checkGroupStatus() {
         List<Group> allActiveGrp = grpRepo.findAllById(activeGrpId);
         LocalDate currentDate = LocalDate.now();
