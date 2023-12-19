@@ -15,6 +15,15 @@ public class Event {
     private LocalDate startDate;
     private LocalDate endDate;
     private String description;
+    private boolean status=true;
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     public Event() {
     }
@@ -28,6 +37,7 @@ public class Event {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", description='" + description + '\'' +
+                ", status=" + status +
                 '}';
     }
 
@@ -79,12 +89,13 @@ public class Event {
         this.description = description;
     }
 
-    public Event(Integer eventId, String eventName, String location, LocalDate startDate, LocalDate endDate, String description) {
+    public Event(Integer eventId, String eventName, String location, LocalDate startDate, LocalDate endDate, String description, boolean status) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.location = location;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
+        this.status = status;
     }
 }

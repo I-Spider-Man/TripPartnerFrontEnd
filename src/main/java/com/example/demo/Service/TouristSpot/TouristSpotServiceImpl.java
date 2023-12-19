@@ -23,8 +23,13 @@ public class TouristSpotServiceImpl implements TouristSpotService{
 
     @Override
     public String addSpot(TouristSpot newSpot) {
-        touristSpotRepository.save(newSpot);
-        return "Tourist spot "+newSpot.getSpotName()+" added Successfully";
+        Optional<TouristSpot> touristSpot=touristSpotRepository.findBySpotName(newSpot.getSpotName());
+        if(touristSpot.isPresent()){
+            return "Spot Already Present";
+        }else{
+            touristSpotRepository.save(newSpot);
+            return "Tourist spot "+newSpot.getSpotName()+" added Successfully";
+        }
     }
 
     @Override

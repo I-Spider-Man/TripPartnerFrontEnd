@@ -1,11 +1,13 @@
 package com.example.demo.Service.Admin;
 
 import com.example.demo.Model.*;
-import com.example.demo.Repository.EventRepository;
-import com.example.demo.Repository.GroupRepository;
-import com.example.demo.Repository.ParticipantRepository;
-import com.example.demo.Repository.UserRepository;
+import com.example.demo.Repository.*;
+import com.example.demo.Service.Event.EventService;
+import com.example.demo.Service.GroupServices.GroupService;
+import com.example.demo.Service.Organizer.OrganizerService;
+import com.example.demo.Service.ParticipantServices.ParticipantService;
 import com.example.demo.Service.TouristSpot.TouristSpotService;
+import com.example.demo.Service.UserServices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,33 +17,51 @@ import java.util.Optional;
 @Service
 public class AdminServiceImpl implements AdminService{
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
     @Autowired
-    private ParticipantRepository participantRepository;
+    private ParticipantService participantService;
     @Autowired
-    private GroupRepository groupRepository;
+    private GroupService groupService;
     @Autowired
-    private EventRepository eventRepository;
+    private EventService eventService;
     @Autowired
     private TouristSpotService touristSpotService;
+    @Autowired
+    private OrganizerService organizerService;
+
+    @Override
+    public String addEvent(Event newEvent) {
+        return eventService.addEvent(newEvent);
+    }
+
+    @Override
+    public String addSpot(TouristSpot spot) {
+        return touristSpotService.addSpot(spot);
+    }
+
     @Override
     public List<Participant> getAllParticipant() {
-        return (List<Participant>) participantRepository.findAll();
+        return (List<Participant>) participantService.getAllParticipants();
+    }
+
+    @Override
+    public List<Participant> getAllParticipantByGroupId(Integer groupId) {
+        return participantService.getAllParticipantsByGroupId(groupId);
     }
 
     @Override
     public List<Group> getAllGroup() {
-        return (List<Group>) groupRepository.findAll();
+        return groupService.getAllGroups();
     }
 
     @Override
     public List<User> getAllUser() {
-        return (List<User>) userRepository.findAll();
+        return userService.getAllUser();
     }
 
     @Override
     public List<Event> getAllEvent() {
-        return (List<Event>) eventRepository.findAll();
+        return eventService.getAllEvents();
     }
 
     @Override
@@ -50,62 +70,58 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public String removeUserById(Integer userId) {
-        userRepository.deleteById(userId);
-        return "User with id "+userId+" is removed successfully";
+    public List<Organizer> getAllOrganizer() {
+        return organizerService.getAllOrganizer();
     }
 
     @Override
+    public String removeUserById(Integer userId) {
+        return userService.removeUserById(userId);
+    }
+    @Override
     public String removeParticipantById(Integer participantId) {
-        participantRepository.deleteById(participantId);
-        return "Participant with id "+participantId+" is removed successfully";
+        return participantService.removeParticipantById(participantId);
     }
 
     @Override
     public String removeGroupById(Integer groupId) {
-        groupRepository.deleteById(groupId);
-        return "Group with id "+groupId+" is removed successfully";
+        return groupService.removeGroupById(groupId);
     }
     @Override
     public String removeEventById(Integer eventId) {
-        Optional<Event> event=eventRepository.findById(eventId);
-        if(event.isPresent()){
-            eventRepository.deleteById(eventId);
-            return "Event "+event.get().getEventName()+" is removed.";
-        }
-        else {
-            return "Event with id "+eventId+" is not present.";
-        }
+        return eventService.deleteEventById(eventId);
     }
-
     @Override
     public String removeTouristSpotById(Integer spotId) {
         return touristSpotService.removeSpotById(spotId);
     }
+    @Override
+    public String removeOrganizerById(Integer organizerId) {
+        return organizerService.removeOrganizerById(organizerId);
+    }
 
     @Override
     public User getUserById(Integer userId) {
-        Optional<User> user=userRepository.findById(userId);
-        return user.orElse(null);
+        return userService.getUserById(userId);
     }
     @Override
     public Participant getParticipantById(Integer participantId) {
-        Optional<Participant> participant=participantRepository.findById(participantId);
-        return participant.orElse(null);
+        return participantService.getParticipantById(participantId);
     }
     @Override
     public Group getGroupById(Integer groupId) {
-        Optional<Group> group=groupRepository.findById(groupId);
-        return group.orElse(null);
+        return groupService.getGroupById(groupId);
     }
     @Override
     public Event getEventById(Integer eventId) {
-        Optional<Event> event=eventRepository.findById(eventId);
-        return event.orElse(null);
+        return eventService.getEventById(eventId);
     }
-
     @Override
     public TouristSpot getSpotById(Integer spotId) {
         return touristSpotService.getSpotById(spotId);
+    }
+    @Override
+    public Organizer getOrganizerById(Integer organizerId) {
+        return organizerService.getOrganizerById(organizerId);
     }
 }

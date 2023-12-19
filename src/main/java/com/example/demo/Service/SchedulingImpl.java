@@ -18,7 +18,7 @@ public class SchedulingImpl implements Scheduling{
     @Autowired
     private GroupRepository grpRepo;
     @Autowired
-    private ParticipantRepository participantRepository;
+    private ParticipantRepository participantService;
 
     public List<Integer> getActiveGrpId() {
         return activeGrpId;
@@ -66,7 +66,7 @@ public class SchedulingImpl implements Scheduling{
                 grp.setGroupStatus(false);
                 activeGrpId.remove(grp.getGroupId());
                 notActiveGrpId.add(grp.getGroupId());
-                List<Participant> allParticipants= participantRepository.findAllByGroupId(grp.getGroupId());
+                List<Participant> allParticipants= participantService.findAllByGroupId(grp.getGroupId());
                 allParticipants.forEach(participant -> participant.setStatus(false));
             }
         });

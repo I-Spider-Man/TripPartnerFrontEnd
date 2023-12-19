@@ -50,6 +50,18 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
+	public String removeGroupById(Integer groupId) {
+		Optional<Group> grp=grpRepo.findById(groupId);
+		if(grp.isPresent()){
+			grpRepo.deleteById(groupId);
+			return "Group with id: "+groupId+" is removed successfully";
+		}
+		else {
+			return "Group with id: "+groupId+" is not found";
+		}
+	}
+
+	@Override
 	public Group getGroupById(Integer grpId) {
 		Optional<Group> grp=grpRepo.findById(grpId);
         return grp.orElse(null);

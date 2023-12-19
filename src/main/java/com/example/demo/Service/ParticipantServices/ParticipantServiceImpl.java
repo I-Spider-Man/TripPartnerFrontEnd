@@ -4,6 +4,7 @@ import com.example.demo.Model.Group;
 import com.example.demo.Model.Participant;
 import com.example.demo.Repository.GroupRepository;
 import com.example.demo.Repository.ParticipantRepository;
+import jakarta.servlet.http.Part;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,16 @@ public class ParticipantServiceImpl implements ParticipantService{
         return (List<Participant>) participantRepo.findAll();
     }
 
+    @Override
+    public Participant getParticipantById(Integer participantId) {
+        Optional<Participant> participant=participantRepo.findById(participantId);
+        return participant.orElse(null);
+    }
+
+    @Override
+    public List<Participant> getAllParticipantsByGroupId(Integer groupId) {
+        return participantRepo.findAllByGroupId(groupId);
+    }
 
 
     @Override
@@ -54,6 +65,18 @@ public class ParticipantServiceImpl implements ParticipantService{
              return "check Group details";
         }
 
+    }
+
+    @Override
+    public String removeParticipantById(Integer participantId) {
+        Optional<Participant> participant=participantRepo.findById(participantId);
+        if(participant.isPresent()){
+            participantRepo.deleteById(participantId);
+            return "participant with id: "+participantId+" removed successfully";
+        }
+        else{
+            return "participant with id: "+participantId+" is not found";
+        }
     }
 
     @Override

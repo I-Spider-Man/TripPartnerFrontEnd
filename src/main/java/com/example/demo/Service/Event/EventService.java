@@ -7,6 +7,6 @@ import java.util.List;
 public interface EventService {
     List<Event> getAllEvents();
     String addEvent(Event newEvent);
-    String deleteEvent(Integer eventId);
+    String deleteEventById(Integer eventId);
     Event getEventById(Integer eventId);
 }

@@ -33,15 +33,19 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	
-	
-	public boolean checkUser(String userEmail) {
-		
-		if(userRepo.findByUserEmail(userEmail).isPresent()) {
-			return true;
-		}else {
-			return false;
+	@Override
+	public String removeUserById(Integer userId) {
+		Optional<User> user=userRepo.findById(userId);
+		if(user.isPresent()){
+			userRepo.deleteById(userId);
+			return "user with id: "+userId+" is removed successfully";
 		}
+		else {
+			return "user with id: "+userId+" is not found";
+		}
+	}
+	public boolean checkUser(String userEmail) {
+        return userRepo.findByUserEmail(userEmail).isPresent();
 	}
 	@Override
 	public User getByUserEmail(String userEmail) {
