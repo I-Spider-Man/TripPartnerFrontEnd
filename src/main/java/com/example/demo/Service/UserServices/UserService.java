@@ -11,4 +11,5 @@ public interface UserService {
 	String removeUserById(Integer userId);
 	List<User> getAllByUserName(String userName);
 	User getByUserEmail(String userEmail);
+	boolean checkUser(String userEmail);
 }

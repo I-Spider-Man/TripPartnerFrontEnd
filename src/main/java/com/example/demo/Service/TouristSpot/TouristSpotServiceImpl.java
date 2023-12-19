@@ -1,17 +1,14 @@
 package com.example.demo.Service.TouristSpot;
 
+import com.example.demo.Model.TouristSpot;
+import com.example.demo.Repository.TouristSpotRepository;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.example.demo.Model.TouristSpot;
-import com.example.demo.Repository.TouristSpotRepository;
-
 @Service
 public class TouristSpotServiceImpl implements TouristSpotService{
-	@Autowired
     private TouristSpotRepository touristSpotRepository;
     @Override
     public List<TouristSpot> getAllSpots() {
