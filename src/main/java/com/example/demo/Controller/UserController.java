@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 import java.util.List;
 
+import com.example.demo.Service.OtpMailService.SMTP_mailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,8 @@ import com.example.demo.Service.UserServices.UserService;
 @RestController
 @RequestMapping("/User")
 public class UserController {
-	
+	@Autowired
+	private SMTP_mailService mailService;
 	@Autowired
 	private UserService userServ;
 	
@@ -29,11 +31,12 @@ public class UserController {
 	
 	@PostMapping
 	public ResponseEntity<String> addUser(@RequestBody User newUser) {
-		if(userServ.addUser(newUser)) {
-			return ResponseEntity.status(HttpStatus.CREATED).body("User with id: " + newUser.getUserId() + " is registered");
-		}else {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("User mail already exists");
-		}
+		return userServ.addUser(newUser);
+	}
+
+	@GetMapping("/otp/{email}")
+	public String sendEmail(@PathVariable String email){
+		return mailService.sendOTPService(email);
 	}
 	
 	 @GetMapping("email/{userEmail}")

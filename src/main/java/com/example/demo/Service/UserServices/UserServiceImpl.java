@@ -3,7 +3,11 @@ package com.example.demo.Service.UserServices;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.demo.Service.OtpMailService.SMTP_mailService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Model.User;
@@ -13,6 +17,8 @@ import com.example.demo.Repository.UserRepository;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepo;
+	@Autowired
+	private SMTP_mailService mailService;
 	@Override
 	public List<User> getAllUser() {
 		return (List<User>) userRepo.findAll(); 
@@ -23,13 +29,21 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public boolean addUser(User user) {
-		if(checkUser(user.getUserEmail())) {
-			return false;
-		}
-		else {
-			userRepo.save(user);
-			return true;
+	public ResponseEntity<String> addUser(User newUser) {
+		Optional<User> user = userRepo.findByUserEmail(newUser.getUserEmail());
+		if (user.isPresent()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("User mail already exists");
+		} else {
+			userRepo.save(newUser);
+			try {
+				String mail = newUser.getUserEmail();
+				String subject = "Registration";
+				String content = "Hi " + newUser.getUserName() + "\n We are happy to welcome you to our Trip Partner.";
+				mailService.sendMailService(mail, subject, content);
+				return ResponseEntity.status(HttpStatus.CREATED).body("User with id: " + newUser.getUserId() + " is registered");
+			} catch (MessagingException e) {
+				throw new RuntimeException(e);
+			}
 		}
 	}
 
@@ -44,9 +58,7 @@ public class UserServiceImpl implements UserService {
 			return "user with id: "+userId+" is not found";
 		}
 	}
-	public boolean checkUser(String userEmail) {
-        return userRepo.findByUserEmail(userEmail).isPresent();
-	}
+
 	@Override
 	public User getByUserEmail(String userEmail) {
 		Optional<User> user=userRepo.findByUserEmail(userEmail);

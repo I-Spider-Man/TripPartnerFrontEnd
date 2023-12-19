@@ -26,11 +26,12 @@ public class SMTP_mailService {
 		mimeMessageHelper.setText(message);
 		javaMailSender.send(mimeMessage);
 	}
-	public void sendOTPService(String mail) {
+	public String sendOTPService(String mail) {
 		String otp=generateOtp();
 		otpStorage.put(mail, otp);
 		try {
 			sendOtpToMail(mail,otp);
+			return otp+"this is your otp";
 		}catch(MessagingException e) {
 			throw new RuntimeException("unable to send otp.");
 		}
