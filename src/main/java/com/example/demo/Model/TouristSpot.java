@@ -30,7 +30,7 @@ public class TouristSpot {
     }
 
     public void setPeopleCount(Integer peopleCount) {
-        this.peopleCount = peopleCount;
+        this.peopleCount += peopleCount;
     }
 
     public TouristSpot(Integer spotId, String spotName, String location, String description, Integer peopleCount) {
