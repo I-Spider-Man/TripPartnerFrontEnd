@@ -36,7 +36,13 @@ public class UserController {
 
 	@GetMapping("/otp/{email}")
 	public String sendEmail(@PathVariable String email){
-		return mailService.sendOTPService(email);
+		User user=userServ.getByUserEmail(email);
+		if(user==null){
+			return mailService.sendOTPService(email);
+		}
+		else {
+			return null;
+		}
 	}
 	
 	 @GetMapping("email/{userEmail}")

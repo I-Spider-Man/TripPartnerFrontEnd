@@ -3,7 +3,10 @@ package com.example.demo.Service.OtpMailService;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
+import com.example.demo.Model.User;
+import com.example.demo.Service.UserServices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -16,7 +19,7 @@ import jakarta.mail.internet.MimeMessage;
 public class SMTP_mailService {
 	@Autowired
 	private JavaMailSender javaMailSender;
-	private Map<String,String> otpStorage=new HashMap<>();
+	private final Map<String,String> otpStorage=new HashMap<>();
 	
 	public void sendMailService(String mail,String Subject ,String message) throws MessagingException {
 		MimeMessage mimeMessage=javaMailSender.createMimeMessage();
@@ -31,7 +34,7 @@ public class SMTP_mailService {
 		otpStorage.put(mail, otp);
 		try {
 			sendOtpToMail(mail,otp);
-			return otp+"this is your otp";
+			return otp;
 		}catch(MessagingException e) {
 			throw new RuntimeException("unable to send otp.");
 		}
