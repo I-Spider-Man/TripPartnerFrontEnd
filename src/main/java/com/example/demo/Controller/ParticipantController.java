@@ -23,6 +23,4 @@ public class ParticipantController {
         return participantService.addParticipant(newParticipant);
     }
 
-
-
 }

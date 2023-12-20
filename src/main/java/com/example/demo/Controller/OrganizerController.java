@@ -1,10 +1,7 @@
 package com.example.demo.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.Model.Group;
 import com.example.demo.Model.Organizer;
@@ -22,4 +19,5 @@ public class OrganizerController {
 		Group group=wrapper.getGroup();
 		return organizerService.addOrganizer(organizer,group);
 	}
+
 }

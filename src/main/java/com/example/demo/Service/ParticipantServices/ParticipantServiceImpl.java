@@ -2,19 +2,28 @@ package com.example.demo.Service.ParticipantServices;
 
 import com.example.demo.Model.Group;
 import com.example.demo.Model.Participant;
+import com.example.demo.Model.User;
 import com.example.demo.Repository.GroupRepository;
 import com.example.demo.Repository.ParticipantRepository;
-import jakarta.servlet.http.Part;
+import com.example.demo.Repository.UserRepository;
+import com.example.demo.Service.OtpMailService.SMTP_mailService;
+import com.example.demo.Service.Scheduling;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 @Service
 public class ParticipantServiceImpl implements ParticipantService{
     @Autowired
     private ParticipantRepository participantRepo;
+    @Autowired
+    private SMTP_mailService mailService;
+    @Autowired
+    private Scheduling scheduling;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private GroupRepository grpRepo;
     @Override
@@ -34,39 +43,54 @@ public class ParticipantServiceImpl implements ParticipantService{
         return participantRepo.findAllByGroupId(groupId);
     }
 
-
     @Override
     public String addParticipant(Participant newParticipant) {
 
         Optional<Participant> participant = participantRepo.findByUserId(newParticipant.getUserId());
+        Optional<User> user=userRepository.findById(participant.get().getUserId());
+        String participantEmail=user.get().getUserEmail();
         Optional<Group> grp=grpRepo.findById(newParticipant.getGroupId());
 
-        if(grp.isPresent() && grp.get().isGroupStatus()) {
-            if (participant.isPresent() ) {
+        if(scheduling.getActiveGrpId().contains(newParticipant.getGroupId())) {
+            if(!scheduling.getActiveOrganizerId().contains(newParticipant.getUserId())) {
+                if (participant.isPresent()) {
+                    if (!participant.get().isStatus()) {
+                        newParticipant.setParticipantId(participant.get().getParticipantId());
+                        newParticipant.setParticipationCount(participant.get().getParticipationCount());
+                        newParticipant.increaseParticipationCount();
+                        newParticipant.setStatus(grp.get().isGroupStatus());
+                        participantRepo.save(newParticipant);
+                        try {
 
-                if(!participant.get().isStatus()) {
-                    newParticipant.setParticipantId(participant.get().getParticipantId());
-                    newParticipant.setParticipationCount(participant.get().getParticipationCount());
-                    newParticipant.increseParticipationCount();
-                    newParticipant.setStatus(grp.get().isGroupStatus());
+                            String Subject="Group Joining";
+                            String Content="Hi "+user.get().getUserName()+",\n you have been successfully joined in "+grp.get().getGroupName();
+                            mailService.sendMailService(participantEmail,Subject,Content);
+                        } catch (MessagingException e) {
+                            e.printStackTrace();
+                        }
+                        return "Participant added to group " + grp.get().getGroupName();
+                    } else {
+                        return "Participant is already joined in a grp : " + grpRepo.findById(participant.get().getGroupId()).get().getGroupName();
+                    }
+                } else {
                     participantRepo.save(newParticipant);
-                    return "Participant added to group "+grp.get().getGroupName();
+                    try {
+                        String Subject="Group Joining";
+                        String Content="Hi "+user.get().getUserName()+",\n you have been successfully joined in "+grp.get().getGroupName();
+                        mailService.sendMailService(participantEmail,Subject,Content);
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
+                    return "participant added successfully to the group " + grp.get().getGroupName();
                 }
-
-                else{
-                    return "Participant is already joined in a grp : "+grpRepo.findById(participant.get().getGroupId()).get().getGroupName();
-                }
-            } else {
-                participantRepo.save(newParticipant);
-                return "participant added successfully to the group "+grp.get().getGroupName();
+            }else{
+                return "you already organizing one group so you cannot join here";
             }
         }
         else{
              return "check Group details";
         }
-
     }
-
     @Override
     public String removeParticipantById(Integer participantId) {
         Optional<Participant> participant=participantRepo.findById(participantId);

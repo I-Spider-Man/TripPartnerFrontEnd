@@ -14,7 +14,7 @@ public class Participant {
     private Integer userId;
     private Integer groupId;
     private Integer participationCount = 0;
-    private boolean status = false;
+    private boolean status ;
 
     public Integer getParticipantId() {
         return participantId;
@@ -40,7 +40,7 @@ public class Participant {
         this.participationCount = participationCount;
     }
 
-    public void increseParticipationCount() {
+    public void increaseParticipationCount() {
         this.participationCount += 1;
     }
 
