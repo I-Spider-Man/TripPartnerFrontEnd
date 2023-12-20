@@ -47,7 +47,7 @@ public class ParticipantServiceImpl implements ParticipantService{
     public String addParticipant(Participant newParticipant) {
 
         Optional<Participant> participant = participantRepo.findByUserId(newParticipant.getUserId());
-        Optional<User> user=userRepository.findById(participant.get().getUserId());
+        Optional<User> user=userRepository.findById(newParticipant.getUserId());
         String participantEmail=user.get().getUserEmail();
         Optional<Group> grp=grpRepo.findById(newParticipant.getGroupId());
 
