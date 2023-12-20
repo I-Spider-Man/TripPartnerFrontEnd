@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 			try {
 				String mail = newUser.getUserEmail();
 				String subject = "Registration";
-				String content = "Hi " + newUser.getUserName() + "\n We are happy to welcome you to our Trip Partner.";
+				String content = "Hi " + newUser.getUserName() + "\n We are happy to welcome you to be a part of Torry Harris Trip Partner family.";
 				mailService.sendMailService(mail, subject, content);
 				return ResponseEntity.status(HttpStatus.CREATED).body("User with id: " + newUser.getUserId() + " is registered");
 			} catch (MessagingException e) {
