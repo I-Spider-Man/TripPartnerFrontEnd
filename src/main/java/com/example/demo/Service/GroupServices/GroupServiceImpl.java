@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.demo.Model.Organizer;
+import com.example.demo.Repository.OrganizerRepository;
+import com.example.demo.Service.Organizer.OrganizerService;
 import com.example.demo.Service.Scheduling;
 import com.example.demo.Service.SchedulingImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +19,14 @@ import com.example.demo.Repository.GroupRepository;
 
 import jakarta.annotation.PostConstruct;
 
+import javax.swing.text.html.Option;
+
 @Service
 public class GroupServiceImpl implements GroupService {
 	@Autowired
 	private GroupRepository grpRepo;
-
+	@Autowired
+	private OrganizerRepository organizerRepository;
 	@Autowired
 	private Scheduling scheduling;
 	
@@ -48,11 +54,12 @@ public class GroupServiceImpl implements GroupService {
 			return "GROUP SUCCESSFULLY CREATED";
 		}
 	}
-
 	@Override
 	public String removeGroupById(Integer groupId) {
 		Optional<Group> grp=grpRepo.findById(groupId);
 		if(grp.isPresent()){
+			Optional<Organizer> organizer=organizerRepository.findById(grp.get().getOrganizerId());
+			organizer.get().setOrganizerStatus(false);
 			grpRepo.deleteById(groupId);
 			return "Group with id: "+groupId+" is removed successfully";
 		}
@@ -60,15 +67,11 @@ public class GroupServiceImpl implements GroupService {
 			return "Group with id: "+groupId+" is not found";
 		}
 	}
-
 	@Override
 	public Group getGroupById(Integer grpId) {
 		Optional<Group> grp=grpRepo.findById(grpId);
         return grp.orElse(null);
 	}
-
-
-
 	@Override
 	public Group getGroupByOrganizerId(Integer orgId) {
 		Optional<Group> grp=grpRepo.findByOrganizerId(orgId);

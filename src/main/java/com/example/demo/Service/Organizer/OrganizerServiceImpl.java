@@ -3,6 +3,7 @@ package com.example.demo.Service.Organizer;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.demo.Service.Scheduling;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,8 @@ public class OrganizerServiceImpl implements OrganizerService{
     private OrganizerRepository organizerRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private Scheduling scheduling;
     @Autowired
     private GroupService groupService;
     @Autowired
@@ -48,47 +51,52 @@ public class OrganizerServiceImpl implements OrganizerService{
         Optional<Organizer> organizer=organizerRepository.findByUserId(newOrganizer.getUserId());
         User user=userService.getUserById(newOrganizer.getUserId());
         String organizerEmail=user.getUserEmail();
-        if(organizer.isPresent()){
-            if(!organizer.get().isOrganizerStatus()){
-                newOrganizer.setOrganizerId(organizer.get().getOrganizerId());
-                newOrganizer.setOrganizedCount(organizer.get().getOrganizedCount());
-                newOrganizer.increseOrganizedCount();
+        if(!scheduling.getActiveParticipantId().contains(newOrganizer.getUserId())){
+            if(organizer.isPresent()){
+                if(!organizer.get().isOrganizerStatus()){
+                    newOrganizer.setOrganizerId(organizer.get().getOrganizerId());
+                    newOrganizer.setOrganizedCount(organizer.get().getOrganizedCount());
+                    newOrganizer.increseOrganizedCount();
+                    newOrganizer.setOrganizerStatus(true);
+                    organizerRepository.save(newOrganizer);
+                    newGroup.setOrganizerId(newOrganizer.getOrganizerId());
+                    groupService.addGroup(newGroup);
+
+                    try {
+                        String Subject="Group Creation";
+                        String Content="Hii "+user.getUserName()+" your group "+newGroup.getGroupName()+" creation is Successfull";
+                        mailService.sendMailService(organizerEmail,Subject,Content);
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
+                    return newGroup;
+                }
+                else {
+                    return null;//"organizer already organizing "+groupService.getGroupByOrganizerId(organizer.get().getOrganizerId());
+                }
+            }
+            else {
+
                 newOrganizer.setOrganizerStatus(true);
+                newOrganizer.increseOrganizedCount();
                 organizerRepository.save(newOrganizer);
                 newGroup.setOrganizerId(newOrganizer.getOrganizerId());
                 groupService.addGroup(newGroup);
-                
+
                 try {
-                	String Subject="Group Creation";
-                	String Content="Hii "+user.getUserName()+" your group "+newGroup.getGroupName()+" creation is Successfull";
-					mailService.sendMailService(organizerEmail,Subject,Content);
-				} catch (MessagingException e) {
-					e.printStackTrace();
-				}
-                return newGroup;
+                    String Subject="Group Creation";
+                    String Content="Hii "+user.getUserName()+" your group "+newGroup.getGroupName()+" creation is Successfull";
+                    mailService.sendMailService(organizerEmail,Subject,Content);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+
+                return  newGroup;
             }
-            else {
-                return null;//"organizer already organizing "+groupService.getGroupByOrganizerId(organizer.get().getOrganizerId());
-            }
+        }else{
+            return null;
         }
-        else {
-        	
-            newOrganizer.setOrganizerStatus(true);
-            newOrganizer.increseOrganizedCount();
-            organizerRepository.save(newOrganizer);
-            newGroup.setOrganizerId(newOrganizer.getOrganizerId());
-            groupService.addGroup(newGroup);
-            
-            try {
-            	String Subject="Group Creation";
-            	String Content="Hii "+user.getUserName()+" your group "+newGroup.getGroupName()+" creation is Successfull";
-            	mailService.sendMailService(organizerEmail,Subject,Content);
-			} catch (MessagingException e) {
-				e.printStackTrace();
-			}
-            
-            return  newGroup;
-        }
+
     }
 
     @Override
