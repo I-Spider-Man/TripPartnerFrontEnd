@@ -1,9 +1,6 @@
 package com.example.demo.Model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Participant {
@@ -14,7 +11,28 @@ public class Participant {
     private Integer userId;
     private Integer groupId;
     private Integer participationCount = 0;
-    private boolean status ;
+    private UserStatus participantStatus =UserStatus.Busy;
+    private Role role=Role.Participant_Role;
+
+    @Override
+    public String toString() {
+        return "Participant{" +
+                "participantId=" + participantId +
+                ", userId=" + userId +
+                ", groupId=" + groupId +
+                ", participationCount=" + participationCount +
+                ", participantStatus=" + participantStatus +
+                ", role=" + role +
+                '}';
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public Integer getParticipantId() {
         return participantId;
@@ -41,26 +59,15 @@ public class Participant {
     }
 
     public void increaseParticipationCount() {
-        this.participationCount += 1;
+        this.participationCount = this.participationCount + 1;
     }
 
-    public boolean isStatus() {
-        return status;
+    public UserStatus getParticipantStatus() {
+        return participantStatus;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "Participant{" +
-                "participantId=" + participantId +
-                ", userId=" + userId +
-                ", groupId=" + groupId +
-                ", participationCount=" + participationCount +
-                ", status=" + status +
-                '}';
+    public void setParticipantStatus(UserStatus participantStatus) {
+        this.participantStatus = participantStatus;
     }
 
     public Integer getUserId() {
@@ -74,11 +81,12 @@ public class Participant {
     public Participant() {
     }
 
-    public Participant(Integer participantId, Integer userId, Integer groupId, Integer participationCount, boolean status) {
+    public Participant(Integer participantId, Integer userId, Integer groupId, Integer participationCount, UserStatus participantStatus, Role role) {
         this.participantId = participantId;
         this.userId = userId;
         this.groupId = groupId;
         this.participationCount = participationCount;
-        this.status = status;
+        this.participantStatus = participantStatus;
+        this.role = role;
     }
 }

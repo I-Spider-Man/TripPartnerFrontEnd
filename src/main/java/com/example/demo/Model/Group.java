@@ -1,11 +1,9 @@
 package com.example.demo.Model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Party")
@@ -20,9 +18,35 @@ public class Group {
 	private String eventName;
 	private String spotName;
 	private String about;
-	private boolean groupStatus = true;
+	private GroupStatus groupStatus=GroupStatus.Active;
 	private Integer participantsLimit;
-	
+	private Integer participantsCount=0;
+
+	@Override
+	public String toString() {
+		return "Group{" +
+				"groupId=" + groupId +
+				", groupName='" + groupName + '\'' +
+				", dateFrom=" + dateFrom +
+				", dateTo=" + dateTo +
+				", organizerId=" + organizerId +
+				", eventName='" + eventName + '\'' +
+				", spotName='" + spotName + '\'' +
+				", about='" + about + '\'' +
+				", groupStatus=" + groupStatus +
+				", participantsLimit=" + participantsLimit +
+				", participantsCount=" + participantsCount +
+				'}';
+	}
+
+	public Integer getParticipantsCount() {
+		return participantsCount;
+	}
+
+	public void participantAdded() {
+		this.participantsCount += 1;
+	}
+
 	public Integer getGroupId() {
 		return groupId;
 	}
@@ -59,12 +83,18 @@ public class Group {
 	public void setAbout(String about) {
 		this.about = about;
 	}
-	public boolean isGroupStatus() {
+
+	public GroupStatus getGroupStatus() {
 		return groupStatus;
 	}
-	public void setGroupStatus(boolean groupStatus) {
+
+	public void setGroupStatus(GroupStatus groupStatus) {
 		this.groupStatus = groupStatus;
+		if(Objects.equals(this.participantsCount, this.participantsLimit)){
+			this.groupStatus=GroupStatus.Full;
+		}
 	}
+
 	public Integer getParticipantsLimit() {
 		return participantsLimit;
 	}
@@ -83,20 +113,21 @@ public class Group {
 	public void setDateTo(LocalDate dateTo) {
 		this.dateTo = dateTo;
 	}
-	public Group(Integer groupId, String groupName, Integer organizerId, String eventName, String spotName, String about,
-			boolean groupStatus, Integer participantsLimit, LocalDate dateFrom, LocalDate dateTo) {
-		super();
+
+	public Group(Integer groupId, String groupName, LocalDate dateFrom, LocalDate dateTo, Integer organizerId, String eventName, String spotName, String about, GroupStatus groupStatus, Integer participantsLimit, Integer participantsCount) {
 		this.groupId = groupId;
 		this.groupName = groupName;
+		this.dateFrom = dateFrom;
+		this.dateTo = dateTo;
 		this.organizerId = organizerId;
 		this.eventName = eventName;
 		this.spotName = spotName;
 		this.about = about;
 		this.groupStatus = groupStatus;
 		this.participantsLimit = participantsLimit;
-		this.dateFrom = dateFrom;
-		this.dateTo = dateTo;
+		this.participantsCount = participantsCount;
 	}
+
 	public Group() {
 		super();
 	}
