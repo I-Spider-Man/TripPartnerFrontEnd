@@ -5,6 +5,7 @@ import com.example.demo.Service.Admin.AdminService;
 import com.example.demo.Service.Event.EventService;
 import com.example.demo.Service.Organizer.OrganizerService;
 import com.example.demo.Service.TouristSpot.TouristSpotService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,10 @@ public class AdminController {
     }
     @GetMapping("/organizers")
     public List<Organizer> getAllOrganizers(){return adminService.getAllOrganizer();}
+    @GetMapping("/organizers/{organizerId}")
+    public Organizer getOrganizerById(@PathVariable Integer organizerId){
+        return adminService.getOrganizerById(organizerId);
+    }
     @GetMapping("/users")
     public List<User> getAllUsers(){
         return adminService.getAllUser();

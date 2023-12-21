@@ -73,6 +73,8 @@ public class ParticipantServiceImpl implements ParticipantService{
                         return "Participant is already joined in a grp : " + grpRepo.findById(participant.get().getGroupId()).get().getGroupName();
                     }
                 } else {
+                    grp.get().participantAdded(grp.get().getParticipantsCount());
+                    grpRepo.save(grp.get());
                     newParticipant.increaseParticipationCount();
                     participantRepo.save(newParticipant);
                     try {
