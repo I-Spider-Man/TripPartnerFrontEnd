@@ -9,7 +9,6 @@ public interface Scheduling {
     void addActiveOrganizerUserId(Integer organizerUserId);
     void addActiveParticipantUserId(Integer participantUserId);
     void addActiveEventId(Integer eventId);
-    List<Integer> getNotActiveGrpId();
     List<Integer> getActiveOrganizerId();
 //    void addNotActiveGrpId(Integer notActiveGrpId);
     List<Integer> getActiveParticipantId();
