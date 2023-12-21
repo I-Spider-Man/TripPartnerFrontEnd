@@ -43,8 +43,13 @@ public class Group {
 		return participantsCount;
 	}
 
-	public void participantAdded() {
-		this.participantsCount += 1;
+	public void participantAdded(Integer participantsCount) {
+		this.participantsCount = participantsCount + 1;
+	}
+
+	public void participantRemoved(Integer numberOfParticipants){
+
+		this.participantsCount =getParticipantsCount() - numberOfParticipants ;
 	}
 
 	public Integer getGroupId() {

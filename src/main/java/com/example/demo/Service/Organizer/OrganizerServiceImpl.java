@@ -1,6 +1,7 @@
 package com.example.demo.Service.Organizer;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import com.example.demo.Model.*;
@@ -61,12 +62,14 @@ public class OrganizerServiceImpl implements OrganizerService{
                 if(organizer.get().getOrganizerStatus() == UserStatus.Free){
                     newOrganizer.setOrganizerId(organizer.get().getOrganizerId());
                     newOrganizer.setOrganizedCount(organizer.get().getOrganizedCount());
-                    newOrganizer.increseOrganizedCount();
                     newOrganizer.setOrganizerStatus(UserStatus.Busy);
                     organizerRepository.save(newOrganizer);
                     scheduling.addActiveOrganizerUserId(newOrganizer.getUserId());
                     newGroup.setOrganizerId(newOrganizer.getOrganizerId());
-                    groupService.addGroup(newGroup);
+                    if(Objects.equals(groupService.addGroup(newGroup), "GROUP SUCCESSFULLY CREATED")){
+                        newOrganizer.increseOrganizedCount();
+                        organizerRepository.save(newOrganizer);
+                    }
                     try {
                         String Subject="Group Creation";
                         String Content="Hii "+user.getUserName()+",\nyour group "+newGroup.getGroupName()+" is successfully created.";
@@ -82,8 +85,7 @@ public class OrganizerServiceImpl implements OrganizerService{
             }
             else {
 
-                newOrganizer.setOrganizerStatus(UserStatus.Busy);
-                newOrganizer.increseOrganizedCount();
+                //newOrganizer.increseOrganizedCount();
                 organizerRepository.save(newOrganizer);
                 newGroup.setOrganizerId(newOrganizer.getOrganizerId());
                 groupService.addGroup(newGroup);
@@ -106,15 +108,36 @@ public class OrganizerServiceImpl implements OrganizerService{
     @Override
     public String removeOrganizerById(Integer organizerId) {
         Optional<Organizer> organizer=organizerRepository.findById(organizerId);
+
         if(organizer.isPresent()){
+            User Organizeruser=userService.getUserById(organizer.get().getUserId());
             Optional<Group> group=groupRepository.findByOrganizerId(organizer.get().getOrganizerId());
             group.ifPresent(value -> {
                 value.setGroupStatus(GroupStatus.InActive);
                 List<Participant> participants=participantRepository.findAllByGroupId(value.getGroupId());
-                participants.forEach(participant -> participant.setParticipantStatus(UserStatus.Free));
+                participants.forEach(participant -> {
+                    participant.setParticipantStatus(UserStatus.Free);
+                    User participantUser=userService.getUserById(participant.getUserId());
+                    try {
+                        String participantEmail=participantUser.getUserEmail();
+                        String Subject="Group Status turned InActive";
+                        String Content="Hi "+participantUser.getUserName()+",\nThe group that you joined is turned inactive. Now you can join or organize groups.\nThank you for joining us.";
+                        mailService.sendMailService(participantEmail,Subject,Content);
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
+                });
                 groupRepository.save(value);
                 participantRepository.saveAll(participants);
             });
+            try {
+                String organizerEmail=userService.getUserById(organizer.get().getUserId()).getUserEmail();
+                String Subject="removed as organizer";
+                String Content="Hi "+Organizeruser.getUserName()+",\nYou have been removed as the organizer. Don't worry you can still join or organize groups.\nThank you for joining us.";
+                mailService.sendMailService(organizerEmail,Subject,Content);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
             organizerRepository.deleteById(organizerId);
             return "Organizer with id: "+organizerId+" is removed successfully";
         }

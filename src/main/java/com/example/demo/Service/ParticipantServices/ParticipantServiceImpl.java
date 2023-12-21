@@ -58,7 +58,7 @@ public class ParticipantServiceImpl implements ParticipantService{
                         newParticipant.increaseParticipationCount();
                         newParticipant.setParticipantStatus(UserStatus.Busy);
                         participantRepo.save(newParticipant);
-                        grp.get().participantAdded();
+                        grp.get().participantAdded(grp.get().getParticipantsCount());
                         grpRepo.save(grp.get());
                         try {
 
@@ -96,6 +96,11 @@ public class ParticipantServiceImpl implements ParticipantService{
     public String removeParticipantById(Integer participantId) {
         Optional<Participant> participant=participantRepo.findById(participantId);
         if(participant.isPresent()){
+            Optional<Group> grp=grpRepo.findById(participant.get().getGroupId());
+            if(grp.isPresent()) {
+                grp.get().participantRemoved(1);
+                grpRepo.save(grp.get());
+            }
             participantRepo.deleteById(participantId);
             return "participant with id: "+participantId+" removed successfully";
         }

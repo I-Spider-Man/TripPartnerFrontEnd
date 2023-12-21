@@ -38,40 +38,47 @@ public class SchedulingImpl implements Scheduling{
     private final List<Integer> activeEvents=new ArrayList<>();
     private List<Event> allActiveEvent=new ArrayList<>();
     private List<Group> allActiveGroup=new ArrayList<>();
-    private List<Group> allNotActiveGroup=new ArrayList<>();
+    private final List<Group> allNotActiveGroup=new ArrayList<>();
     private List<Participant> allActiveParticipants=new ArrayList<>();
     private List<Organizer> allActiveOrganizers=new ArrayList<>();
     @PostConstruct
     private void initializeActiveAndNotActiveLists() {
         // Initialize the lists based on the initial state in the database
         allActiveGroup=grpRepo.findAllByGroupStatus(GroupStatus.Active);
-        allActiveGroup.forEach(grp->activeGrpId.add(grp.getGroupId()));
+        allActiveGroup.forEach(grp->addActiveGrpId(grp.getGroupId()));
 
         allActiveEvent=eventRepository.findAllByEventStatus(EventStatus.Active);
-        allActiveEvent.forEach(event -> activeEvents.add(event.getEventId()));
+        allActiveEvent.forEach(event -> addActiveEventId(event.getEventId()));
 
         allActiveParticipants=participantRepository.findAllByParticipantStatus(UserStatus.Busy);
-        allActiveParticipants.forEach(participant -> activeParticipants.add(participant.getUserId()));
+        allActiveParticipants.forEach(participant -> addActiveParticipantUserId(participant.getUserId()));
 
         allActiveOrganizers=organizerRepository.findAllByOrganizerStatus(UserStatus.Busy);
-        allActiveOrganizers.forEach(organizer -> activeOrganizers.add(organizer.getUserId()));
+        allActiveOrganizers.forEach(organizer -> addActiveOrganizerUserId(organizer.getUserId()));
     }
     @Override
     public void addActiveGrpId(Integer activeGrpId) {
-        this.activeGrpId.add(activeGrpId);
-
+        if(!this.activeGrpId.contains(activeGrpId)) {
+            this.activeGrpId.add(activeGrpId);
+        }
     }
     @Override
     public void addActiveEventId(Integer eventId){
-        this.activeEvents.add(eventId);
+        if(!this.activeEvents.contains(eventId)){
+            this.activeEvents.add(eventId);
+        }
     }
     @Override
     public void addActiveOrganizerUserId(Integer activeOrganizerUserId){
-        this.activeOrganizers.add(activeOrganizerUserId);
+        if(!this.activeOrganizers.contains(activeOrganizerUserId)) {
+            this.activeOrganizers.add(activeOrganizerUserId);
+        }
     }
     @Override
     public void addActiveParticipantUserId(Integer activeParticipantUserId){
-        this.activeParticipants.add(activeParticipantUserId);
+        if(!this.activeParticipants.contains(activeParticipantUserId)){
+            this.activeParticipants.add(activeParticipantUserId);
+        }
     }
     @Override
     public List<Integer> getActiveOrganizerId() {
@@ -87,13 +94,8 @@ public class SchedulingImpl implements Scheduling{
     @Scheduled(fixedRate=60000)//(cron="0 0 0 * * *")
     public void checkGroupStatus() {
         LocalDate currentDate = LocalDate.now();
-
         allActiveEvent=eventRepository.findAllByEventStatus(EventStatus.Active);
-        allActiveEvent.forEach(event -> {
-            if(!activeEvents.contains(event.getEventId())) {
-            activeEvents.add(event.getEventId());
-        }}
-        );
+        allActiveEvent.forEach(event -> addActiveEventId(event.getEventId()));
         allActiveEvent.forEach(event->{
             if(currentDate.isAfter(event.getEndDate())){
                 activeEvents.remove(event.getEventId());
@@ -103,7 +105,7 @@ public class SchedulingImpl implements Scheduling{
         });
 
         allActiveGroup=grpRepo.findAllByGroupStatus(GroupStatus.Active);
-        allActiveGroup.forEach(grp->activeGrpId.add(grp.getGroupId()));
+        allActiveGroup.forEach(grp->addActiveGrpId(grp.getGroupId()));
         allActiveGroup.forEach(grp -> {
             if (currentDate.isAfter(grp.getDateTo())) {
 
