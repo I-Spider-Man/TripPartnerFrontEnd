@@ -54,6 +54,9 @@ public class SchedulingImpl implements Scheduling{
         allActiveEvent=eventRepository.findAllByEventStatus(EventStatus.Active);
         allActiveEvent.forEach(event -> activeEvents.add(event.getEventId()));
 
+        allActiveEvent=eventRepository.findAllByEventStatus(EventStatus.InActive);
+        allActiveEvent.forEach(event -> inActiveEvents.add(event.getEventId()));
+
         allActiveParticipants=participantRepository.findAllByParticipantStatus(UserStatus.Busy);
         allActiveParticipants.forEach(participant -> activeParticipants.add(participant.getUserId()));
 
