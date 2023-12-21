@@ -36,15 +36,29 @@ public class SchedulingImpl implements Scheduling{
     private final List<Integer> activeOrganizers=new ArrayList<>();
     private final List<Integer> activeParticipants=new ArrayList<>();
     private final List<Integer> activeEvents=new ArrayList<>();
+    private final List<Integer> inActiveEvents=new ArrayList<>();
     private List<Event> allActiveEvent=new ArrayList<>();
     private List<Group> allActiveGroup=new ArrayList<>();
+    private List<Group> allNotActiveGroup=new ArrayList<>();
+    private List<Participant> allActiveParticipants=new ArrayList<>();
+    private List<Organizer> allActiveOrganizers=new ArrayList<>();
     @PostConstruct
     private void initializeActiveAndNotActiveLists() {
         // Initialize the lists based on the initial state in the database
         allActiveGroup=grpRepo.findAllByGroupStatus(GroupStatus.Active);
         allActiveGroup.forEach(grp->activeGrpId.add(grp.getGroupId()));
+
+        allNotActiveGroup=grpRepo.findAllByGroupStatus(GroupStatus.InActive);
+        allNotActiveGroup.forEach(grp->notActiveGrpId.add(grp.getGroupId()));
+
         allActiveEvent=eventRepository.findAllByEventStatus(EventStatus.Active);
         allActiveEvent.forEach(event -> activeEvents.add(event.getEventId()));
+
+        allActiveParticipants=participantRepository.findAllByParticipantStatus(UserStatus.Busy);
+        allActiveParticipants.forEach(participant -> activeParticipants.add(participant.getUserId()));
+
+        allActiveOrganizers=organizerRepository.findAllByOrganizerStatus(UserStatus.Busy);
+        allActiveOrganizers.forEach(organizer -> activeOrganizers.add(organizer.getUserId()));
     }
     @Override
     public void addActiveGrpId(Integer activeGrpId) {
@@ -80,40 +94,24 @@ public class SchedulingImpl implements Scheduling{
     @Override
     @Scheduled(fixedRate=60000)//(cron="0 0 0 * * *")
     public void checkGroupStatus() {
-    	
-        List<Group> allActiveGrp = grpRepo.findAllById(activeGrpId);
-        allActiveGrp.forEach(activeGrp->{
-            Optional<Organizer> organizer=organizerRepository.findById(activeGrp.getOrganizerId());
-            Integer orgUserId=organizer.get().getUserId();
-            if(!activeOrganizers.contains(orgUserId)) {
-                activeOrganizers.add(orgUserId);
-            }
-            participantRepository.findAllByGroupId(
-                    activeGrp.getGroupId()).forEach(participant -> {
-                        Integer participantUserId=participant.getUserId();
-                        if(!activeParticipants.contains(participantUserId)) {
-                            activeParticipants.add(participantUserId);
-                        }
-                    });
-        });
-
         LocalDate currentDate = LocalDate.now();
         allActiveEvent.forEach(event->{
             if(currentDate.isAfter(event.getEndDate())){
-                activeEvents.add(event.getEventId());
+                activeEvents.remove(event.getEventId());
+                inActiveEvents.add(event.getEventId());
                 event.setEventStatus(EventStatus.InActive);
             }
         });
         eventRepository.saveAll(allActiveEvent);
-        allActiveGrp.forEach(grp -> {
+        allActiveGroup.forEach(grp -> {
             if (currentDate.isAfter(grp.getDateTo())) {
                 grp.setGroupStatus(GroupStatus.InActive);
 
                 Optional<Organizer> organizer=organizerRepository.findById(grp.getOrganizerId());
                 organizer.get().setOrganizerStatus(UserStatus.Free);
                 organizerRepository.save(organizer.get());
-
                 System.out.println("organized updated");
+
                 activeGrpId.remove(grp.getGroupId());
                 activeOrganizers.remove(organizer.get().getUserId());
                 notActiveGrpId.add(grp.getGroupId());
@@ -128,12 +126,13 @@ public class SchedulingImpl implements Scheduling{
             };
 
         });
-        grpRepo.saveAll(allActiveGrp);
+        grpRepo.saveAll(allActiveGroup);
         System.out.println("active group id "+activeGrpId);
         System.out.println("inactive group id "+notActiveGrpId);
         System.out.println("active organizer id "+activeOrganizers);
         System.out.println("active participant id "+activeParticipants);
         System.out.println("active event id "+activeEvents);
+        System.out.println("Inactive event id "+inActiveEvents);
         
     }
 

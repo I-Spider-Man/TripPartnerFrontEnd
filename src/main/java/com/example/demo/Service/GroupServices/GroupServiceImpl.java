@@ -66,6 +66,7 @@ public class GroupServiceImpl implements GroupService {
 			participantRepository.saveAll(participants);
 			organizer.get().setOrganizerStatus(UserStatus.Free);
 			organizerRepository.save(organizer.get());
+			scheduling.getActiveGrpId().remove(groupId);
 			grpRepo.deleteById(groupId);
 			return "Group with id: "+groupId+" is removed successfully";
 		}

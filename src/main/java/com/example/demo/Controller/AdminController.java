@@ -56,22 +56,49 @@ public class AdminController {
     public Participant getParticipantById(@PathVariable Integer participantId){
         return adminService.getParticipantById(participantId);
     }
+    @GetMapping("/BusyParticipants")
+    public List<Participant> getAllBusyParticipants(){
+        return adminService.getAllBusyParticipants();
+    }
+    @GetMapping("/FreeParticipants")
+    public List<Participant> getAllFreeParticipants(){
+        return adminService.getAllFreeParticipants();
+    }
     @GetMapping("/groups/{groupId}")
     public Group getGroupById(@PathVariable Integer groupId){
         return adminService.getGroupById(groupId);
+    }
+    @GetMapping("/ActiveGroups")
+    public List<Group> getAllActiveGroups(){
+        return adminService.getAllActiveGroups();
+    }
+    @GetMapping("/InActiveGroups")
+    public List<Group> getAllInActiveGroups(){
+        return adminService.getAllInActiveGroups();
     }
     @GetMapping("/events/{eventId}")
     public Event getEventById(@PathVariable Integer eventId){
         return adminService.getEventById(eventId);
     }
+    @GetMapping("/inActiveEvents")
+    public List<Event> getAllInActiveEvents(){
+        return adminService.getAllInActiveEvents();
+    }
+    @GetMapping("/ActiveEvents")
+    public List<Event> getAllActiveEvents(){
+        return adminService.getAllActiveEvents();
+    }
     @GetMapping("/touristSpots/{spotId}")
     public TouristSpot getSpotById(@PathVariable Integer spotId){
         return adminService.getSpotById(spotId);
     }
+
     @DeleteMapping("/users/{userId}")
     public String removeUser(@PathVariable Integer userId){
         return adminService.removeUserById(userId);
     }
+
+
     @DeleteMapping("/participants/{participantId}")
     public String removeParticipant(@PathVariable Integer participantId){
         return adminService.removeParticipantById(participantId);
@@ -83,6 +110,10 @@ public class AdminController {
     @DeleteMapping("/events/{eventId}")
     public String removeEvent(@PathVariable Integer eventId){
         return adminService.removeEventById(eventId);
+    }
+    @DeleteMapping("/inActiveEvents")
+    public String removeInActiveEvents(){
+        return adminService.removeAllInActiveEvents();
     }
     @DeleteMapping("/touristSpots/{spotId}")
     public String removeTouristSpot(@PathVariable Integer spotId){

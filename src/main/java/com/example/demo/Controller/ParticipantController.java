@@ -13,11 +13,10 @@ import java.util.List;
 public class ParticipantController {
     @Autowired
     private ParticipantService participantService;
-    @GetMapping
-    public List<Participant> getAllParticipant(){
-        return participantService.getAllParticipants();
+    @GetMapping("/group/{groupId}")
+    public List<Participant> getAllParticipantsInGroup(@PathVariable Integer groupId){
+        return participantService.getAllParticipantsByGroupId(groupId);
     }
-
     @PostMapping
     public String addParticipant(@RequestBody Participant newParticipant){
         return participantService.addParticipant(newParticipant);

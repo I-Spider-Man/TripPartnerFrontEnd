@@ -16,12 +16,21 @@ public interface AdminService {
     String addEvent(Event newEvent);
     String addSpot(TouristSpot spot);
     List<Participant> getAllParticipant();
+    List<Participant> getAllBusyParticipants();
+    List<Participant> getAllFreeParticipants();
     List<Participant> getAllParticipantByGroupId(Integer groupId);
     List<Group> getAllGroup();
+    List<Group> getAllActiveGroups();
+    List<Group> getAllInActiveGroups();
     List<User> getAllUser();
     List<Event> getAllEvent();
+    List<Event> getAllInActiveEvents();
+    List<Event> getAllActiveEvents();
     List<TouristSpot> getAllSpot();
     List<Organizer> getAllOrganizer();
+    List<Organizer> getAllBusyOrganizers();
+    List<Organizer> getAllFreeOrganizers();
+
 
     String removeUserById(Integer userId);
     String removeParticipantById(Integer participantId);
@@ -29,6 +38,7 @@ public interface AdminService {
     String removeEventById(Integer eventId);
     String removeTouristSpotById(Integer spotId);
     String removeOrganizerById(Integer organizerId);
+    String removeAllInActiveEvents();
 
     User getUserById(Integer userId);
     Participant getParticipantById(Integer participantId);

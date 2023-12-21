@@ -30,7 +30,7 @@ public class EventServiceImpl implements EventService{
         if(event.isPresent()) {
             if(event.get().getEventStatus() == EventStatus.InActive){
                 eventRepository.save(newEvent);
-                scheduling.addActiveEventId(event.get().getEventId());
+                scheduling.addActiveEventId(newEvent.getEventId());
                 return "Event "+newEvent.getEventName()+" Added Successfully";
             }
             else{
@@ -39,6 +39,7 @@ public class EventServiceImpl implements EventService{
         }
         else{
             eventRepository.save(newEvent);
+            scheduling.addActiveEventId(newEvent.getEventId());
             return "Event "+newEvent.getEventId()+" Added Successfully ";
         }
 

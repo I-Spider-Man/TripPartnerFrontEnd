@@ -19,15 +19,23 @@ public class AdminServiceImpl implements AdminService{
     @Autowired
     private UserService userService;
     @Autowired
+    private ParticipantRepository participantRepository;
+    @Autowired
     private ParticipantService participantService;
     @Autowired
     private GroupService groupService;
     @Autowired
+    private GroupRepository groupRepository;
+    @Autowired
     private EventService eventService;
+    @Autowired
+    private EventRepository eventRepository;
     @Autowired
     private TouristSpotService touristSpotService;
     @Autowired
     private OrganizerService organizerService;
+    @Autowired
+    private OrganizerRepository organizerRepository;
 
     @Override
     public String addEvent(Event newEvent) {
@@ -45,6 +53,16 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
+    public List<Participant> getAllBusyParticipants() {
+        return participantRepository.findAllByParticipantStatus(UserStatus.Busy);
+    }
+
+    @Override
+    public List<Participant> getAllFreeParticipants() {
+        return participantRepository.findAllByParticipantStatus(UserStatus.Free);
+    }
+
+    @Override
     public List<Participant> getAllParticipantByGroupId(Integer groupId) {
         return participantService.getAllParticipantsByGroupId(groupId);
     }
@@ -52,6 +70,16 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public List<Group> getAllGroup() {
         return groupService.getAllGroups();
+    }
+
+    @Override
+    public List<Group> getAllActiveGroups() {
+        return groupRepository.findAllByGroupStatus(GroupStatus.Active);
+    }
+
+    @Override
+    public List<Group> getAllInActiveGroups() {
+        return groupRepository.findAllByGroupStatus(GroupStatus.InActive);
     }
 
     @Override
@@ -65,6 +93,16 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
+    public List<Event> getAllInActiveEvents() {
+        return eventRepository.findAllByEventStatus(EventStatus.InActive);
+    }
+
+    @Override
+    public List<Event> getAllActiveEvents() {
+        return eventRepository.findAllByEventStatus(EventStatus.Active);
+    }
+
+    @Override
     public List<TouristSpot> getAllSpot() {
         return touristSpotService.getAllSpots();
     }
@@ -72,6 +110,16 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public List<Organizer> getAllOrganizer() {
         return organizerService.getAllOrganizer();
+    }
+
+    @Override
+    public List<Organizer> getAllBusyOrganizers() {
+        return organizerRepository.findAllByOrganizerStatus(UserStatus.Busy);
+    }
+
+    @Override
+    public List<Organizer> getAllFreeOrganizers() {
+        return organizerRepository.findAllByOrganizerStatus(UserStatus.Free);
     }
 
     @Override
@@ -98,6 +146,12 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public String removeOrganizerById(Integer organizerId) {
         return organizerService.removeOrganizerById(organizerId);
+    }
+
+    @Override
+    public String removeAllInActiveEvents() {
+        eventRepository.deleteAll(getAllInActiveEvents());
+        return "InActive Events removed successfully";
     }
 
     @Override

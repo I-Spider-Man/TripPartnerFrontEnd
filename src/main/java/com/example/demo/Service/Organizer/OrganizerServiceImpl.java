@@ -59,7 +59,6 @@ public class OrganizerServiceImpl implements OrganizerService{
         if(!scheduling.getActiveParticipantId().contains(newOrganizer.getUserId())){
             if(organizer.isPresent()){
                 if(organizer.get().getOrganizerStatus() == UserStatus.Free){
-
                     newOrganizer.setOrganizerId(organizer.get().getOrganizerId());
                     newOrganizer.setOrganizedCount(organizer.get().getOrganizedCount());
                     newOrganizer.increseOrganizedCount();
@@ -70,7 +69,7 @@ public class OrganizerServiceImpl implements OrganizerService{
                     groupService.addGroup(newGroup);
                     try {
                         String Subject="Group Creation";
-                        String Content="Hii "+user.getUserName()+" your group "+newGroup.getGroupName()+" creation is Successfully";
+                        String Content="Hii "+user.getUserName()+",\nyour group "+newGroup.getGroupName()+" is successfully created.";
                         mailService.sendMailService(organizerEmail,Subject,Content);
                     } catch (MessagingException e) {
                         e.printStackTrace();
