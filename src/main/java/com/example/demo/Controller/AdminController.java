@@ -39,6 +39,14 @@ public class AdminController {
     public Organizer getOrganizerById(@PathVariable Integer organizerId){
         return adminService.getOrganizerById(organizerId);
     }
+    @GetMapping("/busyOrganizers")
+    public List<Organizer> getAllBusyOrganizer(){
+        return adminService.getAllBusyOrganizers();
+    }
+    @GetMapping("/freeOrganizers")
+    public List<Organizer> getAllFreeOrganizer(){
+        return adminService.getAllFreeOrganizers();
+    }
     @GetMapping("/users")
     public List<User> getAllUsers(){
         return adminService.getAllUser();
