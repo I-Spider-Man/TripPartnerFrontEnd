@@ -2,6 +2,7 @@ package com.example.demo.Model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
@@ -12,7 +13,6 @@ public class TouristSpot {
     private String spotName;
     private String location;
     private String description;
-    private Integer peopleCount=0;
 
     @Override
     public String toString() {
@@ -21,24 +21,16 @@ public class TouristSpot {
                 ", spotName='" + spotName + '\'' +
                 ", location='" + location + '\'' +
                 ", description='" + description + '\'' +
-                ", peopleCount=" + peopleCount +
                 '}';
     }
 
-    public Integer getPeopleCount() {
-        return peopleCount;
-    }
-
-    public void setPeopleCount(Integer peopleCount) {
-        this.peopleCount = peopleCount;
-    }
 
     public TouristSpot(Integer spotId, String spotName, String location, String description, Integer peopleCount) {
         this.spotId = spotId;
         this.spotName = spotName;
         this.location = location;
         this.description = description;
-        this.peopleCount = peopleCount;
+
     }
 
     public TouristSpot() {

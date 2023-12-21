@@ -1,8 +1,6 @@
 package com.example.demo.Service.ParticipantServices;
 
-import com.example.demo.Model.Group;
-import com.example.demo.Model.Participant;
-import com.example.demo.Model.User;
+import com.example.demo.Model.*;
 import com.example.demo.Repository.GroupRepository;
 import com.example.demo.Repository.ParticipantRepository;
 import com.example.demo.Repository.UserRepository;
@@ -51,15 +49,17 @@ public class ParticipantServiceImpl implements ParticipantService{
         String participantEmail=user.get().getUserEmail();
         Optional<Group> grp=grpRepo.findById(newParticipant.getGroupId());
 
-        if(scheduling.getActiveGrpId().contains(newParticipant.getGroupId())) {
+        if(scheduling.getActiveGrpId().contains(newParticipant.getGroupId()) && (grp.get().getGroupStatus() != GroupStatus.Full)) {
             if(!scheduling.getActiveOrganizerId().contains(newParticipant.getUserId())) {
                 if (participant.isPresent()) {
-                    if (!participant.get().isStatus()) {
+                    if (participant.get().getParticipantStatus() == UserStatus.Free) {
                         newParticipant.setParticipantId(participant.get().getParticipantId());
                         newParticipant.setParticipationCount(participant.get().getParticipationCount());
                         newParticipant.increaseParticipationCount();
-                        newParticipant.setStatus(grp.get().isGroupStatus());
+                        newParticipant.setParticipantStatus(UserStatus.Busy);
                         participantRepo.save(newParticipant);
+                        grp.get().participantAdded();
+                        grpRepo.save(grp.get());
                         try {
 
                             String Subject="Group Joining";

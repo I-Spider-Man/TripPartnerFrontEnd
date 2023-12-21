@@ -3,13 +3,13 @@ package com.example.demo.Service.Organizer;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.demo.Model.*;
+import com.example.demo.Repository.GroupRepository;
+import com.example.demo.Repository.ParticipantRepository;
 import com.example.demo.Service.Scheduling;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Model.Group;
-import com.example.demo.Model.Organizer;
-import com.example.demo.Model.User;
 import com.example.demo.Repository.OrganizerRepository;
 import com.example.demo.Service.GroupServices.GroupService;
 import com.example.demo.Service.OtpMailService.SMTP_mailService;
@@ -26,9 +26,14 @@ public class OrganizerServiceImpl implements OrganizerService{
     @Autowired
     private Scheduling scheduling;
     @Autowired
+    private ParticipantRepository participantRepository;
+    @Autowired
+    private GroupRepository groupRepository;
+    @Autowired
     private GroupService groupService;
     @Autowired
     private SMTP_mailService mailService;
+
     @Override
     public List<Organizer> getAllOrganizer() {
         return (List<Organizer>) organizerRepository.findAll();
@@ -53,18 +58,19 @@ public class OrganizerServiceImpl implements OrganizerService{
         String organizerEmail=user.getUserEmail();
         if(!scheduling.getActiveParticipantId().contains(newOrganizer.getUserId())){
             if(organizer.isPresent()){
-                if(!organizer.get().isOrganizerStatus()){
+                if(organizer.get().getOrganizerStatus() == UserStatus.Free){
+
                     newOrganizer.setOrganizerId(organizer.get().getOrganizerId());
                     newOrganizer.setOrganizedCount(organizer.get().getOrganizedCount());
                     newOrganizer.increseOrganizedCount();
-                    newOrganizer.setOrganizerStatus(true);
+                    newOrganizer.setOrganizerStatus(UserStatus.Busy);
                     organizerRepository.save(newOrganizer);
+                    scheduling.addActiveOrganizerUserId(newOrganizer.getUserId());
                     newGroup.setOrganizerId(newOrganizer.getOrganizerId());
                     groupService.addGroup(newGroup);
-
                     try {
                         String Subject="Group Creation";
-                        String Content="Hii "+user.getUserName()+" your group "+newGroup.getGroupName()+" creation is Successfull";
+                        String Content="Hii "+user.getUserName()+" your group "+newGroup.getGroupName()+" creation is Successfully";
                         mailService.sendMailService(organizerEmail,Subject,Content);
                     } catch (MessagingException e) {
                         e.printStackTrace();
@@ -77,7 +83,7 @@ public class OrganizerServiceImpl implements OrganizerService{
             }
             else {
 
-                newOrganizer.setOrganizerStatus(true);
+                newOrganizer.setOrganizerStatus(UserStatus.Busy);
                 newOrganizer.increseOrganizedCount();
                 organizerRepository.save(newOrganizer);
                 newGroup.setOrganizerId(newOrganizer.getOrganizerId());
@@ -85,7 +91,7 @@ public class OrganizerServiceImpl implements OrganizerService{
 
                 try {
                     String Subject="Group Creation";
-                    String Content="Hii "+user.getUserName()+" your group "+newGroup.getGroupName()+" creation is Successfull";
+                    String Content="Hii "+user.getUserName()+" your group "+newGroup.getGroupName()+" creation is Successfully";
                     mailService.sendMailService(organizerEmail,Subject,Content);
                 } catch (MessagingException e) {
                     e.printStackTrace();
@@ -96,13 +102,20 @@ public class OrganizerServiceImpl implements OrganizerService{
         }else{
             return null;
         }
-
     }
 
     @Override
     public String removeOrganizerById(Integer organizerId) {
         Optional<Organizer> organizer=organizerRepository.findById(organizerId);
         if(organizer.isPresent()){
+            Optional<Group> group=groupRepository.findByOrganizerId(organizer.get().getOrganizerId());
+            group.ifPresent(value -> {
+                value.setGroupStatus(GroupStatus.InActive);
+                List<Participant> participants=participantRepository.findAllByGroupId(value.getGroupId());
+                participants.forEach(participant -> participant.setParticipantStatus(UserStatus.Free));
+                groupRepository.save(value);
+                participantRepository.saveAll(participants);
+            });
             organizerRepository.deleteById(organizerId);
             return "Organizer with id: "+organizerId+" is removed successfully";
         }

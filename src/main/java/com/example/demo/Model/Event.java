@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 @Entity
 public class Event {
@@ -15,30 +16,17 @@ public class Event {
     private LocalDate startDate;
     private LocalDate endDate;
     private String description;
-    private boolean status=true;
+    private EventStatus eventStatus=EventStatus.Active;
 
-    public boolean isStatus() {
-        return status;
+    public EventStatus getEventStatus() {
+        return eventStatus;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setEventStatus(EventStatus eventStatus) {
+        this.eventStatus = eventStatus;
     }
 
     public Event() {
-    }
-
-    @Override
-    public String toString() {
-        return "Event{" +
-                "eventId=" + eventId +
-                ", eventName='" + eventName + '\'' +
-                ", location='" + location + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                '}';
     }
 
     public Integer getEventId() {
@@ -89,13 +77,26 @@ public class Event {
         this.description = description;
     }
 
-    public Event(Integer eventId, String eventName, String location, LocalDate startDate, LocalDate endDate, String description, boolean status) {
+    @Override
+    public String toString() {
+        return "Event{" +
+                "eventId=" + eventId +
+                ", eventName='" + eventName + '\'' +
+                ", location='" + location + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", description='" + description + '\'' +
+                ", eventStatus=" + eventStatus +
+                '}';
+    }
+
+    public Event(Integer eventId, String eventName, String location, LocalDate startDate, LocalDate endDate, String description, EventStatus eventStatus) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.location = location;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
-        this.status = status;
+        this.eventStatus = eventStatus;
     }
 }

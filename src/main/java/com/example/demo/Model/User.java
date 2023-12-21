@@ -2,6 +2,7 @@ package com.example.demo.Model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
@@ -13,22 +14,41 @@ public class User {
 	private String userName;
 	private String userEmail;
 	private String aboutUser;
-	private boolean sysAdmin=false;
+	private Role role=Role.User_Role;
 	private String userPassword;
-	
 	public User() {
 		super();
 	}
-	public User(Integer userId, String userName, String userEmail, String aboutUser, boolean sysAdmin,
-			String userPassword) {
-		super();
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"userId=" + userId +
+				", userName='" + userName + '\'' +
+				", userEmail='" + userEmail + '\'' +
+				", aboutUser='" + aboutUser + '\'' +
+				", role=" + role +
+				", userPassword='" + userPassword + '\'' +
+				'}';
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public User(Integer userId, String userName, String userEmail, String aboutUser, Role role, String userPassword) {
 		this.userId = userId;
 		this.userName = userName;
 		this.userEmail = userEmail;
 		this.aboutUser = aboutUser;
-		this.sysAdmin = sysAdmin;
+		this.role = role;
 		this.userPassword = userPassword;
 	}
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -53,22 +73,12 @@ public class User {
 	public void setAboutUser(String aboutUser) {
 		this.aboutUser = aboutUser;
 	}
-	public boolean isSysAdmin() {
-		return sysAdmin;
-	}
-	public void setSysAdmin(boolean sysAdmin) {
-		this.sysAdmin = sysAdmin;
-	}
 	public String getUserPassword() {
 		return userPassword;
 	}
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", userEmail=" + userEmail + ", aboutUser="
-				+ aboutUser + ", sysAdmin=" + sysAdmin + ", userPassword=" + userPassword + "]";
-	}
+
 	
 }

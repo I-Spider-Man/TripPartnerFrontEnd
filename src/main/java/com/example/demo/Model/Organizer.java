@@ -1,9 +1,6 @@
 package com.example.demo.Model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Organizer {
@@ -12,11 +9,9 @@ public class Organizer {
     private Integer organizerId;
     @Column(name = "user_id", unique = true)
     private Integer userId;
-    private boolean organizerStatus;
+    private UserStatus organizerStatus=UserStatus.Busy;
     private Integer organizedCount=0;
-
-    public Organizer() {
-    }
+    private Role role=Role.Organizer_Role;
 
     @Override
     public String toString() {
@@ -25,8 +20,21 @@ public class Organizer {
                 ", userId=" + userId +
                 ", organizerStatus=" + organizerStatus +
                 ", organizedCount=" + organizedCount +
+                ", role=" + role +
                 '}';
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Organizer() {
+    }
+
     public void increseOrganizedCount() {
         this.organizedCount += 1;
     }
@@ -46,12 +54,21 @@ public class Organizer {
         this.userId = userId;
     }
 
-    public boolean isOrganizerStatus() {
+
+    public UserStatus getOrganizerStatus() {
         return organizerStatus;
     }
 
-    public void setOrganizerStatus(boolean organizerStatus) {
+    public void setOrganizerStatus(UserStatus organizerStatus) {
         this.organizerStatus = organizerStatus;
+    }
+
+    public Organizer(Integer organizerId, Integer userId, UserStatus organizerStatus, Integer organizedCount, Role role) {
+        this.organizerId = organizerId;
+        this.userId = userId;
+        this.organizerStatus = organizerStatus;
+        this.organizedCount = organizedCount;
+        this.role = role;
     }
 
     public Integer getOrganizedCount() {
@@ -62,10 +79,5 @@ public class Organizer {
         this.organizedCount = organizedCount;
     }
 
-    public Organizer(Integer organizerId, Integer userId, boolean organizerStatus, Integer organizedCount) {
-        this.organizerId = organizerId;
-        this.userId = userId;
-        this.organizerStatus = organizerStatus;
-        this.organizedCount = organizedCount;
-    }
+
 }
