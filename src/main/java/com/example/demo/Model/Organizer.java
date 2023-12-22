@@ -35,9 +35,10 @@ public class Organizer {
     public Organizer() {
     }
 
-    public void increseOrganizedCount() {
-        this.organizedCount += 1;
+    public void increseOrganizedCount(Integer organizedCount) {
+        this.organizedCount = organizedCount + 1;
     }
+
     public Integer getOrganizerId() {
         return organizerId;
     }

@@ -66,10 +66,7 @@ public class OrganizerServiceImpl implements OrganizerService{
                     organizerRepository.save(newOrganizer);
                     scheduling.addActiveOrganizerUserId(newOrganizer.getUserId());
                     newGroup.setOrganizerId(newOrganizer.getOrganizerId());
-                    if(Objects.equals(groupService.addGroup(newGroup), "GROUP SUCCESSFULLY CREATED")){
-                        newOrganizer.increseOrganizedCount();
-                        organizerRepository.save(newOrganizer);
-                    }
+                    groupService.addGroup(newGroup);
                     try {
                         String Subject="Group Creation";
                         String Content="Hii "+user.getUserName()+",\nyour group "+newGroup.getGroupName()+" is successfully created.";
@@ -92,7 +89,7 @@ public class OrganizerServiceImpl implements OrganizerService{
 
                 try {
                     String Subject="Group Creation";
-                    String Content="Hii "+user.getUserName()+" your group "+newGroup.getGroupName()+" creation is Successfully";
+                    String Content="Hii "+user.getUserName()+" your group "+newGroup.getGroupName()+" creation is Successfully created.";
                     mailService.sendMailService(organizerEmail,Subject,Content);
                 } catch (MessagingException e) {
                     e.printStackTrace();

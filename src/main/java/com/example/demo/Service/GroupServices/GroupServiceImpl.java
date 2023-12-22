@@ -42,6 +42,9 @@ public class GroupServiceImpl implements GroupService {
 		Optional<Group> grp=grpRepo.findByOrganizerId(newGroup.getOrganizerId());
 		if(grp.isPresent()) {
 			if(grp.get().getGroupStatus() == GroupStatus.InActive) {
+				Optional<Organizer> organizer=organizerRepository.findById(grp.get().getOrganizerId());
+				organizer.get().increseOrganizedCount(organizer.get().getOrganizedCount());
+				organizerRepository.save(organizer.get());
 				grpRepo.save(newGroup);
 				scheduling.addActiveGrpId(newGroup.getGroupId());
 				return "GROUP SUCCESSFULLY CREATED";
@@ -52,6 +55,9 @@ public class GroupServiceImpl implements GroupService {
 		}
 		else {
 			grpRepo.save(newGroup);
+			Optional<Organizer> organizer=organizerRepository.findById(newGroup.getOrganizerId());
+			organizer.get().increseOrganizedCount(organizer.get().getOrganizedCount());
+			organizerRepository.save(organizer.get());
 			scheduling.addActiveGrpId(newGroup.getGroupId());
 			return "GROUP SUCCESSFULLY CREATED";
 		}
