@@ -13,6 +13,7 @@ public class TouristSpot {
     private String spotName;
     private String location;
     private String description;
+    private Integer peopleCount;
 
     @Override
     public String toString() {
@@ -21,7 +22,20 @@ public class TouristSpot {
                 ", spotName='" + spotName + '\'' +
                 ", location='" + location + '\'' +
                 ", description='" + description + '\'' +
+                ", peopleCount=" + peopleCount +
                 '}';
+    }
+
+    public Integer getPeopleCount() {
+        return peopleCount;
+    }
+
+    public void increasePeopleCount(Integer peopleCount) {
+        this.peopleCount += peopleCount;
+    }
+
+    public void decreasePeopleCount(Integer peopleCount) {
+        this.peopleCount -= peopleCount;
     }
 
 

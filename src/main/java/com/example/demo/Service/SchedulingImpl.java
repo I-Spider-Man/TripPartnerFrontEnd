@@ -6,16 +6,12 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.demo.Model.*;
-import com.example.demo.Repository.EventRepository;
+import com.example.demo.Repository.*;
 import com.example.demo.Service.Organizer.OrganizerService;
 import com.example.demo.Service.ParticipantServices.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import com.example.demo.Repository.GroupRepository;
-import com.example.demo.Repository.OrganizerRepository;
-import com.example.demo.Repository.ParticipantRepository;
 
 import jakarta.annotation.PostConstruct;
 
@@ -25,6 +21,8 @@ import javax.swing.text.html.Option;
 public class SchedulingImpl implements Scheduling{
     @Autowired
     private GroupRepository grpRepo;
+    @Autowired
+    private TouristSpotRepository spotRepository;
     @Autowired
     private ParticipantRepository participantRepository;
     @Autowired
@@ -108,7 +106,15 @@ public class SchedulingImpl implements Scheduling{
         allActiveGroup.forEach(grp->addActiveGrpId(grp.getGroupId()));
         allActiveGroup.forEach(grp -> {
             if (currentDate.isAfter(grp.getDateTo())) {
-
+                if(grp.getEventName()!=null){
+                    Optional<Event> event=eventRepository.findByEventName(grp.getEventName());
+                    event.get().decreasePeopleCount(grp.getParticipantsLimit());
+                    eventRepository.save(event.get());
+                }else{
+                    Optional<TouristSpot> spot=spotRepository.findBySpotName(grp.getSpotName());
+                    spot.get().decreasePeopleCount(grp.getParticipantsLimit());
+                    spotRepository.save(spot.get());
+                }
                 grp.setGroupStatus(GroupStatus.InActive);
 
                 Optional<Organizer> organizer=organizerRepository.findById(grp.getOrganizerId());

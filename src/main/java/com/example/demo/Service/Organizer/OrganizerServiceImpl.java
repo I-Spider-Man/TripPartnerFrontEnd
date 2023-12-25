@@ -5,13 +5,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 import com.example.demo.Model.*;
-import com.example.demo.Repository.GroupRepository;
-import com.example.demo.Repository.ParticipantRepository;
+import com.example.demo.Repository.*;
 import com.example.demo.Service.Scheduling;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Repository.OrganizerRepository;
 import com.example.demo.Service.GroupServices.GroupService;
 import com.example.demo.Service.OtpMailService.SMTP_mailService;
 import com.example.demo.Service.UserServices.UserService;
@@ -26,6 +24,10 @@ public class OrganizerServiceImpl implements OrganizerService{
     private UserService userService;
     @Autowired
     private Scheduling scheduling;
+    @Autowired
+    private EventRepository eventRepository;
+    @Autowired
+    private TouristSpotRepository spotRepository;
     @Autowired
     private ParticipantRepository participantRepository;
     @Autowired
@@ -105,12 +107,20 @@ public class OrganizerServiceImpl implements OrganizerService{
     @Override
     public String removeOrganizerById(Integer organizerId) {
         Optional<Organizer> organizer=organizerRepository.findById(organizerId);
-
         if(organizer.isPresent()){
             User Organizeruser=userService.getUserById(organizer.get().getUserId());
             Optional<Group> group=groupRepository.findByOrganizerId(organizer.get().getOrganizerId());
             group.ifPresent(value -> {
                 value.setGroupStatus(GroupStatus.InActive);
+                if(value.getEventName()!=null){
+                    Optional<Event> event=eventRepository.findByEventName(value.getEventName());
+                    event.get().decreasePeopleCount(value.getParticipantsLimit());
+                    eventRepository.save(event.get());
+                }else{
+                    Optional<TouristSpot> spot=spotRepository.findBySpotName(value.getSpotName());
+                    spot.get().increasePeopleCount(value.getParticipantsLimit());
+                    spotRepository.save(spot.get());
+                }
                 List<Participant> participants=participantRepository.findAllByGroupId(value.getGroupId());
                 participants.forEach(participant -> {
                     participant.setParticipantStatus(UserStatus.Free);

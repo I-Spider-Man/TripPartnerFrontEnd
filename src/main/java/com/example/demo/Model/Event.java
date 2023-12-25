@@ -17,6 +17,43 @@ public class Event {
     private LocalDate endDate;
     private String description;
     private EventStatus eventStatus=EventStatus.Active;
+    private Integer peopleCount=0;
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "eventId=" + eventId +
+                ", eventName='" + eventName + '\'' +
+                ", location='" + location + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", description='" + description + '\'' +
+                ", eventStatus=" + eventStatus +
+                ", peopleCount=" + peopleCount +
+                '}';
+    }
+
+    public Integer getPeopleCount() {
+        return peopleCount;
+    }
+
+    public void increasePeopleCount(Integer peopleCount) {
+        this.peopleCount += peopleCount;
+    }
+    public void decreasePeopleCount(Integer peopleCount) {
+        this.peopleCount -= peopleCount;
+    }
+
+    public Event(Integer eventId, String eventName, String location, LocalDate startDate, LocalDate endDate, String description, EventStatus eventStatus, Integer peopleCount) {
+        this.eventId = eventId;
+        this.eventName = eventName;
+        this.location = location;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+        this.eventStatus = eventStatus;
+        this.peopleCount = peopleCount;
+    }
 
     public EventStatus getEventStatus() {
         return eventStatus;
@@ -77,26 +114,4 @@ public class Event {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "Event{" +
-                "eventId=" + eventId +
-                ", eventName='" + eventName + '\'' +
-                ", location='" + location + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", description='" + description + '\'' +
-                ", eventStatus=" + eventStatus +
-                '}';
-    }
-
-    public Event(Integer eventId, String eventName, String location, LocalDate startDate, LocalDate endDate, String description, EventStatus eventStatus) {
-        this.eventId = eventId;
-        this.eventName = eventName;
-        this.location = location;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.description = description;
-        this.eventStatus = eventStatus;
-    }
 }

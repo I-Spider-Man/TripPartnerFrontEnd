@@ -6,16 +6,13 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.demo.Model.*;
-import com.example.demo.Repository.OrganizerRepository;
-import com.example.demo.Repository.ParticipantRepository;
+import com.example.demo.Repository.*;
 import com.example.demo.Service.Organizer.OrganizerService;
 import com.example.demo.Service.Scheduling;
 import com.example.demo.Service.SchedulingImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import com.example.demo.Repository.GroupRepository;
 
 import jakarta.annotation.PostConstruct;
 
@@ -27,6 +24,10 @@ public class GroupServiceImpl implements GroupService {
 	private GroupRepository grpRepo;
 	@Autowired
 	private OrganizerRepository organizerRepository;
+	@Autowired
+	private EventRepository eventRepository;
+	@Autowired
+	private TouristSpotRepository spotRepository;
 	@Autowired
 	private ParticipantRepository participantRepository;
 	@Autowired
@@ -40,6 +41,15 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public String addGroup(Group newGroup) {
 		Optional<Group> grp=grpRepo.findByOrganizerId(newGroup.getOrganizerId());
+		if(newGroup.getEventName()!=null){
+			Optional<Event> event=eventRepository.findByEventName(newGroup.getEventName());
+			event.get().increasePeopleCount(newGroup.getParticipantsLimit());
+			eventRepository.save(event.get());
+		}else{
+			Optional<TouristSpot> spot=spotRepository.findBySpotName(newGroup.getSpotName());
+			spot.get().increasePeopleCount(newGroup.getParticipantsLimit());
+			spotRepository.save(spot.get());
+		}
 		if(grp.isPresent()) {
 			if(grp.get().getGroupStatus() == GroupStatus.InActive) {
 				Optional<Organizer> organizer=organizerRepository.findById(grp.get().getOrganizerId());
@@ -66,6 +76,15 @@ public class GroupServiceImpl implements GroupService {
 	public String removeGroupById(Integer groupId) {
 		Optional<Group> grp=grpRepo.findById(groupId);
 		if(grp.isPresent()){
+			if(grp.get().getEventName()!=null){
+				Optional<Event> event=eventRepository.findByEventName(grp.get().getEventName());
+				event.get().decreasePeopleCount(grp.get().getParticipantsLimit());
+				eventRepository.save(event.get());
+			}else{
+				Optional<TouristSpot> spot=spotRepository.findBySpotName(grp.get().getSpotName());
+				spot.get().decreasePeopleCount(grp.get().getParticipantsLimit());
+				spotRepository.save(spot.get());
+			}
 			Optional<Organizer> organizer=organizerRepository.findById(grp.get().getOrganizerId());
 			List<Participant> participants=participantRepository.findAllByGroupId(grp.get().getGroupId());
 			participants.forEach(participant -> participant.setParticipantStatus(UserStatus.Free));
