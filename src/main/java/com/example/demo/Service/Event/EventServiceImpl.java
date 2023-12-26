@@ -24,6 +24,11 @@ public class EventServiceImpl implements EventService{
     }
 
     @Override
+    public List<Event> getAllActiveEvents() {
+        return eventRepository.findAllByEventStatus(EventStatus.Active);
+    }
+
+    @Override
     public String addEvent(Event newEvent) {
         newEvent.setEventStatus(EventStatus.Active);
         Optional<Event> event=eventRepository.findByEventName(newEvent.getEventName());
