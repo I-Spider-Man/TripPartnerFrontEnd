@@ -9,5 +9,6 @@ public interface TouristSpotService {
     TouristSpot getSpotById(Integer spotId);
     String addSpot(TouristSpot newSpot);
     String removeSpotById(Integer spotId);
+    List<TouristSpot> getAllPopularTouristSpot();
 
 }

@@ -42,5 +42,13 @@ public class EventSpotController {
     public TouristSpot getSpotById(@PathVariable Integer id){
         return spotService.getSpotById(id);
     }
+    @GetMapping("/PopularSpots")
+     public List<TouristSpot> getAllPopularSpots(){
+        return spotService.getAllPopularTouristSpot();
+    }
+    @GetMapping("/PopularEvents")
+    public List<Event> getAllPopularEvents(){
+        return eventService.getAllPopularEvents();
+    }
 
 }
