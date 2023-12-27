@@ -37,6 +37,12 @@ public class TouristSpotServiceImpl implements TouristSpotService{
     }
 
     @Override
+    public String addAllSpots(List<TouristSpot> spots) {
+        touristSpotRepository.saveAll(spots);
+        return "Success";
+    }
+
+    @Override
     public String removeSpotById(Integer spotId) {
         touristSpotRepository.deleteById(spotId);
         return "Tourist spot with id "+spotId+" is removed successfully.";

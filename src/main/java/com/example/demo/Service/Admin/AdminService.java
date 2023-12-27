@@ -12,9 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AdminService {
-
+    String addManyUsers(List<User> users);
     String addEvent(Event newEvent);
+    String addAllEvents(List<Event> events);
     String addSpot(TouristSpot spot);
+    String addAllSpots(List<TouristSpot> spots);
     List<Participant> getAllParticipant();
     List<Participant> getAllBusyParticipants();
     List<Participant> getAllFreeParticipants();
