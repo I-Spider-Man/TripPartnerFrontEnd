@@ -6,7 +6,6 @@ import EventsHome from './Components/Events/EventsHome';
 import TouristSpotHome from './Components/TouristSpots/TouristSpotHomePage';
 import Event from './Components/Events/Event';
 import TouristSpot from './Components/TouristSpots/TouristSpot';
-
 function App() {
   return (
     <Router>

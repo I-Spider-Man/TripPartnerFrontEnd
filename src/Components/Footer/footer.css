@@ -1,6 +1,6 @@
 .footer{
     display: flex;
-    margin: 30px 0px;
+    margin: 30px 0px 0px 0px;
     flex-direction: row;
     width: 100%;
     height: fit-content;
