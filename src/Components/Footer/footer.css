@@ -1,0 +1,43 @@
+.footer{
+    display: flex;
+    margin: 30px 0px;
+    flex-direction: row;
+    width: 100%;
+    height: fit-content;
+    justify-content: space-between;
+    background-color: white;
+    padding: 15px 0px;
+    font-family: "Poppins-Medium", Helvetica;
+}
+.footer .Logo-container img{
+    height: 150px;
+    width: 370px;
+}
+.footer .section-0{
+    padding: 0px 0px 0px 50px
+}
+.footer .section-2{
+    padding: 0px 50px 0px 0px
+}
+.footer .section-1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 30px;
+}
+.footer .Pages-container, .Service-container, .Contact-container, .Socialmedia-container{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.Contact-container .contact-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 4px;
+}
+.Socialmedia-container .social-icons{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

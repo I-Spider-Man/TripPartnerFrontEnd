@@ -55,7 +55,7 @@ body {
   
   .nav button:hover {
     color:black;
-    background: white;
+    background: transparent;
   }
   
   .search-container {
