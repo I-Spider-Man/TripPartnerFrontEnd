@@ -2,6 +2,7 @@ import NavBar from '../NavBar/NavBar'
 import { useParams } from 'react-router-dom'
 import './Event.css'
 import Event_details from '../Files/Event_Details';
+import Footer from '../Footer/Footer';
 function Event() {
   const {eventId} = useParams();
   
@@ -26,6 +27,9 @@ const event=Event_details.find(detail=>String(detail.event_id)===String(eventId)
           <p>No data found</p>
         )}
 
+    </div>
+    <div>
+      <Footer/>
     </div>
     </div>
   );

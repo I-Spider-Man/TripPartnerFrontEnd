@@ -1,48 +1,134 @@
-/* Event.css */
+
+.nav {
+  width: 100%;
+}
 
 .event-content {
-  margin-top: 20px;
+  max-width: 600px;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  overflow-y: auto; /* Add a scrollbar if the content overflows */
 }
 
 .event-content img {
-  width: 100%;
-  max-height: 50px;
-}
-
-.event-content h1 {
+  max-width: 100%;
+  height: auto;
   margin-bottom: 10px;
 }
 
-.event-content label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-}
-
 .join-organize-button {
+  display: flex;
+  gap: 10px;
   margin-top: 20px;
 }
 
-.join-organize-button button {
-  padding: 10px 15px;
-  margin-right: 10px;
-  letter-spacing: 2px;
-  font-size: 16px;
-  background-color: wheat;
+button {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-.join-organize-button button:hover {
-  background-color: bisque;
+button:hover {
+  background-color: #0056b3;
+}
+/* Add these styles to your existing CSS */
+
+.organizer-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  z-index: 1000;
 }
 
-/* Responsive styles */
-@media screen and (max-width: 600px) {
-  .event-content img {
-    max-height: 30px; /* Adjust the max-height for smaller screens */
-  }
+.organizer-form h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
 
-  .join-organize-button button {
-    font-size: 14px; /* Adjust font size for smaller screens */
-  }
+.organizer-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.organizer-form label {
+  margin-bottom: 10px;
+}
+
+.organizer-form input {
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.organizer-form button {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.organizer-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Add this style to your existing styles or create a new CSS file */
+
+.event-list-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.event-list-popup h2 {
+  margin-bottom: 15px;
+}
+
+.event-list-popup ul {
+  list-style: none;
+  padding: 0;
+}
+
+.event-list-popup li {
+  margin-bottom: 20px;
+}
+
+.event-list-popup p {
+  margin: 0;
+}
+
+.event-list-popup button {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.event-list-popup button:hover {
+  background-color: #0056b3;
 }

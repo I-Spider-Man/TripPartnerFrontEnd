@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './EventsHome.css'
 import {HiOutlineLocationMarker} from 'react-icons/hi'
 import {MdOutlineJoinInner} from 'react-icons/md'
@@ -51,10 +52,11 @@ const EventsHomePage = () => {
                                 <div className="desc">
                                     <p>{truncatedDescription}</p>
                                 </div>
-                                <button className="btn flex">
+                                <Link to={`/Events/${encodeURIComponent(event_id)}`}><button className="btn flex">
                                     VIEW MORE
                                     <IoMdRadioButtonOn className='icon'/>
-                                </button>
+                                </button></Link>
+                                
                             </div>
                         </div>
                     )
