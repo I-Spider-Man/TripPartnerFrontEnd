@@ -1,10 +1,21 @@
+.front-page{
+  background-image: 'https://trip-partner.s3.eu-north-1.amazonaws.com/pexels-kamizzle-15747770+(1)+(1).jpg';
+}
+.event-page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
+  width: 100%;
+}
 .nav {
   width: 100%;
 }
-
+.content-details{
+  padding: 20px;
+}
 .event-content {
-  max-width: 600px;
+  max-width: 90%;
   margin: 20px;
   padding: 20px;
   border: 1px solid #ddd;
@@ -25,8 +36,36 @@
   gap: 10px;
   margin-top: 20px;
 }
+.join-organize-button button {
+  padding: 17px 40px;
+  border-radius: 50px;
+  cursor: pointer;
+  border: 0;
+  background-color: white;
+  box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-size: 15px;
+  transition: all 0.5s ease;
+}
 
-button {
+.join-organize-button button:hover {
+  letter-spacing: 3px;
+  background-color: hsl(261deg 80% 48%);
+  color: hsl(0, 0%, 100%);
+  box-shadow: rgb(93 24 220) 0px 7px 29px 0px;
+}
+
+.join-organize-button button:active {
+  letter-spacing: 3px;
+  background-color: hsl(261deg 80% 48%);
+  color: hsl(0, 0%, 100%);
+  box-shadow: rgb(93 24 220) 0px 0px 0px 0px;
+  transform: translateY(10px);
+  transition: 100ms;
+}
+
+.event-home button {
   padding: 10px;
   background-color: #007bff;
   color: #fff;
@@ -35,7 +74,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.event-home button:hover {
   background-color: #0056b3;
 }
 /* Add these styles to your existing CSS */

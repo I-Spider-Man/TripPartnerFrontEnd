@@ -43,6 +43,7 @@
 }
 .login-button{
     border: none;
+    cursor: pointer;
 }
 
 .nav-bar .login-signup-outline {

@@ -6,9 +6,17 @@ import {IoMdRadioButtonOn} from 'react-icons/io'
 import NavBar from '../NavBar/NavBar'
 import Footer from '../Footer/Footer'
 import Tourist_Spot_Details from '../Files/TouristSpotDetails'
-
+import {Link} from 'react-router-dom'
 
 const TouristSpotHomePage = () => {
+    const backgroundImageStyle = {
+        backgroundImage: `url('https://trip-partner.s3.eu-north-1.amazonaws.com/pexels-kwnos-iv-16785282+(1)+(1).jpg')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        height: '100%', // Adjust this based on your design
+        margin: 0,       // Remove default margin
+        padding: 0,      // Remove default padding
+      };
     function shuffleArray(array) {
         let shuffledArray = [...array];
         for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -20,7 +28,7 @@ const TouristSpotHomePage = () => {
     const shuffledDetails = shuffleArray(Tourist_Spot_Details.slice(0, 5));
 
   return (
-    <section className="main container section" style={{backgroundColor:'black'}}>
+    <section className="main container section" style={backgroundImageStyle}>
         <div className="nav-container" ><NavBar/></div>
         <div className="secTitle" style={{marginTop:'15%'}}>
             <h1 data-aos='fade-right' className="title">
@@ -53,10 +61,10 @@ const TouristSpotHomePage = () => {
                                 <div className="desc">
                                     <p>{truncatedDescription}</p>
                                 </div>
-                                <button className="btn flex">
+                                <Link to={`/Spot/${encodeURIComponent(spot_id)}`}><button className="btn flex">
                                     VIEW MORE
                                     <IoMdRadioButtonOn className='icon'/>
-                                </button>
+                                </button></Link>
                             </div>
                         </div>
                     )
@@ -98,10 +106,10 @@ const TouristSpotHomePage = () => {
                                 <div className="desc">
                                     <p>{truncatedDescription}</p>
                                 </div>
-                                <button className="btn flex">
+                                <Link to={`/Spot/${encodeURIComponent(spot_id)}`}><button className="btn flex">
                                     VIEW MORE
                                     <IoMdRadioButtonOn className='icon'/>
-                                </button>
+                                </button></Link>
                             </div>
                         </div>
                     )
