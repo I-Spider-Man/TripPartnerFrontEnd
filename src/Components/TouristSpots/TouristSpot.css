@@ -6,27 +6,34 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    margin-top: 10%;
   }
   .nav {
     width: 100%;
   }
   .content-details{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     padding: 20px;
   }
+  .content-details label{
+    display: flex;
+    flex-direction: column;
+  }
+  
   .spot-content {
     max-width: 90%;
-    margin: 20px;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    overflow-y: auto; /* Add a scrollbar if the content overflows */
   }
   
   .spot-content img {
     max-width: 65%;
-    height: auto;
+    max-height: 10%;
     margin-bottom: 10px;
   }
   

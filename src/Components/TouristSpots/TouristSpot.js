@@ -17,20 +17,21 @@ const backgroundImageStyle = {
 };
   return (
     <div className='front-page' style={backgroundImageStyle}>
-    <div className='spot-page'>
-    <div className='nav-container'><NavBar/></div>
-    <div className='spot-content' style={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'center', marginTop:'15%'}}>
+       <div className='nav-container'><NavBar/></div> 
+       <div className='spot-page'>
+
+    <div className='spot-content' style={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'center'}}>
     {spot ? (
           <><img src={spot.spot_image} alt={spot.spot_alt} />
           <div className='content-details'>
-            <div><label>spot name: <h1>{spot.spot_name}</h1></label>
-            <label>spot happening on: {spot.spot_happening}</label>
-            <label>spot description: {spot.spot_description}</label>
-            <label>spot address: {spot.spot_address}</label>
+            <label><strong>SPOT NAME: </strong><h1>{spot.spot_name}</h1></label>
+            <label><strong>SPOT LOCATION:</strong> {spot.spot_address}</label>
+            <label><strong>SPOT DESCRIPTION:</strong> {spot.spot_description}</label>
+            
             <div className='join-organize-button'>
               <button>Join</button>
               <button>Organize</button>
-            </div></div>
+            </div>
             </div>
           </> 
         ) : (

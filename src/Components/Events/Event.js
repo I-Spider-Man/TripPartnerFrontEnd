@@ -18,18 +18,18 @@ const backgroundImageStyle = {
     <div className='front-page' style={backgroundImageStyle}>
     <div className='event-page'>
     <div className='nav-container'><NavBar/></div>
-    <div className='event-content' style={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'center', marginTop:'15%'}}>
+    <div className='event-content' style={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'center', marginTop:'10%'}}>
     {event ? (
           <><img src={event.event_image} alt={event.image_alt} />
           <div className='content-details'>
-            <div><label>Event name: <h1>{event.event_name}</h1></label>
-            <label>Event happening on: {event.event_happening}</label>
-            <label>Event description: {event.event_discription}</label>
-            <label>Event address: {event.event_address}</label>
+            <label><strong>EVENT NAME:</strong> <h1>{event.event_name}</h1></label>
+            <label><strong>EVENT HAPPENING ON: </strong><p>{event.event_happening}</p></label>
+            <label><strong>EVENT DESCRIPTION:</strong> <p>{event.event_discription}</p></label>
+            <label><strong>EVENT ADDRESS:</strong> <p>{event.event_address}</p></label>
             <div className='join-organize-button'>
               <button>Join</button>
               <button>Organize</button>
-            </div></div>
+            </div>
             
             </div>
             

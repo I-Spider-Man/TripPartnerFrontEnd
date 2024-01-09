@@ -12,7 +12,14 @@
   width: 100%;
 }
 .content-details{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
   padding: 20px;
+}
+.content-details label{
+  display: flex;
+  flex-direction: column;
 }
 .event-content {
   max-width: 90%;
