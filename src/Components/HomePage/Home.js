@@ -15,7 +15,19 @@ function Home() {
 
   return (
     <div className='home' >
-      <video src={vid} autoPlay loop muted/>
+      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+  <video src={vid} autoPlay loop muted style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+  <div
+    style={{
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      width: '100%',
+      height: '3%', // Adjust this value to control the height of the faded area
+      background: 'linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0.5,0.5,1))',
+    }}
+  />
+</div>
       <div className='header'>
         <div className='nav-container'><NavBar/></div>
         <div className='header-content'>welcome to trip partner</div>
@@ -43,8 +55,8 @@ function Home() {
                   )
                 )
               }
-              <Link to='/EventsHome' style={{ textDecoration: 'none'}}>
-                <button style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column',textTransform:'uppercase' }}><div style={{ marginRight: '5px' }}>v</div>
+              <Link to='/EventsHomePage' style={{ textDecoration: 'none'}}>
+                <button style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column',textTransform:'uppercase',backgroundColor:'black',color:'whitesmoke' }}><div style={{ marginRight: '5px' }}>v</div>
               <div style={{ marginRight: '5px' }}>i</div>
               <div style={{ marginRight: '5px' }}>e</div>
               <div style={{ marginRight: '5px' }}>w</div>
@@ -70,8 +82,9 @@ function Home() {
             spotImage={spot.spot_image}
             spotAlt={spot.image_alt}/>
             ))}
-            <Link to='/TouristSpotHome' style={{ textDecoration: 'none'}}>
-              <button style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column',textTransform:'uppercase' }}><div style={{ marginRight: '5px' }}>v</div>
+            <div></div>
+            <Link to='/TouristHomePage' style={{ textDecoration: 'none'}}>
+              <button style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column',textTransform:'uppercase',backgroundColor:'black',color:'whitesmoke' }}><div style={{ marginRight: '5px' }}>v</div>
                 <div style={{ marginRight: '5px' }}>i</div>
                 <div style={{ marginRight: '5px' }}>e</div>
                 <div style={{ marginRight: '5px' }}>w</div>

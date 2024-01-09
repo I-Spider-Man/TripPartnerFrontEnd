@@ -19,23 +19,18 @@ function NavBar() {
     <div className='nav-bar'>
       <div className='Trip-Logo-Container' style={{display:'flex',alignItems:'center'}}>
         <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-          <img className='Trip-Logo' src="https://trip-partner.s3.eu-north-1.amazonaws.com/Logo.png"/>
+          <img className='Trip-Logo' src="https://trip-partner.s3.eu-north-1.amazonaws.com/MicrosoftTeams-image+(5).png"/>
         </Link>
       </div>
       <div className='menu-list' >
         <div className='nav'>
-          <Link to="/EventsHome">
+          <Link to="/EventsHomePage">
             <button>Events</button>
           </Link>
         </div>
         <div className='nav'>
-          <Link to="/HotSpotsHome">
+          <Link to="/TouristHomePage">
             <button>Hot Spots</button>
-          </Link>
-        </div>
-        <div className='nav'>
-          <Link to="/OrganizerHome">
-            <button>Organizers</button>
           </Link>
         </div>
       </div>
@@ -47,6 +42,7 @@ function NavBar() {
           <img className='login-signup' alt='login or sign up' src={profileAva} />
         </button>
       </div>
+      
       {visible && <LoginPage onClose={() => {setvisible(false)}} onReturn={childValue}/>}
     </div>
   );
