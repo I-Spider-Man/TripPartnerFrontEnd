@@ -29,7 +29,7 @@ const EventsHomePage = () => {
     const shuffledDetails = shuffleArray(Event_Details.slice(0, 5));
   return (
     <section className="main container section" style={backgroundImageStyle}>
-        <div className="nav-container"><NavBar/></div>
+        <div style={{minHeight:'100vh'}}><div className="nav-container"><NavBar/></div>
         <div className="secTitle" style={{marginTop:'15%'}}>
             <h1 data-aos='fade-right' className="title">
                 Popular events ....
@@ -117,7 +117,8 @@ const EventsHomePage = () => {
             }
  
             <p>More events to be added soon</p>
-        </div>
+        </div></div>
+        
         <Footer/>
     </section>
   )

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import './Event.css'
 import Event_details from '../Files/Event_Details';
 import Footer from '../Footer/Footer';
+import Loading from '../LoadingComponents/ContentLoading';
 function Event() {
   const {eventId} = useParams();
 const event=Event_details.find(detail=>String(detail.event_id)===String(eventId));
@@ -10,15 +11,16 @@ const backgroundImageStyle = {
   backgroundImage: `url('https://trip-partner.s3.eu-north-1.amazonaws.com/pexels-kamizzle-15747770+(1)+(1).jpg')`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
-  height: '100vh', // Adjust this based on your design
+  height: '100%', // Adjust this based on your design
   margin: 0,       // Remove default margin
   padding: 0,      // Remove default padding
 };
   return (
-    <div className='front-page' style={backgroundImageStyle}>
-    <div className='event-page'>
-    <div className='nav-container'><NavBar/></div>
-    <div className='event-content' style={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'center', marginTop:'10%'}}>
+    <div className='front-page' style={backgroundImageStyle}><div className='nav-container'><NavBar/></div>
+    <div className='event-page' style={{minHeight:'100vh'}}>
+    
+    <div className='content-container' style={{display:'flex', alignItems:'center', justifyContent:'center',height:'65vh'}}>
+      <div className='event-content' style={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'center', marginTop:'10%'}}>
     {event ? (
           <><img src={event.event_image} alt={event.image_alt} />
           <div className='content-details'>
@@ -35,10 +37,11 @@ const backgroundImageStyle = {
             
           </> 
         ) : (
-          <p>No data found</p>
+          <Loading/>
         )}
 
-    </div>
+    </div></div>
+    
     </div><div>
       <Footer/>
     </div>

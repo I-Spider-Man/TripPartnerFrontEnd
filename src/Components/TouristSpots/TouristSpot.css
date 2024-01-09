@@ -24,6 +24,7 @@
   
   .spot-content {
     max-width: 90%;
+    min-height: 50vh;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -33,7 +34,6 @@
   
   .spot-content img {
     max-width: 65%;
-    max-height: 10%;
     margin-bottom: 10px;
   }
   
