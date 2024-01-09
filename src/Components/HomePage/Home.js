@@ -9,10 +9,12 @@ import Tourist_Spot_Details from '../Files/TouristSpotDetails'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
 function Home() {
-  
+  const [profileAva,setProfileAva] =useState("https://trip-partner.s3.eu-north-1.amazonaws.com/login_signUp.svg")
   const [firstEvent,setFirstEvent]=useState();
   const noOfEvents=Event_Details.length;
-
+const setProfile=(value)=>{
+  setProfileAva(value);
+}
   return (
     <div className='home' >
       <div style={{ position: 'relative', width: '100%', height: '100%' }}>
@@ -29,7 +31,7 @@ function Home() {
   />
 </div>
       <div className='header'>
-        <div className='nav-container'><NavBar/></div>
+        <div className='nav-container'><NavBar profileAvatar={setProfile}/></div>
         <div className='header-content'>welcome to trip partner</div>
       </div>
       <div className='body'>
