@@ -56,10 +56,11 @@
     color: white;
     font-family: fantasy;
   }
-  .events-container .container, .spot-container .container{
+  .events-container .container-content, .spot-container .container-content{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    color: aliceblue;
     justify-content: center;
     width: 100%;
     height: 100%;

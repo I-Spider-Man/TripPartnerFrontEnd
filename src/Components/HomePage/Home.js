@@ -1,6 +1,8 @@
 import React,{useState,useEffect} from 'react'
 import NavBar from '../NavBar/NavBar'
 import vid from './pexels_videos_2096549 (1080p).mp4'
+import Slider from 'slider-moon';
+import 'slider-moon/dist/style.css'
 import './Home.css'
 import EventComponent from '../Events/EventComponent'
 import TouristSpotComponent from '../TouristSpots/TouristSpotComponent'
@@ -10,7 +12,7 @@ import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
 function Home() {
   const [profileAva,setProfileAva] =useState("https://trip-partner.s3.eu-north-1.amazonaws.com/login_signUp.svg")
-  const [firstEvent,setFirstEvent]=useState();
+
   const noOfEvents=Event_Details.length;
 const setProfile=(value)=>{
   setProfileAva(value);
@@ -35,18 +37,28 @@ const setProfile=(value)=>{
         <div className='header-content'>welcome to trip partner</div>
       </div>
       <div className='body'>
-        <div className='events-container'>
+        <div className='events-container' >
           <div className='container'>
           <h3>Events</h3>
-          <p>Unlock the magic of travel! Immerse yourself in vibrant events at breathtaking tourist spots. From cultural festivals to culinary delights, join us for unforgettable experiences that go beyond sightseeing. Embrace the journey, forge global connections, and make every moment extraordinary. Explore. Connect. Celebrate.</p>
         </div>
-
+        <div className='container-content'>
+          <p>Unlock the magic of travel! Immerse yourself in vibrant events at breathtaking tourist spots. From cultural festivals to culinary delights, join us for unforgettable experiences that go beyond sightseeing. Embrace the journey, forge global connections, and make every moment extraordinary. Explore. Connect. Celebrate.</p>
           <div className='popular-event-container'>
-              {
-              Event_Details.slice(0, 3).map
-                ((details)=>
-                  (
-                    <EventComponent
+          <Slider
+            slideClass={'my-slider'}
+            infinite={true}
+            bullets={true}
+            arrowsNav={true}
+            animation={'scale'}
+            callback={() => {
+              console.log('here');
+            }}
+          >
+              <div className='slider my-slider'>
+                <ul className='slider-wrapper'>
+                  {Event_Details.slice(0,3).map((details,item) => (
+                    <li key={item}>
+                      <EventComponent
                     eventId={details.event_id}
                     eventName={details.event_name}
                     eventDiscription={details.event_discription}
@@ -54,9 +66,12 @@ const setProfile=(value)=>{
                     eventImage={details.event_image}
                     eventAddress={details.event_address}
                     alt={details.image_alt}/>
-                  )
-                )
-              }
+                    </li>
+                  ))}
+                </ul>
+              </div>
+          </Slider>
+
               <Link to='/EventsHomePage' style={{ textDecoration: 'none'}}>
                 <button style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column',textTransform:'uppercase',backgroundColor:'black',color:'whitesmoke' }}><div style={{ marginRight: '5px' }}>v</div>
               <div style={{ marginRight: '5px' }}>i</div>
@@ -69,6 +84,8 @@ const setProfile=(value)=>{
               <div>e</div></button>
             </Link>
           </div>
+        </div>
+        
         </div>
         <div className='spot-container'>
           <div className='container'>
