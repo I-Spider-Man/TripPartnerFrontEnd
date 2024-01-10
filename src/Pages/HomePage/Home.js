@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect, createRef} from 'react'
 import vid from './pexels_videos_2096549 (1080p).mp4'
 import './Home.css'
 import EventComponent from '../../Components/Events/EventComponent'
@@ -11,20 +11,31 @@ function Home() {
   const setProfile = (value) => {
     setProfileAva(value);
   };
-  
-  const details = Tourist_Spot_Details.slice(0, 3);
-  console.log(details);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [event,setEvent]=useState({});
+  const [spot,setSpot]=useState({});
+  const eventDetails=Event_Details.slice(0,3);
+  const spotDetails = Tourist_Spot_Details.slice(0, 3);
+  const [currentEvent, setCurrentEvent] = useState(0);
+  const [currentSpot,setCurrentSpot]=useState(0);
+useEffect(()=>{
+  setEvent(eventDetails[currentEvent]);
+},[currentEvent]);
+useEffect(()=>{
+  setSpot(spotDetails[currentSpot])
+},[currentSpot])
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % 3);
+  const nextEvent = () => {
+    setCurrentEvent(currentEvent+1);
   };
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? 3 - 1 : prevIndex - 1
-    );
+const nextSpot=()=>{
+  setCurrentSpot(currentSpot+1);
+}
+  const prevEvent = () => {
+    setCurrentEvent(currentEvent-1);
   };
+  const prevSpot=()=>{
+    setCurrentSpot(currentSpot-1)
+  }
   return (
     <div className='home' >
       <div style={{ position: 'relative', width: '100%', height: '100%' }}>
@@ -50,14 +61,8 @@ function Home() {
           <p>Unlock the magic of travel! Immerse yourself in vibrant events at breathtaking tourist spots. From cultural festivals to culinary delights, join us for unforgettable experiences that go beyond sightseeing. Embrace the journey, forge global connections, and make every moment extraordinary. Explore. Connect. Celebrate.</p>
         </div>
         <div className="slider-container">
-        <button onClick={prevSlide}>Prev</button>
+        {currentEvent !==0 && <button onClick={prevEvent}>Prev</button>}
         <div className="slider">
-          {Event_Details.map((event, index) => (
-            <div
-              key={event.event_id}
-              className={index === currentIndex ? 'slide active' : 'slide'}
-            >
-              {console.log(event.event_discription)}
               <EventComponent
                 eventId={event.event_id}
                 eventName={event.event_name}
@@ -65,10 +70,8 @@ function Home() {
                 eventImage={event.event_image}
                 alt={event.image_alt}
               />
-            </div>
-          ))}
         </div>
-        <button onClick={nextSlide}>Next</button>
+        <button onClick={nextEvent}>Next</button>
       </div>
               <Link to='/EventsHomePage' style={{ textDecoration: 'none'}}>
                 <button style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column',textTransform:'uppercase',backgroundColor:'black',color:'whitesmoke' }}><div style={{ marginRight: '5px' }}>v</div>
@@ -88,9 +91,14 @@ function Home() {
             <h3>Popular Spots</h3>
             <p>Discover the allure of tourist spots like never before! Join us in celebrating the unique charm of each destination through captivating events. From cultural festivals to scenic adventures, these experiences redefine your travel. Embrace the extraordinary – explore, indulge, and make memories that last a lifetime. Your journey begins here.</p>
           </div>
+          <div className="slider-container">
+        {currentSpot !==0 && <button onClick={prevSpot}>Prev</button>}
+        <div className="slider">
+        <TouristSpotComponent spotId={spot.spot_id} spotName={spot.spot_name} spotImage={spot.spot_image} spotDescription={spot.spot_description} spotAlt={spot.spot_name}/>
+        </div>
+        <button onClick={nextSpot}>Next</button>
+      </div>
           <div className='popular-hotspot-container'>
-              <TouristSpotComponent spotId={''} spotName={''} spotImage={''} spotDescription={''} spotAlt={''}/>
-            <div></div>
             <Link to='/TouristHomePage' style={{ textDecoration: 'none'}}>
               <button style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column',textTransform:'uppercase',backgroundColor:'black',color:'whitesmoke' }}><div style={{ marginRight: '5px' }}>v</div>
                 <div style={{ marginRight: '5px' }}>i</div>
