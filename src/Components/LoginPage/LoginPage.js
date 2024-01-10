@@ -43,7 +43,7 @@ function LoginPage({ onClose, onReturn }) {
     zIndex: 1000,
   };
   return (
-    <div className='login-page-overlay' onClick={onClose}>
+    <div className='login-page-overlay' style={{position:'absolute'}} onClick={onClose}>
       <div className="login-signup-container" onClick={(e)=> e.stopPropagation()}>
     <input type="checkbox" id="chk" aria-hidden="true" />
     <div className="login">

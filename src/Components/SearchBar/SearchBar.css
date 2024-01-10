@@ -4,11 +4,13 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  background: #2f3640;
+  background: #d3d4d6;
   border-radius: 50px;
   position: relative;
 }
-
+.searchBox input{
+  color: black;
+}
 .searchButton {
   color: white;
   position: absolute;
