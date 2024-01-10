@@ -11,7 +11,7 @@
   box-shadow: 7px 7px 10px 3px #24004628;
 }
 .reg .reg-input{
-  width: 251px;
+  width: 315px;
   height: 30px;
   background: #e0dede;
   padding: 10px;
@@ -23,10 +23,10 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding: 24px;
+  padding: 40px 0px;
   align-items: center;
 }
-#chk {
+#chk,#chk2 {
   display: none;
 }
 .reg-form .verify-button{
@@ -114,17 +114,20 @@
 
 #chk:checked ~ .register label {
   transform: scale(1);
-  margin: 10% 0 5%;
+  margin: 5% 0 5%;
 }
 
 #chk:checked ~ .login label {
   transform: scale(.6);
-  margin: 5% 0 5%;
-}   
+  margin: 5% 0 9%;
+}  
+
+
+
 .pass-detail-container {
   position: absolute;
-  right: 30px;
-  top: 330px;
+  right: 24px;
+  top: 295px;
   transform: translateY(-204%) translateX(-151%);
   tab-size: 30px;
   color:red;

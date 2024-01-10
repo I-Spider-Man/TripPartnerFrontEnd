@@ -5,7 +5,7 @@ import './OrganizerHome.css'
 function OrganizerHome() {
   return (
     <div className='organizerHomeTop'>
-      <div className='nav'><NavBar/></div>
+      
       <div className='org'><Organizer/></div>
     </div>
   )

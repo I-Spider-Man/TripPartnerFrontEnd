@@ -28,9 +28,8 @@ const TouristSpotHomePage = () => {
     const shuffledDetails = shuffleArray(Tourist_Spot_Details.slice(0, 5));
 
   return (
-    <section className="main container section" style={backgroundImageStyle}>
-        <div className="nav-container" ><NavBar/></div>
-        <div className="secTitle" style={{marginTop:'15%'}}>
+    <section className="main container section" >
+        <div className="secTitle">
             <h1 data-aos='fade-right' className="title">
                 Most Visited Destinations...
             </h1>
@@ -118,7 +117,6 @@ const TouristSpotHomePage = () => {
  
             <p>More places to be added soon</p>
         </div>
-        <Footer/>
     </section>
   )
 }

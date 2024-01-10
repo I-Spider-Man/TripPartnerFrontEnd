@@ -16,11 +16,11 @@ const backgroundImageStyle = {
   padding: 0,      // Remove default padding
 };
   return (
-    <div className='front-page' style={backgroundImageStyle}><div className='nav-container'><NavBar/></div>
+    <div className='front-page'>
     <div className='event-page' style={{minHeight:'100vh'}}>
     
-    <div className='content-container' style={{display:'flex', alignItems:'center', justifyContent:'center',height:'65vh'}}>
-      <div className='event-content' style={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'center', marginTop:'10%'}}>
+    <div className='content-container' style={{display:'flex', alignItems:'center', justifyContent:'center',height:'100vh'}}>
+      <div className='event-content' style={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'center'}}>
     {event ? (
           <><img src={event.event_image} alt={event.image_alt} />
           <div className='content-details'>
@@ -42,8 +42,6 @@ const backgroundImageStyle = {
 
     </div></div>
     
-    </div><div>
-      <Footer/>
     </div>
     </div>
     
