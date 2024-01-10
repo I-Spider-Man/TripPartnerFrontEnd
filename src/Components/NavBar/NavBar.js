@@ -22,19 +22,12 @@ function NavBar({profileAvatar}) {
           <img className='Trip-Logo' src="https://trip-partner.s3.eu-north-1.amazonaws.com/MicrosoftTeams-image+(5).png"/>
         </Link>
       </div>
-      <div className='menu-list' >
-        <div className='nav'>
-          <Link to="/EventsHomePage">
-            <button>Events</button>
-          </Link>
+      <div className='menu-list' style={{justifyContent:'center',alignItems:'center'}}>
+        <div>
+          <Link to='/EventsHomePage'><span>Events</span></Link>
         </div>
-        <div className='nav'>
-          <Link to="/TouristHomePage">
-            <button>Hot Spots</button>
-          </Link>
-        </div>
-      </div>
-      <div className='search-container' >
+        <div><Link to='/TouristHomePage'><span>Tourist Spots</span></Link></div>
+        <div className='search-container' >
           <SearchBar/>
         </div>
         <div className='login-signup-outline' onClick={login} style={{
@@ -46,6 +39,8 @@ function NavBar({profileAvatar}) {
       }}><img src={profileAva} style={{ 
 
       objectFit:'scale-down'}}></img> </div>
+      </div>
+      
       
       {visible && <LoginPage onClose={() => {setvisible(false)}} onReturn={childValue}/>}
     </div>
