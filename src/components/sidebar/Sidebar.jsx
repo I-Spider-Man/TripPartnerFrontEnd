@@ -51,10 +51,13 @@ const Sidebar = () => {
             <CreditCardIcon className="icon" />
             <span>Organzier</span>
           </li>
-          <li>
+          <Link to="/touristspots" style={{textDecoration: "none"}}>
+            <li>
             <LocalShippingIcon className="icon" />
-            <span>Hotspots</span>
-          </li>
+            <span>Tourist Spots</span>
+            </li>
+          </Link>
+          
           <p className="title">USEFUL</p>
           <li>
             <InsertChartIcon className="icon" />

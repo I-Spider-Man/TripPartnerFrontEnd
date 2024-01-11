@@ -4,20 +4,30 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
-
+import { Link } from "react-router-dom";
+import { fetchEventsData, fetchGroupsData, fetchUserData } from "../../DataStorage"; 
+import { useEffect, useState } from "react";
+import { useScrollTrigger } from "@mui/material";
 const Widget = ({ type }) => {
   let data;
-
-  //temporary
-  const amount = 100;
-  const diff = 20;
-
+  const[count,setcount]=useState(0);
+  
   switch (type) {
     case "user":
+      const fetchUsers=async()=>{
+          try{
+            const users=await fetchUserData();
+            setcount(users.length);
+          }catch(error){
+            console.log(error);
+          }
+      }
+      fetchUsers();
       data = {
         title: "ACTIVE_USERS",
-        isMoney: false,
         link: "See all users",
+        actualLink:'/users',
+        count: count,
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -29,11 +39,17 @@ const Widget = ({ type }) => {
         ),
       };
       break;
-    case "order":
+
+
+
+    case "organizers":
+      
       data = {
         title: "Organizer",
         isMoney: false,
         link: "View all Organizers",
+        actualLink:'/orders',
+        count: count,
         icon: (
           <ShoppingCartOutlinedIcon
             className="icon"
@@ -45,11 +61,27 @@ const Widget = ({ type }) => {
         ),
       };
       break;
-    case "earning":
+
+
+
+
+    case "events":
+
+    const fetchEvents=async()=>{
+      try{
+        const users=await fetchEventsData();
+        setcount(users.length);
+      }catch(error){
+        console.log(error);
+      }
+  }
+  fetchEvents();
       data = {
         title: "Events",
         isMoney: true,
         link: "View all events",
+        count: count,
+        actualLink:'/events',
         icon: (
           <MonetizationOnOutlinedIcon
             className="icon"
@@ -58,11 +90,25 @@ const Widget = ({ type }) => {
         ),
       };
       break;
-    case "balance":
+
+
+
+    case "groups":
+      const fetchGroups=async()=>{
+        try{
+          const users=await fetchGroupsData();
+          setcount(users.length);
+        }catch(error){
+          console.log(error);
+        }
+    }
+    fetchGroups();
       data = {
         title: "Groups",
         isMoney: true,
         link: "See details",
+        actualLink:'/groups',
+        count: count,
         icon: (
           <AccountBalanceWalletOutlinedIcon
             className="icon"
@@ -83,9 +129,9 @@ const Widget = ({ type }) => {
       <div className="left">
         <span className="title">{data.title}</span>
         <span className="counter">
-          {amount}
+          {data.count}
         </span>
-        <span className="link">{data.link}</span>
+        <Link to={data.actualLink}><span className="link">{data.link}</span></Link>
       </div>
       <div className="right">
         <div className="percentage positive">

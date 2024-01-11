@@ -6,8 +6,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
+import { fetchActiveGroupsData } from "../../DataStorage";
+import { useEffect, useState } from "react";
 const List = () => {
+  const [activeGrp,setActiveGrp]=useState();
+  useEffect(async()=>{
+    const response=await fetchActiveGroupsData();
+    setActiveGrp(response);
+  })
+  
   const rows = [
     {
       id: 1143155,
@@ -65,7 +72,7 @@ const List = () => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell className="tableCell">Event ID</TableCell>
+            <TableCell className="tableCell">Group ID</TableCell>
             <TableCell className="tableCell">Active Events</TableCell>
             <TableCell className="tableCell">Organizer</TableCell>
             <TableCell className="tableCell">Till Date</TableCell>
@@ -74,9 +81,9 @@ const List = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {activeGrp ? <>{activeGrp.map((row) => (
             <TableRow key={row.id}>
-              <TableCell className="tableCell">{row.id}</TableCell>
+              <TableCell className="tableCell">{row.eventId}</TableCell>
               <TableCell className="tableCell">
                 <div className="cellWrapper">
                   <img src={row.img} alt="" className="image" />
@@ -91,7 +98,10 @@ const List = () => {
                 <span className={`status ${row.status}`}>{row.status}</span>
               </TableCell>
             </TableRow>
-          ))}
+          ))}</> :
+        <span>no data</span>
+        }
+          
         </TableBody>
       </Table>
     </TableContainer>
