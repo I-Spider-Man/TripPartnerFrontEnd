@@ -1,5 +1,10 @@
 import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import TourIcon from '@mui/icons-material/Tour';
+import EventIcon from '@mui/icons-material/Event';
+import JoinInnerIcon from '@mui/icons-material/JoinInner';
+import JoinFullIcon from '@mui/icons-material/JoinFull';
+import GroupsIcon from '@mui/icons-material/Groups';
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
@@ -41,19 +46,30 @@ const Sidebar = () => {
               <span>Users</span>
             </li>
           </Link>
+          <li>
+            <JoinInnerIcon className="icon" />
+            <span>Organzier</span>
+          </li>
+          <li>
+            <JoinFullIcon className="icon" />
+            <span>Participants</span>
+          </li>
+          <li>
+            <GroupsIcon className="icon" />
+            <span>Groups</span>
+          </li>
           <Link to="/products" style={{ textDecoration: "none" }}>
             <li>
-              <StoreIcon className="icon" />
+              <EventIcon className="icon" />
               <span>Events</span>
             </li>
           </Link>
-          <li>
-            <CreditCardIcon className="icon" />
-            <span>Organzier</span>
-          </li>
+
+          
+
           <Link to="/touristspots" style={{textDecoration: "none"}}>
             <li>
-            <LocalShippingIcon className="icon" />
+            <TourIcon className="icon" />
             <span>Tourist Spots</span>
             </li>
           </Link>

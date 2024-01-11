@@ -1,8 +1,8 @@
 import "./widget.scss";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import GroupsIcon from '@mui/icons-material/Groups';
+import EventIcon from '@mui/icons-material/Event';
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import { Link } from "react-router-dom";
 import { fetchEventsData, fetchGroupsData, fetchUserData } from "../../DataStorage"; 
@@ -51,7 +51,7 @@ const Widget = ({ type }) => {
         actualLink:'/orders',
         count: count,
         icon: (
-          <ShoppingCartOutlinedIcon
+          <GroupsIcon
             className="icon"
             style={{
               backgroundColor: "rgba(218, 165, 32, 0.2)",
@@ -83,7 +83,7 @@ const Widget = ({ type }) => {
         count: count,
         actualLink:'/events',
         icon: (
-          <MonetizationOnOutlinedIcon
+          <EventIcon
             className="icon"
             style={{ backgroundColor: "rgba(0, 128, 0, 0.2)", color: "green" }}
           />
@@ -110,7 +110,7 @@ const Widget = ({ type }) => {
         actualLink:'/groups',
         count: count,
         icon: (
-          <AccountBalanceWalletOutlinedIcon
+          <GroupsIcon
             className="icon"
             style={{
               backgroundColor: "rgba(128, 0, 128, 0.2)",
