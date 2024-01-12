@@ -15,59 +15,7 @@ const List = () => {
     setActiveGrp(response);
   })
   
-  const rows = [
-    {
-      id: 1143155,
-      product: "Stand_up Comedy",
-      img: "https://m.media-amazon.com/images/I/81bc8mA3nKL._AC_UY327_FMwebp_QL65_.jpg",
-      customer: "Akash",
-      date: "10 Feb",
-      amount: 10,
-      method: "Cash on Delivery",
-      status: "Active",
-    },
-    {
-      id: 2235235,
-      product: "Candle light",
-      img: "https://m.media-amazon.com/images/I/31JaiPXYI8L._AC_UY327_FMwebp_QL65_.jpg",
-      customer: "Alfred",
-      date: "02 Nov",
-      amount: 20,
-      method: "Online Payment",
-      status: "Inactive",
-    },
-    {
-      id: 2342353,
-      product: "Sing on Fire",
-      img: "https://m.media-amazon.com/images/I/71kr3WAj1FL._AC_UY327_FMwebp_QL65_.jpg",
-      customer: "Shivanshu",
-      date: "1 March",
-      amount: 35,
-      method: "Cash on Delivery",
-      status: "Inactive",
-    },
-    {
-      id: 2357741,
-      product: "Rock the beat",
-      img: "https://m.media-amazon.com/images/I/71wF7YDIQkL._AC_UY327_FMwebp_QL65_.jpg",
-      customer: "Jane Smith",
-      date: "17 June",
-      amount: 92,
-      method: "Online",
-      status: "Active",
-    },
-    {
-      id: 2342355,
-      product: "Web develop seminar",
-      img: "https://m.media-amazon.com/images/I/81hH5vK-MCL._AC_UY327_FMwebp_QL65_.jpg",
-      customer: "Bhavya",
-      date: "1 March",
-      amount: 20,
-      method: "Online",
-      status: "Active",
-    },
-  ];
-  return (
+   return (
     <TableContainer component={Paper} className="table">
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>

@@ -42,28 +42,6 @@ const Widget = ({ type }) => {
 
 
 
-    case "organizers":
-      
-      data = {
-        title: "Organizer",
-        isMoney: false,
-        link: "View all Organizers",
-        actualLink:'/orders',
-        count: count,
-        icon: (
-          <GroupsIcon
-            className="icon"
-            style={{
-              backgroundColor: "rgba(218, 165, 32, 0.2)",
-              color: "goldenrod",
-            }}
-          />
-        ),
-      };
-      break;
-
-
-
 
     case "events":
 
@@ -107,7 +85,7 @@ const Widget = ({ type }) => {
         title: "Groups",
         isMoney: true,
         link: "See details",
-        actualLink:'/groups',
+        actualLink:'/group',
         count: count,
         icon: (
           <GroupsIcon
@@ -131,7 +109,7 @@ const Widget = ({ type }) => {
         <span className="counter">
           {data.count}
         </span>
-        <Link to={data.actualLink}><span className="link">{data.link}</span></Link>
+        <Link to={data.actualLink} style={{textDecoration:"none"}}><span className="link">{data.link}</span></Link>
       </div>
       <div className="right">
         <div className="percentage positive">

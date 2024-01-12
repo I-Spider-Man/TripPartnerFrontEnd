@@ -3,10 +3,11 @@ import { fetchGroupsData } from '../../DataStorage';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import { DataGrid } from '@mui/x-data-grid';
-
+import { Button, Divider, Stack } from '@mui/material';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
 function Groups() {
   const [groupData, setGroupData] = useState([]);
-
   useEffect(() => {
     const fetchGroup = async () => {
       try {
@@ -44,7 +45,9 @@ function Groups() {
     },
     { field: 'participantsLimit', headerName: 'Participant Limit',width:150},
     { field: 'participantsCount', headerName: 'Participant Count',width:150 },
-    { field: 'groupStatus', headerName: 'Group Status' },
+    { field: 'groupStatus', headerName: 'Group Status' ,renderCell:(params)=>{
+      <span className={`status ${params}`}>params</span>
+    } },
   ];
 
   return (
@@ -54,6 +57,7 @@ function Groups() {
         <div className="listContainer">
           <Navbar />
           <div className="datatable">
+          
             <DataGrid
               className="datagrid"
               rows={groupData} 
@@ -63,6 +67,7 @@ function Groups() {
               checkboxSelection
             />
           </div>
+          
         </div>
       </div>
     </div>

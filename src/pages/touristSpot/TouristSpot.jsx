@@ -5,8 +5,11 @@ import Navbar from "../../components/navbar/Navbar"
 import { fetchTouristSpotsData } from '../../DataStorage';
 import { spotDelete } from '../../components/DeleteStorage';
 import { Link } from 'react-router-dom';
+import { Button, Stack } from '@mui/material';
+import New from '../new/New';
 function TouristSpot() {
     const [spotRows,setSpotRows]=useState([]);
+    const [visible,setVisible]=useState(false);
     useEffect(()=>{
         const fetchSpots=async()=>{
         try{
@@ -15,8 +18,7 @@ function TouristSpot() {
             ...spot,
             id: spot.spotId,
           }));
-        setSpotRows(rowsWithId); 
-        console.log(spotRows);
+        setSpotRows(rowsWithId);
         }
         catch(error){
             console.log(error);
@@ -46,6 +48,7 @@ function TouristSpot() {
           }
         }
       };
+      
       const actionColumn = [
         {
           field: "action",
@@ -71,7 +74,11 @@ function TouristSpot() {
       <Sidebar/>
       <div className="listContainer">
         <Navbar/>
-        <div className="datatable">
+        <div className="datatable" style={{display:'flex',flexDirection:'column',gap:'10px'}}>
+        <Stack direction="row"  spacing={{ xs: 1, sm: 2, md: 1 }}>
+            <Link to="/touristspots/newSpot"><Button variant="contained" >Add Spot</Button></Link>
+            <Button variant="outlined">Edit Spot</Button>
+          </Stack>
         <DataGrid
             className="datagrid"
             rows={spotRows}
@@ -81,6 +88,10 @@ function TouristSpot() {
             checkboxSelection
         />
     </div>
+    <div>
+      
+    </div>
+      
       </div>
     </div>
     </div>

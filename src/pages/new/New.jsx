@@ -3,10 +3,42 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
-
-const New = ({ inputs, title }) => {
+import axios from "axios";
+import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
+const New = ({ inputs, title, updateGrid }) => {
   const [file, setFile] = useState("");
-
+  const [userData, setUserData] = useState({});
+ 
+  const handleInputChange = (inputId, value) => {
+    setUserData((prevData) => ({
+      ...prevData,
+      [inputId]: value,
+    }));
+  };
+ 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+    handleInputChange("image", e.target.files[0]);
+  };
+ 
+  const handleSendClick = async (e) => {
+    e.preventDefault();
+ 
+    try {
+      const response = await axios.post("http://localhost:8080/Admin/touristSpot", userData);
+      const newUser = response.data;
+      updateGrid(newUser);
+      setFile("");
+      setUserData({
+        image: null,
+      });
+ 
+      console.log("User Data sent successfully:", newUser);
+    } catch (error) {
+      console.error("Error sending user data:", error);
+    }
+  };
+ 
   return (
     <div className="new">
       <Sidebar />
@@ -21,13 +53,14 @@ const New = ({ inputs, title }) => {
               src={
                 file
                   ? URL.createObjectURL(file)
-                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+                  : "https://trip-partner.s3.eu-north-1.amazonaws.com/login_signUp.svg"
               }
               alt=""
             />
           </div>
           <div className="right">
             <form>
+
               <div className="formInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
@@ -35,17 +68,26 @@ const New = ({ inputs, title }) => {
                 <input
                   type="file"
                   id="file"
-                  onChange={(e) => setFile(e.target.files[0])}
+                  onChange={handleFileChange}
                   style={{ display: "none" }}
+                  required
                 />
               </div>
+ 
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
-                  <label>{input.label}</label>
-                  <input type={input.type} placeholder={input.placeholder} />
+                  <label>{input.header}</label>
+                  <input
+                    type={input.type}
+                    placeholder={input.placeholder}
+                    onChange={(e) => handleInputChange(input.label, e.target.value)}
+                    required
+                  />
                 </div>
               ))}
-              <button>Send</button>
+
+              <button onClick={handleSendClick}>Send</button>
+
             </form>
           </div>
         </div>
@@ -53,5 +95,5 @@ const New = ({ inputs, title }) => {
     </div>
   );
 };
-
+ 
 export default New;

@@ -1,3 +1,28 @@
+export const spotInputs=[
+  {
+    id:1,
+    label:"spotName",
+    header:"Spot Name",
+    type:"text",
+    placeholder:"Taj Mahal"
+  },
+  {
+    id:2,
+    label:"location",
+    header:"Location",
+    type:"text",
+    placeholder:"Agra, India"
+  },
+  {
+    id:3,
+    label:"description",
+    header:"Description",
+    type:"text",
+    placeholder:"A stunning white marble mausoleum built by the Mughal emperor Shah Jahan."
+  },
+]
+
+
 export const userInputs = [
     {
       id: 1,

@@ -5,7 +5,7 @@ import List from "./pages/list/List";
 import Single from "./pages/single/Single";
 import New from "./pages/new/New";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { productInputs, userInputs } from "./formSource";
+import { productInputs, spotInputs, userInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
@@ -43,6 +43,10 @@ function App() {
             </Route>
             <Route path="touristspots">
               <Route index element={<TouristSpot/>}/>
+              <Route
+                path="newSpot"
+                element={<New inputs={spotInputs} title="Add New Events" />}
+              />
               <Route path=":spotId" element={<Single />} />
             </Route>
             <Route path="group">
