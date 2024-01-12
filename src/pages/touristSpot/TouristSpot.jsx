@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DataGrid } from "@mui/x-data-grid";
 import Sidebar from "../../components/sidebar/Sidebar"
 import Navbar from "../../components/navbar/Navbar"
-import Datatable from "../../components/datatable/Datatable"
 import { fetchTouristSpotsData } from '../../DataStorage';
 import { spotDelete } from '../../components/DeleteStorage';
 import { Link } from 'react-router-dom';
@@ -31,7 +30,7 @@ function TouristSpot() {
         {
           field: "spotName",
           headerName: "spot",
-          width: 230,
+          width: 850,
         },
                
       ];
@@ -51,7 +50,7 @@ function TouristSpot() {
         {
           field: "action",
           headerName: "Action",
-          width: 200,
+          width: 150,
           renderCell: (params) => {
             return (
               <div className="cellAction">

@@ -10,6 +10,8 @@ import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import TouristSpot from "./pages/touristSpot/TouristSpot";
+import { Group } from "@mui/icons-material";
+import Groups from "./pages/group/Groups";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -42,6 +44,9 @@ function App() {
             <Route path="touristspots">
               <Route index element={<TouristSpot/>}/>
               <Route path=":spotId" element={<Single />} />
+            </Route>
+            <Route path="group">
+              <Route index element={<Groups/>}/>
             </Route>
           </Route>
         </Routes>

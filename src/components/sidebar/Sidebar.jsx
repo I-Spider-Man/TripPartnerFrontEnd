@@ -54,10 +54,13 @@ const Sidebar = () => {
             <JoinFullIcon className="icon" />
             <span>Participants</span>
           </li>
+          <Link to="/group" style={{textDecoration:"none"}}>
           <li>
             <GroupsIcon className="icon" />
             <span>Groups</span>
           </li>
+          </Link>
+          
           <Link to="/products" style={{ textDecoration: "none" }}>
             <li>
               <EventIcon className="icon" />
