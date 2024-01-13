@@ -35,8 +35,8 @@ function Groups() {
       width:200,
       renderCell: (params) => (
         <div>
-          {params.value ? (
-            <>{params.value}</>
+          {params.row.eventName ? (
+            <>{params.row.eventName}</>
           ) : (
             <>{params.row.spotName}</>
           )}
@@ -45,9 +45,10 @@ function Groups() {
     },
     { field: 'participantsLimit', headerName: 'Participant Limit',width:150},
     { field: 'participantsCount', headerName: 'Participant Count',width:150 },
-    { field: 'groupStatus', headerName: 'Group Status' ,renderCell:(params)=>{
-      <span className={`status ${params}`}>params</span>
-    } },
+    { field: 'groupStatus', headerName: 'Group Status', renderCell: (params) => (
+      <span className={`status ${params.value}`}>{params.value}</span>
+    )},
+    
   ];
 
   return (

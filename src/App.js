@@ -12,6 +12,7 @@ import { DarkModeContext } from "./context/darkModeContext";
 import TouristSpot from "./pages/touristSpot/TouristSpot";
 import { Group } from "@mui/icons-material";
 import Groups from "./pages/group/Groups";
+import Organizers from "./pages/Organzier/Organizers";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -47,6 +48,11 @@ function App() {
                 path="newSpot"
                 element={<New inputs={spotInputs} title="Add New Events" />}
               />
+              <Route path=":spotId" element={<Single />} />
+            </Route>
+            <Route path="organizer">
+              <Route index element={<Organizers/>}/>
+              
               <Route path=":spotId" element={<Single />} />
             </Route>
             <Route path="group">

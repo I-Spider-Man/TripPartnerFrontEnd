@@ -6,9 +6,6 @@ import JoinInnerIcon from '@mui/icons-material/JoinInner';
 import JoinFullIcon from '@mui/icons-material/JoinFull';
 import GroupsIcon from '@mui/icons-material/Groups';
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
-import StoreIcon from "@mui/icons-material/Store";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -46,10 +43,13 @@ const Sidebar = () => {
               <span>Users</span>
             </li>
           </Link>
+          <Link to="/organizer" style={{textDecoration:"none"}}> 
           <li>
             <JoinInnerIcon className="icon" />
             <span>Organzier</span>
           </li>
+          </Link>
+          
           <li>
             <JoinFullIcon className="icon" />
             <span>Participants</span>

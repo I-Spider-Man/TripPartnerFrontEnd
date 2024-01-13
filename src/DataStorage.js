@@ -44,6 +44,7 @@ export const fetchInavtiveEventsData = async () => {
 export const fetchGroupsData = async () => {
     try {
       const response = await axios.get("http://localhost:8080/Admin/groups");
+      
       return response.data;
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -72,9 +73,19 @@ export const fetchInActiveGroupsData = async () => {
 };
 
 export const fetchOrganziersData = async () => {
-    try {
-      const response = await axios.get("http://localhost:8080/Admin/InActiveGroups");
-      return response.data;
+  let result;  
+  try {
+      const response = await axios.get("http://localhost:8080/Admin/organizers");
+      const organizerWithUserData=await Promise.all(
+         response.data.map(async(organizer)=>{
+        const response1=await axios.get(`http://localhost:8080/Admin/users/${organizer.userId}`)
+        return {
+          ...organizer,
+          userData:response1.data,
+        };
+      })
+      );
+      return organizerWithUserData;
     } catch (error) {
       console.error("Error fetching data:", error);
       return [];

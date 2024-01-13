@@ -26,7 +26,7 @@ function TouristSpot() {
     }
     fetchSpots();
     },[])
-    
+
     const eventColumns = [
         { field: "spotId", headerName: "ID", width: 70 },
         {
@@ -34,7 +34,7 @@ function TouristSpot() {
           headerName: "spot",
           width: 850,
         },
-               
+
       ];
 
       const handleDelete = async (id) => {
@@ -48,7 +48,7 @@ function TouristSpot() {
           }
         }
       };
-      
+
       const actionColumn = [
         {
           field: "action",
@@ -89,9 +89,9 @@ function TouristSpot() {
         />
     </div>
     <div>
-      
+
     </div>
-      
+
       </div>
     </div>
     </div>

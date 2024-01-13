@@ -4,13 +4,18 @@ import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
 import axios from "axios";
-import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
-const New = ({ inputs, title, updateGrid }) => {
+import { Button } from "@mui/material";
+
+const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
-  const [userData, setUserData] = useState({});
+  const [spotData, setspotData] = useState({
+    spotName:"",
+    location:"",
+    description:"",
+  });
  
   const handleInputChange = (inputId, value) => {
-    setUserData((prevData) => ({
+    setspotData((prevData) => ({
       ...prevData,
       [inputId]: value,
     }));
@@ -22,18 +27,22 @@ const New = ({ inputs, title, updateGrid }) => {
   };
  
   const handleSendClick = async (e) => {
-    e.preventDefault();
+    e.preventDefault(e);
  
     try {
-      const response = await axios.post("http://localhost:8080/Admin/touristSpot", userData);
-      const newUser = response.data;
-      updateGrid(newUser);
+      if(Object.values(spotData).some(value=>!value)){
+        return alert("Add all details");
+      }
+      console.log(spotData);
+      const response = await axios.post("http://localhost:8080/Admin/touristSpot", spotData);
+      const newSpot = response.data;
       setFile("");
-      setUserData({
+      setspotData({
         image: null,
       });
- 
-      console.log("User Data sent successfully:", newUser);
+      console.log("User Data sent successfully:", newSpot);
+      alert("Tourist spot "+spotData.spotName+" added successfully.");
+      window.location.reload();
     } catch (error) {
       console.error("Error sending user data:", error);
     }
@@ -86,7 +95,7 @@ const New = ({ inputs, title, updateGrid }) => {
                 </div>
               ))}
 
-              <button onClick={handleSendClick}>Send</button>
+              <Button variant="contained" onClick={handleSendClick}>Send</Button>
 
             </form>
           </div>
