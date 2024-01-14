@@ -1,0 +1,92 @@
+/* Improved CSS */
+
+.home {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.container p {
+  color: white;
+}
+
+.home button {
+  font-family: "Poppins-Medium", Helvetica;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  height: 3rem; /* Corrected unit */
+  width: 100%;
+  border-bottom: 3px solid white; /* Added border style */
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.body .events-container,
+.body .spot-container,
+.popular-event-container,
+.popular-hotspot-container {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.body .events-container p,
+.body .spot-container p,
+.popular-event-container p,
+.popular-hotspot-container p {
+  padding: 10px;
+}
+
+.header-content {
+  display: flex;
+  text-transform: uppercase;
+  align-items: center;
+  justify-content: center;
+  font-weight: 300;
+  margin-top: 25%;
+  font-size: 4rem;
+  color: white;
+  font-family: fantasy;
+}
+
+.container-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: aliceblue;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  letter-spacing: 2px;
+  font-family: "Poppins-Medium", Helvetica;
+  transition: opacity 0.25s;
+  z-index: 2;
+}
+
+.container h3 {
+  text-transform: uppercase;
+  color: rgb(49, 101, 247);
+  font-size: 24px;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: center;
+}

@@ -49,6 +49,7 @@ function LoginPage({ onClose, onReturn }) {
     <div className="login">
       {!isforgotPassword ? (<><form className="login-form" onSubmit={handleSubmit}>
         <label htmlFor="chk" aria-hidden="true">Log in</label>
+        
         <input
           className="login-input"
           type="email"
@@ -66,7 +67,7 @@ function LoginPage({ onClose, onReturn }) {
         <button type='submit' >Log in</button>
       </form>
       </>) : (<><form className='forgot-form'>
-      <label htmlFor="chk" aria-hidden="true">Forgot password</label>
+      <label >Forgot password</label>
         <input
           className="login-input"
           type="email"
@@ -136,8 +137,8 @@ function LoginPage({ onClose, onReturn }) {
           />
           <button className='verify-button'
           style={{ position: 'absolute',
-          right: '5px',
-          top: '50%',
+          right: '-4px',
+          top: '50.6%',
           transform: 'translateY(-204%) translateX(-151%)', tabSize: "30px" }} 
           // onClick={validateEmail}
           disabled={!userEmail.trim()}

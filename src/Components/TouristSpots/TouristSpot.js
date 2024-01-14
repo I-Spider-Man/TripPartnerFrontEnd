@@ -17,9 +17,8 @@ const backgroundImageStyle = {
 };
   return (
     <div className='front-page' style={backgroundImageStyle}>
-       <div className='nav-container'><NavBar/></div> 
        <div className='spot-page' style={{minHeight:'100vh'}}>
-        <div className='content-container' style={{display:'flex', alignItems:'center', justifyContent:'center',height:'80vh'}}>
+        <div className='content-container' style={{display:'flex', alignItems:'center', justifyContent:'center',height:'100vh'}}>
           <div className='spot-content' style={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'center'}}>
     {spot ? (
           <><img src={spot.spot_image} alt={spot.spot_alt} />
@@ -39,8 +38,6 @@ const backgroundImageStyle = {
         )}
     </div></div>
     
-    </div><div>
-      <Footer/>
     </div>
     </div>
   );
