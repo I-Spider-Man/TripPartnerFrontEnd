@@ -10,14 +10,7 @@ import Event_Details from '../Files/Event_Details'
 
 
 const EventsHomePage = () => {
-    const backgroundImageStyle = {
-        backgroundImage: `url('https://trip-partner.s3.eu-north-1.amazonaws.com/pexels-kamizzle-15747770+(1)+(1).jpg')`,
-        backgroundSize: 'fit',
-        backgroundPosition: 'center',
-        height: '100%', // Adjust this based on your design
-        margin: 0,       // Remove default margin
-        padding: 0,      // Remove default padding
-      };
+    
     function shuffleArray(array) {
         let shuffledArray = [...array];
         for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -50,7 +43,7 @@ const EventsHomePage = () => {
                                 <img src={event_image} alt={event_name} />
                             </div>
  
-                            <div className="cardInfo">
+                            <div className="cardInfo" style={{display:'flex', flexDirection:'column',gap:'5px', justifyContent:'center'}}>
                                 <h4 className="event_name">{event_name}</h4>
                                 <span className="continent flex">
                                 <HiOutlineLocationMarker className='icon' />

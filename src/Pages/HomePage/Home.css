@@ -7,9 +7,10 @@
   background-color: black;
   flex-direction: column;
   justify-content: center;
+  gap:20px
 }
 
-.container p {
+.events-container .container p, .spot-container .container p{
   color: white;
 }
 
@@ -23,7 +24,7 @@ video {
   object-fit: cover;
 }
 
-.header {
+.header-text {
   position: absolute;
   top: 0;
   height: 3rem; /* Corrected unit */
@@ -31,12 +32,7 @@ video {
   border-bottom: 3px solid white; /* Added border style */
 }
 
-.body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+
 
 .body .events-container,
 .body .spot-container,
@@ -51,7 +47,8 @@ video {
 .body .spot-container p,
 .popular-event-container p,
 .popular-hotspot-container p {
-  padding: 10px;
+  padding: 50px;
+  padding-right: 100px;
 }
 
 .header-content {
@@ -79,7 +76,10 @@ video {
   transition: opacity 0.25s;
   z-index: 2;
 }
-
+.events-container .container{
+  display: flex;
+  flex-direction: column;
+}
 .container h3 {
   text-transform: uppercase;
   color: rgb(49, 101, 247);
