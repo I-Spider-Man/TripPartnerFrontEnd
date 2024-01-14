@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './LoginPage.css';
 import UserProfileAva from '../Files/User_profile_avator';
-function LoginPage({ onClose, onReturn }) {
+function LoginPage({onClose, onReturn }) {
+  console.log("login rendered");
   const [otpInput, setOtpInput] = useState(false);
-  const [isPopupVisible, setPopupVisible] = useState(false);
   const [isforgotPassword,setForgotPassword]=useState(false);
   const [userPassword,setUserPassword]=useState("");
   const [userPasswordC,setUserPasswordC]=useState("");
@@ -15,9 +15,6 @@ function LoginPage({ onClose, onReturn }) {
   }
   const passwordRegx = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]{8,}$/ ;
   const isPasswordValid=passwordRegx.test(userPassword);
-  const closePopup = () => {
-    setPopupVisible(false);
-  };
   const handleSubmit=(e)=>{
     e.preventDefault();
     const randomIndex = Math.floor(Math.random() * UserProfileAva.length);
@@ -30,20 +27,11 @@ function LoginPage({ onClose, onReturn }) {
   const toggleOTPinput = () =>{
     setOtpInput(!otpInput);
   };
-  const popupStyle = {
-    display: 'block',
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    padding: '20px',
-    backgroundColor: '#fff',
-    border: '1px solid #ccc',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    zIndex: 1000,
-  };
+
   return (
-    <div className='login-page-overlay' style={{position:'absolute'}} onClick={onClose}>
+    <>
+    
+    <div className='login-page-overlay' style={{position:'absolute'}}>
       <div className="login-signup-container" onClick={(e)=> e.stopPropagation()}>
     <input type="checkbox" id="chk" aria-hidden="true" />
     <div className="login">
@@ -167,13 +155,9 @@ function LoginPage({ onClose, onReturn }) {
       </form>
     </div>
     </div>
-        {isPopupVisible && (
-          <div style={popupStyle}>
-            {/* <p>{errorMessage}</p> */}
-            <button onClick={closePopup}>Close</button>
-          </div>
-        )}
       </div>
+    </>
+    
   );
 }
 

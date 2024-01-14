@@ -28,8 +28,7 @@ video {
   position: absolute;
   top: 0;
   height: 3rem; /* Corrected unit */
-  width: 100%;
-  border-bottom: 3px solid white; /* Added border style */
+  width: 90%;
 }
 
 

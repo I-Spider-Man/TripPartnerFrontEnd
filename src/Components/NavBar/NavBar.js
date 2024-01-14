@@ -3,20 +3,42 @@ import { Link } from 'react-router-dom';
 import './NavBar.css';
 import '../styleguide.css';
 import LoginPage from '../LoginPage/LoginPage';
+import SearchBar from '../SearchBar/SearchBar';
+import Dialog from '@mui/material/Dialog';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Slide from '@mui/material/Slide';
 
-import SearchBar from '../SearchBar/SearchBar'
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+
 function NavBar({profileAvatar}) {
-
+  const [anchorEl, setAnchorEl] = useState(null);
   const [visible, setvisible] = useState(false);
+  const [login,setLogin]=useState(false);
+  const open = Boolean(anchorEl);
   const [profileAva,setProfileAva]=useState("https://trip-partner.s3.eu-north-1.amazonaws.com/login_signUp.svg");
-  const login = () => {
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose1 = () => {
+    setAnchorEl(null);
+  };
+  const log = () => {
     setvisible(!visible);
   }; 
+  const handleClose=()=>{
+    setvisible(false);
+  }
   const childValue=(value)=>{
     setProfileAva(value);
+    setLogin(true);
   };
   return (
-    <div className='nav-bar'>
+    <React.Fragment>
+      <div className='nav-bar'>
       <div className='Trip-Logo-Container' style={{display:'flex',alignItems:'center'}}>
         <Link to="/" style={{ textDecoration: "none", color: "black" }}>
           <img className='Trip-Logo' src="https://trip-partner.s3.eu-north-1.amazonaws.com/MicrosoftTeams-image+(5).png"/>
@@ -30,20 +52,43 @@ function NavBar({profileAvatar}) {
         <div className='search-container' >
           <SearchBar/>
         </div>
-        <div className='login-signup-outline' onClick={login} style={{
+        <div className='login-signup-outline' onClick={(event)=>{login ? handleClick(event):log()}} style={{
               backgroundColor: 'white',
-      backgroundPosition: 'center',
-      margin: 0,
-        padding: 0,
-        cursor:'pointer'
-      }}><img src={profileAva} style={{ 
-
+              backgroundPosition: 'center',
+              margin: 0,
+              padding: 0,
+              cursor:'pointer'
+      }}><img src={profileAva} style={{
       objectFit:'scale-down'}}></img> </div>
       </div>
+      {!login ? <Dialog
+        open={visible}
+        TransitionComponent={Transition}
+        onClose={handleClose}
+        sx={{ '& .MuiDialog-paper': { width: '34.2%', minHeight: '84%' ,padding:'0px 0px', borderRadius:'15px'} }}
+      >
+        <LoginPage onClose={()=>{handleClose()}} onReturn={childValue}/>
+      </Dialog>
+      :
+      <>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose1}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleClose1}>Profile</MenuItem>
+        <MenuItem onClick={handleClose1}>My account</MenuItem>
+        <MenuItem onClick={()=>{window.location.reload()}} >Logout</MenuItem>
+      </Menu>
+      </>}
       
-      
-      {visible && <LoginPage onClose={() => {setvisible(false)}} onReturn={childValue}/>}
     </div>
+    </React.Fragment>
+    
   );
 }
 

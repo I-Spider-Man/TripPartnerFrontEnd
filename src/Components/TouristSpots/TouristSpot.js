@@ -4,7 +4,16 @@ import './TouristSpot.css'
 import TouristSpotDetails from '../Files/TouristSpotDetails';
 import Footer from '../Footer/Footer';
 import Loading from '../LoadingComponents/Loading';
+import { useState } from 'react';
+import SpotsJoinPage from './SpotsJoinPage';
 function TouristSpot() {
+  const [open, setOpen] = useState(false);
+  const handleClickListItem = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  }
   const {spotId} = useParams();
 const spot=TouristSpotDetails.find(detail=>String(detail.spot_id)===String(spotId));
 const backgroundImageStyle = {
@@ -28,7 +37,7 @@ const backgroundImageStyle = {
             <label><strong>SPOT DESCRIPTION:</strong> {spot.spot_description}</label>
             
             <div className='join-organize-button'>
-              <button>Join</button>
+              <button onClick={handleClickListItem}>Join</button>
               <button>Organize</button>
             </div>
             </div>
@@ -36,7 +45,14 @@ const backgroundImageStyle = {
         ) : (
           <Loading/>
         )}
-    </div></div>
+    </div>
+    <SpotsJoinPage
+          id="ringtone-menu"
+          keepMounted
+          open={open}
+          onClose={handleClose}
+        />
+        </div>
     
     </div>
     </div>
