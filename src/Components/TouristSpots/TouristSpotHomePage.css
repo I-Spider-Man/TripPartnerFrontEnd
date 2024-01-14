@@ -79,6 +79,9 @@
   color: white;
   box-shadow: 1 4px 4px rgba(85, 85, 114, 0.549);
   transition: 0.3s ease;
+  .cardInfo{
+    color: wheat;
+  }
 }
 .main .secContent .singleDestination .imageDiv {
   height: 180px;

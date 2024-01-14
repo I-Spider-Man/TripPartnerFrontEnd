@@ -50,7 +50,7 @@ const TouristSpotHomePage = () => {
                                 <img src={spot_image} alt={spot_name} />
                             </div>
  
-                            <div className="cardInfo">
+                            <div className="cardInfo" style={{display:'flex', flexDirection:'column',gap:'5px', justifyContent:'center'}}>
                                 <h4 className="spot_name">{spot_name}</h4>
                                 <span className="continent flex">
                                 <HiOutlineLocationMarker className='icon' />
