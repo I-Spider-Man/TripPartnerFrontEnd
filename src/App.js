@@ -12,7 +12,7 @@ import BlogSlider from './Components/Events/Components-container';
 function App() {
   return (
     <Router>
-    <div className='page'>
+    <div className='page' style={{maxWidth:'100%'}}>
       <div className='header'><NavBar/></div>
       <div className='body' style={{minHeight:'100vh'}}><Routes>
         <Route path="/" element={<Home/>} />

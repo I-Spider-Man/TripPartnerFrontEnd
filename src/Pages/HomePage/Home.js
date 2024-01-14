@@ -7,6 +7,7 @@ import Event_Details from '../../Components/Files/Event_Details'
 import Tourist_Spot_Details from '../../Components/Files/TouristSpotDetails'
 import { Link } from 'react-router-dom'
 import FeaturedPost from '../../Components/FeaturedPost'
+import { Button } from '@mui/material'
 function Home() {
   const [profileAva, setProfileAva] = useState("https://trip-partner.s3.eu-north-1.amazonaws.com/login_signUp.svg");
   const setProfile = (value) => {
@@ -71,14 +72,14 @@ const nextSpot=()=>{
           <p>Unlock the magic of travel! Immerse yourself in vibrant events at breathtaking tourist spots. From cultural festivals to culinary delights, join us for unforgettable experiences that go beyond sightseeing. Embrace the journey, forge global connections, and make every moment extraordinary. Explore. Connect. Celebrate.</p>
         </div>
         <div className="slider-container" style={{padding:'20px'}}>
-        {currentEvent !==0 && <button onClick={prevEvent} style={{color:'white',padding:'5px'}}>Prev</button>}
+        {currentEvent !==0 && <Button variant='contained' onClick={prevEvent} style={{color:'white',padding:'5px'}}>Prev</Button>}
         <div className="slider">
-        <FeaturedPost key={post.event_id} post={post} />
+        <EventComponent key={post.event_id} post={event} />
         </div>
-        {(currentEvent < eventDetails.length-1) && <button onClick={nextEvent} style={{color:'white',padding:'5px'}}>Next</button>}
+        {(currentEvent < eventDetails.length-1) && <Button variant='contained' onClick={nextEvent} style={{color:'white',padding:'5px'}}>Next</Button>}
       </div>
               <Link to='/EventsHomePage' style={{ textDecoration: 'none'}}>
-                <button style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column',textTransform:'uppercase',backgroundColor:'black',color:'whitesmoke' }}><div style={{ marginRight: '5px' }}>v</div>
+                <Button variant='outlined' style={{ textDecoration: 'none', display: 'flex',alignItems:'center',justifyContent:'center', flexDirection: 'column',textTransform:'uppercase',backgroundColor:'black',color:'whitesmoke' }}><div style={{ marginRight: '5px' }}>v</div>
               <div style={{ marginRight: '5px' }}>i</div>
               <div style={{ marginRight: '5px' }}>e</div>
               <div style={{ marginRight: '5px' }}>w</div>
@@ -86,36 +87,44 @@ const nextSpot=()=>{
               <div>m</div>
               <div>o</div>
               <div>r</div>
-              <div>e</div></button>
+              <div>e</div></Button>
             </Link>
           </div>
         </div>
         <div className='spot-container' style={{padding:'60px'}}>
-          <div className='container'>
+        <div className='popular-hotspot-container'>
+          <div style={{display:'flex',flexDirection:'row',gap:'20px', alignItems:'center'}}>
+              <Link to='/TouristHomePage' style={{ textDecoration: 'none'}}>
+                            <Button variant='outlined' style={{ display: 'flex',alignItems:'center',justifyContent:'center', flexDirection: 'column',textTransform:'uppercase',color:'whitesmoke' }}><div style={{ marginRight: '5px' }}>v</div>
+                              <div style={{ marginRight: '5px' }}>i</div>
+                              <div style={{ marginRight: '5px' }}>e</div>
+                              <div style={{ marginRight: '5px' }}>w</div>
+                              <br />
+                              <div>m</div>
+                              <div>o</div>
+                              <div>r</div>
+                              <div>e</div>
+                            </Button>
+                          </Link>
+                        <div className="slider-container">
+                      {currentSpot !==0 && <Button variant='contained' onClick={prevSpot} style={{color:'white'}}>Prev</Button>}
+                      <div className="slider">
+                      <TouristSpotComponent key={post.event_id} post={spot} />
+                      </div>
+                      {(currentSpot < spotDetails.length-1) && <Button variant='contained' onClick={nextSpot} style={{color:'white'}}>Next</Button>}
+                    </div>
+          </div>
+          
+            
+          </div>
+          
+          
+          <div className='container' style={{display:'flex',flexDirection:'column',alignItems:'flex-end'}}>
             <h3>Popular Spots</h3>
             <p>Discover the allure of tourist spots like never before! Join us in celebrating the unique charm of each destination through captivating events. From cultural festivals to scenic adventures, these experiences redefine your travel. Embrace the extraordinary – explore, indulge, and make memories that last a lifetime. Your journey begins here.</p>
           </div>
-          <div className="slider-container">
-        {currentSpot !==0 && <button onClick={prevSpot} style={{color:'white'}}>Prev</button>}
-        <div className="slider">
-        <TouristSpotComponent spotId={spot.spot_id} spotName={spot.spot_name} spotImage={spot.spot_image} spotDescription={spot.spot_description} spotAlt={spot.spot_name}/>
-        </div>
-        {(currentSpot < spotDetails.length-1) && <button onClick={nextSpot} style={{color:'white'}}>Next</button>}
-      </div>
-          <div className='popular-hotspot-container'>
-            <Link to='/TouristHomePage' style={{ textDecoration: 'none'}}>
-              <button style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column',textTransform:'uppercase',backgroundColor:'black',color:'whitesmoke' }}><div style={{ marginRight: '5px' }}>v</div>
-                <div style={{ marginRight: '5px' }}>i</div>
-                <div style={{ marginRight: '5px' }}>e</div>
-                <div style={{ marginRight: '5px' }}>w</div>
-                <br />
-                <div>m</div>
-                <div>o</div>
-                <div>r</div>
-                <div>e</div>
-              </button>
-            </Link>
-          </div>
+          
+          
         </div>
         </div>
   

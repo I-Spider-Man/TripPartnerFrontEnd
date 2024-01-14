@@ -1,20 +1,19 @@
-import NavBar from '../NavBar/NavBar'
 import { useParams } from 'react-router-dom'
 import './Event.css'
 import Event_details from '../Files/Event_Details';
-import Footer from '../Footer/Footer';
 import Loading from '../LoadingComponents/ContentLoading';
+import { useState } from 'react';
+import EventsJoinPage from './EventsJoinPage';
 function Event() {
+  const [open, setOpen] = useState(false);
+  const handleClickListItem = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  }
   const {eventId} = useParams();
-const event=Event_details.find(detail=>String(detail.event_id)===String(eventId));
-const backgroundImageStyle = {
-  backgroundImage: `url('https://trip-partner.s3.eu-north-1.amazonaws.com/pexels-kamizzle-15747770+(1)+(1).jpg')`,
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-  height: '100%', // Adjust this based on your design
-  margin: 0,       // Remove default margin
-  padding: 0,      // Remove default padding
-};
+  const event=Event_details.find(detail=>String(detail.event_id)===String(eventId));
   return (
     <div className='front-page'>
     <div className='event-page' style={{minHeight:'100vh'}}>
@@ -29,7 +28,7 @@ const backgroundImageStyle = {
             <label><strong>EVENT DESCRIPTION:</strong> <p>{event.event_discription}</p></label>
             <label><strong>EVENT ADDRESS:</strong> <p>{event.event_address}</p></label>
             <div className='join-organize-button'>
-              <button>Join</button>
+              <button onClick={handleClickListItem}>Join</button>
               <button>Organize</button>
             </div>
             
@@ -39,8 +38,12 @@ const backgroundImageStyle = {
         ) : (
           <Loading/>
         )}
-
-    </div></div>
+        </div><EventsJoinPage
+          id="ringtone-menu"
+          keepMounted
+          open={open}
+          onClose={handleClose}
+        /></div>
     
     </div>
     </div>
@@ -48,4 +51,4 @@ const backgroundImageStyle = {
   );
 }
 
-export default Event;
+export default Event
