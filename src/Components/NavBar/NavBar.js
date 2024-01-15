@@ -33,7 +33,8 @@ function NavBar({profileAvatar}) {
     setvisible(false);
   }
   const childValue=(value)=>{
-    setProfileAva(value);
+    console.log(value);
+    setProfileAva(value.userProfile);
     setLogin(true);
   };
   return (
