@@ -43,7 +43,7 @@ const handleLogin = async (e) => {
     const userData = await getUserDetails(userDetails.userEmail);
 
     if (userData.userPassword === userDetails.userPassword) {
-      alert('Login success');
+      console.log("login success");
       setUserDetails((prevState) => ({
         ...prevState,
         userProfile: userData.userProfile,
@@ -70,7 +70,6 @@ const handleLogin = async (e) => {
 const handleSubmit=async()=>{
   console.log('Current state values:', { otp, userotp, ...userDetails.userPassword, userPasswordC });
 const randomIndex = Math.floor(Math.random() * UserProfileAva.length);
-alert(otp ,userotp)
   if(otp == userotp){
       if(userDetails.userPassword === userPasswordC){
           try {
