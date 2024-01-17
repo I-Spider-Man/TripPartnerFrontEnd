@@ -5,6 +5,7 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import { useState } from "react";
 import axios from "axios";
 import { Button } from "@mui/material";
+import { postSpot } from "../../PostData";
 
 const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
@@ -34,17 +35,11 @@ const New = ({ inputs, title }) => {
         return alert("Add all details");
       }
       console.log(spotData);
-      const response = await axios.post("http://localhost:8080/Admin/touristSpot", spotData);
-      const newSpot = response.data;
-      setFile("");
-      setspotData({
-        image: null,
-      });
-      console.log("User Data sent successfully:", newSpot);
+      const response = await postSpot(spotData);
       alert("Tourist spot "+spotData.spotName+" added successfully.");
       window.location.reload();
     } catch (error) {
-      console.error("Error sending user data:", error);
+      console.error("Error sending spot data:", error);
     }
   };
  

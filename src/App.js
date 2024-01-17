@@ -13,6 +13,10 @@ import TouristSpot from "./pages/touristSpot/TouristSpot";
 import { Group } from "@mui/icons-material";
 import Groups from "./pages/group/Groups";
 import Organizers from "./pages/Organzier/Organizers";
+import SingleUser from "./pages/list/SingleUser";
+import EventDetails from "./pages/event/EventDetails";
+import Eventdatatable from "./pages/event/Event";
+import NewEventForm from "./pages/event/NewEventForm";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -28,18 +32,14 @@ function App() {
 
             <Route path="users">
               <Route index element={<List />} />
-              <Route path=":userId" element={<Single />} />
-              <Route
-                path="new"
-                element={<New inputs={userInputs} title="Add New User" />}
-              />
+              <Route path=":userId" element={<SingleUser />} />
             </Route>
-            <Route path="products">
-              <Route index element={<List />} />
-              <Route path=":productId" element={<Single />} />
+            <Route path="Event">
+              <Route index element={<Eventdatatable />} />
+              <Route path=":eventId" element={<EventDetails />} />
               <Route
-                path="new"
-                element={<New inputs={productInputs} title="Add New Product" />}
+                path="newEventForm"
+                element={<NewEventForm inputs={productInputs} title="Add New Product" />}
               />
             </Route>
             <Route path="touristspots">

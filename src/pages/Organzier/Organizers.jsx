@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import Sidebar from "../../components/sidebar/Sidebar"
 import Navbar from "../../components/navbar/Navbar"
 import { fetchOrganziersData } from '../../DataStorage';
-import { organizersDelete } from '../../components/DeleteStorage';
+import { organizerDelete, organizersDelete } from '../../components/DeleteStorage';
 import { Link } from 'react-router-dom';
 function Organizers() {
     const [organizerRows,setOrganizerRows]=useState([]);
@@ -23,7 +23,7 @@ function Organizers() {
     }
     fetchOrganizers();
     },[])
-
+    console.log(organizerRows)
     const organizerColumns = [
         { field: "organizerId", headerName: "ID", width: 70 },
         {
@@ -53,6 +53,7 @@ function Organizers() {
         const confirmed = window.confirm("Are you sure you want to delete this user?");
         if (confirmed) {
           try {
+            await organizerDelete(id);
             setOrganizerRows((prevRows) => prevRows.filter((organizer) => organizer.organizerId !== id));
           } catch (error) {
             console.error("Error deleting Organizer:", error);

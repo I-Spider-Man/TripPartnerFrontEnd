@@ -1,0 +1,38 @@
+.details-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+  }
+
+  .event-details-content {
+    max-width: 800px;
+    margin: auto;
+
+    h2 {
+      text-align: center;
+    }
+
+    .event-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+
+      .event-image {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 20px;
+      }
+
+      .event-text {
+        text-align: center;
+
+        p {
+          margin: 8px 0;
+        }
+      }
+    }
+  }
+

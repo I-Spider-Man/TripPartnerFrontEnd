@@ -10,6 +10,16 @@ export const fetchUserData = async () => {
   }
 };
 
+export const fetchUserDataById = async (Id) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/Admin/users/${Id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return [];
+  }
+};
+
 
 export const fetchEventsData = async () => {
     try {
@@ -44,8 +54,16 @@ export const fetchInavtiveEventsData = async () => {
 export const fetchGroupsData = async () => {
     try {
       const response = await axios.get("http://localhost:8080/Admin/groups");
-      
-      return response.data;
+      const groupWithOrganizerData=await Promise.all(
+          response.data.map(async(group)=>{
+            const organizerWithUserData=await fetchOrganizerDataById(group.organizerId);
+            return {
+              ...group,
+              organizerData: organizerWithUserData
+            };
+          })
+      )
+      return groupWithOrganizerData;
     } catch (error) {
       console.error("Error fetching data:", error);
       return [];
@@ -55,7 +73,16 @@ export const fetchGroupsData = async () => {
 export const fetchActiveGroupsData = async () => {
     try {
       const response = await axios.get("http://localhost:8080/Admin/ActiveGroups");
-      return response.data;
+      const groupWithOrganizerData=await Promise.all(
+        response.data.map(async(group)=>{
+          const organizerWithUserData=await fetchOrganizerDataById(group.organizerId);
+          return {
+            ...group,
+            organizerData: organizerWithUserData
+          };
+        })
+    )
+    return groupWithOrganizerData;
     } catch (error) {
       console.error("Error fetching data:", error);
       return [];
@@ -72,8 +99,26 @@ export const fetchInActiveGroupsData = async () => {
     }
 };
 
+export const fetchOrganizerDataById = async(id)=>{
+  try{
+    const organizer = await axios.get(`http://localhost:8080/Admin/organizers/${id}`)
+  .then(async (organizer) => {
+    return axios.get(`http://localhost:8080/User/${organizer.data.userId}`)
+      .then((userData) => {
+        return {
+          ...organizer.data,
+          userData: userData.data
+        };
+      });
+  });
+    return organizer;
+    
+  }catch(error){
+    console.log("error while fetching organizer by Id :" + error);
+  }
+}
+
 export const fetchOrganziersData = async () => {
-  let result;  
   try {
       const response = await axios.get("http://localhost:8080/Admin/organizers");
       const organizerWithUserData=await Promise.all(

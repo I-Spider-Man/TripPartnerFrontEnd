@@ -13,8 +13,8 @@ const List = () => {
   useEffect(async()=>{
     const response=await fetchActiveGroupsData();
     setActiveGrp(response);
-  })
-  
+  },[])
+  console.log(activeGrp);
    return (
     <TableContainer component={Paper} className="table">
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -31,19 +31,18 @@ const List = () => {
         <TableBody>
           {activeGrp ? <>{activeGrp.map((row) => (
             <TableRow key={row.id}>
-              <TableCell className="tableCell">{row.eventId}</TableCell>
+              <TableCell className="tableCell">{row.groupId}</TableCell>
               <TableCell className="tableCell">
                 <div className="cellWrapper">
-                  <img src={row.img} alt="" className="image" />
-                  {row.product}
+                  {row.groupName}
                 </div>
               </TableCell>
-              <TableCell className="tableCell">{row.customer}</TableCell>
-              <TableCell className="tableCell">{row.date}</TableCell>
-              <TableCell className="tableCell">{row.amount}</TableCell>
+              <TableCell className="tableCell">{row.organizerData.userData.userName}</TableCell>
+              <TableCell className="tableCell">{row.dateTo}</TableCell>
+              <TableCell className="tableCell">{row.participantsLimit}</TableCell>
               {/* <TableCell className="tableCell">{row.method}</TableCell> */}
               <TableCell className="tableCell">
-                <span className={`status ${row.status}`}>{row.status}</span>
+                <span className={`status ${row.groupStatus}`}>{row.groupStatus}</span>
               </TableCell>
             </TableRow>
           ))}</> :
