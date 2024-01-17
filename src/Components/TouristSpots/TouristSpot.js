@@ -6,6 +6,8 @@ import Footer from '../Footer/Footer';
 import Loading from '../LoadingComponents/Loading';
 import { useState } from 'react';
 import SpotsJoinPage from './SpotsJoinPage';
+import EventsJoinPage from '../Events/EventsJoinPage';
+import GroupOrganizeForm from '../Group/GroupOrganizeForm';
 function TouristSpot() {
   const [open, setOpen] = useState(false);
   const handleClickListItem = () => {
@@ -13,7 +15,13 @@ function TouristSpot() {
   };
   const handleClose = () => {
     setOpen(false);
+    setOrganizeFormVisible(false);
   }
+  const handleOrganizeClick = () => {
+    setOrganizeFormVisible(true);
+  };
+  const [organizeFormVisible, setOrganizeFormVisible] = useState(false);
+
   const {spotId} = useParams();
 const spot=TouristSpotDetails.find(detail=>String(detail.spot_id)===String(spotId));
 const backgroundImageStyle = {
@@ -23,6 +31,10 @@ const backgroundImageStyle = {
   height: '100%', // Adjust this based on your design
   margin: 0,       // Remove default margin
   padding: 0,      // Remove default padding
+};
+const handleOrganizeSubmit = (formData) => {
+  console.log('Organize Form Data:', formData);
+  setOrganizeFormVisible(false);
 };
   return (
     <div className='front-page' style={backgroundImageStyle}>
@@ -38,7 +50,7 @@ const backgroundImageStyle = {
             
             <div className='join-organize-button'>
               <button onClick={handleClickListItem}>Join</button>
-              <button>Organize</button>
+              <button onClick={handleOrganizeClick}>Organize</button>
             </div>
             </div>
           </> 
@@ -46,14 +58,17 @@ const backgroundImageStyle = {
           <Loading/>
         )}
     </div>
-    <SpotsJoinPage
+        </div>
+        <EventsJoinPage
           id="ringtone-menu"
           keepMounted
           open={open}
           onClose={handleClose}
         />
-        </div>
-    
+          <GroupOrganizeForm id="ringtone-menu"
+          keepMounted
+          open={organizeFormVisible}
+          onClose={handleClose} onSubmit={handleOrganizeSubmit} />
     </div>
     </div>
   );

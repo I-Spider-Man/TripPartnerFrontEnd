@@ -11,15 +11,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Group_details from '../Files/Group_Details';
 
 function EventsJoinPage(props) {
-  const { onClose, value: valueProp, open, ...other } = props;
-  const [value, setValue] = React.useState(valueProp);
+  const { onClose, open, ...other } = props;
   const radioGroupRef = React.useRef(null);
-
-  React.useEffect(() => {
-    if (!open) {
-      setValue(valueProp);
-    }
-  }, [valueProp, open]);
 
   const handleEntering = () => {
     if (radioGroupRef.current != null) {
@@ -32,12 +25,9 @@ function EventsJoinPage(props) {
   };
 
   const handleOk = () => {
-    onClose(value);
+    onClose();
   };
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
 
   return (
     <Dialog

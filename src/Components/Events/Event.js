@@ -13,6 +13,7 @@ function Event() {
   };
   const handleClose = () => {
     setOpen(false);
+    setOrganizeFormVisible(false);
   }
   const {eventId} = useParams();
   const event=Event_details.find(detail=>String(detail.event_id)===String(eventId));
@@ -47,15 +48,16 @@ function Event() {
         ) : (
           <Loading/>
         )}
-        </div><EventsJoinPage
+        </div></div><EventsJoinPage
           id="ringtone-menu"
           keepMounted
           open={open}
           onClose={handleClose}
-        /></div>
-        {organizeFormVisible && (
-          <GroupOrganizeForm onClose={() => setOrganizeFormVisible(false)} onSubmit={handleOrganizeSubmit} />
-        )}
+        />
+          <GroupOrganizeForm id="ringtone-menu"
+          keepMounted
+          open={organizeFormVisible}
+          onClose={handleClose} onSubmit={handleOrganizeSubmit} />
     </div>
     </div>
     

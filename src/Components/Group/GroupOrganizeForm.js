@@ -1,87 +1,118 @@
-// OrganizeEventForm.js
 import React, { useState } from 'react';
-import './GroupOrganizerForm.css'; // Import the CSS file
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-const GroupOrganizeForm = ({ onClose, onSubmit }) => {
-  const [organizeFormVisible, setOrganizeFormVisible] = useState(true);
-  const [eventName, setEventName] = useState('');
-  const [eventDescription, setEventDescription] = useState('');
-  const [dateFrom, setDateFrom] = useState(getTodayDate());
-  const [dateTo, setDateTo] = useState(getTodayDate());
-  const [participantsCount, setParticipantsCount] = useState('');
+import dayjs from 'dayjs';
+import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import Button from '@mui/material/Button';
+const GroupOrganizeForm = (props) => {
+  const { onClose, onSubmit, open, ...other } = props;
+  const [groupForm,setGroupForm]=useState({
+    groupName:"",
+    about:"",
+    dateFrom:"",
+    dateTo:"",
+    eventName:"",
+    spotName:"",
+    participantsLimit:0
+  })
+  const handleCancel = () => {
+    onClose();
+  };
 
-  function getTodayDate() {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = (today.getMonth() + 1).toString().padStart(2, '0');
-    const day = today.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
+  const handleOk = () => {
+    onSubmit();
+  };
+  const radioGroupRef = React.useRef(null);
+  console.log(groupForm);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setGroupForm((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 console.log("group organize form rendered");
-  const handleSubmit = e => {
-    e.preventDefault();
-    onSubmit({
-      eventName,
-      eventDescription,
-      dateFrom,
-      dateTo,
-      participantsCount,
-    });
+
+
+  const handleStartDateChange = (newStartDate) => {
+    setGroupForm((prevData) => ({
+      ...prevData,
+      dateFrom: dayjs(newStartDate).format('YYYY-MM-DD'), // Assuming you want to store the date as a string in ISO format
+    }));
   };
-
-  const handleDateFromChange = e => {
-    const selectedDate = e.target.value;
-    const today = getTodayDate();
-
-    if (selectedDate >= today) {
-      setDateFrom(selectedDate);
+  
+  const handleEndDateChange = (newEndDate) => {
+    if (dayjs(newEndDate).isBefore(groupForm.dateFrom)) {
+      alert("End date should not be before start date.");
+      setGroupForm((prevData)=>(
+        
+        {
+        ...prevData,
+        dateTo: null
+      }))
+    } else {
+      setGroupForm((prevData) => ({
+        ...prevData,
+        dateTo: dayjs(newEndDate).format('YYYY-MM-DD'),
+      }));
     }
   };
-
-  const handleDateToChange = e => {
-    const selectedDate = e.target.value;
-
-    if (selectedDate >= dateFrom) {
-      setDateTo(selectedDate);
+  const handleEntering = () => {
+    if (radioGroupRef.current != null) {
+      radioGroupRef.current.focus();
     }
   };
-
   return (
-    <div className={`overlay ${organizeFormVisible ? 'active' : ''}`} onClick={() => setOrganizeFormVisible(false)}>
-      <div className={`popup ${organizeFormVisible ? 'active' : ''}`} onClick={e => e.stopPropagation()}>
-        <h2>Organize Event</h2>
-        <form onSubmit={handleSubmit}>
+    <Dialog
+      sx={{ '& .MuiDialog-paper': { width: '80%', minHeight: 435, backgroundColor: '#383838', color:'white', display:'flex', flexDirection:'column', gap:'10px'} }}
+      maxWidth="xs"
+      TransitionProps={{ onEntering: handleEntering }}
+      open={open}
+      {...other}
+    >
+      <DialogTitle> <h2>Organize Event</h2></DialogTitle>
+      <DialogContent sx={{display:'flex',flexDirection:'column',gap:"12"}}>
           <label>Group Name:</label>
-          <input type="text" value={eventName} onChange={e => setEventName(e.target.value)} />
+          <input type="text" name='groupName' value={groupForm.groupName} onChange={handleChange} />
 
           <label>Group Description:</label>
-          <textarea value={eventDescription} onChange={e => setEventDescription(e.target.value)} />
+          <textarea name='about' value={groupForm.about} onChange={handleChange} />
 
-          <label>Date From:<br></br>
-             <LocalizationProvider dateAdapter={AdapterDayjs}>
-    
-            <DatePicker disablePast format='YYYY-MM-DD' value={dateFrom} onChange={handleDateFromChange}/>
- 
-        </LocalizationProvider>         
-          </label>
-          <label>Date To:<br></br>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker disablePast format='YYYY-MM-DD' value={dateTo} onChange={handleDateToChange}/>
-          </LocalizationProvider>            
-          </label>
+          <label>
+                  Start Date:<br></br>
+                  <LocalizationProvider dateAdapter={AdapterDayjs} >
+                    <DatePicker 
+                      value={groupForm.dateFrom}
+                      onChange={handleStartDateChange}
+                      disablePast
+                      format="YYYY-MM-DD"
+                    />
+                  </LocalizationProvider>
+                </label>
+                <label>
+                  End Date:<br></br>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      value={groupForm.dateTo}
+                      onChange={handleEndDateChange}
+                      format="YYYY-MM-DD"
+                      disablePast
+                    />
+                  </LocalizationProvider>
+                </label>
 
 
           <label>No. of Participants:</label>
-          <input type="number" value={participantsCount} onChange={e => setParticipantsCount(e.target.value)} />
+          <input type="number" name='participantsLimit' value={groupForm.participantsLimit} onChange={handleChange} />
+      </DialogContent>
+        <DialogActions>
+          <Button variant='contained' onClick={handleOk} >Submit</Button>
+          <Button variant='outlined' onClick={handleCancel}>Cancel</Button>
+        </DialogActions>
 
-          <button className='aa' type="submit">Submit</button>
-          <button className='aa' onClick={onClose}>Cancel</button>
-        </form>
-      </div>
-    </div>
+          
+    </Dialog>
   );
 };
 
