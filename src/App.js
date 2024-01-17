@@ -9,6 +9,7 @@ import TouristSpot from './Components/TouristSpots/TouristSpot';
 import NavBar from './Components/NavBar/NavBar';
 import Footer from './Components/Footer/Footer';
 import BlogSlider from './Components/Events/Components-container';
+import ProfilePage from './Components/ProfilePage/Profile';
 function App() {
   return (
     <Router>
@@ -22,6 +23,7 @@ function App() {
         <Route path='/Events/:eventId' element={<Event/>}/>
         <Route path='/Spot/:spotId' element={<TouristSpot/>}/>
         <Route path="/component" element={<BlogSlider/>}/>
+        <Route path='/profile/:userId' element={<ProfilePage/>}/>
       </Routes></div>
       <div className='footer'><Footer/></div>
     </div>

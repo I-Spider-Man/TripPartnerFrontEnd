@@ -18,6 +18,7 @@ function NavBar({profileAvatar}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [visible, setvisible] = useState(false);
   const [login,setLogin]=useState(false);
+  const [userId,setUserId]=useState(0);
   const open = Boolean(anchorEl);
   const [profileAva,setProfileAva]=useState("https://trip-partner.s3.eu-north-1.amazonaws.com/login_signUp.svg");
   const handleClick = (event) => {
@@ -33,7 +34,9 @@ function NavBar({profileAvatar}) {
     setvisible(false);
   }
   const childValue=(value)=>{
-    setProfileAva(value);
+    console.log(value);
+    setUserId(value.userId);
+    setProfileAva(value.userProfile);
     setLogin(true);
   };
   return (
@@ -65,7 +68,7 @@ function NavBar({profileAvatar}) {
         open={visible}
         TransitionComponent={Transition}
         onClose={handleClose}
-        sx={{ '& .MuiDialog-paper': { width: '34.2%', minHeight: '84%' ,padding:'0px 0px', borderRadius:'15px'} }}
+        sx={{ '& .MuiDialog-paper': { width: 'auto', minHeight: 'auto' ,padding:'0px 0px', borderRadius:'15px'} }}
       >
         <LoginPage onClose={()=>{handleClose()}} onReturn={childValue}/>
       </Dialog>
@@ -80,7 +83,8 @@ function NavBar({profileAvatar}) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose1}>Profile</MenuItem>
+        <MenuItem >
+        <Link to={`/profile/${userId}`}>Profile</Link></MenuItem>
         <MenuItem onClick={handleClose1}>My account</MenuItem>
         <MenuItem onClick={()=>{window.location.reload()}} >Logout</MenuItem>
       </Menu>

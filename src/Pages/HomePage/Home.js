@@ -13,15 +13,6 @@ function Home() {
   const setProfile = (value) => {
     setProfileAva(value);
   };
-  const post={
-    event_id:1,
-    event_name:"Candle Light India",
-    event_happening:"6th JAN, 1AM",
-    event_discription:"Candlelight India is a one of a kind immersive concert experience. It is curated to evoke a sense of wonder in concert goers by taking you on a magical journey where music and ambience converge to",
-    event_address:"Good Shepherd Auditorium\nMuseum Rd, Opp Patricks Church, Shanthala Nagar, Richmond Town, Bengaluru, Karnataka",
-    event_image:"https://assets-in.bmscdn.com/discovery-catalog/events/et00379779-wunhsyzzrr-landscape.jpg",
-    image_alt:"Candle Light India A Tribute To ARR"
-  };
   const [event,setEvent]=useState({});
   const [spot,setSpot]=useState({});
   const eventDetails=Event_Details.slice(0,4);
@@ -74,7 +65,7 @@ const nextSpot=()=>{
         <div className="slider-container" style={{padding:'20px'}}>
         {currentEvent !==0 && <Button variant='contained' onClick={prevEvent} style={{color:'white',padding:'5px'}}>Prev</Button>}
         <div className="slider">
-        <EventComponent key={post.event_id} post={event} />
+        <EventComponent key={event.event_id} post={event} />
         </div>
         {(currentEvent < eventDetails.length-1) && <Button variant='contained' onClick={nextEvent} style={{color:'white',padding:'5px'}}>Next</Button>}
       </div>
@@ -109,7 +100,7 @@ const nextSpot=()=>{
                         <div className="slider-container">
                       {currentSpot !==0 && <Button variant='contained' onClick={prevSpot} style={{color:'white'}}>Prev</Button>}
                       <div className="slider">
-                      <TouristSpotComponent key={post.event_id} post={spot} />
+                      <TouristSpotComponent key={spot.spot_id} post={spot} />
                       </div>
                       {(currentSpot < spotDetails.length-1) && <Button variant='contained' onClick={nextSpot} style={{color:'white'}}>Next</Button>}
                     </div>
