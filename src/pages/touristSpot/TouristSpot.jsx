@@ -77,7 +77,7 @@ function TouristSpot() {
         <div className="datatable" style={{display:'flex',flexDirection:'column',gap:'10px'}}>
         <Stack direction="row"  spacing={{ xs: 1, sm: 2, md: 1 }}>
             <Link to="/touristspots/newSpot"><Button variant="contained" >Add Spot</Button></Link>
-            <Button variant="outlined">Edit Spot</Button>
+            
           </Stack>
         <DataGrid
             className="datagrid"

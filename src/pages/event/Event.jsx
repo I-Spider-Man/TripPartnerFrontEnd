@@ -34,7 +34,7 @@ const Eventdatatable = () => {
         if (confirmed) {
             try {
                 await eventDelete(id);
-                fetchEvents(); 
+                setData((prevData)=>prevData.filter((event)=>event.eventId !== id));
             } catch (error) {
                 console.error("Error deleting event:", error);
             }
@@ -83,7 +83,6 @@ const Eventdatatable = () => {
                         <Link to="/Event/newEventForm">
                           <Button variant="contained">Add New Event</Button> 
                         </Link>
-                        <Button variant="outlined">Edit Event</Button>
                     </div>
                     <DataGrid
                         className="datagrid"
