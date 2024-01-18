@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './LoginPage.css';
 import axios from 'axios';
 import {UserProfileAva, registerUser, generateOtp, getUserDetails} from '../Files/User_profile_avator'
+import { forgotPassword } from '../Files/Other_DataBase';
 
 function LoginPage({ onClose , onReturn}) {
   const [otpInput, setOtpInput] = useState(false);
@@ -29,16 +30,25 @@ function LoginPage({ onClose , onReturn}) {
     });
     setForgotPassword(!isforgotPassword);
   }
-
+  const handleForgotPassword=async()=>{
+    if(userotp==otp && userotp!='' && otp!=''){
+      await forgotPassword(userDetails.userEmail);
+      alert("check your email for new password");
+      showForgotPassword();
+    }else{
+      alert("entered otp is wrong");
+    }
+  }
+  console.log(userDetails);
   const getOtp=async()=>{
     toggleOTPinput();
-    setGeneratedOtp(!generatedOtp)
-    await generateOtp(userDetails.userEmail).then(response=>{setUserOtp(response)})
-    console.log(userotp)
+    const response=await generateOtp(userDetails.userEmail);
+    setUserOtp(response);
+    console.log("user otp"+userotp);
+    setGeneratedOtp(!generatedOtp);
 }
 const handleLogin = async (e) => {
   e.preventDefault();
-
   try {
     const userData = await getUserDetails(userDetails.userEmail);
 
@@ -132,38 +142,41 @@ const randomIndex = Math.floor(Math.random() * UserProfileAva.length);
           className="login-input"
           type="email"
           placeholder="Email"
-          onBlur={(e)=>setUserDetails({...userDetails,userEmail:e.target.value})}
+          onBlur={validateEmail}
+          onChange={(e)=>setUserDetails({...userDetails,userEmail:e.target.value})}
           // required
         />
         <input className="login-input"
         type="password"
         placeholder="Password"
-        onBlur={(e)=>setUserDetails({...userDetails,userPassword:e.target.value})}
+        onChange={(e)=>setUserDetails({...userDetails,userPassword:e.target.value})}
         // required
         />
         <span className='forgot-password' onClick={()=>showForgotPassword()}>Forgot password?</span>
         <button onClick={(e)=>handleLogin(e)}>Log in</button>
       </form>
-      </>) : (<><form className='forgot-form'>
+      </>) 
+      : 
+      (<><form className='forgot-form'>
       <label >Forgot password</label>
         <input
           className="login-input"
           type="email"
           placeholder="Email"
-          onBlur={(e)=>setUserDetails({...userDetails,userEmail:e.target.value})}
+          onChange={(e)=>setUserDetails({...userDetails,userEmail:e.target.value})}
           required
         />
         <input className="login-input"
         type="otp"
         placeholder="Enter OTP"
-        onBlur={(e)=>setOtp(e.target.value)}
+        onChange={(e)=>setOtp(e.target.value)}
         required
         />
         <span className='back-to-sign-in' onClick={()=>showForgotPassword()}>Back to sign in</span>
         {generatedOtp ? (
-          <><button onClick={()=>{alert("check your email for new password");showForgotPassword()}} >Generate Password</button>
+          <><button onClick={()=>{handleForgotPassword()}} >Generate Password</button>
           </>
-        ) : (<><button onClick={getOtp}>Get Otp</button>
+        ) : (<><button onClick={()=>getOtp()}>Get Otp</button>
         </>)}
         
       </form>
@@ -214,8 +227,8 @@ const randomIndex = Math.floor(Math.random() * UserProfileAva.length);
           right: '5px',
           top: '50%',
           transform: 'translateY(-204%) translateX(-151%)', tabSize: "30px" }} 
-          onClick={validateEmail}
-          disabled={!userDetails.userEmail.trim()}
+          onClick={()=>validateEmail()}
+          disabled={!userDetails.userEmail?.trim()}
         >
           Get otp
         </button></>
