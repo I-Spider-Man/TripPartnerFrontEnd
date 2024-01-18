@@ -4,16 +4,26 @@ import Event_details from '../Files/Event_Details';
 import Loading from '../LoadingComponents/ContentLoading';
 import { useState } from 'react';
 import EventsJoinPage from './EventsJoinPage';
+import GroupOrganizeForm from '../Group/GroupOrganizeForm';
 function Event() {
+  const [organizeFormVisible, setOrganizeFormVisible] = useState(false);
   const [open, setOpen] = useState(false);
   const handleClickListItem = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+    setOrganizeFormVisible(false);
   }
   const {eventId} = useParams();
   const event=Event_details.find(detail=>String(detail.event_id)===String(eventId));
+  const handleOrganizeClick = () => {
+    setOrganizeFormVisible(true);
+  };
+  const handleOrganizeSubmit = (formData) => {
+    console.log('Organize Form Data:', formData);
+    setOrganizeFormVisible(false);
+  };
   return (
     <div className='front-page'>
     <div className='event-page' style={{minHeight:'100vh'}}>
@@ -29,7 +39,7 @@ function Event() {
             <label><strong>EVENT ADDRESS:</strong> <p>{event.event_address}</p></label>
             <div className='join-organize-button'>
               <button onClick={handleClickListItem}>Join</button>
-              <button>Organize</button>
+              <button onClick={handleOrganizeClick}>Organize</button>
             </div>
             
             </div>
@@ -38,13 +48,16 @@ function Event() {
         ) : (
           <Loading/>
         )}
-        </div><EventsJoinPage
+        </div></div><EventsJoinPage
           id="ringtone-menu"
           keepMounted
           open={open}
           onClose={handleClose}
-        /></div>
-    
+        />
+          <GroupOrganizeForm id="ringtone-menu"
+          keepMounted
+          open={organizeFormVisible}
+          onClose={handleClose} onSubmit={handleOrganizeSubmit} />
     </div>
     </div>
     
