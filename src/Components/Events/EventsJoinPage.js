@@ -8,7 +8,7 @@ import Dialog from '@mui/material/Dialog';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Group_details from '../Files/Group_Details';
+import {Group_details} from '../Files/Group_Details';
 
 function EventsJoinPage(props) {
   const { onClose, open, ...other } = props;

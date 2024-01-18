@@ -1,4 +1,4 @@
-const Event_Details=[{
+export const Event_Details=[{
         event_id:1,
         event_name:"Candle Light India",
         event_happening:"6th JAN, 1AM",
@@ -44,6 +44,3 @@ const Event_Details=[{
       },
     ]
 
-
-
-export default Event_Details;

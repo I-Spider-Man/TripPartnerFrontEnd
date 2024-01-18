@@ -10,17 +10,23 @@ import NavBar from './Components/NavBar/NavBar';
 import Footer from './Components/Footer/Footer';
 import BlogSlider from './Components/Events/Components-container';
 import ProfilePage from './Components/ProfilePage/Profile';
+import { useState } from 'react';
 function App() {
+  const [userId,setUserId]=useState('');
+  const handleUserIdChange = (userId) => {
+    console.log("UserId changed:", userId);
+    setUserId(userId);
+  };
   return (
     <Router>
     <div className='page' style={{maxWidth:'100%'}}>
-      <div className='header'><NavBar/></div>
+      <div className='header'><NavBar onUserIdChange={handleUserIdChange}/></div>
       <div className='body' style={{minHeight:'100vh'}}><Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/OrganizerHome" element={<OrganizerHome />} />
         <Route path="/EventsHomePage" element={<EventsHomePage/>}/>
         <Route path="/TouristHomePage" element={<TouristSpotHomePage/>}/>
-        <Route path='/Events/:eventId' element={<Event/>}/>
+        <Route path='/Events/:eventId' element={<Event userId={userId}/>}/>
         <Route path='/Spot/:spotId' element={<TouristSpot/>}/>
         <Route path="/component" element={<BlogSlider/>}/>
         <Route path='/profile/:userId' element={<ProfilePage/>}/>

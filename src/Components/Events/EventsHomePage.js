@@ -6,7 +6,7 @@ import {MdOutlineJoinInner} from 'react-icons/md'
 import {IoMdRadioButtonOn} from 'react-icons/io'
 import NavBar from '../NavBar/NavBar'
 import Footer from '../Footer/Footer'
-import Event_Details from '../Files/Event_Details'
+import {Event_Details} from '../Files/Event_Details'
 
 
 const EventsHomePage = () => {

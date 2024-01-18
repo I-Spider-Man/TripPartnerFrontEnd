@@ -52,14 +52,7 @@ const handleOrganizeSubmit = (formData) => {
               <button onClick={handleClickListItem}>Join</button>
               <button onClick={handleOrganizeClick}>Organize</button>
             </div>
-            </div>
-          </> 
-        ) : (
-          <Loading/>
-        )}
-    </div>
-        </div>
-        <EventsJoinPage
+            </div><EventsJoinPage
           id="ringtone-menu"
           keepMounted
           open={open}
@@ -67,8 +60,16 @@ const handleOrganizeSubmit = (formData) => {
         />
           <GroupOrganizeForm id="ringtone-menu"
           keepMounted
+          spotName={spot.spot_name}
           open={organizeFormVisible}
           onClose={handleClose} onSubmit={handleOrganizeSubmit} />
+          </> 
+        ) : (
+          <Loading/>
+        )}
+    </div>
+        </div>
+        
     </div>
     </div>
   );

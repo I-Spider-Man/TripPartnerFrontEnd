@@ -10,6 +10,7 @@ function LoginPage({ onClose , onReturn}) {
   const [otpInput, setOtpInput] = useState(false);
   const [otpProcess,setOtpProcess]=useState(false);
   const [userDetails,setUserDetails]=useState({
+    userId:'',
     userName:"",
     userEmail:"",
     userPassword:"",
@@ -26,10 +27,11 @@ function LoginPage({ onClose , onReturn}) {
   const showForgotPassword=()=>{
     setUserDetails({
       ...userDetails,
-      userName: null,
-      userEmail: null,
-      userPassword: null,
-      userProfile: null
+      userId:'',
+      userName: "",
+      userEmail: "",
+      userPassword: "",
+      userProfile: ""
     });
 
     setForgotPassword(!isforgotPassword);
@@ -62,11 +64,11 @@ const handleLogin = async (e) => {
   e.preventDefault();
   try {
     const userData = await getUserDetails(userDetails.userEmail);
-
     if (userData.userPassword === userDetails.userPassword) {
       console.log("login success");
       setUserDetails((prevState) => ({
         ...prevState,
+        userId: userData.userId,
         userProfile: userData.userProfile,
         userName: userData.userName,
       }));
@@ -74,6 +76,7 @@ const handleLogin = async (e) => {
       // Use the updated userDetails from the state
       const updatedUserDetails = {
         ...userDetails,
+        userId: userData.userId,
         userProfile: userData.userProfile,
         userName: userData.userName,
       };

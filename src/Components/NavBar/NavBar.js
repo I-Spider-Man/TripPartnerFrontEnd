@@ -14,7 +14,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-function NavBar({profileAvatar}) {
+function NavBar({onUserIdChange}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [visible, setvisible] = useState(false);
   const [login,setLogin]=useState(false);
@@ -38,6 +38,7 @@ function NavBar({profileAvatar}) {
     setUserId(value.userId);
     setProfileAva(value.userProfile);
     setLogin(true);
+    onUserIdChange(value.userId);
   };
   return (
     <React.Fragment>

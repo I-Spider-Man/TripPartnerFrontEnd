@@ -1,22 +1,23 @@
 import { useParams } from 'react-router-dom'
 import './Event.css'
-import Event_details from '../Files/Event_Details';
+import {Event_Details} from '../Files/Event_Details';
 import Loading from '../LoadingComponents/ContentLoading';
 import { useState } from 'react';
 import EventsJoinPage from './EventsJoinPage';
 import GroupOrganizeForm from '../Group/GroupOrganizeForm';
-function Event() {
+function Event({userId}) {
   const [organizeFormVisible, setOrganizeFormVisible] = useState(false);
   const [open, setOpen] = useState(false);
   const handleClickListItem = () => {
     setOpen(true);
   };
+  console.log(userId);
   const handleClose = () => {
     setOpen(false);
     setOrganizeFormVisible(false);
   }
   const {eventId} = useParams();
-  const event=Event_details.find(detail=>String(detail.event_id)===String(eventId));
+  const event=Event_Details.find(detail=>String(detail.event_id)===String(eventId));
   const handleOrganizeClick = () => {
     setOrganizeFormVisible(true);
   };
@@ -38,26 +39,32 @@ function Event() {
             <label><strong>EVENT DESCRIPTION:</strong> <p>{event.event_discription}</p></label>
             <label><strong>EVENT ADDRESS:</strong> <p>{event.event_address}</p></label>
             <div className='join-organize-button'>
-              <button onClick={handleClickListItem}>Join</button>
-              <button onClick={handleOrganizeClick}>Organize</button>
+              <button onClick={()=>handleClickListItem()}>Join</button>
+              <button onClick={()=>handleOrganizeClick()}>Organize</button>
             </div>
-            
+        <EventsJoinPage
+          id="ringtone-menu"
+          keepMounted
+          open={open}
+          onClose={()=>handleClose()}
+        />
+          {event && (
+          <GroupOrganizeForm
+            id="ringtone-menu"
+            keepMounted
+            userId={userId}
+            eventName={event.event_name}
+            open={organizeFormVisible}
+            onClose={() => handleClose()}
+            onSubmit={() => handleOrganizeSubmit()}
+          />
+          )}
             </div>
-            
           </> 
         ) : (
           <Loading/>
         )}
-        </div></div><EventsJoinPage
-          id="ringtone-menu"
-          keepMounted
-          open={open}
-          onClose={handleClose}
-        />
-          <GroupOrganizeForm id="ringtone-menu"
-          keepMounted
-          open={organizeFormVisible}
-          onClose={handleClose} onSubmit={handleOrganizeSubmit} />
+        </div></div>
     </div>
     </div>
     
