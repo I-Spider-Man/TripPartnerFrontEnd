@@ -109,7 +109,7 @@
 }
 
 #chk:checked ~ .register {
-  transform: translateY(-70%);
+  transform: translateY(-55%);
 }
 
 #chk:checked ~ .register label {
@@ -125,19 +125,11 @@
 
 
 .pass-detail-container {
-  position: absolute;
-  right: 24px;
-  top: 276px;
-  transform: translateY(-204%) translateX(-151%);
-  tab-size: 30px;
+
   color:red;
 }
 
-.pass-detail {
-  display: inline-block;
-  position: relative;
-  cursor: pointer;
-}
+
 
 .tooltip {
   visibility: hidden;

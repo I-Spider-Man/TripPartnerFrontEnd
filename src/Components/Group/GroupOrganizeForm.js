@@ -71,7 +71,7 @@ console.log("group organize form rendered");
       open={open}
       {...other}
     >
-      <DialogTitle> <h2>Organize Event</h2></DialogTitle>
+      <DialogTitle> <h2>Organize Group</h2></DialogTitle>
       <DialogContent sx={{display:'flex',flexDirection:'column',gap:"12"}}>
           <label>Group Name:</label>
           <input type="text" name='groupName' value={groupForm.groupName} onChange={handleChange} />
