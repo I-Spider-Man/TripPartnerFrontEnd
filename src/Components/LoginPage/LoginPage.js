@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './LoginPage.css';
-import axios from 'axios';
 import {UserProfileAva, registerUser, generateOtp, getUserDetails} from '../Files/User_profile_avator'
 import { forgotPassword } from '../Files/Other_DataBase';
 import Button from '@mui/material/Button';
 import { Tooltip } from '@mui/material';
-
+import {LoadingButton} from '@mui/lab';
+import { CircularProgress } from '@mui/material';
 function LoginPage({ onClose , onReturn}) {
   const [otpInput, setOtpInput] = useState(false);
+  const [otpProcess,setOtpProcess]=useState(false);
   const [userDetails,setUserDetails]=useState({
     userName:"",
     userEmail:"",
@@ -46,11 +47,16 @@ function LoginPage({ onClose , onReturn}) {
   }
   console.log(userDetails);
   const getOtp=async()=>{
+    if(!userDetails.userEmail?.trim()){
+      return null;
+    }
+    setOtpProcess(true)
     toggleOTPinput();
     const response=await generateOtp(userDetails.userEmail);
     setUserOtp(response);
     console.log("user otp"+userotp);
     setGeneratedOtp(!generatedOtp);
+    setOtpProcess(false)
 }
 const handleLogin = async (e) => {
   e.preventDefault();
@@ -193,9 +199,9 @@ const randomIndex = Math.floor(Math.random() * UserProfileAva.length);
         {userotp ? (
           <> <Button variant='contained' onClick={()=>handleForgotPassword()}>Generate Password</Button>
           </>
-        ) : (<>
-        <Button onClick={()=>getOtp()} varient='contained'> Get OTP </Button>
-        </>)}
+        ) : (<div onClick={()=>getOtp()} style={{width:'100%',display:'flex',alignItems:'center'}} disabled={!userDetails.userEmail?.trim()}>
+        <LoadingButton loading={otpProcess} loadingIndicator={<div style={{display:'flex',alignItems:'center',color:'white',gap:'10px' }}>Sending OTP<CircularProgress color="primary" size={16} /></div>}> Get OTP</LoadingButton>
+        </div>)}
         
       </form>
       </>)}
@@ -205,7 +211,7 @@ const randomIndex = Math.floor(Math.random() * UserProfileAva.length);
       <form className="reg-form" onSubmit={handleSubmit}>
         <label htmlFor="chk" aria-hidden="true">Register</label>
         <input className="reg-input" type="text"  name="userName" value={userDetails.userName} placeholder="Username" required onChange={handleChange}/>
-        <div className='reg' style={{ display: "flex", flexDirection: "row",alignItems:'center',gap:'10px' }}>
+        <div className='reg' style={{ display: "flex", flexDirection: "row",alignItems:'center',gap:'5px',marginLeft:'10px' }}>
         <input
             className="reg-input"
             type="email"
@@ -216,12 +222,12 @@ const randomIndex = Math.floor(Math.random() * UserProfileAva.length);
             style={{width:'312px',marginLeft:'58px'}}
             required
           />
-          <button className='verify-button'
-          onClick={()=>validateEmail()}
-          disabled={!userDetails.userEmail?.trim()}
-        >
-          Get otp
-        </button>
+          <div onClick={()=>getOtp()}>
+            <LoadingButton variant="contained" sx={{width:50,height:30, fontSize:10,backgroundColor:'#573b8a'}} loading={otpProcess} loadingIndicator={<CircularProgress color="primary" size={16} />}> 
+              Get OTP
+            </LoadingButton>
+          </div>
+          
         </div>
          {userotp && <><input
       className="reg-input"
@@ -236,20 +242,21 @@ const randomIndex = Math.floor(Math.random() * UserProfileAva.length);
     <div style={{display:'flex',flexDirection:'row',alignItems:'center',gap:'10px'}}>
       <input className="reg-input" type="password" style={{width:'315px',marginLeft:'25px'}} value={userDetails.userPassword} name="pswd" placeholder="Password" required onChange={(e)=>setUserDetails({...userDetails,userPassword:e.target.value})}/>
         <div className='pass-detail-container'>
-        {isPasswordValid ? (<Tooltip title="Password containes at least one uppercase letter, one numeric digit, one special character and one lowercase letter" placement='top' disableInteractive>
+        
+        {isPasswordValid ? 
+        (<Tooltip title="Password containes at least one uppercase letter, one numeric digit, one special character and one lowercase letter" placement='top' disableInteractive>
         <svg className='pass-detail' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16" style={{color:'green'}}>
   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
   <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
-</svg></Tooltip>):<Tooltip title="Password must contain at least one uppercase letter, one numeric digit, and one special character." placement='top' disableInteractive><svg className='pass-detail' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+</svg></Tooltip>)
+:<Tooltip title="Password must contain at least one uppercase letter, one numeric digit, and one special character." placement='top' disableInteractive><svg className='pass-detail' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
 </svg></Tooltip>}
-      
     </div>
     </div>
-        
         <input className="reg-input" type="password" value={userPasswordC} name="cpswd" placeholder="Confirm Password" required onChange={(e)=>setUserPasswordC(e.target.value)}/>
-        <button type='submit'>Register</button>
+        <button className='reg-button' type='submit'>Register</button>
       </form>
     </div>
     </div>

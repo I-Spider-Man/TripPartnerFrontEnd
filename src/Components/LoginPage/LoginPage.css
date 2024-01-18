@@ -171,7 +171,7 @@
   cursor: pointer;
 }
 /*Button*/
-.login-form button, .reg-form button , .forgot-form button{
+.login-form button, .reg-form .reg-button , .forgot-form button{
   width: 85%;
   height: 40px;
   margin: 12px auto 10%;
@@ -185,7 +185,7 @@
   transition: .2s ease-in;
 }
 
-.login-form button:hover, .forgot-form button:hover, .reg-form button:hover {
+.login-form button:hover, .forgot-form button:hover, .reg-form .reg-button:hover {
   background-color: #4f1897;
 }
 
