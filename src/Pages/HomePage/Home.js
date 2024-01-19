@@ -3,20 +3,20 @@ import vid from './pexels_videos_2096549 (1080p).mp4'
 import './Home.css'
 import EventComponent from '../../Components/Events/EventComponent'
 import TouristSpotComponent from '../../Components/TouristSpots/TouristSpotComponent'
-import {fetch_Event_Details} from '../../Components/Files/Event_Details'
-import { fetch_spot_data } from '../../Components/Files/TouristSpotDetails'
+import {fetch_Event_Details, fetch_popularEvents} from '../../Components/Files/Event_Details'
+import { fetch_popularSpots, fetch_spot_data } from '../../Components/Files/TouristSpotDetails'
 import { Link } from 'react-router-dom'
 import FeaturedPost from '../../Components/FeaturedPost'
 import { Button } from '@mui/material'
 function Home() {
   const [profileAva, setProfileAva] = useState("https://trip-partner.s3.eu-north-1.amazonaws.com/login_signUp.svg");
-  const [Event_Details,setEventDetails] = useState([{}])
-  const [Spot_Details,setSpotDetails]=useState([{}])
+  const [eventDetails,setEventDetails] = useState([{}])
+  const [spotDetails,setSpotDetails]=useState([{}])
   useEffect(()=>{
     const fetchData = async () => {
       try {
-        const response = await (fetch_Event_Details());
-        const response1 = await (fetch_spot_data());
+        const response = await (fetch_popularEvents());
+        const response1 = await (fetch_popularSpots());
         setSpotDetails(response1);
         setEventDetails(response);
       } catch (error) {
@@ -24,23 +24,24 @@ function Home() {
       }
     };
     fetchData();
-  },[1]);
+  },[]);
     useEffect(() => {
-    console.log("event", Event_Details);
-  }, [Event_Details]);
+    console.log("event", eventDetails);
+  }, [eventDetails]);
   useEffect(() => {
-    console.log("spot", Spot_Details);
-  }, [Spot_Details]);
+    console.log("spot", spotDetails);
+  }, [spotDetails]);
   const [event,setEvent]=useState({});
   const [spot,setSpot]=useState({});
-  const eventDetails=Event_Details.slice(0,4);
-  const spotDetails = Spot_Details.slice(0, 4);
+
   const [currentEvent, setCurrentEvent] = useState(0);
   const [currentSpot,setCurrentSpot]=useState(0);
+
 useEffect(()=>{
   setEvent(eventDetails[currentEvent]);
   console.log("single event ",event)
 },[currentEvent]);
+
 useEffect(()=>{
   setSpot(spotDetails[currentSpot])
   console.log("single spot ",spot)
