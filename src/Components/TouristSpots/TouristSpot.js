@@ -1,26 +1,38 @@
 import NavBar from '../NavBar/NavBar'
 import { useParams } from 'react-router-dom'
 import './TouristSpot.css'
-import {fetch_spot_data } from '../Files/TouristSpotDetails';
+import {fetch_spot_data, fetch_spots_by_id } from '../Files/TouristSpotDetails';
 import Footer from '../Footer/Footer';
 import Loading from '../LoadingComponents/Loading';
-import { useState } from 'react';
-import SpotsJoinPage from './SpotsJoinPage';
+import { useEffect, useState } from 'react';
 import EventsJoinPage from '../Events/EventsJoinPage';
 import GroupOrganizeForm from '../Group/GroupOrganizeForm';
-function TouristSpot() {
+function TouristSpot({userId}) {
+  const [spot,setSpots]=useState({});
   const [open, setOpen] = useState(false);
-  const [TouristSpotDetails,setTourist_Spot_Details]=useState([{}]);
-  const fetchData = async () => {
+  const {spotId} = useParams();
+  useEffect(()=>{
+      const fetchData = async () => {
       try {
-        const response1 = await(fetch_spot_data());
-        setTourist_Spot_Details(response1);
+        const response1 = await fetch_spots_by_id(spotId);
+        setSpots(response1);
       } catch (error) {
         console.log("Error while fetching event data:", error);
       }
     };
     fetchData();
+  },[spotId])
+
+
+  useEffect(()=>{
+  console.log(spot);
+  },[spot])
+
+
   const handleClickListItem = () => {
+    if(userId===""){
+      return alert("need to login");
+    }
     setOpen(true);
   };
   const handleClose = () => {
@@ -28,19 +40,33 @@ function TouristSpot() {
     setOrganizeFormVisible(false);
   }
   const handleOrganizeClick = () => {
+    if(userId===""){
+      return alert("need to login");
+    }
     setOrganizeFormVisible(true);
   };
   const [organizeFormVisible, setOrganizeFormVisible] = useState(false);
 
-  const {spotId} = useParams();
-const spot=TouristSpotDetails.find(detail=>String(detail.spot_id)===String(spotId));
 const backgroundImageStyle = {
   backgroundImage: `url('https://trip-partner.s3.eu-north-1.amazonaws.com/pexels-kwnos-iv-16785282+(1)+(1).jpg')`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
-  height: '100%', // Adjust this based on your design
+  height: '100%',
+  width:'100%', // Adjust this based on your design
   margin: 0,       // Remove default margin
   padding: 0,      // Remove default padding
+};
+const getStatus = () => {
+  const lowThreshold = 50;
+  const mediumThreshold = 100;
+
+  if (spot.peopleCount < lowThreshold) {
+    return 'Low';
+  } else if (spot.peopleCount < mediumThreshold) {
+    return 'Medium';
+  } else {
+    return 'High';
+  }
 };
 const handleOrganizeSubmit = (formData) => {
   console.log('Organize Form Data:', formData);
@@ -52,12 +78,12 @@ const handleOrganizeSubmit = (formData) => {
         <div className='content-container' style={{display:'flex', alignItems:'center', justifyContent:'center',height:'100vh'}}>
           <div className='spot-content' style={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'center'}}>
     {spot ? (
-          <><img src={spot.spot_image} alt={spot.spot_alt} />
+          <><img src={spot.spotPicture} alt={spot.spotName} />
           <div className='content-details'>
-            <label><strong>SPOT NAME: </strong><h1>{spot.spot_name}</h1></label>
-            <label><strong>SPOT LOCATION:</strong> {spot.spot_address}</label>
-            <label><strong>SPOT DESCRIPTION:</strong> {spot.spot_description}</label>
-            
+            <label><strong>SPOT NAME: </strong><h1>{spot.spotName}</h1></label>
+            <label><strong>SPOT LOCATION:</strong> {spot.location}</label>
+            <label><strong>SPOT DESCRIPTION:</strong> {spot.description}</label>
+            <label><strong>PEOPLE COUNT:</strong> {getStatus()}</label>
             <div className='join-organize-button'>
               <button onClick={handleClickListItem}>Join</button>
               <button onClick={handleOrganizeClick}>Organize</button>
@@ -70,7 +96,8 @@ const handleOrganizeSubmit = (formData) => {
         />
           <GroupOrganizeForm id="ringtone-menu"
           keepMounted
-          spotName={spot.spot_name}
+          userId={userId}
+          spotName={spot.spotName}
           open={organizeFormVisible}
           onClose={handleClose} onSubmit={handleOrganizeSubmit} />
           </> 

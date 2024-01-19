@@ -27,7 +27,7 @@ function App() {
         <Route path="/EventsHomePage" element={<EventsHomePage/>}/>
         <Route path="/TouristHomePage" element={<TouristSpotHomePage/>}/>
         <Route path='/Events/:eventId' element={<Event userId={userId}/>}/>
-        <Route path='/Spot/:spotId' element={<TouristSpot/>}/>
+        <Route path='/Spot/:spotId' element={<TouristSpot userId={userId}/>}/>
         <Route path="/component" element={<BlogSlider/>}/>
         <Route path='/profile/:userId' element={<ProfilePage/>}/>
       </Routes></div>

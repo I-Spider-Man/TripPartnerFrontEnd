@@ -1,25 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './EventsHome.css'
 import {HiOutlineLocationMarker} from 'react-icons/hi'
-import {MdOutlineJoinInner} from 'react-icons/md'
 import {IoMdRadioButtonOn} from 'react-icons/io'
-import NavBar from '../NavBar/NavBar'
-import Footer from '../Footer/Footer'
-import {Event_Details} from '../Files/Event_Details'
+import {fetch_Event_Details, fetch_popularEvents} from '../Files/Event_Details'
 
 
 const EventsHomePage = () => {
-    
-    function shuffleArray(array) {
-        let shuffledArray = [...array];
-        for (let i = shuffledArray.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    const [eventDetails,setEventDetails]=useState([{}]);
+    const [popularEvents,setPopularEvents]=useState([{}]);
+    useEffect(()=>{
+        const fetchData=async()=>{
+        try{
+            const response=await fetch_Event_Details();
+            const response1=await fetch_popularEvents();
+            setEventDetails(response);
+            setPopularEvents(response1);
+        }catch(error){
+            console.log("error while fetching event details",error);
         }
-        return shuffledArray;
-      }
-    const shuffledDetails = shuffleArray(Event_Details.slice(0, 5));
+    }
+    fetchData();
+    },[])
+    
+    useEffect(()=>{
+        console.log(eventDetails);
+    },[eventDetails])
   return (
     <section className="main container section">
         <div style={{minHeight:'100vh'}}>
@@ -31,29 +37,24 @@ const EventsHomePage = () => {
  
         <div className="secContent grid">
             {
-                shuffledDetails.slice(0,5).map(({event_id, event_image, event_name, event_address,event_discription})=>{
-                    const maxDescriptionLength = 110;
-                    const truncatedDescription =
-                      event_discription.length > maxDescriptionLength
-                        ? `${event_discription.substring(0, maxDescriptionLength)}...`
-                        : event_discription;
+                popularEvents.map(({eventId, eventPicture, eventName, location,description})=>{
                     return(
-                        <div key={event_id} className="singleDestination" style={{padding:'5px'}}>
+                        <div key={eventId} className="singleDestination" style={{padding:'5px'}}>
                             <div className="imageDiv">
-                                <img src={event_image} alt={event_name} />
+                                <img src={eventPicture} alt={eventName} />
                             </div>
  
                             <div className="cardInfo" style={{display:'flex', flexDirection:'column',gap:'5px', justifyContent:'center'}}>
-                                <h4 className="event_name">{event_name}</h4>
+                                <h4 className="eventName">{eventName}</h4>
                                 <span className="continent flex">
                                 <HiOutlineLocationMarker className='icon' />
-                                <span className="name">{event_address}</span>
+                                <span className="name">{location}</span>
                                 </span>
  
                                 <div className="desc">
-                                    <p>{truncatedDescription}</p>
+                                    <p>{description}</p>
                                 </div>
-                                <Link to={`/Events/${encodeURIComponent(event_id)}`}><button className="btn flex">
+                                <Link to={`/Events/${encodeURIComponent(eventId)}`}><button className="btn flex">
                                     VIEW MORE
                                     <IoMdRadioButtonOn className='icon'/>
                                 </button></Link>
@@ -77,29 +78,24 @@ const EventsHomePage = () => {
         </div>
         <div className="secContent grid">
             {
-                Event_Details.map(({event_id, event_image, event_name, event_address, event_discription})=>{
-                    const maxDescriptionLength = 110;
-                    const truncatedDescription =
-                      event_discription.length > maxDescriptionLength
-                        ? `${event_discription.substring(0, maxDescriptionLength)}...`
-                        : event_discription;
+                eventDetails.map(({eventId, eventPicture, eventName, location, description})=>{
                     return(
-                        <div key={event_id} className="singleDestination" style={{padding:'5px'}}>
+                        <div key={eventId} className="singleDestination" style={{padding:'5px'}}>
                             <div className="imageDiv">
-                                <img src={event_image} alt={event_name} />
+                                <img src={eventPicture} alt={eventName} />
                             </div>
  
                             <div className="cardInfo">
-                                <h4 className="event_name">{event_name}</h4>
+                                <h4 className="eventName">{eventName}</h4>
                                 <span className="continent flex">
                                 <HiOutlineLocationMarker className='icon' />
-                                <span className="name">{event_address}</span>
+                                <span className="name">{location}</span>
                                 </span>
  
                                 <div className="desc">
-                                    <p>{truncatedDescription}</p>
+                                    <p>{description}</p>
                                 </div>
-                                <Link to={`/Events/${encodeURIComponent(event_id)}`}><button className="btn flex">
+                                <Link to={`/Events/${encodeURIComponent(eventId)}`}><button className="btn flex">
                                     VIEW MORE
                                     <IoMdRadioButtonOn className='icon'/>
                                 </button></Link>

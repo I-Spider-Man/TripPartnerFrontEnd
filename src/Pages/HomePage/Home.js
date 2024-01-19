@@ -16,7 +16,7 @@ function Home() {
     const fetchData = async () => {
       try {
         const response = await (fetch_Event_Details());
-        const response1 = await(fetch_spot_data());
+        const response1 = await (fetch_spot_data());
         setSpotDetails(response1);
         setEventDetails(response);
       } catch (error) {
@@ -24,27 +24,26 @@ function Home() {
       }
     };
     fetchData();
-  },[Event_Details]);
+  },[1]);
     useEffect(() => {
     console.log("event", Event_Details);
   }, [Event_Details]);
   useEffect(() => {
     console.log("spot", Spot_Details);
   }, [Spot_Details]);
-  const [event,setEvent]=useState({});  
+  const [event,setEvent]=useState({});
   const [spot,setSpot]=useState({});
   const eventDetails=Event_Details.slice(0,4);
   const spotDetails = Spot_Details.slice(0, 4);
   const [currentEvent, setCurrentEvent] = useState(0);
   const [currentSpot,setCurrentSpot]=useState(0);
-
- 
-
 useEffect(()=>{
   setEvent(eventDetails[currentEvent]);
+  console.log("single event ",event)
 },[currentEvent]);
 useEffect(()=>{
   setSpot(spotDetails[currentSpot])
+  console.log("single spot ",spot)
 },[currentSpot])
 
   const nextEvent = () => {
