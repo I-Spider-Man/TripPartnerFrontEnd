@@ -1,0 +1,38 @@
+.details-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+  }
+  
+  .spot-details-content {
+    max-width: 800px;
+    margin: auto;
+  
+    h2 {
+      text-align: center;
+    }
+  
+    .spot-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+  
+      .spot-image {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 20px;
+      }
+  
+      .spot-text {
+        text-align: center;
+  
+        p {
+          margin: 8px 0;
+        }
+      }
+    }
+  }
+  

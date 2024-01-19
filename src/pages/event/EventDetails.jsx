@@ -1,5 +1,3 @@
-// EventDetails.jsx
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -14,7 +12,7 @@ const EventDetails = () => {
   useEffect(() => {
     const fetchEventDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8099/Admin/events/${eventId}`);
+        const response = await axios.get(`http://localhost:8080/Admin/events/${eventId}`);
         setEventDetails(response.data);
       } catch (error) {
         console.error("Error fetching event details:", error);
@@ -26,14 +24,14 @@ const EventDetails = () => {
 
   return (
     <div className="list">
-            <Sidebar />
-            <div className="listContainer">
-                <Navbar />
+      <Sidebar />
+      <div className="listContainer">
+        <Navbar />
 
         <div className="event-details-content">
           <h2>Event Details</h2>
           <div className="event-info">
-            <img src={"https://th.bing.com/th/id/OIP.mKiMi5YuLxFciIAhteUD-wHaE7?rs=1&pid=ImgDetMain"} alt="Event" className="event-image" />
+            <img src={eventDetails.eventUrl} alt="Event" className="event-image" />
             <div className="event-text">
               <p><strong>Event ID:</strong> {eventDetails.eventId}</p>
               <p><strong>Event Name:</strong> {eventDetails.eventName}</p>
@@ -48,7 +46,7 @@ const EventDetails = () => {
           </div>
         </div>
       </div>
-      </div>
+    </div>
   );
 };
 

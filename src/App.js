@@ -3,14 +3,14 @@ import Login from "./pages/login/Login";
 import Logout from "./pages/logout/Logout";
 import List from "./pages/list/List";
 import Single from "./pages/single/Single";
-import New from "./pages/new/New";
+import NewTouristSpotForm from "./pages/touristSpot/NewTouristSpotForm";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { productInputs, spotInputs, userInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import TouristSpot from "./pages/touristSpot/TouristSpot";
-import { Group } from "@mui/icons-material";
+import TouristSpotDetails from "./pages/touristSpot/TouristSpotDetails";
 import Groups from "./pages/group/Groups";
 import Organizers from "./pages/Organzier/Organizers";
 import SingleUser from "./pages/list/SingleUser";
@@ -46,9 +46,9 @@ function App() {
               <Route index element={<TouristSpot/>}/>
               <Route
                 path="newSpot"
-                element={<New inputs={spotInputs} title="Add New Events" />}
+                element={<NewTouristSpotForm inputs={spotInputs} title="Add New Spot" />}
               />
-              <Route path=":spotId" element={<Single />} />
+              <Route path=":spotId" element={<TouristSpotDetails />} />
             </Route>
             <Route path="organizer">
               <Route index element={<Organizers/>}/>
