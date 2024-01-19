@@ -1,3 +1,4 @@
+import './GroupOrganizerForm.css';
 import React, { useState } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -124,7 +125,7 @@ const GroupOrganizeForm = ({userId, eventName, spotName, ...props }) => {
           <label>
                   Start Date:<br></br>
                   <LocalizationProvider dateAdapter={AdapterDayjs} >
-                    <DatePicker 
+                    <DatePicker className='akash1' 
                       value={groupForm.dateFrom}
                       onChange={handleStartDateChange}
                       disablePast
@@ -136,7 +137,7 @@ const GroupOrganizeForm = ({userId, eventName, spotName, ...props }) => {
                 <label>
                   End Date:<br></br>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
+                    <DatePicker  className='akash1'
                       value={groupForm.dateTo}
                       onChange={handleEndDateChange}
                       format="YYYY-MM-DD"
@@ -152,7 +153,7 @@ const GroupOrganizeForm = ({userId, eventName, spotName, ...props }) => {
       </DialogContent>
         <DialogActions>
           <Button variant='contained' onClick={()=>handleOk()} >Submit</Button>
-          <Button variant='outlined' onClick={()=>handleCancel()}>Cancel</Button>
+          <Button variant='outlined' onClick={()=>handleCancel() }>Cancel</Button>
         </DialogActions>
 
           

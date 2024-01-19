@@ -69,7 +69,7 @@ function NavBar({onUserIdChange}) {
         open={visible}
         TransitionComponent={Transition}
         onClose={handleClose}
-        sx={{ '& .MuiDialog-paper': { width: 'auto', minHeight: 'auto' ,padding:'0px 0px', borderRadius:'15px'} }}
+        sx={{ '& .MuiDialog-paper': { width: 'auto', minHeight: 'auto' ,padding:'0px 0px', borderRadius:'15px',overflow:'hidden'} }}
       >
         <LoginPage onClose={()=>{handleClose()}} onReturn={childValue}/>
       </Dialog>
