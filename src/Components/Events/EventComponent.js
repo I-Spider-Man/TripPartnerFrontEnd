@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 
 function EventComponent(props) {
   const { post } = props;
+  console.log(post);
   return (
     <Grid item xs={12} md={6}>
       <Link  to={`/Events/${encodeURIComponent(post.event_id)}`}>

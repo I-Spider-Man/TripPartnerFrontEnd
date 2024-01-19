@@ -1,4 +1,6 @@
-const Tourist_Spot_Details= [
+import axios from "axios"
+
+export const Tourist_Spot_Details= [
     {
         spot_id: 1,
         spot_image: "https://www.holidify.com/images/bgImages/COORG.jpg",
@@ -88,5 +90,12 @@ const Tourist_Spot_Details= [
     },
 
 ]
- 
-export default Tourist_Spot_Details;
+
+export const fetch_spot_data=async()=>{
+    try{
+        const response=await axios.get("http://localhost:8080/Spots");
+        return response.data;
+    }catch(error){
+        console.log("error while fetching spot data ",error);
+    }
+}

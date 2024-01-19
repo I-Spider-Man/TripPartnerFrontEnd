@@ -1,14 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './TouristSpotHomePage.css'
 import {HiOutlineLocationMarker} from 'react-icons/hi'
 import {MdOutlineJoinInner} from 'react-icons/md'
 import {IoMdRadioButtonOn} from 'react-icons/io'
 import NavBar from '../NavBar/NavBar'
 import Footer from '../Footer/Footer'
-import Tourist_Spot_Details from '../Files/TouristSpotDetails'
 import {Link} from 'react-router-dom'
+import { fetch_spot_data } from '../Files/TouristSpotDetails'
 
 const TouristSpotHomePage = () => {
+    const [Tourist_Spot_Details,setTourist_Spot_Details]=useState([{}]);
+    const fetchData = async () => {
+        try {
+          const response1 = await(fetch_spot_data());
+          setTourist_Spot_Details(response1);
+        } catch (error) {
+          console.log("Error while fetching event data:", error);
+        }
+      };
+      fetchData();
     const backgroundImageStyle = {
         backgroundImage: `url('https://trip-partner.s3.eu-north-1.amazonaws.com/pexels-kwnos-iv-16785282+(1)+(1).jpg')`,
         backgroundSize: 'cover',
@@ -17,6 +27,7 @@ const TouristSpotHomePage = () => {
         margin: 0,       // Remove default margin
         padding: 0,      // Remove default padding
       };
+    
     function shuffleArray(array) {
         let shuffledArray = [...array];
         for (let i = shuffledArray.length - 1; i > 0; i--) {

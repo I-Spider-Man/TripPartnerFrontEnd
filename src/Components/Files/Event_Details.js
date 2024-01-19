@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const Event_Details=[{
         event_id:1,
         event_name:"Candle Light India",
@@ -44,3 +46,12 @@ export const Event_Details=[{
       },
     ]
 
+export const fetch_Event_Details = async() => {
+  try{
+    const response=await axios.get("http://localhost:8080/Admin/ActiveEvents");
+    return response.data;
+  }catch(error){
+    console.log(error);
+    return [];
+  }
+}

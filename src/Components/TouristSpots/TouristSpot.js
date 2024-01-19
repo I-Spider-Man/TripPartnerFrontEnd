@@ -1,7 +1,7 @@
 import NavBar from '../NavBar/NavBar'
 import { useParams } from 'react-router-dom'
 import './TouristSpot.css'
-import TouristSpotDetails from '../Files/TouristSpotDetails';
+import {fetch_spot_data } from '../Files/TouristSpotDetails';
 import Footer from '../Footer/Footer';
 import Loading from '../LoadingComponents/Loading';
 import { useState } from 'react';
@@ -10,6 +10,16 @@ import EventsJoinPage from '../Events/EventsJoinPage';
 import GroupOrganizeForm from '../Group/GroupOrganizeForm';
 function TouristSpot() {
   const [open, setOpen] = useState(false);
+  const [TouristSpotDetails,setTourist_Spot_Details]=useState([{}]);
+  const fetchData = async () => {
+      try {
+        const response1 = await(fetch_spot_data());
+        setTourist_Spot_Details(response1);
+      } catch (error) {
+        console.log("Error while fetching event data:", error);
+      }
+    };
+    fetchData();
   const handleClickListItem = () => {
     setOpen(true);
   };
