@@ -46,7 +46,7 @@ function App() {
               <Route index element={<TouristSpot/>}/>
               <Route
                 path="newSpot"
-                element={<New inputs={spotInputs} title="Add New Events" />}
+                element={<New inputs={spotInputs} title="Add New Tourist spots" />}
               />
               <Route path=":spotId" element={<Single />} />
             </Route>

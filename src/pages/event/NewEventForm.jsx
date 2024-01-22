@@ -9,6 +9,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { Button, styled } from '@mui/material';
 const NewEventForm = () => {
   const [eventData, setEventData] = useState({
     eventName: '',
@@ -44,7 +46,17 @@ const NewEventForm = () => {
       startDate: dayjs(newStartDate).format('YYYY-MM-DD'), // Assuming you want to store the date as a string in ISO format
     }));
   };
-  
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+  });
   const handleEndDateChange = (newEndDate) => {
     if (dayjs(newEndDate).isBefore(eventData.startDate)) {
       alert("End date should not be before start date.");
@@ -109,7 +121,6 @@ const NewEventForm = () => {
                       onChange={handleEndDateChange}
                       format="YYYY-MM-DD"
                       disablePast
-                     
                     />
                   </LocalizationProvider>
                 </label>
@@ -122,6 +133,10 @@ const NewEventForm = () => {
                         required
                     />
                 </label>
+                <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
+                  Upload file
+                  <VisuallyHiddenInput type="file" />
+                </Button>
                 <button className='aa' type="submit">Create Event</button>
             </form>
             {/* <ToastContainer /> */}

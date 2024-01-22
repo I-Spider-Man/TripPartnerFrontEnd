@@ -6,15 +6,27 @@ import { useState } from "react";
 import axios from "axios";
 import { Button } from "@mui/material";
 import { postSpot } from "../../PostData";
-
+import ImageUploading from 'react-images-uploading';
 const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
   const [spotData, setspotData] = useState({
     spotName:"",
     location:"",
     description:"",
+    spotPicture:"",
   });
- 
+  const [images, setImages] = useState([]);
+  const maxNumber =1;
+
+  const onChange = (imageList, addUpdateIndex) => {
+    // data for submit
+    const formData=new FormData();
+    formData.append('file',imageList[0]);
+    console.log(formData);
+    console.log(imageList, addUpdateIndex);
+
+    setImages(imageList);
+  };
   const handleInputChange = (inputId, value) => {
     setspotData((prevData) => ({
       ...prevData,
@@ -26,7 +38,10 @@ const New = ({ inputs, title }) => {
     setFile(e.target.files[0]);
     handleInputChange("image", e.target.files[0]);
   };
- 
+ const formData=new FormData();
+ formData.append('profile',file);
+
+ console.log(formData,file);
   const handleSendClick = async (e) => {
     e.preventDefault(e);
  
@@ -53,20 +68,44 @@ const New = ({ inputs, title }) => {
         </div>
         <div className="bottom">
           <div className="left">
-            <img
-              src={
-                file
-                  ? URL.createObjectURL(file)
-                  : "https://trip-partner.s3.eu-north-1.amazonaws.com/login_signUp.svg"
-              }
-              alt=""
-            />
+           
+          <ImageUploading
+                multiple
+                value={images}
+                onChange={onChange}
+                maxNumber={maxNumber}
+                dataURLKey="data_url"
+              >
+        {({imageList,onImageUpload,onImageUpdate,onImageRemove,isDragging,dragProps,}) => (
+          <div className="upload__image-wrapper">
+            Image upload
+            <Button variant="contained"
+              style={isDragging ? { color: 'red' } : undefined}
+              onClick={onImageUpload}
+              {...dragProps}
+            >
+              Click or Drop here
+            </Button>
+            &nbsp;
+
+            {imageList.map((image, index) => (
+              <div key={index} className="image-item">
+                <img src={image['data_url']} alt="" width="100" />
+                <div className="image-item__btn-wrapper">
+                  <button onClick={() => onImageUpdate(index)}>Update</button>
+                  <button onClick={() => onImageRemove(index)}>Remove</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </ImageUploading>
           </div>
           <div className="right">
             <form>
 
               <div className="formInput">
-                <label htmlFor="file">
+              <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
                 </label>
                 <input

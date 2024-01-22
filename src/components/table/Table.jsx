@@ -45,8 +45,10 @@ const List = () => {
                 <span className={`status ${row.groupStatus}`}>{row.groupStatus}</span>
               </TableCell>
             </TableRow>
-          ))}</> :
-        <span>no data</span>
+          ))}</> :(
+            <TableRow><TableCell>NO ACTIVE GROUPS</TableCell></TableRow>
+          )
+        
         }
           
         </TableBody>
