@@ -10,17 +10,18 @@ import { Link } from 'react-router-dom';
 
 function TouristSpotComponent(props) {
   const { post } = props;
+  console.log(post)
   return (
     <Grid item xs={12} md={6}>
-      <Link  to={`/Spot/${encodeURIComponent(post.spot_id)}`}>
+      <Link  to={`/Spot/${encodeURIComponent(post.spotId)}`}>
       <CardActionArea component="Link">
         <Card sx={{ display: 'flex', height: 120, width: 500 }}>
           <CardContent sx={{ flex: 1 }}>
             <Typography component="h2" variant="h5">
-              {post.spot_name}
+              {post.spotName}
             </Typography>
             <Typography variant="subtitle1" color="text.secondary">
-              {post.spot_address}
+              {post.location}
             </Typography>
           </CardContent>
           <CardMedia

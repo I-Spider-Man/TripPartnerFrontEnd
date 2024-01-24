@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import './LoginPage.css';
-import axios from 'axios';
 import {UserProfileAva, registerUser, generateOtp, getUserDetails} from '../Files/User_profile_avator'
 import { forgotPassword } from '../Files/Other_DataBase';
-
+import Button from '@mui/material/Button';
+import { Tooltip } from '@mui/material';
+import {LoadingButton} from '@mui/lab';
+import { CircularProgress } from '@mui/material';
 function LoginPage({ onClose , onReturn}) {
   const [otpInput, setOtpInput] = useState(false);
+  const [otpProcess,setOtpProcess]=useState(false);
   const [userDetails,setUserDetails]=useState({
+    userId:'',
     userName:"",
     userEmail:"",
     userPassword:"",
@@ -23,17 +27,21 @@ function LoginPage({ onClose , onReturn}) {
   const showForgotPassword=()=>{
     setUserDetails({
       ...userDetails,
-      userName: null,
-      userEmail: null,
-      userPassword: null,
-      userProfile: null
+      userId:'',
+      userName: "",
+      userEmail: "",
+      userPassword: "",
+      userProfile: ""
     });
+
     setForgotPassword(!isforgotPassword);
   }
+  console.log(userDetails);
   const handleForgotPassword=async()=>{
+    console.log(userotp+"   "+otp);
     if(userotp==otp && userotp!='' && otp!=''){
       await forgotPassword(userDetails.userEmail);
-      alert("check your email for new password");
+      
       showForgotPassword();
     }else{
       alert("entered otp is wrong");
@@ -41,21 +49,26 @@ function LoginPage({ onClose , onReturn}) {
   }
   console.log(userDetails);
   const getOtp=async()=>{
+    if(!userDetails.userEmail?.trim()){
+      return null;
+    }
+    setOtpProcess(true)
     toggleOTPinput();
     const response=await generateOtp(userDetails.userEmail);
     setUserOtp(response);
     console.log("user otp"+userotp);
     setGeneratedOtp(!generatedOtp);
+    setOtpProcess(false)
 }
 const handleLogin = async (e) => {
   e.preventDefault();
   try {
     const userData = await getUserDetails(userDetails.userEmail);
-
     if (userData.userPassword === userDetails.userPassword) {
       console.log("login success");
       setUserDetails((prevState) => ({
         ...prevState,
+        userId: userData.userId,
         userProfile: userData.userProfile,
         userName: userData.userName,
       }));
@@ -63,6 +76,7 @@ const handleLogin = async (e) => {
       // Use the updated userDetails from the state
       const updatedUserDetails = {
         ...userDetails,
+        userId: userData.userId,
         userProfile: userData.userProfile,
         userName: userData.userName,
       };
@@ -75,7 +89,13 @@ const handleLogin = async (e) => {
     alert('Email not found. Register!!!');
   }
 };
-
+const handleChange=(e)=>{
+  const {name,value}=e.target;
+  setUserDetails((preData)=>({
+    ...userDetails,
+    [name]:value
+  }))
+}
 
 const handleSubmit=async()=>{
   console.log('Current state values:', { otp, userotp, ...userDetails.userPassword, userPasswordC });
@@ -135,65 +155,84 @@ const randomIndex = Math.floor(Math.random() * UserProfileAva.length);
       <div className="login-signup-container" onClick={(e)=> e.stopPropagation()}>
     <input type="checkbox" id="chk" aria-hidden="true" />
     <div className="login">
-    {!isforgotPassword ? (<><form className="login-form">
+    {!isforgotPassword ? (<><form className="login-form" style={{maxHeight:'345px',minHeight:'345px'}}>
         <label htmlFor="chk" aria-hidden="true">Log in</label>
         
         <input
           className="login-input"
           type="email"
+          name='userEmail'
+          value={userDetails.userEmail}
           placeholder="Email"
-          onBlur={validateEmail}
-          onChange={(e)=>setUserDetails({...userDetails,userEmail:e.target.value})}
+          onChange={handleChange}
           // required
         />
         <input className="login-input"
         type="password"
+        name='userPassword'
+        value={userDetails.userPassword}
         placeholder="Password"
-        onChange={(e)=>setUserDetails({...userDetails,userPassword:e.target.value})}
+        onChange={handleChange}
         // required
         />
         <span className='forgot-password' onClick={()=>showForgotPassword()}>Forgot password?</span>
-        <button onClick={(e)=>handleLogin(e)}>Log in</button>
+        <Button variant='contained' onClick={(e)=>handleLogin(e)}>Login In</Button>
       </form>
       </>) 
       : 
-      (<><form className='forgot-form'>
+      (<><form className='forgot-form' style={{minHeight:'345px',maxHeight:'345px'}}>
       <label >Forgot password</label>
         <input
           className="login-input"
           type="email"
+          name='userEmail'
+          value={userDetails.userEmail}
           placeholder="Email"
-          onChange={(e)=>setUserDetails({...userDetails,userEmail:e.target.value})}
+          onChange={handleChange}
           required
         />
-        <input className="login-input"
+        {userotp && <input className="login-input"
         type="otp"
+        name='otp'
         placeholder="Enter OTP"
         onChange={(e)=>setOtp(e.target.value)}
         required
-        />
+        />}
         <span className='back-to-sign-in' onClick={()=>showForgotPassword()}>Back to sign in</span>
-        {generatedOtp ? (
-          <><button onClick={()=>{handleForgotPassword()}} >Generate Password</button>
+        {userotp ? (
+          <> <Button variant='contained' onClick={()=>handleForgotPassword()}>Generate Password</Button>
           </>
-        ) : (<><button onClick={()=>getOtp()}>Get Otp</button>
-        </>)}
+        ) : (<div onClick={()=>getOtp()} style={{width:'100%',display:'flex',alignItems:'center'}} disabled={!userDetails.userEmail?.trim()}>
+        <LoadingButton loading={otpProcess} loadingIndicator={<div style={{display:'flex',alignItems:'center',color:'white',gap:'10px' }}>Sending OTP<CircularProgress color="primary" size={16} /></div>}> Get OTP</LoadingButton>
+        </div>)}
         
       </form>
       </>)}
     </div>
 
-
-
-
-
-
     <div className="register">
       <form className="reg-form" onSubmit={handleSubmit}>
         <label htmlFor="chk" aria-hidden="true">Register</label>
-        <input className="reg-input" type="text"  name="userName" placeholder="Username" required onBlur={(e)=>setUserDetails({...userDetails,userName:e.target.value})}/>
-        <div className='reg' style={{ display: "flex", flexDirection: "row" }}>
-         {otpInput ? (<><input
+        <input className="reg-input" type="text"  name="userName" value={userDetails.userName} placeholder="Username" required onChange={handleChange}/>
+        <div className='reg' style={{ display: "flex", flexDirection: "row",alignItems:'center',gap:'5px',marginLeft:'10px' }}>
+        <input
+            className="reg-input"
+            type="email"
+            name="userEmail"
+            value={userDetails.userEmail}
+            placeholder="Email"
+            onChange={handleChange}
+            style={{width:'312px',marginLeft:'58px'}}
+            required
+          />
+          <div onClick={()=>getOtp()}>
+            <LoadingButton variant="contained" sx={{width:50,height:30, fontSize:10,backgroundColor:'#573b8a'}} loading={otpProcess} loadingIndicator={<CircularProgress color="primary" size={16} />}> 
+              Get OTP
+            </LoadingButton>
+          </div>
+          
+        </div>
+         {userotp && <><input
       className="reg-input"
       type="text"
       name="otpreg"
@@ -202,55 +241,25 @@ const randomIndex = Math.floor(Math.random() * UserProfileAva.length);
       onChange={(e)=>setOtp(e.target.value)}
       style={{ paddingRight: '40px' }}
       required
-    />
-          <button className='verify-button'
-            style={{ position: 'absolute',
-            right: '5px',
-            top: '50%',
-            transform: 'translateY(-204%) translateX(-151%)', tabSize: "30px" }} 
-            onClick={toggleOTPinput}
-          >
-            Check Email
-          </button></>
-            
-           ) : (<><input
-            className="reg-input"
-            type="email"
-            name="email"
-            placeholder="Email"
-            onBlur={(e) => setUserDetails({...userDetails,userEmail:e.target.value})}
-            style={{ paddingRight: '40px' }}
-            required
-          />
-          <button className='verify-button'
-          style={{ position: 'absolute',
-          right: '5px',
-          top: '50%',
-          transform: 'translateY(-204%) translateX(-151%)', tabSize: "30px" }} 
-          onClick={()=>validateEmail()}
-          disabled={!userDetails.userEmail?.trim()}
-        >
-          Get otp
-        </button></>
-
-           )}
-
-        </div>
-        <input className="reg-input" type="password" value={userDetails.userPassword} name="pswd" placeholder="Password" required onChange={(e)=>setUserDetails({...userDetails,userPassword:e.target.value})}/>
+    /></>}
+    <div style={{display:'flex',flexDirection:'row',alignItems:'center',gap:'10px'}}>
+      <input className="reg-input" type="password" style={{width:'315px',marginLeft:'25px'}} value={userDetails.userPassword} name="pswd" placeholder="Password" required onChange={(e)=>setUserDetails({...userDetails,userPassword:e.target.value})}/>
         <div className='pass-detail-container'>
-        {isPasswordValid ? (<><svg className='pass-detail' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16" style={{color:'green'}}>
+        
+        {isPasswordValid ? 
+        (<Tooltip title="Password containes at least one uppercase letter, one numeric digit, one special character and one lowercase letter" placement='top' disableInteractive>
+        <svg className='pass-detail' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16" style={{color:'green'}}>
   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
   <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
-</svg></>):<><svg className='pass-detail' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+</svg></Tooltip>)
+:<Tooltip title="Password must contain at least one uppercase letter, one numeric digit, and one special character." placement='top' disableInteractive><svg className='pass-detail' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-</svg></>}
-      <div className='tooltip'>
-        Password must contain at least one uppercase letter, one numeric digit, and one special character.
-      </div>
+</svg></Tooltip>}
+    </div>
     </div>
         <input className="reg-input" type="password" value={userPasswordC} name="cpswd" placeholder="Confirm Password" required onChange={(e)=>setUserPasswordC(e.target.value)}/>
-        <button type='submit'>Register</button>
+        <button className='reg-button' type='submit'>Register</button>
       </form>
     </div>
     </div>

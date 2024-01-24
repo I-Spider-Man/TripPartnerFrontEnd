@@ -14,7 +14,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-function NavBar({profileAvatar}) {
+function NavBar({onUserIdChange}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [visible, setvisible] = useState(false);
   const [login,setLogin]=useState(false);
@@ -38,6 +38,7 @@ function NavBar({profileAvatar}) {
     setUserId(value.userId);
     setProfileAva(value.userProfile);
     setLogin(true);
+    onUserIdChange(value.userId);
   };
   return (
     <React.Fragment>
@@ -68,7 +69,7 @@ function NavBar({profileAvatar}) {
         open={visible}
         TransitionComponent={Transition}
         onClose={handleClose}
-        sx={{ '& .MuiDialog-paper': { width: 'auto', minHeight: 'auto' ,padding:'0px 0px', borderRadius:'15px'} }}
+        sx={{ '& .MuiDialog-paper': { width: 'auto', minHeight: 'auto' ,padding:'0px 0px', borderRadius:'15px',overflow:'hidden'} }}
       >
         <LoginPage onClose={()=>{handleClose()}} onReturn={childValue}/>
       </Dialog>

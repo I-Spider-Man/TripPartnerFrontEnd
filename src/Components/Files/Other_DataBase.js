@@ -7,6 +7,7 @@ export const forgotPassword=async(userEmail)=>{
                 userEmail:userEmail
             }
         }).then((response)=>{console.log(response.data)});
+        alert("check your email for new password");
     }
     catch(error){
         console.log("error while sending forgotPassword Request : "+error)

@@ -14,12 +14,10 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow-y: scroll; /* Ensure no content overflows the popup */
   }
-  
-  /* .overlay.active,
-  .popup.active {
-    display: block;
-  } */
-  
+  .akash1{
+    background-color: white;
+  }
+
   .popup h2 {
     margin-bottom: 20px;
   }
