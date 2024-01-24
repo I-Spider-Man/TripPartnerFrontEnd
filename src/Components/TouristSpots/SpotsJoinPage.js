@@ -5,7 +5,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Dialog from '@mui/material/Dialog';
-import Group_details from '../Files/Group_Details';
+import {Group_details} from '../Files/Group_Details';
 
 function SpotsJoinPage(props) {
   const { onClose, value: valueProp, open, ...other } = props;

@@ -10,23 +10,24 @@ import { Link } from 'react-router-dom';
 
 function EventComponent(props) {
   const { post } = props;
+  console.log(post);
   return (
     <Grid item xs={12} md={6}>
-      <Link  to={`/Events/${encodeURIComponent(post.event_id)}`}>
+      <Link  to={`/Events/${encodeURIComponent(post.eventId)}`}>
       <CardActionArea component="Link">
         <Card sx={{ display: 'flex', height: 120, width: 500 }}>
           <CardContent sx={{ flex: 1 }}>
             <Typography component="h2" variant="h5">
-              {post.event_name}
+              {post.eventName}
             </Typography>
             <Typography variant="subtitle1" color="text.secondary">
-              {post.event_happening}
+              {post.startDate} - {post.endDate}
             </Typography>
           </CardContent>
           <CardMedia
             component="img"
             sx={{ width: 250, display: { xs: 'none', sm: 'block' } }}
-            image={post.event_image}
+            image={post.eventPicture}
             alt={post.imageLabel}
           />
         </Card>

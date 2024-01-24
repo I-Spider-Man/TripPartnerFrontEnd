@@ -1,4 +1,6 @@
-const Group_details=[
+import axios from "axios"
+
+export const Group_details=[
     {
         "groupId": 1,
         "groupName": "Mugiwara",
@@ -26,4 +28,15 @@ const Group_details=[
         "participantsCount": 0
     }
 ]
-export default Group_details;
+
+export const postGroup=async(value)=>{
+    try{
+        const response=await axios.post("http://localhost:8080/organizer",value);
+        console.log(response.data);
+        return response.data;
+    }
+    catch(error){
+        console.log("error while creating group "+error);
+    }
+    
+}

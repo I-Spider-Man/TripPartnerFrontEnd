@@ -36,16 +36,12 @@ export const registerUser=async(value)=>{
   }
 }
 export const generateOtp=async(value)=>{
+  console.log(" otp rendered")
   try{
-    const response=await axios.get(`http://localhost:8080/User/otp/${value}`)
-    .catch(error => {
-      if (error.response.status === 400) {
-        alert("Email already present");
-        console.error('Error fetching data:', error);
-        return false;
-      }
-    });
+    const response=await axios.get(`http://localhost:8080/User/otp/${value}`);
     const otp=response.data;
+    alert("check your email for otp.");
+    console.log("otp obtained "+otp+ "response obtained "+response);
     return otp
   }catch(error){
     console.log("error while sending otp :",error)
