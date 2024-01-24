@@ -14,6 +14,7 @@ const GroupOrganizeForm = ({userId, eventName, spotName, ...props }) => {
       userId:userId.toString()
     }
   })
+
   const [groupForm,setGroupForm]=useState({
     groupName:"",
     about:"",
@@ -29,7 +30,7 @@ const GroupOrganizeForm = ({userId, eventName, spotName, ...props }) => {
       group: groupForm,
     });
   }, [groupForm]);
-  console.log(organizerFrom);
+  console.log("form data ",organizerFrom);
   console.log(groupForm);
   React.useEffect(() => {
     if (eventName !== undefined) {
@@ -60,10 +61,14 @@ const GroupOrganizeForm = ({userId, eventName, spotName, ...props }) => {
 
   const handleOk = async() => {
     try{
-      const groupData=await postGroup(organizerFrom);
+      const groupResponse=await postGroup(organizerFrom);
+      if(groupResponse){
+        alert("group successfully created");
+      }
       onSubmit();
     }catch(error){
-      console.log(error)
+      console.log(error);
+      alert("error while sending group form");
     }
     
   };
@@ -146,8 +151,6 @@ const GroupOrganizeForm = ({userId, eventName, spotName, ...props }) => {
                     />
                   </LocalizationProvider>
                 </label>
-
-
           <label>No. of Participants:</label>
           <input type="number" name='participantsLimit' style={{color:'black'}} value={groupForm.participantsLimit} onChange={handleChange} />
       </DialogContent>
@@ -155,8 +158,6 @@ const GroupOrganizeForm = ({userId, eventName, spotName, ...props }) => {
           <Button variant='contained' onClick={()=>handleOk()} >Submit</Button>
           <Button variant='outlined' onClick={()=>handleCancel() }>Cancel</Button>
         </DialogActions>
-
-          
     </Dialog>
   );
 };

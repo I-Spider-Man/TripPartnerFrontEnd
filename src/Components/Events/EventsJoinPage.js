@@ -10,10 +10,14 @@ import Radio from '@mui/material/Radio';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import {Group_details} from '../Files/Group_Details';
 
-function EventsJoinPage(props) {
+function EventsJoinPage(eventName,spotName,props) {
   const { onClose, open, ...other } = props;
+  const {groupDetails,setGroupDetails}=React.useState([{}]);
   const radioGroupRef = React.useRef(null);
-
+  React.useEffect(()=>{
+    const fetchGroup=async()=>{
+    }
+  })
   const handleEntering = () => {
     if (radioGroupRef.current != null) {
       radioGroupRef.current.focus();
