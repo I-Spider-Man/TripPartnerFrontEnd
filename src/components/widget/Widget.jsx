@@ -59,7 +59,7 @@ const Widget = ({ type }) => {
         isMoney: true,
         link: "View all events",
         count: count,
-        actualLink:'/events',
+        actualLink:'/Event',
         icon: (
           <EventIcon
             className="icon"

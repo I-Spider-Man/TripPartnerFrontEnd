@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import './NewEventForm.scss';
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { postEvent } from '../../PostData';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -17,10 +15,10 @@ const NewEventForm = () => {
     location: '',
     startDate: '',
     endDate: '',
-    description: '',
-    peopleCount: '',
+    description: ''
   });
-
+  const [eventPicture,setEventPicture]=useState(null);
+  const [privewURL,setPreviewURL]=useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEventData((prevData) => ({
@@ -31,10 +29,22 @@ const NewEventForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const formData=new FormData();
+    if(eventPicture){
+      formData.append('eventPicture',eventPicture);
+      if(!Object.values(eventData).some(value=>!value)){
+        formData.append('newEvent',JSON.stringify(eventData));
+      }else{
+        return alert("enter all event details");
+      }
+    }else{
+      return alert("provide event image");
+    }
     try {
-      await postEvent(eventData);
-      window.location.reload();
+      const response=await postEvent(formData);
+      console.log(response);
+      alert("event "+eventData.eventName+" added successfully.")
+      // window.location.reload();
     } catch (error) {
 
       console.error('Error creating event:', error);
@@ -50,18 +60,35 @@ const NewEventForm = () => {
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
     height: 1,
-    overflow: 'hidden',
+    overflow: 'none',
     position: 'absolute',
     bottom: 0,
     left: 0,
     whiteSpace: 'nowrap',
     width: 1,
   });
+  const handlePicture=(e)=>{
+    const file=e.target.files[0]
+    if((Math.floor(file.size/1024))<500){
+      setEventPicture(file);
+      if(file){
+        const fileRead=new FileReader();
+        fileRead.onloadend=()=>{
+          setPreviewURL(fileRead.result)
+        }
+        fileRead.readAsDataURL(file);
+      }
+      else{
+        setPreviewURL(null);
+      }
+    }else{
+      alert("picture size needs to be less then 500kb");
+    }
+  }
   const handleEndDateChange = (newEndDate) => {
     if (dayjs(newEndDate).isBefore(eventData.startDate)) {
       alert("End date should not be before start date.");
       setEventData((prevData)=>(
-        
         {
         ...prevData,
         endDate: null
@@ -135,11 +162,11 @@ const NewEventForm = () => {
                 </label>
                 <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
                   Upload file
-                  <VisuallyHiddenInput type="file" />
+                  <VisuallyHiddenInput type="file" onChange={handlePicture}/>
                 </Button>
+                {privewURL && (<><img src={privewURL} alt='preview' style={{width:"100%",height:"300px"}}/></>)}
                 <button className='aa' type="submit">Create Event</button>
             </form>
-            {/* <ToastContainer /> */}
     </div>
     </div>
     </div>
