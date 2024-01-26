@@ -44,7 +44,7 @@ const NewEventForm = () => {
       const response=await postEvent(formData);
       console.log(response);
       alert("event "+eventData.eventName+" added successfully.")
-      // window.location.reload();
+      window.location.reload();
     } catch (error) {
 
       console.error('Error creating event:', error);

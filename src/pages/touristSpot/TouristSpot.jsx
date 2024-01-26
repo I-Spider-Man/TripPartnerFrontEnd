@@ -57,7 +57,7 @@ function TouristSpot() {
           renderCell: (params) => {
             return (
               <div className="cellAction">
-                <Link to={`/spots/${params.row.spotId}`} style={{ textDecoration: "none" }}>
+                <Link to={`/touristspots/${params.row.spotId}`} style={{ textDecoration: "none" }}>
                   <div className="viewButton">View</div>
                 </Link>
                 <div className="deleteButton" onClick={() => handleDelete(params.row.spotId)}>

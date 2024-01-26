@@ -9,7 +9,16 @@ export const fetchUserData = async () => {
     return [];
   }
 };
-
+export const fetchPicture=async(PictureName)=>{
+  try{
+    console.log(PictureName);
+    const response=await axios.get(`http://localhost:8080/Picture/${PictureName}`,{responseType:'arraybuffer',});
+    const blob=new Blob([response.data],{type:response.headers['Content-Type']});
+    return (URL.createObjectURL(blob));
+  }catch(error){
+    return console.log(error);
+  }
+}
 export const fetchUserDataById = async (Id) => {
   try {
     const response = await axios.get(`http://localhost:8080/Admin/users/${Id}`);
@@ -146,3 +155,19 @@ export const fetchTouristSpotsData = async () => {
     return [];
   }
 };
+export const fetchSpotDataById=async(spotId)=>{
+  try{
+    const response=await axios.get(`http://localhost:8080/spots/${spotId}`);
+    return response.data;
+  }catch(error){
+    return console.log(error);
+  }
+}
+export const fetchEventDataByEventId=async(eventId)=>{
+  try{
+    const response=await axios.get(`http://localhost:8080/activeEvents/${eventId}`);
+    return response.data;
+  }catch(error){
+    return console.log(error);
+  }
+}

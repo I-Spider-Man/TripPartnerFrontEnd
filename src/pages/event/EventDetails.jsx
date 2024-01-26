@@ -1,54 +1,90 @@
-// EventDetails.jsx
-
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import Navbar from "../../components/navbar/Navbar";
+import "./EventDetails.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
-import './EventDetails.scss'; // Create and import the SCSS file for styling
+import Navbar from "../../components/navbar/Navbar";
+import Chart from "../../components/chart/Chart";
+import List from "../../components/table/Table";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { fetchPicture, fetchEventDataByEventId } from "../../DataStorage";
 
 const EventDetails = () => {
-  const { eventId } = useParams();
-  const [eventDetails, setEventDetails] = useState({});
-
-  useEffect(() => {
-    const fetchEventDetails = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8099/Admin/events/${eventId}`);
-        setEventDetails(response.data);
-      } catch (error) {
-        console.error("Error fetching event details:", error);
+  const [eventDetails,setEventDetails]=useState({});
+  const [eventPicture,setEventPicture]=useState(null);
+  const {eventId}=useParams();
+  useEffect(()=>{
+    const fetchEventDetails=async()=>{
+      try{
+        const response=await fetchEventDataByEventId(eventId);
+      setEventDetails(response);
+      const picture=await fetchPicture(response.eventPicture);
+      setEventPicture(picture);
+      }catch(error){
+        console.log(error);
       }
-    };
-
+    }
     fetchEventDetails();
-  }, [eventId]);
-
+  },[eventId])
   return (
-    <div className="list">
-            <Sidebar />
-            <div className="listContainer">
-                <Navbar />
-
-        <div className="event-details-content">
-          <h2>Event Details</h2>
-          <div className="event-info">
-            <img src={"https://th.bing.com/th/id/OIP.mKiMi5YuLxFciIAhteUD-wHaE7?rs=1&pid=ImgDetMain"} alt="Event" className="event-image" />
-            <div className="event-text">
-              <p><strong>Event ID:</strong> {eventDetails.eventId}</p>
-              <p><strong>Event Name:</strong> {eventDetails.eventName}</p>
-              <p><strong>Location:</strong> {eventDetails.location}</p>
-              <p><strong>Start Date:</strong> {eventDetails.startDate}</p>
-              <p><strong>End Date:</strong> {eventDetails.endDate}</p>
-              <p><strong>Event Status:</strong> {eventDetails.eventStatus}</p>
-              <p><strong>People Count:</strong> {eventDetails.peopleCount}</p>
-              <p><strong>Description:</strong> {eventDetails.description}</p>
-              {/* Add more fields as needed */}
+    <div className="single">
+      <Sidebar />
+      <div className="singleContainer">
+        <Navbar />
+        <div className="top">
+          <div className="left">
+            <img
+                src={eventPicture}
+                alt="eventPicture"
+                className="itemImg"
+                style={{width:'100%',minHeight:"300px",maxHeight:'300px',objectFit:'fill',objectPosition:'center'}}
+              />
+          </div>
+          <div className="right">
+          
+            <h1 className="title">Event Information</h1>
+            <div className="item">
+              
+              <div className="details">
+                <h1 className="itemTitle">{eventDetails.eventName}</h1>
+                <div className="detailItem">
+                  <span className="itemKey">Event Id: </span>
+                  <span className="itemValue">{eventDetails.eventId}</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Location: </span>
+                  <span className="itemValue">{eventDetails.location}</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Event start date: </span>
+                  <span className="itemValue">{eventDetails.startDate}</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Event End date: </span>
+                  <span className="itemValue">{eventDetails.endDate}</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Event status: </span>
+                  <span className="itemValue">{eventDetails.eventStatus}</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">People Count: </span>
+                  <span className="itemValue">{eventDetails.peopleCount}</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Description :</span>
+                  <span className="itemValue">
+                    {eventDetails.description}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <div className="bottom">
+        <h1 className="title">Last Transactions</h1>
+          <List/>
+        </div>
       </div>
-      </div>
+    </div>
   );
 };
 
