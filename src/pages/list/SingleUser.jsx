@@ -6,25 +6,20 @@ import Chart from '../../components/chart/Chart';
 import List from '../../components/table/Table';
 import axios from 'axios';
 import './singleuser.scss';
+import { fetchPicture, fetchUserData, fetchUserDataById } from '../../DataStorage';
 
 const SingleUser = () => {
-  const [userData, setUserData] = useState({
-    userId: null,
-    userName: '',
-    userEmail: '',
-    aboutUser: '',
-    userPassword: '',
-    userProfile:"",
-  });
-
+  const [userData, setUserData] = useState({});
+  const [userPicture,setUserPicture]=useState(null);
   const { userId } = useParams(); // Use useParams to get the dynamic parameter from the URL
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/Admin/users/${userId}`); // Use the dynamic userId
-
-        setUserData(response.data);
+        const response = await fetchUserDataById(userId) // Use the dynamic userId
+        setUserData(response);
+        const picture =await fetchPicture(response.userProfile);
+        setUserPicture(picture);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -44,7 +39,7 @@ const SingleUser = () => {
             <h1 className="title">Information</h1>
             <div className="item">
               <img
-                src={userData.userProfile}
+                src={userPicture}
                 alt=""
                 className="itemImg"
               />
