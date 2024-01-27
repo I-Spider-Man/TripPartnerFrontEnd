@@ -27,7 +27,7 @@ function TouristSpotComponent(props) {
           <CardMedia
             component="img"
             sx={{ width: 250, display: { xs: 'none', sm: 'block' } }}
-            image={post.spot_image}
+            image={post.spotPicture}
             alt={post.imageLabel}
           />
         </Card>
