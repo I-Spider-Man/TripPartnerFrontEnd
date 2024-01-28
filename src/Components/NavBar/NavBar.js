@@ -48,14 +48,15 @@ function NavBar({onUserIdChange}) {
           <img className='Trip-Logo' src="https://trip-partner.s3.eu-north-1.amazonaws.com/MicrosoftTeams-image+(5).png"/>
         </Link>
       </div>
+      <div className='search-container' >
+          <SearchBar/>
+        </div>
       <div className='menu-list' style={{justifyContent:'center',alignItems:'center'}}>
         <div>
           <Link to='/EventsHomePage'><span>Events</span></Link>
         </div>
         <div><Link to='/TouristHomePage'><span>Tourist Spots</span></Link></div>
-        <div className='search-container' >
-          <SearchBar/>
-        </div>
+        
         <div className='login-signup-outline' onClick={(event)=>{login ? handleClick(event):log()}} style={{
               backgroundColor: 'white',
               backgroundPosition: 'center',
