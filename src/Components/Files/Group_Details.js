@@ -50,13 +50,23 @@ export const postGroup=async(value)=>{
 }
 
 export const getGroup=async(eventName,spotName)=>{
+    console.log("renders")
     try{
-        if(eventName!="" || eventName!=undefined){
-            const response=await axios.get(`http://localhost:8080/event/group/${eventName}`)
+        if(eventName){
+            console.log(eventName);
+            const response=await axios.get(`http://localhost:8080/event/group/${eventName}`);
+            console.log("renders",response.data)
+            return response.data;
+        }else if(spotName){
+            console.log("renders")
+            const response=await axios.get(`http://localhost:8080/spot/group/${spotName}`);
+            return response.data;
         }else{
-            const response=await axios.get(`http://localhost:8080/spot/group/${spotName}`)
+            console.log("no values");
+            return [];
         }
     }catch(error){
-
+        console.log(error);
+        return []
     }
 }

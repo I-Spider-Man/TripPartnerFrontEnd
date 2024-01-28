@@ -80,6 +80,8 @@ function Event({userId}) {
           keepMounted
           open={open}
           eventName={event.eventName}
+          spotName={null}
+          userId={userId}
           onClose={()=>handleClose()}
         />
           {event && (

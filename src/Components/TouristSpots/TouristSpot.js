@@ -91,15 +91,17 @@ const handleOrganizeSubmit = (formData) => {
             </div><EventsJoinPage
           id="ringtone-menu"
           keepMounted
+          eventName={null}
+          spotName={spot.spotName}
           open={open}
-          onClose={handleClose}
+          onClose={()=>handleClose()}
         />
           <GroupOrganizeForm id="ringtone-menu"
           keepMounted
           userId={userId}
           spotName={spot.spotName}
           open={organizeFormVisible}
-          onClose={handleClose} onSubmit={handleOrganizeSubmit} />
+          onClose={()=>handleClose()} onSubmit={()=>handleOrganizeSubmit()} />
           </> 
         ) : (
           <Loading/>
