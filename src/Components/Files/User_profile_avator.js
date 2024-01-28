@@ -1,4 +1,5 @@
 import axios from "axios"
+import { fetchPicture } from "./Event_Details";
 
 export const UserProfileAva=[
     'https://trip-partner.s3.eu-north-1.amazonaws.com/user-icons/Open+Peeps+-+Bust+(1).png'
@@ -22,8 +23,14 @@ export const UserProfileAva=[
 export const getUserDetails=async(value)=>{
   try{
     const fetchUser=await axios.get(`http://localhost:8080/User/email/${value}`);
-    const userdata=fetchUser.data;
-    return userdata;
+    if(fetchUser.data.userProfile.startsWith("http")){
+      return fetchUser.data;
+    }
+    const picture=await fetchPicture(fetchUser.data.userProfile);
+    return {
+      ...fetchUser.data,
+      userProfile:picture
+    };
   }catch(error){
     console.log("error occured while fetching user data :", error);
   }
