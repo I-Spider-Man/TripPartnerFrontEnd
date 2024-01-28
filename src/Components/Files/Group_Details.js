@@ -33,10 +33,30 @@ export const postGroup=async(value)=>{
     try{
         const response=await axios.post("http://localhost:8080/organizer",value);
         console.log(response.data);
-        return response.data;
+        if(response.status===201){
+            alert("you have created a group successfully")
+            return true;
+        }
+        
     }
     catch(error){
+        if(error.response.status===409){
+            alert(error.response.data);
+        }
         console.log("error while creating group "+error);
+        return false;
     }
     
+}
+
+export const getGroup=async(eventName,spotName)=>{
+    try{
+        if(eventName!="" || eventName!=undefined){
+            const response=await axios.get(`http://localhost:8080/event/group/${eventName}`)
+        }else{
+            const response=await axios.get(`http://localhost:8080/spot/group/${spotName}`)
+        }
+    }catch(error){
+
+    }
 }

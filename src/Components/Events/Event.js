@@ -79,6 +79,7 @@ function Event({userId}) {
           id="ringtone-menu"
           keepMounted
           open={open}
+          eventName={event.eventName}
           onClose={()=>handleClose()}
         />
           {event && (
