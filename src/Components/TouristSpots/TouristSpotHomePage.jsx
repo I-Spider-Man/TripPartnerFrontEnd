@@ -3,24 +3,30 @@ import './TouristSpotHomePage.css'
 import {HiOutlineLocationMarker} from 'react-icons/hi'
 import {IoMdRadioButtonOn} from 'react-icons/io'
 import {Link} from 'react-router-dom'
-import { fetch_spot_data } from '../Files/TouristSpotDetails'
+import { fetchPicture, fetch_popularSpots, fetch_spot_data } from '../Files/TouristSpotDetails'
+
 
 const TouristSpotHomePage = () => {
-  const [Spot_Details,setSpotDetails]=useState([{}])
-  const fetchData = async () => {
-    try {
-      const response1 = await fetch_spot_data();
-      console.log("Spot Data:", response1); // Log the response
-      setSpotDetails(response1);
-    } catch (error) {
-      console.log("Error while fetching spot data:", error);
+  const [Spot_Details,setSpotDetails]=useState([{}]);
+  const [PopularSpotDetails,setPopularSpotDetails]=useState([{}]);
+  useEffect(()=>{
+    try{
+        const fetchSpots=async()=>{
+            const response=await fetch_spot_data();
+            console.log(response)
+            setSpotDetails(response);
+        }
+        fetchSpots();
+        const fetchPopularSpots=async()=>{
+            const response=await fetch_popularSpots();
+            setPopularSpotDetails(response);
+
+        }
+        fetchPopularSpots();
+    }catch(error){
+        console.log(error);
     }
-  };
-    fetchData();
-  useEffect(() => {
-    console.log("spot", Spot_Details);
-    
-  }, [Spot_Details]);
+  },[])
   
   return (
     <section className="main container section" >
@@ -32,10 +38,8 @@ const TouristSpotHomePage = () => {
  
         <div className="secContent grid">
             {
-                Spot_Details.slice(0,5).map(({spotId, spotPicture, spotName, location, description})=>{
-                    
+                PopularSpotDetails.map(({spotId, spotPicture, spotName, location, description})=>{
                     return(
-                        
                         <div key={spotId} className="singleDestination" style={{padding:'5px'}}>
                             <div className="imageDiv">
                                 <img src={spotPicture} alt={spotName} />
@@ -60,8 +64,6 @@ const TouristSpotHomePage = () => {
                     )
                 })
             }
- 
-            <p>More places to be added soon...</p>
         </div>
  
         <br />
