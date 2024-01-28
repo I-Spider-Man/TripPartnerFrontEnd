@@ -59,7 +59,48 @@ export const fetchInavtiveEventsData = async () => {
       return [];
     }
 };
-
+export const fetchParticipantsData=async ()=>{
+  try{
+    const response = await axios.get("http://localhost:8080/Admin/participants");
+    const participantWithUserData=await Promise.all(
+      response.data.map(async(participant)=>{
+        const userdata=await fetchUserDataById(participant.userId);
+        return {
+          ...participant,
+          userData:userdata
+        }
+      })
+    )
+    console.log(participantWithUserData);
+    const participantWithGroupData=await Promise.all(
+      participantWithUserData.map(async(participant)=>{
+        const group=await fetchGrpDataById(participant.groupId);
+        return {
+          ...participant,
+          groupData:group
+        };
+      })
+    );
+    console.log(participantWithGroupData);
+    return participantWithGroupData;
+  }catch(error){
+    console.log(error);
+    return []
+  }
+}
+export const fetchGrpDataById= async(id)=>{
+  try{
+    const response=await axios.get(`http://localhost:8080/Admin/groups/${id}`);
+    const organizerData=await fetchOrganizerDataById(response.organizerId);
+    return {
+      ...response,
+      organizerData:organizerData
+    }
+  }catch(error){
+    console.log(error);
+    return {}
+  }
+}
 export const fetchGroupsData = async () => {
     try {
       const response = await axios.get("http://localhost:8080/Admin/groups");

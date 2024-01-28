@@ -17,6 +17,7 @@ import EventDetails from "./pages/event/EventDetails";
 import Eventdatatable from "./pages/event/Event";
 import NewEventForm from "./pages/event/NewEventForm";
 import SpotDetails from "./pages/single/Single";
+import Participants from "./pages/participants/Participants";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -42,6 +43,10 @@ function App() {
                 element={<NewEventForm inputs={productInputs} title="Add New Product" />}
               />
             </Route>
+            <Route path="participants">
+              <Route index element={<Participants/>}/>
+              <Route path=":participantId" element={<EventDetails/>}/> 
+            </Route>
             <Route path="touristspots">
               <Route index element={<TouristSpot/>}/>
               <Route
@@ -52,7 +57,6 @@ function App() {
             </Route>
             <Route path="organizer">
               <Route index element={<Organizers/>}/>
-              
               <Route path=":spotId" element={<SpotDetails />} />
             </Route>
             <Route path="group">

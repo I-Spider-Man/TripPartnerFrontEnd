@@ -9,7 +9,15 @@ export const spotDelete = async (id) => {
       }
     
   };
-
+export const participantDelete = async (id) =>{
+  try{
+    const response=await axios.delete(`http://localhost:8080/Admin/participants/${id}`);
+    alert(response.data);
+  }catch(error){
+    console.log(error);
+    alert(error.response.data);
+  }
+}
   export const eventDelete = async (id) => {
 
     try {
