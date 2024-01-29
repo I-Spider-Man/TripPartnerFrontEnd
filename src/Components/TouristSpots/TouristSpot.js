@@ -7,7 +7,9 @@ import Loading from '../LoadingComponents/Loading';
 import { useEffect, useState } from 'react';
 import EventsJoinPage from '../Events/EventsJoinPage';
 import GroupOrganizeForm from '../Group/GroupOrganizeForm';
-function TouristSpot({userId}) {
+import { useUser } from '../Auth/UserContext';
+function TouristSpot() {
+  const {userDetails}=useUser();
   const [spot,setSpots]=useState({});
   const [open, setOpen] = useState(false);
   const {spotId} = useParams();
@@ -30,7 +32,7 @@ function TouristSpot({userId}) {
 
 
   const handleClickListItem = () => {
-    if(userId===""){
+    if(userDetails){
       return alert("need to login");
     }
     setOpen(true);
@@ -40,7 +42,7 @@ function TouristSpot({userId}) {
     setOrganizeFormVisible(false);
   }
   const handleOrganizeClick = () => {
-    if(userId===""){
+    if(userDetails){
       return alert("need to login");
     }
     setOrganizeFormVisible(true);
@@ -93,12 +95,13 @@ const handleOrganizeSubmit = (formData) => {
           keepMounted
           eventName={null}
           spotName={spot.spotName}
+          userId={userDetails.userId}
           open={open}
           onClose={()=>handleClose()}
         />
           <GroupOrganizeForm id="ringtone-menu"
           keepMounted
-          userId={userId}
+          userId={userDetails.userId}
           spotName={spot.spotName}
           open={organizeFormVisible}
           onClose={()=>handleClose()} onSubmit={()=>handleOrganizeSubmit()} />

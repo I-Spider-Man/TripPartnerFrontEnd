@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
 import '../styleguide.css';
@@ -8,6 +8,8 @@ import Dialog from '@mui/material/Dialog';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Slide from '@mui/material/Slide';
+import { useUser } from '../Auth/UserContext';
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -15,12 +17,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 function NavBar({onUserIdChange}) {
+
+  const {userDetails,setUserData} = useUser();
   const [anchorEl, setAnchorEl] = useState(null);
   const [visible, setvisible] = useState(false);
   const [login,setLogin]=useState(false);
   const [userId,setUserId]=useState(0);
   const open = Boolean(anchorEl);
-  const [profileAva,setProfileAva]=useState("https://trip-partner.s3.eu-north-1.amazonaws.com/login_signUp.svg");
+  const [profileAva,setProfileAva]=useState(userDetails?userDetails.userProfile:"https://trip-partner.s3.eu-north-1.amazonaws.com/login_signUp.svg");
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -33,12 +37,16 @@ function NavBar({onUserIdChange}) {
   const handleClose=()=>{
     setvisible(false);
   }
+  useEffect(()=>{
+    setLogin(userDetails?true:false);
+  },[userDetails]);
+  const handleLogout=()=>{
+    setUserData(null);
+    window.location.reload();
+  }
   const childValue=(value)=>{
-    console.log(value);
-    setUserId(value.userId);
+    setUserData(value);
     setProfileAva(value.userProfile);
-    setLogin(true);
-    onUserIdChange(value.userId);
   };
   return (
     <React.Fragment>
@@ -88,7 +96,7 @@ function NavBar({onUserIdChange}) {
         <MenuItem >
         <Link to={`/profile/${userId}`}>Profile</Link></MenuItem>
         <MenuItem onClick={handleClose1}>My account</MenuItem>
-        <MenuItem onClick={()=>{window.location.reload()}} >Logout</MenuItem>
+        <MenuItem onClick={()=>handleLogout()} >Logout</MenuItem>
       </Menu>
       </>}
       

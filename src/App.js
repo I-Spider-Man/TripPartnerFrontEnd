@@ -11,6 +11,7 @@ import Footer from './Components/Footer/Footer';
 import BlogSlider from './Components/Events/Components-container';
 import ProfilePage from './Components/ProfilePage/Profile';
 import { useState } from 'react';
+import { UserProvider } from './Components/Auth/UserContext';
 function App() {
   const [userId,setUserId]=useState('');
   const handleUserIdChange = (userId) => {
@@ -18,7 +19,8 @@ function App() {
     setUserId(userId);
   };
   return (
-    <Router>
+    <UserProvider>
+      <Router>
     <div className='page' style={{maxWidth:'100%'}}>
       <div className='header'><NavBar onUserIdChange={handleUserIdChange}/></div>
       <div className='body' style={{minHeight:'100vh'}}><Routes>
@@ -34,6 +36,8 @@ function App() {
       <div className='footer'><Footer/></div>
     </div>
   </Router>
+    </UserProvider>
+    
   );
 }
 export default App;

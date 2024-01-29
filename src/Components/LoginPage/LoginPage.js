@@ -6,7 +6,9 @@ import Button from '@mui/material/Button';
 import { Tooltip } from '@mui/material';
 import {LoadingButton} from '@mui/lab';
 import { CircularProgress } from '@mui/material';
+import { useUser } from '../Auth/UserContext';
 function LoginPage({ onClose , onReturn}) {
+  const {setUserData}=useUser();
   const [otpInput, setOtpInput] = useState(false);
   const [otpProcess,setOtpProcess]=useState(false);
   const [userDetails,setUserDetails]=useState({
@@ -72,7 +74,7 @@ const handleLogin = async (e) => {
         userProfile: userData.userProfile,
         userName: userData.userName,
       }));
-
+      
       // Use the updated userDetails from the state
       const updatedUserDetails = {
         ...userDetails,
@@ -80,7 +82,9 @@ const handleLogin = async (e) => {
         userProfile: userData.userProfile,
         userName: userData.userName,
       };
-      console.log(updatedUserDetails)
+      
+      setUserData(updatedUserDetails);
+      console.log(updatedUserDetails);
       onReturn(updatedUserDetails);
     } else {
       alert('Incorrect password');
