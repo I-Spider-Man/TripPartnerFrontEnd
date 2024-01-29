@@ -1,0 +1,199 @@
+/* .front-page{
+    background-image: 'https://trip-partner.s3.eu-north-1.amazonaws.com/pexels-kamizzle-15747770+(1)+(1).jpg';
+  } */
+  .spot-page{
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: #007bff; */
+
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  /* background-color: rgb(241, 13, 66); */
+  /* background-color: rgb(248, 233, 69); */
+  border-radius: 10px;
+  /* margin-top: 50px; */
+  /* padding: 50px; */
+  }
+
+  .content-container{
+    background-color: rgb(248, 233, 69);
+    /* background-color: rgb(241, 13, 66); */
+  border-radius: 10px;
+  margin: 20px;
+  }
+  .nav {
+    width: 100%;
+  }
+  .content-details{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+  }
+  .content-details label{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .spot-content {
+    max-width: 90%;
+    min-height: 50vh;
+    padding: 50px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  .spot-content img {
+    /* max-width: 65%; */
+    width: 75%;
+    height: auto;
+    margin-bottom: 10px;
+
+  }
+  
+  .join-organize-button {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .join-organize-button button {
+    padding: 17px 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: 0;
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    transition: all 0.5s ease;
+  }
+  
+  .join-organize-button button:hover {
+    letter-spacing: 3px;
+    background-color: hsl(261deg 80% 48%);
+    color: hsl(0, 0%, 100%);
+    box-shadow: rgb(93 24 220) 0px 7px 29px 0px;
+  }
+  
+  .join-organize-button button:active {
+    letter-spacing: 3px;
+    background-color: hsl(261deg 80% 48%);
+    color: hsl(0, 0%, 100%);
+    box-shadow: rgb(93 24 220) 0px 0px 0px 0px;
+    transform: translateY(10px);
+    transition: 100ms;
+  }
+  
+  .spot-home button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .spot-home button:hover {
+    background-color: #0056b3;
+  }
+  /* Add these styles to your existing CSS */
+  
+  .organizer-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    z-index: 1000;
+  }
+  
+  .organizer-form h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .organizer-form form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .organizer-form label {
+    margin-bottom: 10px;
+  }
+  
+  .organizer-form input {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .organizer-form button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .organizer-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Add this style to your existing styles or create a new CSS file */
+  
+  .spot-list-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .spot-list-popup h2 {
+    margin-bottom: 15px;
+  }
+  
+  .spot-list-popup ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .spot-list-popup li {
+    margin-bottom: 20px;
+  }
+  
+  .spot-list-popup p {
+    margin: 0;
+  }
+  
+  .spot-list-popup button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .spot-list-popup button:hover {
+    background-color: #0056b3;
+  }

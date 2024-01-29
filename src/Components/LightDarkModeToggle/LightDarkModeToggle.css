@@ -1,0 +1,25 @@
+/* LightDarkModeToggle.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    transition: background-color 0.5s, color 0.5s;
+  }
+  
+  .container {
+    max-width: 80%px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Light Mode */
+  body.light-mode {
+    background-color: #fff;
+    color: #333;
+  }
+  
+  /* Dark Mode */
+  body.dark-mode {
+    background-color: #333;
+    color: #fff;
+  }
+  
