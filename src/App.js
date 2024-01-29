@@ -13,25 +13,21 @@ import ProfilePage from './Components/ProfilePage/Profile';
 import { useState } from 'react';
 import { UserProvider } from './Components/Auth/UserContext';
 function App() {
-  const [userId,setUserId]=useState('');
-  const handleUserIdChange = (userId) => {
-    console.log("UserId changed:", userId);
-    setUserId(userId);
-  };
+  
   return (
     <UserProvider>
       <Router>
     <div className='page' style={{maxWidth:'100%'}}>
-      <div className='header'><NavBar onUserIdChange={handleUserIdChange}/></div>
+      <div className='header'><NavBar /></div>
       <div className='body' style={{minHeight:'100vh'}}><Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/OrganizerHome" element={<OrganizerHome />} />
         <Route path="/EventsHomePage" element={<EventsHomePage/>}/>
         <Route path="/TouristHomePage" element={<TouristSpotHomePage/>}/>
-        <Route path='/Events/:eventId' element={<Event userId={userId}/>}/>
-        <Route path='/Spot/:spotId' element={<TouristSpot userId={userId}/>}/>
+        <Route path='/Events/:eventName' element={<Event/>}/>
+        <Route path='/Spot/:spotName' element={<TouristSpot/>}/>
         <Route path="/component" element={<BlogSlider/>}/>
-        <Route path='/profile/:userId' element={<ProfilePage/>}/>
+        <Route path='/profile' element={<ProfilePage/>}/>
       </Routes></div>
       <div className='footer'><Footer/></div>
     </div>

@@ -16,7 +16,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-function NavBar({onUserIdChange}) {
+function NavBar() {
 
   const {userDetails,setUserData} = useUser();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -28,6 +28,10 @@ function NavBar({onUserIdChange}) {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  useEffect(()=>{
+    console.log(profileAva)
+  },[profileAva])
+  
   const handleClose1 = () => {
     setAnchorEl(null);
   };
@@ -94,7 +98,7 @@ function NavBar({onUserIdChange}) {
         }}
       >
         <MenuItem >
-        <Link to={`/profile/${userId}`}>Profile</Link></MenuItem>
+        <Link to={`/profile`}>Profile</Link></MenuItem>
         <MenuItem onClick={handleClose1}>My account</MenuItem>
         <MenuItem onClick={()=>handleLogout()} >Logout</MenuItem>
       </Menu>

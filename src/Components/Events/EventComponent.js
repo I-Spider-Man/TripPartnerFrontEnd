@@ -13,7 +13,7 @@ function EventComponent(props) {
   console.log(post);
   return (
     <Grid item xs={12} md={6}>
-      <Link  to={`/Events/${encodeURIComponent(post.eventId)}`}>
+      <Link  to={`/Events/${post.eventName}`}>
       <CardActionArea component="Link">
         <Card sx={{ display: 'flex', height: 120, width: 500 }}>
           <CardContent sx={{ flex: 1 }}>

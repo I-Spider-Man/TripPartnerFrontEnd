@@ -1,7 +1,7 @@
 import NavBar from '../NavBar/NavBar'
 import { useParams } from 'react-router-dom'
 import './TouristSpot.css'
-import {fetch_spot_data, fetch_spots_by_id } from '../Files/TouristSpotDetails';
+import {fetchSpotBySpotName, fetch_spot_data, fetch_spots_by_id } from '../Files/TouristSpotDetails';
 import Footer from '../Footer/Footer';
 import Loading from '../LoadingComponents/Loading';
 import { useEffect, useState } from 'react';
@@ -12,18 +12,18 @@ function TouristSpot() {
   const {userDetails}=useUser();
   const [spot,setSpots]=useState({});
   const [open, setOpen] = useState(false);
-  const {spotId} = useParams();
+  const {spotName} = useParams();
   useEffect(()=>{
       const fetchData = async () => {
       try {
-        const response1 = await fetch_spots_by_id(spotId);
+        const response1 = await fetchSpotBySpotName(spotName);
         setSpots(response1);
       } catch (error) {
         console.log("Error while fetching event data:", error);
       }
     };
     fetchData();
-  },[spotId])
+  },[spotName])
 
 
   useEffect(()=>{

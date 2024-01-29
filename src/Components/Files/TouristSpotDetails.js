@@ -10,6 +10,19 @@ export const fetchPicture=async(PictureName)=>{
         return [];
     }
 }
+export const fetchSpotBySpotName=async(spotName)=>{
+    try{
+        const response=await axios.get(`http://localhost:8080/spot/${spotName}`)
+        const picture=await fetchPicture(response.data.spotPicture);
+        return {
+            ...response.data,
+            spotPicture:picture
+        }
+    }catch(error){
+        console.log(error);
+        return [];
+    }
+}
 export const fetch_spot_data=async()=>{
     try{
         const response=await axios.get("http://localhost:8080/spots");
