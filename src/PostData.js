@@ -8,6 +8,7 @@ export const postEvent=async (formData)=>{
         return response});
     }catch(error){
         console.error("error on event posting :",error);
+        return error.response;
     }
 }
 
@@ -17,5 +18,6 @@ export const postSpot=async (formData)=>{
         await axios.post("http://localhost:8080/Admin/touristSpot",formData,{headers:{'Content-Type':'multipart/form-data',},}).then((response)=>{return response});
     }catch(error){
         console.error("error on posting spot :", error);
+        return error.response;
     }
 }

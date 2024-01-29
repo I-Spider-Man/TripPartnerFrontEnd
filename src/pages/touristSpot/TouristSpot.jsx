@@ -41,7 +41,8 @@ function TouristSpot() {
         const confirmed = window.confirm("Are you sure you want to delete this user?");
         if (confirmed) {
           try {
-            await spotDelete(id);
+            const response=await spotDelete(id);
+            alert(response.data);
             setSpotRows((prevRows) => prevRows.filter((spot) => spot.spotId !== id));
           } catch (error) {
             console.error("Error deleting user:", error);

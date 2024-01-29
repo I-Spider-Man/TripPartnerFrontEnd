@@ -3,9 +3,11 @@ import axios from "axios";
 export const spotDelete = async (id) => {
 
       try {
-        await axios.delete(`http://localhost:8080/Admin/touristSpots/${id}`);
+        const response=await axios.delete(`http://localhost:8080/Admin/touristSpots/${id}`);
+        return response;
       } catch (error) {
         console.error("Error deleting user:", error);
+        return error.response;
       }
     
   };
@@ -21,9 +23,11 @@ export const participantDelete = async (id) =>{
   export const eventDelete = async (id) => {
 
     try {
-      await axios.delete(`http://localhost:8080/Admin/events/${id}`);
+      const response=await axios.delete(`http://localhost:8080/Admin/events/${id}`);
+      return response;
     } catch (error) {
       console.error("Error deleting user:", error);
+      return error.response;
     }
   
 };

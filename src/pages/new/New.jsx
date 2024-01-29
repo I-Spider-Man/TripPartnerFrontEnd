@@ -1,13 +1,10 @@
 import "./new.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useEffect, useState } from "react";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import axios from "axios";
 import { Button, styled } from '@mui/material';
 import { postSpot } from "../../PostData";
-import ImageUploading from 'react-images-uploading';
 const New = ({ inputs, title }) => {
   const [spotData, setspotData] = useState({
     spotName:"",
@@ -61,8 +58,14 @@ const New = ({ inputs, title }) => {
     try {
       console.log(spotData);
       const response = await postSpot(formData);
-      alert("Tourist spot "+spotData.spotName+" added successfully.");
-      window.location.reload();
+      if(response.status===201){
+        alert(response.data);
+        window.location.reload();
+      }
+      else{
+        alert(response.data);
+      }
+      
     } catch (error) {
       console.error("Error sending spot data:", error);
     }

@@ -33,7 +33,8 @@ const Eventdatatable = () => {
         const confirmed = window.confirm("Are you sure you want to delete this event?");
         if (confirmed) {
             try {
-                await eventDelete(id);
+                const response=await eventDelete(id);
+                alert(response.data);
                 setData((prevData)=>prevData.filter((event)=>event.eventId !== id));
             } catch (error) {
                 console.error("Error deleting event:", error);
