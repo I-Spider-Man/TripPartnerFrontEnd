@@ -7,6 +7,7 @@ export const fetchPicture=async(PictureName)=>{
         return (URL.createObjectURL(blob));
     }catch(error){
         return console.log(error);
+        return [];
     }
 }
 export const fetch_spot_data=async()=>{

@@ -30,6 +30,7 @@ export const fetch_Event_By_id=async(id)=>{
     };
   }catch(error){
     console.error(error);
+    return [];
   }
 }
 export const fetchPicture=async(PictureName)=>{
@@ -39,6 +40,7 @@ export const fetchPicture=async(PictureName)=>{
       return (URL.createObjectURL(blob));
   }catch(error){
       return console.log(error);
+      return [];
   }
 }
 export const fetch_popularEvents=async()=>{
@@ -56,5 +58,6 @@ export const fetch_popularEvents=async()=>{
     return eventwithpicture;
   }catch(error){
     console.error(error);
+    return [];
   }
 }
