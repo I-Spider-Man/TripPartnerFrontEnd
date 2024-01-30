@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import ParticipantList from './ParticipantList';
 import './GroupPage.css';
 
-import OrganizerData, { Organizer, participants } from './OrganizerData';
+import { Organizer, participants } from './OrganizerData';
 
 const GroupPage = () => {
 
