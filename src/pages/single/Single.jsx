@@ -65,7 +65,7 @@ const SpotDetails = () => {
         </div>
         <div className="bottom">
         <h1 className="title">Last Transactions</h1>
-          <List/>
+          <List spotName={spotDetails.spotName}/>
         </div>
       </div>
     </div>

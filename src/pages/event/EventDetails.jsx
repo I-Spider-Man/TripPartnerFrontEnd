@@ -81,7 +81,7 @@ const EventDetails = () => {
         </div>
         <div className="bottom">
         <h1 className="title">Last Transactions</h1>
-          <List/>
+          <List eventName={eventDetails.eventName}/>
         </div>
       </div>
     </div>

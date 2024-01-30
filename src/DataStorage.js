@@ -119,7 +119,38 @@ export const fetchGroupsData = async () => {
       return [];
     }
 };
-
+export const fetchCorrespondingGroupData=async(eventName,spotName)=>{
+  console.log(eventName,spotName);
+  let response;
+  try{
+      if(eventName){
+          console.log(eventName);
+          response=await axios.get(`http://localhost:8080/event/group/${eventName}`);
+          console.log("renders",response.data)
+          
+      }else if(spotName){
+          console.log("renders")
+          response=await axios.get(`http://localhost:8080/spot/group/${spotName}`);
+          
+      }else{
+          response=await axios.get("http://localhost:8080/Admin/ActiveGroups");
+          
+      }
+      const groupWithOrganizerData=await Promise.all(
+        response.data.map(async(group)=>{
+          const organizerWithUserData=await fetchOrganizerDataById(group.organizerId);
+          return {
+            ...group,
+            organizerData: organizerWithUserData
+          };
+        })
+        )
+      return groupWithOrganizerData; 
+  }catch(error){
+      console.log(error);
+      return []
+  }
+}
 export const fetchActiveGroupsData = async () => {
     try {
       const response = await axios.get("http://localhost:8080/Admin/ActiveGroups");

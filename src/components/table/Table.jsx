@@ -6,14 +6,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { fetchActiveGroupsData } from "../../DataStorage";
+import { fetchActiveGroupsData, fetchCorrespondingGroupData } from "../../DataStorage";
 import { useEffect, useState } from "react";
-const List = () => {
-  const [activeGrp,setActiveGrp]=useState();
+const List = ({eventName,spotName}) => {
+  const [activeGrp,setActiveGrp]=useState([]);
   useEffect(async()=>{
-    const response=await fetchActiveGroupsData();
+    const response=await fetchCorrespondingGroupData(eventName,spotName);
     setActiveGrp(response);
-  },[])
+  },[eventName,spotName])
   console.log(activeGrp);
    return (
     <TableContainer component={Paper} className="table">
@@ -29,7 +29,7 @@ const List = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {activeGrp ? <>{activeGrp.map((row) => (
+          {activeGrp.length > 0 ? <>{activeGrp.map((row) => (
             <TableRow key={row.id}>
               <TableCell className="tableCell">{row.groupId}</TableCell>
               <TableCell className="tableCell">
