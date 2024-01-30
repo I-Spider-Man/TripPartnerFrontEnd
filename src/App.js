@@ -12,6 +12,7 @@ import BlogSlider from './Components/Events/Components-container';
 import ProfilePage from './Components/ProfilePage/Profile';
 import { useState } from 'react';
 import { UserProvider } from './Components/Auth/UserContext';
+import GroupPage from './Components/GroupPage/GroupPage';
 function App() {
   
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path='/Spot/:spotName' element={<TouristSpot/>}/>
         <Route path="/component" element={<BlogSlider/>}/>
         <Route path='/profile/:userId' element={<ProfilePage/>}/>
+        <Route path="/GroupPage" element={<GroupPage/>}/>
       </Routes></div>
       <div className='footer'><Footer/></div>
     </div>
