@@ -11,6 +11,7 @@ import Footer from './Components/Footer/Footer';
 import BlogSlider from './Components/Events/Components-container';
 import ProfilePage from './Components/ProfilePage/Profile';
 import { useState } from 'react';
+import GroupPage from './Components/GroupPage/GroupPage';
 function App() {
   const [userId,setUserId]=useState('');
   const handleUserIdChange = (userId) => {
@@ -30,6 +31,7 @@ function App() {
         <Route path='/Spot/:spotId' element={<TouristSpot userId={userId}/>}/>
         <Route path="/component" element={<BlogSlider/>}/>
         <Route path='/profile/:userId' element={<ProfilePage/>}/>
+        <Route path="/GroupPage" element={<GroupPage/>}/>
       </Routes></div>
       <div className='footer'><Footer/></div>
     </div>
