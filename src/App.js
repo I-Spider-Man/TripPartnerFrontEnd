@@ -11,6 +11,7 @@ import Footer from './Components/Footer/Footer';
 import BlogSlider from './Components/Events/Components-container';
 import ProfilePage from './Components/ProfilePage/Profile';
 import { useState } from 'react';
+import { UserProvider } from './Components/Auth/UserContext';
 function App() {
   
   return (
