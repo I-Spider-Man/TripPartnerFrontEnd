@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './NavBar.css';
 import '../styleguide.css';
 import LoginPage from '../LoginPage/LoginPage';
@@ -17,7 +17,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 function NavBar() {
-
+const navigate=useNavigate();
   const {userDetails,setUserData} = useUser();
   const [anchorEl, setAnchorEl] = useState(null);
   const [visible, setvisible] = useState(false);
@@ -45,6 +45,7 @@ function NavBar() {
     setLogin(userDetails?true:false);
   },[userDetails]);
   const handleLogout=()=>{
+    navigate("/");
     setUserData(null);
     window.location.reload();
   }
@@ -98,7 +99,7 @@ function NavBar() {
         }}
       >
         <MenuItem >
-        <Link to={`/profile`}>Profile</Link></MenuItem>
+        <Link to={`/profile/${userDetails.userId}`}>Profile</Link></MenuItem>
         <MenuItem onClick={handleClose1}>My account</MenuItem>
         <MenuItem onClick={()=>handleLogout()} >Logout</MenuItem>
       </Menu>

@@ -82,10 +82,7 @@ const handleLogin = async (e) => {
         userProfile: userData.userProfile,
         userName: userData.userName,
       };
-      
-      setUserData(updatedUserDetails);
-      console.log(updatedUserDetails);
-      onReturn(updatedUserDetails);
+      onReturn(userData);
     } else {
       alert('Incorrect password');
     }
