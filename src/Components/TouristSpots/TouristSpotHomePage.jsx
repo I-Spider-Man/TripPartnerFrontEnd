@@ -94,7 +94,7 @@ const TouristSpotHomePage = () => {
                                 <div className="desc">
                                     <p>{description}</p>
                                 </div>
-                                <Link to={`/Spot/${encodeURIComponent(spotId)}`}><button className="btn flex">
+                                <Link to={`/Spot/${spotName}`}><button className="btn flex">
                                     VIEW MORE
                                     <IoMdRadioButtonOn className='icon'/>
                                 </button></Link>

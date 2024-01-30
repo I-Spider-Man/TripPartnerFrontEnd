@@ -7,14 +7,16 @@ import dayjs from 'dayjs';
 import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import Button from '@mui/material/Button';
 import { postGroup } from '../Files/Group_Details';
-const GroupOrganizeForm = ({userId, eventName, spotName, ...props }) => {
+import { useUser } from '../Auth/UserContext';
+const GroupOrganizeForm = ({eventName, spotName, ...props }) => {
+  const {userDetails}=useUser();
   const { onClose, onSubmit, open, ...other } = props;
   const [organizerFrom,setOrganizerFrom]=useState({
     organizer:{
-      userId:userId.toString()
+      userId:userDetails?.userId.toString()||null
     }
   })
-
+console.log(userDetails);
   const [groupForm,setGroupForm]=useState({
     groupName:"",
     about:"",
@@ -111,7 +113,7 @@ const GroupOrganizeForm = ({userId, eventName, spotName, ...props }) => {
       radioGroupRef.current.focus();
     }
   };
-  return (
+  return userDetails? (
     <Dialog
       sx={{ '& .MuiDialog-paper': { width: '80%', minHeight: 435, backgroundColor: '#383838', color:'white', display:'flex', flexDirection:'column', gap:'10px'} }}
       maxWidth="xs"
@@ -159,7 +161,22 @@ const GroupOrganizeForm = ({userId, eventName, spotName, ...props }) => {
           <Button variant='outlined' onClick={()=>handleCancel() }>Cancel</Button>
         </DialogActions>
     </Dialog>
-  );
+  ):(<>
+  <Dialog
+      sx={{ '& .MuiDialog-paper': { width: '80%', minHeight: 435, backgroundColor: '#383838', color:'white', display:'flex', flexDirection:'column', gap:'10px',alignItems:'center',justifyContent:'center'} }}
+      maxWidth="xs"
+      TransitionProps={{ onEntering: handleEntering }}
+      open={open}
+      {...other}
+    >
+      <DialogTitle> <h2>Organize Group</h2></DialogTitle>
+      <DialogContent sx={{display:'flex',flexDirection:'column',gap:"12"}}>
+          login First !!!!
+      </DialogContent>
+        <DialogActions>
+          <Button variant='contained' onClick={()=>handleCancel() }>Ok</Button>
+        </DialogActions>
+    </Dialog></>);
 };
 
 export default GroupOrganizeForm;

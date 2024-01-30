@@ -12,9 +12,6 @@ function Event() {
   const [organizeFormVisible, setOrganizeFormVisible] = useState(false);
   const [open, setOpen] = useState(false);
   const handleClickListItem = () => {
-    if(userDetails){
-      return alert("for joining in a group you need to login first!!");
-    }
     setOpen(true);
   };
   console.log(userDetails?.userId||'null');
@@ -48,9 +45,6 @@ function Event() {
   },[event])
 
   const handleOrganizeClick = () => {
-    if(userDetails){
-      return alert("for Organizing a group you need to login first!!");
-    }
     setOrganizeFormVisible(true);
   };
 
@@ -83,14 +77,12 @@ function Event() {
           open={open}
           eventName={event.eventName}
           spotName={null}
-          userId={userDetails.userId}
           onClose={()=>handleClose()}
         />
           {event && (
           <GroupOrganizeForm
             id="ringtone-menu"
             keepMounted
-            userId={userDetails.userId}
             eventName={event.eventName}
             open={organizeFormVisible}
             onClose={() => handleClose()}

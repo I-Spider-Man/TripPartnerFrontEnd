@@ -24,8 +24,6 @@ export const UserProvider = ({ children }) => {
  
 export const useUser = () => {
   const { userDetails, setUserData } = useContext(UserContext);
-console.log('user Context');
-console.log(userDetails);
   // Additional logic to check localStorage if userDetails is null
   useEffect(() => {
     const storedUserDetails = localStorage.getItem('userDetails');

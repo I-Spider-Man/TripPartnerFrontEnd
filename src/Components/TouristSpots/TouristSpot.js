@@ -32,9 +32,6 @@ function TouristSpot() {
 
 
   const handleClickListItem = () => {
-    if(userDetails){
-      return alert("need to login");
-    }
     setOpen(true);
   };
   const handleClose = () => {
@@ -42,9 +39,6 @@ function TouristSpot() {
     setOrganizeFormVisible(false);
   }
   const handleOrganizeClick = () => {
-    if(userDetails){
-      return alert("need to login");
-    }
     setOrganizeFormVisible(true);
   };
   const [organizeFormVisible, setOrganizeFormVisible] = useState(false);
@@ -95,13 +89,11 @@ const handleOrganizeSubmit = (formData) => {
           keepMounted
           eventName={null}
           spotName={spot.spotName}
-          userId={userDetails.userId}
           open={open}
           onClose={()=>handleClose()}
         />
           <GroupOrganizeForm id="ringtone-menu"
           keepMounted
-          userId={userDetails.userId}
           spotName={spot.spotName}
           open={organizeFormVisible}
           onClose={()=>handleClose()} onSubmit={()=>handleOrganizeSubmit()} />
