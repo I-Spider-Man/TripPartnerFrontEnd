@@ -7,6 +7,20 @@ export const fetchPicture=async(PictureName)=>{
         return (URL.createObjectURL(blob));
     }catch(error){
         return console.log(error);
+        return [];
+    }
+}
+export const fetchSpotBySpotName=async(spotName)=>{
+    try{
+        const response=await axios.get(`http://localhost:8080/spot/${spotName}`)
+        const picture=await fetchPicture(response.data.spotPicture);
+        return {
+            ...response.data,
+            spotPicture:picture
+        }
+    }catch(error){
+        console.log(error);
+        return [];
     }
 }
 export const fetch_spot_data=async()=>{

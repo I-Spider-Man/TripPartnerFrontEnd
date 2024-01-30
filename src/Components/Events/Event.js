@@ -1,21 +1,20 @@
 import { useParams } from 'react-router-dom'
 import './Event.css'
-import {Event_Details, fetch_Event_By_id} from '../Files/Event_Details';
+import {Event_Details, fetchEventByEventName, fetch_Event_By_id} from '../Files/Event_Details';
 import Loading from '../LoadingComponents/ContentLoading';
 import { useEffect, useState } from 'react';
 import EventsJoinPage from './EventsJoinPage';
 import GroupOrganizeForm from '../Group/GroupOrganizeForm';
-function Event({userId}) {
+import { useUser } from '../Auth/UserContext';
+function Event() {
   const [event,setEvent]=useState({});
+  const {userDetails}=useUser();
   const [organizeFormVisible, setOrganizeFormVisible] = useState(false);
   const [open, setOpen] = useState(false);
   const handleClickListItem = () => {
-    if(userId===""){
-      return alert("for joining in a group you need to login first!!");
-    }
     setOpen(true);
   };
-  console.log(userId);
+  console.log(userDetails?.userId||'null');
   const handleClose = () => {
     setOpen(false);
     setOrganizeFormVisible(false);
@@ -32,23 +31,20 @@ function Event({userId}) {
       return 'High';
     }
   };
-  const {eventId} = useParams();
+  const {eventName} = useParams();
   useEffect(()=>{
     const fetchData=async ()=>{
-      const response= await fetch_Event_By_id(eventId);
+      const response= await fetchEventByEventName(eventName);
       console.log(response)
       setEvent(response);
     }
     fetchData();
-  },[])
+  },[eventName])
   useEffect(()=>{
     console.log(event);
   },[event])
 
   const handleOrganizeClick = () => {
-    if(userId===""){
-      return alert("for Organizing a group you need to login first!!");
-    }
     setOrganizeFormVisible(true);
   };
 
@@ -81,14 +77,12 @@ function Event({userId}) {
           open={open}
           eventName={event.eventName}
           spotName={null}
-          userId={userId}
           onClose={()=>handleClose()}
         />
           {event && (
           <GroupOrganizeForm
             id="ringtone-menu"
             keepMounted
-            userId={userId}
             eventName={event.eventName}
             open={organizeFormVisible}
             onClose={() => handleClose()}

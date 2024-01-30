@@ -54,7 +54,7 @@ const EventsHomePage = () => {
                                 <div className="desc">
                                     <p>{description}</p>
                                 </div>
-                                <Link to={`/Events/${encodeURIComponent(eventId)}`}><button className="btn flex">
+                                <Link to={`/Events/${eventName}`}><button className="btn flex">
                                     VIEW MORE
                                     <IoMdRadioButtonOn className='icon'/>
                                 </button></Link>
@@ -95,7 +95,7 @@ const EventsHomePage = () => {
                                 <div className="desc">
                                     <p>{description}</p>
                                 </div>
-                                <Link to={`/Events/${encodeURIComponent(eventId)}`}><button className="btn flex">
+                                <Link to={`/Events/${eventName}`}><button className="btn flex">
                                     VIEW MORE
                                     <IoMdRadioButtonOn className='icon'/>
                                 </button></Link>

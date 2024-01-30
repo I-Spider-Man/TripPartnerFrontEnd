@@ -30,6 +30,20 @@ export const fetch_Event_By_id=async(id)=>{
     };
   }catch(error){
     console.error(error);
+    return [];
+  }
+}
+export const fetchEventByEventName=async(eventName)=>{
+  try{
+    const response=await axios.get(`http://localhost:8080/activeEvent/${eventName}`);
+    const picture=await fetchPicture(response.data.eventPicture);
+    const eventWithPicture={
+      ...response.data,
+      eventPicture:picture
+    };
+    return eventWithPicture;
+  }catch(error){
+    console.log(error);
   }
 }
 export const fetchPicture=async(PictureName)=>{
@@ -39,6 +53,7 @@ export const fetchPicture=async(PictureName)=>{
       return (URL.createObjectURL(blob));
   }catch(error){
       return console.log(error);
+      return [];
   }
 }
 export const fetch_popularEvents=async()=>{
@@ -56,5 +71,6 @@ export const fetch_popularEvents=async()=>{
     return eventwithpicture;
   }catch(error){
     console.error(error);
+    return [];
   }
 }

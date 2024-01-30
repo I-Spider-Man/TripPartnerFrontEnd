@@ -1,27 +1,29 @@
 import NavBar from '../NavBar/NavBar'
 import { useParams } from 'react-router-dom'
 import './TouristSpot.css'
-import {fetch_spot_data, fetch_spots_by_id } from '../Files/TouristSpotDetails';
+import {fetchSpotBySpotName, fetch_spot_data, fetch_spots_by_id } from '../Files/TouristSpotDetails';
 import Footer from '../Footer/Footer';
 import Loading from '../LoadingComponents/Loading';
 import { useEffect, useState } from 'react';
 import EventsJoinPage from '../Events/EventsJoinPage';
 import GroupOrganizeForm from '../Group/GroupOrganizeForm';
-function TouristSpot({userId}) {
+import { useUser } from '../Auth/UserContext';
+function TouristSpot() {
+  const {userDetails}=useUser();
   const [spot,setSpots]=useState({});
   const [open, setOpen] = useState(false);
-  const {spotId} = useParams();
+  const {spotName} = useParams();
   useEffect(()=>{
       const fetchData = async () => {
       try {
-        const response1 = await fetch_spots_by_id(spotId);
+        const response1 = await fetchSpotBySpotName(spotName);
         setSpots(response1);
       } catch (error) {
         console.log("Error while fetching event data:", error);
       }
     };
     fetchData();
-  },[spotId])
+  },[spotName])
 
 
   useEffect(()=>{
@@ -30,9 +32,6 @@ function TouristSpot({userId}) {
 
 
   const handleClickListItem = () => {
-    if(userId===""){
-      return alert("need to login");
-    }
     setOpen(true);
   };
   const handleClose = () => {
@@ -40,9 +39,6 @@ function TouristSpot({userId}) {
     setOrganizeFormVisible(false);
   }
   const handleOrganizeClick = () => {
-    if(userId===""){
-      return alert("need to login");
-    }
     setOrganizeFormVisible(true);
   };
   const [organizeFormVisible, setOrganizeFormVisible] = useState(false);
@@ -98,7 +94,6 @@ const handleOrganizeSubmit = (formData) => {
         />
           <GroupOrganizeForm id="ringtone-menu"
           keepMounted
-          userId={userId}
           spotName={spot.spotName}
           open={organizeFormVisible}
           onClose={()=>handleClose()} onSubmit={()=>handleOrganizeSubmit()} />

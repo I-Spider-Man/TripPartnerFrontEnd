@@ -13,7 +13,7 @@ function TouristSpotComponent(props) {
   console.log(post)
   return (
     <Grid item xs={12} md={6}>
-      <Link  to={`/Spot/${encodeURIComponent(post.spotId)}`}>
+      <Link  to={`/Spot/${post.spotName}`}>
       <CardActionArea component="Link">
         <Card sx={{ display: 'flex', height: 120, width: 500 }}>
           <CardContent sx={{ flex: 1 }}>
