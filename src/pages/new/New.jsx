@@ -19,9 +19,6 @@ const New = ({ inputs, title }) => {
       [inputId]: value,
     }));
   };
-  useEffect(()=>{
-    console.log(spotPicture);
-  },[spotPicture])
   const handlePicture=(e)=>{
     const file=e.target.files[0];
     if((Math.floor(file.size/1024))<500){
@@ -58,6 +55,7 @@ const New = ({ inputs, title }) => {
     try {
       console.log(spotData);
       const response = await postSpot(formData);
+      console.log(response.data);
       if(response.status===201){
         alert(response.data);
         window.location.reload();
