@@ -69,7 +69,7 @@ console.log(groupDetails,participantData,organizerData);
         <marquee><p>Date From: {groupDetails.dateFrom} Date To: {groupDetails.dateTo}</p></marquee>
       </div>
       <div id="participants-list">
-        <ParticipantList participants={participantData} />
+        {participantData.length > 0 ? <ParticipantList participants={participantData} />:(<>no participants</>)}
       </div>
     </div>
     </div>
