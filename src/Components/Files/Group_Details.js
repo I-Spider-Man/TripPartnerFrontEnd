@@ -48,7 +48,31 @@ export const postGroup=async(value)=>{
     }
     
 }
-
+export const getAllParticipantsById=async(grpId)=>{
+    try{
+        const response=await axios.get(`http://localhost:8080/Participant/group/${grpId}`);
+        const participantWithUserData=await Promise.all(response.data.map(async(participant)=>{
+            const userData=await axios.get(`http://localhost:8080/User/${participant.userId}`);
+            return{
+                ...participant,
+                userData:userData.data,
+            }
+        }));
+        return participantWithUserData;
+    }catch(error){
+        console.log(error);
+        return [];
+    }
+}
+export const getGroupById=async(grpId)=>{
+    try{
+        const response=await axios.get(`http://localhost:8080/Group/groupId/${grpId}`);
+        return response.data;
+    }catch(error){
+        console.log(error);
+        return null
+    }
+}
 export const getGroup=async(eventName,spotName)=>{
     console.log("renders")
     try{

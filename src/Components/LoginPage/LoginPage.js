@@ -10,6 +10,7 @@ import { useUser } from '../Auth/UserContext';
 function LoginPage({ onClose , onReturn}) {
   const [otpInput, setOtpInput] = useState(false);
   const [otpProcess,setOtpProcess]=useState(false);
+  const [loginProcess,setLoginProcess]=useState(false);
   const [userDetails,setUserDetails]=useState({
     userId:'',
     userName:"",
@@ -63,6 +64,7 @@ function LoginPage({ onClose , onReturn}) {
 }
 const handleLogin = async (e) => {
   e.preventDefault();
+  setLoginProcess(true)
   try {
     const userData = await getUserDetails(userDetails.userEmail);
     if (userData.userPassword === userDetails.userPassword) {
@@ -177,7 +179,9 @@ const randomIndex = Math.floor(Math.random() * UserProfileAva.length);
         // required
         />
         <span className='forgot-password' onClick={()=>showForgotPassword()}>Forgot password?</span>
-        <Button variant='contained' onClick={(e)=>handleLogin(e)}>Login In</Button>
+        {/* <Button variant='contained' onClick={(e)=>handleLogin(e)}>Login In</Button> */}
+        <div style={{width:'100%',display:'flex',alignItems:'center'}} onClick={(e)=>handleLogin(e)} disabled={!userDetails.userEmail?.trim()}><LoadingButton loading={loginProcess} loadingIndicator={<div style={{display:'flex',alignItems:'center',color:'white',gap:'10px' }}>Checking User<CircularProgress color="primary" size={16} /></div>}> Login </LoadingButton></div>
+        
       </form>
       </>) 
       : 

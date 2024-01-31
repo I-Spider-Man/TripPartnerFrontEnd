@@ -46,7 +46,7 @@ export const getUserDetails=async(value)=>{
 }
 export const registerUser=async(value)=>{
   try{
-    await axios.post("http://localhost:8080/User",value).then((response)=>{return alert(response.status)})
+    await axios.post("http://localhost:8080/User",value).then((response)=>{return (response.status)})
   }catch(error){
     console.log("error occured while registering user :", error)
   }
@@ -56,7 +56,6 @@ export const generateOtp=async(value)=>{
   try{
     const response=await axios.get(`http://localhost:8080/User/otp/${value}`);
     const otp=response.data;
-    alert("check your email for otp.");
     console.log("otp obtained "+otp+ "response obtained "+response);
     return otp
   }catch(error){

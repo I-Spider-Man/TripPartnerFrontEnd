@@ -18,13 +18,13 @@ const ParticipantList = ({ participants }) => {
           <div className="participant-info">
             <div className="profile-pic">
               <img
-                src="https://tg-stockach.de/wp-content/uploads/2020/12/5f4d0f15338e20133dc69e95_dummy-profile-pic-300x300.png"
+                src={participant.userData.userProfile}
                 alt="Profile Pic"
                 width="40" // Adjust the width as needed
                 height="40" // Adjust the height as needed
               />
             </div>  
-          <span className="participant-name">{participant}</span>
+          <span className="participant-name">{participant.userData.userName}</span>
           <br />
              
           <button className="button-85" onClick={() => handleViewMore(participant)}>
