@@ -19,6 +19,13 @@ const New = ({ inputs, title }) => {
       [inputId]: value,
     }));
   };
+  const handleDes=(e)=>{
+    const {name,value}=e.target;
+    setspotData((prevData)=>({
+      ...prevData,
+      [name]:value,
+    }))
+  }
   const handlePicture=(e)=>{
     const file=e.target.files[0];
     if((Math.floor(file.size/1024))<500){
@@ -117,6 +124,16 @@ const New = ({ inputs, title }) => {
                   />
                 </div>
               ))}
+              <label>
+                    Description:
+                    <textarea
+                        name="description"
+                        placeholder="A stunning white marble mausoleum built by the Mughal emperor Shah Jahan."
+                        value={spotData.description}
+                        onChange={handleDes}
+                        required
+                    />
+                </label>
 
               <Button variant="contained" onClick={handleSendClick}>Send</Button>
 

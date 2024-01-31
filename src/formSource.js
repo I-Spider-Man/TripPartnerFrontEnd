@@ -13,13 +13,6 @@ export const spotInputs=[
     type:"text",
     placeholder:"Agra, India"
   },
-  {
-    id:3,
-    label:"description",
-    header:"Description",
-    type:"text",
-    placeholder:"A stunning white marble mausoleum built by the Mughal emperor Shah Jahan."
-  },
 ]
 
 
