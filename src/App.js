@@ -28,7 +28,7 @@ function App() {
         <Route path='/Spot/:spotName' element={<TouristSpot/>}/>
         <Route path="/component" element={<BlogSlider/>}/>
         <Route path='/profile/:userId' element={<ProfilePage/>}/>
-        <Route path='/GroupPage' element={<GroupPage/>}/>
+        <Route path='/GroupPage/:groupId' element={<GroupPage/>}/>
       </Routes></div>
       <div className='footer'><Footer/></div>
     </div>

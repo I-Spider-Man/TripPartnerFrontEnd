@@ -44,6 +44,7 @@ const navigate=useNavigate();
   useEffect(()=>{
     setLogin(userDetails?true:false);
   },[userDetails]);
+
   const handleLogout=()=>{
     navigate("/");
     setUserData(null);
@@ -52,6 +53,7 @@ const navigate=useNavigate();
   const childValue=(value)=>{
     setUserData(value);
     setProfileAva(value.userProfile);
+    window.location.reload();
   };
   return (
     <React.Fragment>
@@ -85,7 +87,7 @@ const navigate=useNavigate();
         onClose={handleClose}
         sx={{ '& .MuiDialog-paper': { width: 'auto', minHeight: 'auto' ,padding:'0px 0px', borderRadius:'15px',overflow:'hidden'} }}
       >
-        <LoginPage onClose={()=>{handleClose()}} onReturn={childValue}/>
+        <LoginPage onClose={handleClose} onReturn={childValue}/>
       </Dialog>
       :
       <>

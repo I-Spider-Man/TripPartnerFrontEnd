@@ -8,7 +8,6 @@ import {LoadingButton} from '@mui/lab';
 import { CircularProgress } from '@mui/material';
 import { useUser } from '../Auth/UserContext';
 function LoginPage({ onClose , onReturn}) {
-  const {setUserData}=useUser();
   const [otpInput, setOtpInput] = useState(false);
   const [otpProcess,setOtpProcess]=useState(false);
   const [userDetails,setUserDetails]=useState({
@@ -83,6 +82,7 @@ const handleLogin = async (e) => {
         userName: userData.userName,
       };
       onReturn(userData);
+      onClose();
     } else {
       alert('Incorrect password');
     }

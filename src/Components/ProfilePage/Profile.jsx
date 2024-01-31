@@ -13,6 +13,7 @@ import {
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { useUser } from '../Auth/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const PopupForm = lazy(() => import('../PopupForm/PopupForm'));
 
@@ -22,6 +23,7 @@ export default function ProfilePage() {
   const {userDetails,organizerData,participantData,setUserData}=useUser();
   const openPopup = () => setPopupOpen(true);
   const closePopup = () => setPopupOpen(false);
+  const navigate=useNavigate();
   const openEditProfile = () => setIsEditProfileOpen(true);
 console.log(organizerData);
   const setCoverPhoto = (photo) => {
@@ -40,9 +42,9 @@ console.log(organizerData);
   // }, [userInfo]);
 const handleGroup=()=>{
   if(organizerData){
-    return alert("You are organizing");
+    navigate(`/GroupPage/${organizerData.groupId}`)
   }else if(participantData){
-    return alert("you are participating");
+    navigate(`/GroupPage/${participantData.groupId}`)
   }else{
     return alert("nothing");
   }
