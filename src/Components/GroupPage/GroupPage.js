@@ -10,9 +10,9 @@ import { getAllParticipantsById, getGroupById } from '../Files/Group_Details';
 import { fetchOrganizerDataById } from '../Files/Organzier_Details';
 
 const GroupPage = () => {
-const [groupDetails,setGroupDetails]=useState({});
-const [organizerData,setOrganizerData]=useState({});
-const [participantData,setParticipantData]=useState([]);
+const [groupDetails,setGroupDetails]=useState(null);
+const [organizerData,setOrganizerData]=useState(null);
+const [participantData,setParticipantData]=useState(null);
 const {groupId}=useParams();
 useEffect(()=>{
   console.log("renders");
@@ -52,6 +52,7 @@ useEffect(()=>{
 },[groupDetails]);
 console.log(groupDetails,participantData,organizerData);
   return (
+    groupDetails && participantData && organizerData && (
     <div className='body1'>
         <div className="group-container">
       <div className="header1">
@@ -69,11 +70,11 @@ console.log(groupDetails,participantData,organizerData);
         <marquee><p>Date From: {groupDetails.dateFrom} Date To: {groupDetails.dateTo}</p></marquee>
       </div>
       <div id="participants-list">
-        {participantData.length > 0 ? <ParticipantList participants={participantData} />:(<>no participants</>)}
+        {participantData.length > 0 ? <ParticipantList participants={participants} />:(<>no participants</>)}
       </div>
     </div>
     </div>
-    
+  )
   );
 };
 
