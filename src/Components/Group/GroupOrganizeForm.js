@@ -4,12 +4,14 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
-import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import Button from '@mui/material/Button';
 import { postGroup } from '../Files/Group_Details';
 import { useUser } from '../Auth/UserContext';
+import { LoadingButton } from '@mui/lab';
 const GroupOrganizeForm = ({eventName, spotName, ...props }) => {
   const {userDetails}=useUser();
+  const [submitProcess,setSubmitProcess]=useState(false);
   const { onClose, onSubmit, open, ...other } = props;
   const [organizerFrom,setOrganizerFrom]=useState({
     organizer:{
@@ -62,6 +64,7 @@ console.log(userDetails);
   };
 
   const handleOk = async() => {
+    setSubmitProcess(true);
     try{
       const groupResponse=await postGroup(organizerFrom);
       if(groupResponse){
@@ -72,7 +75,7 @@ console.log(userDetails);
       console.log(error);
       alert("error while sending group form");
     }
-    
+    setSubmitProcess(false);
   };
   const radioGroupRef = React.useRef(null);
   const handleChange = (e) => {
@@ -149,7 +152,6 @@ console.log(userDetails);
                       onChange={handleEndDateChange}
                       format="YYYY-MM-DD"
                       disablePast
-                      
                     />
                   </LocalizationProvider>
                 </label>
@@ -157,7 +159,7 @@ console.log(userDetails);
           <input type="number" name='participantsLimit' style={{color:'black'}} value={groupForm.participantsLimit} onChange={handleChange} />
       </DialogContent>
         <DialogActions>
-          <Button variant='contained' onClick={()=>handleOk()} >Submit</Button>
+          <div onClick={()=>handleOk()}><LoadingButton loading={submitProcess} loadingIndicator={<CircularProgress color="primary" size={16}/>}>Submit</LoadingButton></div>
           <Button variant='outlined' onClick={()=>handleCancel() }>Cancel</Button>
         </DialogActions>
     </Dialog>

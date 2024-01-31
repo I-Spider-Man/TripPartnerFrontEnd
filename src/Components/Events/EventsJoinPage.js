@@ -42,12 +42,13 @@ const openLogin=()=>{
   };
 
 const handleJoin=(e)=>{
-  setjoinDetails({
-    ...joinDetails,
-    userId:userDetails.userId,
-    groupId:e.target.value
-  });
-  Participation();
+  navigate(`/GroupPage/${e.target.value}`)
+  // setjoinDetails({
+  //   ...joinDetails,
+  //   userId:userDetails.userId,
+  //   groupId:e.target.value
+  // });
+  // Participation();
 }
 const Participation=async()=>{
   const response=await participantJoining(joinDetails);
@@ -65,7 +66,7 @@ const Participation=async()=>{
       <DialogTitle>Groups List</DialogTitle>
       <DialogContent>
         {groupDetails.length > 0 ? (
-        groupDetails.map((grp)=>(<DialogContent dividers style={{display:'flex',justifyContent:'space-between'}}>{grp.groupName} <Button variant='contained' name="groupId" value={grp.groupId} onClick={navigate(`/GroupPage/${grp.groupId}`)}> view </Button></DialogContent>)))
+        groupDetails.map((grp)=>(<DialogContent dividers style={{display:'flex',justifyContent:'space-between'}}>{grp.groupName} <Button variant='contained' name="groupId" value={grp.groupId} onClick={(e)=>handleJoin(e)}> view </Button></DialogContent>)))
       :
       (<>No Groups to Join</>)
       }
