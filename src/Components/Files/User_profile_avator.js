@@ -19,6 +19,15 @@ export const UserProfileAva=[
       'https://trip-partner.s3.eu-north-1.amazonaws.com/user-icons/Open+Peeps+-+Bust+(8).png'
 ]
 
+export const updateUserDetails=async(value)=>{
+  try{
+    const updateUser=await axios.put(`http://localhost:8080/User/updateUser/${value.userId}`,value);
+    return updateUser.data;
+  }catch(error){
+    console.log(error);
+    return null;
+  }
+}
 
 export const getUserDetails=async(value)=>{
   try{

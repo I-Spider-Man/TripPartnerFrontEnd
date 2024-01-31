@@ -9,6 +9,36 @@ import { fetchPicture, fetch_popularSpots, fetch_spot_data } from '../Files/Tour
 const TouristSpotHomePage = () => {
   const [Spot_Details,setSpotDetails]=useState([{}]);
   const [PopularSpotDetails,setPopularSpotDetails]=useState([{}]);
+  const [slideIndex, setSlideIndex] = useState(1);
+
+    const plusDivs = (n) => {
+      showDivs(slideIndex + n);
+    };
+  
+    const showDivs = (n) => {
+      let newIndex = n;
+      const x = document.getElementsByClassName("mySlides");
+  
+      if (newIndex > x.length) {
+        newIndex = 1;
+      }
+  
+      if (newIndex < 1) {
+        newIndex = x.length;
+      }
+  
+      setSlideIndex(newIndex);
+  
+      for (let i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+  
+      x[newIndex - 1].style.display = "block";
+    };
+  
+    useEffect(() => {
+      showDivs(slideIndex);
+    }, [slideIndex]);
   useEffect(()=>{
     try{
         const fetchSpots=async()=>{
@@ -30,6 +60,23 @@ const TouristSpotHomePage = () => {
   
   return (
     <section className="main container section" >
+        <div className='top-slideshow-div'>
+                {/* <h2 className="w3-center"></h2> */}
+
+                <div className="w3-content w3-display-container">
+                    <img className="mySlides" src="https://th.bing.com/th/id/R.17165b6e9cad01442913960b0ed18343?rik=wouQPnVfb8LrWA&riu=http%3a%2f%2fwww.japjitravel.com%2fblog%2fwp-content%2fuploads%2f2017%2f04%2fTaj-Mahal.jpg&ehk=isNV1lcW5FH7SxoGKQGfnSg03874LdT%2fIga%2fiCV%2bBtY%3d&risl=&pid=ImgRaw&r=0" style={{ height:'60vh', width: '100%' }} />
+                    <img className="mySlides" src="https://loveincorporated.blob.core.windows.net/contentimages/gallery/818d8b01-8844-4ac2-8ecb-72a40fa7ec0b-Temple-Amritsar-Elena-Odareeva.jpg" style={{ height:'60vh', width: '100%' }} />
+                    <img className="mySlides" src="https://www.nortonrosefulbright.com/-/media/images/nrf/nrfweb/knowledge/publications/global-fdi/india.jpeg?la=en-hk&revision=&hash=CAF3A0694161AA8979D726C8BBB908E3AD5F6A1C" style={{ height:'60vh', width: '100%' }} />
+                    <img className="mySlides" src="https://tripnxt.com/blog/wp-content/uploads/2020/02/TripNxt-Varanasi-1536x1021.jpg" style={{ height:'60vh', width: '100%' }} />
+                    <img className="mySlides" src="https://wallpapercave.com/wp/AtzSnEY.jpg" style={{ height:'60vh', width: '100%' }} />
+                    <img className="mySlides" src="https://wallpaperbat.com/img/332681-wallpaper-river-home-india-image-for-desktop-section-gorod.jpg" style={{ height:'60vh', width: '100%' }} />
+                    <img className="mySlides" src="https://th.bing.com/th/id/R.40f45706c1b0176ca0ee696aa4034942?rik=l5%2fk9d4ilZZLzw&riu=http%3a%2f%2fd27k8xmh3cuzik.cloudfront.net%2fwp-content%2fuploads%2f2015%2f07%2fNubra-Valley-in-Ladakh.jpg&ehk=UjPdINnuDigww%2fz6qr%2fWP2qdQKDkYilxv9CRJT0anMs%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1" style={{ height:'60vh', width: '100%' }} />
+                    <img className="mySlides" src="https://images.yourstory.com/cs/wordpress/2016/03/yourstory-delhigovt-incubation.jpg?w=1152&fm=auto&ar=2:1&mode=crop&crop=faces" style={{ height:'60vh', width: '100%' }} />
+
+                    <button className="w3-button w3-black w3-display-left" onClick={() => plusDivs(-1)}>&#10094;</button>
+                    <button className="w3-button w3-black w3-display-right" onClick={() => plusDivs(1)}>&#10095;</button>
+                </div>
+            </div>
         <div className="secTitle">
             <h1 data-aos='fade-right' className="title">
                 Most Visited Destinations...
