@@ -17,24 +17,33 @@ export const UserProvider = ({ children }) => {
   const storedParticipantDetails=localStorage.getItem('participantDetails');
   return storedParticipantDetails ? JSON.parse(storedParticipantDetails) : null;
  })
- const updateOrganizerData=async()=>{
-    const storedUserData=localStorage.getItem('userDetails');
-    const organizer=await axios.get(`http://localhost:8080/User/Organizer/${storedUserData.userId}`);
+ const updateOrganizerData=async(userData)=>{
+  try{
+    const organizer=await axios.get(`http://localhost:8080/User/Organizer/${userData.userId}`);
     console.log(organizer.data);
     localStorage.setItem('organizerDetails',JSON.stringify(organizer.data));
+  }
+  catch(error){
+    console.log(error);
+  }
  }
- const updateParticipantData=async()=>{
-  const storedUserData=localStorage.getItem('userDetails');
-  const participant=await axios.get(`http://localhost:8080/User/Participant/${storedUserData.userId}`);
+ const updateParticipantData=async(userData)=>{
+  try{
+  const participant=await axios.get(`http://localhost:8080/User/Participant/${userData.userId}`);
     console.log(participant.data);
     localStorage.setItem('participantDetails',JSON.stringify(participant.data));
+  }
+  catch(error){
+    console.log(error);
+  }
+
 
  }
   const setUserData = async(user) => {
     localStorage.setItem('userDetails', JSON.stringify(user));
   };
   return (
-    <UserContext.Provider value={{ userDetails, organizerData, participantData, setUserData }}>
+    <UserContext.Provider value={{ userDetails, organizerData, participantData, setUserData, updateOrganizerData,updateParticipantData }}>
       {children}
     </UserContext.Provider>
   );
@@ -42,8 +51,11 @@ export const UserProvider = ({ children }) => {
 
 export const useUser = () => {
   const { userDetails,organizerData,participantData, setUserData ,updateOrganizerData,updateParticipantData} = useContext(UserContext);
+  const storedUserDetails = localStorage.getItem('userDetails');
+  updateOrganizerData(JSON.parse(storedUserDetails));
+  updateParticipantData(JSON.parse(storedUserDetails));
   useEffect(() => {
-    const storedUserDetails = localStorage.getItem('userDetails');
+   
     if (!userDetails && storedUserDetails) {
       setUserData(JSON.parse(storedUserDetails));
     }

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
-// import PopupForm from '../PopupForm/PopupForm';
 import './Profile.css';
 import {
   MDBCol,
@@ -10,13 +9,6 @@ import {
   MDBCardBody,
   MDBCardImage,
   MDBBtn,
-  MDBBreadcrumb,
-  MDBBreadcrumbItem,
-  // MDBProgress,
-  // MDBProgressBar,
-  MDBIcon,
-  MDBListGroup,
-  MDBListGroupItem
 } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -27,22 +19,18 @@ const PopupForm = lazy(() => import('../PopupForm/PopupForm'));
 export default function ProfilePage() {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false); // Define isEditProfileOpen state
-  const {userDetails,organizerData,participantData}=useUser();
+  const {userDetails,organizerData,participantData,setUserData}=useUser();
   const openPopup = () => setPopupOpen(true);
   const closePopup = () => setPopupOpen(false);
   const openEditProfile = () => setIsEditProfileOpen(true);
 console.log(organizerData);
   const setCoverPhoto = (photo) => {
     console.log('Setting cover photo:', photo);
-    // Implement logic to set cover photo
   };
-
   const closeEditProfile = () => setIsEditProfileOpen(false);
-
-  // const openEditProfile = () => {setIsEditProfileOpen(true);}
-
-  // const closeEditProfile = () => setIsEditProfileOpen(false);
-
+  const updateUser=(value)=>{
+    setUserData(value);
+  }
   const handleEditProfileToggle = () => {
     setIsEditProfileOpen(!isEditProfileOpen);
   };
@@ -181,6 +169,7 @@ const handleGroup=()=>{
         <Suspense fallback={<div>Loading...</div>}>
           <PopupForm
           onClose={closeEditProfile}
+          onReturn={updateUser}
           />
         </Suspense>
       )}

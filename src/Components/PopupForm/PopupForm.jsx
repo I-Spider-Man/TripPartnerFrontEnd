@@ -6,7 +6,7 @@ import { updateUserDetails } from '../Files/User_profile_avator';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-const EditProfilePage = ({onClose}) => {
+const EditProfilePage = ({onClose,onReturn}) => {
   const {userDetails,setUserData}=useUser();
   console.log(userDetails);
   const userId=userDetails.userId;
@@ -30,7 +30,7 @@ const EditProfilePage = ({onClose}) => {
   const handleSubmit = async () => {
     try {
       const updatedUser = await updateUserDetails(updateUser);
-      setUserData(updatedUser);
+      onReturn(updatedUser);
       onClose()
     } catch (error) {
       console.log(error);
