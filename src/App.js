@@ -8,7 +8,6 @@ import Event from './Components/Events/Event';
 import TouristSpot from './Components/TouristSpots/TouristSpot';
 import NavBar from './Components/NavBar/NavBar';
 import Footer from './Components/Footer/Footer';
-import BlogSlider from './Components/Events/Components-container';
 import ProfilePage from './Components/ProfilePage/Profile';
 import { UserProvider } from './Components/Auth/UserContext';
 import GroupPage from './Components/GroupPage/GroupPage';
@@ -26,7 +25,6 @@ function App() {
         <Route path="/TouristHomePage" element={<TouristSpotHomePage/>}/>
         <Route path='/Events/:eventName' element={<Event/>}/>
         <Route path='/Spot/:spotName' element={<TouristSpot/>}/>
-        <Route path="/component" element={<BlogSlider/>}/>
         <Route path='/profile/:userId' element={<ProfilePage/>}/>
         <Route path='/GroupPage/:groupId' element={<GroupPage/>}/>
       </Routes></div>

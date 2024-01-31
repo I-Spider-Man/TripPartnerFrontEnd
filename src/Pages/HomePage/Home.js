@@ -1,5 +1,5 @@
 import React,{useState,useEffect, createRef, useDebugValue} from 'react'
-import vid from './pexels_videos_2096549 (1080p).mp4'
+import vid from './production_id_4063585 (1080p).mp4'
 import './Home.css'
 import EventComponent from '../../Components/Events/EventComponent'
 import TouristSpotComponent from '../../Components/TouristSpots/TouristSpotComponent'
@@ -37,15 +37,19 @@ function Home() {
   const [currentEvent, setCurrentEvent] = useState(0);
   const [currentSpot,setCurrentSpot]=useState(0);
 
-useEffect(()=>{
-  setEvent(eventDetails[currentEvent]);
-  console.log("single event ",event)
-},[currentEvent]);
-
-useEffect(()=>{
-  setSpot(spotDetails[currentSpot])
-  console.log("single spot ",spot)
-},[currentSpot])
+  useEffect(() => {
+    console.log("event", eventDetails);
+    if (eventDetails.length > 0) {
+      setEvent(eventDetails[currentEvent]);
+    }
+  }, [eventDetails, currentEvent]);
+  
+  useEffect(() => {
+    console.log("spot", spotDetails);
+    if (spotDetails.length > 0) {
+      setSpot(spotDetails[currentSpot]);
+    }
+  }, [spotDetails, currentSpot]);
 
   const nextEvent = () => {
     setCurrentEvent(currentEvent+1);
@@ -60,7 +64,7 @@ const nextSpot=()=>{
     setCurrentSpot(currentSpot-1)
   }
   return (
-    <div className='home' style={{}}>
+    <div className='home' style={{width:'100%'}}>
       <div style={{ position: 'relative', width: '100%', height: '100%' }}>
   <video src={vid} autoPlay loop muted style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
   <div
@@ -75,11 +79,11 @@ const nextSpot=()=>{
   />
 </div>
       <div className='header-text'>
-        <div className='header-content'>welcome to trip partner</div>
+        <div className='header-content' style={{textShadow:'3px 0 3px black'}}>welcome to trip partner</div>
       </div>
       <div>
-        <div className='events-container' style={{backgroundColor:'black',padding:'50px'}}>
-          <div className='container' style={{}}>
+        <div className='events-container' style={{padding:'50px'}}>
+          <div className='container'>
           <h3>Events</h3>
           <p>Unlock the magic of travel! Immerse yourself in vibrant events at breathtaking tourist spots. From cultural festivals to culinary delights, join us for unforgettable experiences that go beyond sightseeing. Embrace the journey, forge global connections, and make every moment extraordinary. Explore. Connect. Celebrate.</p>
         </div>

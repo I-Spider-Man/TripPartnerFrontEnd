@@ -2,7 +2,7 @@ import React from 'react'
 import './ContentLoading.css'
 function Loading() {
   return (
-    <div className="content-loader">
+    <div className="content-loader" style={{background:'none'}}>
   <div className="box box-1">
     <div className="side-left"></div>
     <div className="side-right"></div>

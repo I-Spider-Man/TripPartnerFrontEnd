@@ -69,7 +69,7 @@ const handleOrganizeSubmit = (formData) => {
   setOrganizeFormVisible(false);
 };
   return (
-    <div className='front-page' style={backgroundImageStyle}>
+    <div className='front-page'>
        <div className='spot-page' style={{minHeight:'100vh'}}>
         <div className='content-container' style={{display:'flex', alignItems:'center', justifyContent:'center',height:'100vh'}}>
           <div className='spot-content' style={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'center'}}>
