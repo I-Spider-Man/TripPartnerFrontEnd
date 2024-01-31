@@ -8,6 +8,7 @@ import Dialog from '@mui/material/Dialog';
 import {Group_details, getGroup} from '../Files/Group_Details';
 import { participantJoining } from '../Files/Participant_Details';
 import { useUser } from '../Auth/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 function EventsJoinPage(props) {
     const {userDetails}=useUser();
@@ -16,6 +17,7 @@ console.log(userDetails);
   const [groupDetails,setGroupDetails]=React.useState([{}]);
   const radioGroupRef = React.useRef(null);
   const [joinDetails,setjoinDetails]=React.useState({})
+  const navigate=useNavigate();
   React.useEffect(()=>{
     const fetchGroup=async()=>{
       const groups=await getGroup(eventName,spotName);
@@ -63,7 +65,7 @@ const Participation=async()=>{
       <DialogTitle>Groups List</DialogTitle>
       <DialogContent>
         {groupDetails.length > 0 ? (
-        groupDetails.map((grp)=>(<DialogContent dividers style={{display:'flex',justifyContent:'space-between'}}>{grp.groupName} <Button variant='contained' name="groupId" value={grp.groupId} onClick={(e)=>handleJoin(e)}> join </Button></DialogContent>)))
+        groupDetails.map((grp)=>(<DialogContent dividers style={{display:'flex',justifyContent:'space-between'}}>{grp.groupName} <Button variant='contained' name="groupId" value={grp.groupId} onClick={navigate(`/GroupPage/${grp.groupId}`)}> view </Button></DialogContent>)))
       :
       (<>No Groups to Join</>)
       }
