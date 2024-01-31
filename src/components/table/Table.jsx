@@ -48,9 +48,7 @@ const List = ({eventName,spotName}) => {
           ))}</> :(
             <TableRow><TableCell>NO ACTIVE GROUPS</TableCell></TableRow>
           )
-        
         }
-          
         </TableBody>
       </Table>
     </TableContainer>

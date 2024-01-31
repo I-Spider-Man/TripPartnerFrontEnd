@@ -42,7 +42,7 @@ function Groups() {
   const columnData = [
     { field: 'groupId', headerName: 'Group Id', width: 80 },
     { field: 'groupName', headerName: 'Group Name', width: 120 },
-    { field: 'organizerName', headerName: 'Organizer Name', width: 130 ,renderCell:(params)=>(params.row.organizerData.userData.userName)},
+    { field: 'organizerName', headerName: 'Organizer Name', width: 130 ,renderCell:(params)=>(params.row.organizerData?.userData.userName || 'deleted')},
     {
       field: 'event/spot',
       headerName: 'eventName/spotName',
