@@ -209,11 +209,28 @@
     margin-right: 10px; /* Add margin for spacing between the image and text */
   }
 
-
+ 
   
-
+  /* CSS */
+  .button-32 {
+    padding: 12px 26px;
+    color: #fff;
+    border: 0;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 150ms ease-in-out;
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;
+    border-radius: 10px;
+    background-color: #111111;
+    background-image: radial-gradient(76% 151% at 52% -52%, rgba(255, 255, 255, 0.23) 0%, transparent 100%);
+  }
   
+  .button-32:hover {
+    filter: brightness(1.1);
+  }
   
-  
-  /* Additional styling for participant list can be added here */
+  .button-32:active {
+    transform: scale(.95);
+  }
+   
   
