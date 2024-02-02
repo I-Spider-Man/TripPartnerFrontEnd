@@ -145,7 +145,8 @@ const handleGroup=()=>{
                       <h2>Number of times you were a participant:</h2>
                     </div>
                     <div className='user-count text-muted'>
-                      {organizerData?organizerData.organizedCount:"null"}
+                      
+                      {participantData?participantData.participationCount:"null"}
                     </div>
                   </MDBCardBody>
                 </MDBCard>
@@ -158,7 +159,7 @@ const handleGroup=()=>{
                       <h2>Number of times you were an organizer:</h2>
                     </div>
                     <div className='user-count text-muted'>
-                      {participantData?participantData.participationCount:"null"}
+                    {organizerData?organizerData.organizedCount:"null"}
                     </div>
                   </MDBCardBody>
                 </MDBCard>

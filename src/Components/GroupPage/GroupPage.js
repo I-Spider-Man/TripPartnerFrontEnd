@@ -16,6 +16,9 @@ const [participants,setParticipants]=useState(null);
 const {groupId}=useParams();
 console.log(organizerData,groupId);
 console.log(organizerData.groupId===groupId);
+const isOrganizer = organizerData.groupId == groupId;
+const isParticipant = participantData.groupId == groupId;
+
 useEffect(()=>{
   console.log("renders");
   const fetchData=async()=>{
@@ -72,23 +75,22 @@ const handleLeaveClick = () => {
         <h1 className="headerh1">
           <span className="group-icon">👥</span> {groupDetails.groupName}
         </h1>
-        {!(organizerData.groupId== groupId || participantData.groupId== groupId )? (
-              <div className='button-32'>
-                <button onClick={handleJoinClick}>Join</button>
-              </div>
-            ) : null
-            }
-        {!(organizerData.groupId== groupId) ? (
+        
+       
+        {(isParticipant && !isOrganizer) && (
               <div className='button-32'>
                 <button onClick={handleLeaveClick}>Leave</button>
               </div>
-            ) : null}    
+            ) }    
        
       {
-           ( participantData.groupId === groupId) && (
+           (!isOrganizer && !isParticipant)  && (
+
                 <div className='button-32'>
-                    <button onClick={handleLeaveClick}>Leave</button>
+                    <button onClick={handleJoinClick}>Join</button>
+                 
                 </div>
+                  
             )
         }
          

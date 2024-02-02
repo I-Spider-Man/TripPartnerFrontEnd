@@ -28,6 +28,14 @@ console.log(userDetails);
     spotName:"",
     participantsLimit:0
   })
+  const isAllFieldsFilled = () => {
+    for (const key in groupForm) {
+      if (key !== 'eventName' && key !== 'spotName' && !groupForm[key]) {
+        return false;
+      }
+    }
+    return true;
+  };
   React.useEffect(() => {
     setOrganizerFrom({
       ...organizerFrom,
@@ -159,7 +167,12 @@ console.log(userDetails);
           <input type="number" name='participantsLimit' style={{color:'black'}} value={groupForm.participantsLimit} onChange={handleChange} />
       </DialogContent>
         <DialogActions>
-          <div onClick={()=>handleOk()}><LoadingButton loading={submitProcess} loadingIndicator={<CircularProgress color="primary" size={16}/>}>Submit</LoadingButton></div>
+        <Button onClick={() => handleOk()} disabled={!isAllFieldsFilled()}>
+  <LoadingButton loading={submitProcess} loadingIndicator={<CircularProgress color="primary" size={16}/>} >
+    Submit
+  </LoadingButton>
+</Button>
+
           <Button variant='outlined' onClick={()=>handleCancel() }>Cancel</Button>
         </DialogActions>
     </Dialog>
