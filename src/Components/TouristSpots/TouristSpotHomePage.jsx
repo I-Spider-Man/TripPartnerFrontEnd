@@ -87,9 +87,9 @@ const TouristSpotHomePage = () => {
  
         <div className="secContent grid">
             {PopularSpotDetails.length > 0  ? (<>{
-                PopularSpotDetails.map(({spotId, spotPicture, spotName, location, description})=>{
+                PopularSpotDetails.map(({spotId, spotPictureList, spotName, location, description})=>{
                     return(
-                        <Spot spotId={spotId} spotName={spotName} spotPicture={spotPicture} location={location} description={description}/>
+                        <Spot spotId={spotId} spotName={spotName} spotPictureList={spotPictureList} location={location} description={description}/>
                     )
                         
                     
@@ -109,9 +109,9 @@ const TouristSpotHomePage = () => {
         </div>
         <div className="secContent grid">
             {Spot_Details.length > 0 ? (<>{
-                Spot_Details.map(({spotId, spotPicture, spotName, location,  description})=>{
+                Spot_Details.map(({spotId, spotPictureList, spotName, location,  description})=>{
                     return(
-                        <Spot spotId={spotId} spotName={spotName} spotPicture={spotPicture} location={location} description={description}/>
+                        <Spot spotId={spotId} spotName={spotName} spotPictureList={spotPictureList} location={location} description={description}/>
                     )
                 })
             }<p>More places to be added soon</p></>):(<div style={{color:'white',display:'flex',alignItems:'center',justifyContent:'center',width:'100%'}}><Loading/></div>)}

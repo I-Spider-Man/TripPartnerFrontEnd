@@ -10,12 +10,14 @@
     background-attachment: fixed;
     height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
+    justify-content: space-around;
+    width: 100%;
   }
   
   .group-container {
-    margin-top: 50px;
     width: 550px;
     /* height: 75vw; Set both width and height to the same value for a square */
     max-width: 800px;

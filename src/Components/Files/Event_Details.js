@@ -6,10 +6,10 @@ export const fetch_Event_Details = async() => {
     const response=await axios.get("http://localhost:8080/activeEvents");
     const eventwithpicture=await Promise.all(
       response.data.map(async(event)=>{
-        const picture=await fetchPicture(event.eventPicture);
+        const picture=await axios.get(`http://localhost:8080/event/pictureList/${event.eventId}`);
         return{
           ...event,
-          eventPicture:picture
+          eventPictureList:picture.data,
         };
       })
     );
@@ -23,10 +23,10 @@ export const fetch_Event_Details = async() => {
 export const fetch_Event_By_id=async(id)=>{
   try{
     const response=await axios.get(`http://localhost:8080/activeEvents/${id}`)
-    const picture=await fetchPicture(response.data.eventPicture);
+    const picture=await axios.get(`http://localhost:8080/event/pictureList/${response.data.eventId}`);
     return {
       ...response.data,
-      eventPicture:picture
+      eventPictureList:picture.data,
     };
   }catch(error){
     console.error(error);
@@ -36,24 +36,14 @@ export const fetch_Event_By_id=async(id)=>{
 export const fetchEventByEventName=async(eventName)=>{
   try{
     const response=await axios.get(`http://localhost:8080/activeEvent/${eventName}`);
-    const picture=await fetchPicture(response.data.eventPicture);
+    const picture=await axios.get(`http://localhost:8080/event/pictureList/${response.data.eventId}`);
     const eventWithPicture={
       ...response.data,
-      eventPicture:picture
+      eventPictureList:picture.data
     };
     return eventWithPicture;
   }catch(error){
     console.log(error);
-  }
-}
-export const fetchPicture=async(PictureName)=>{
-  try{
-      const response=await axios.get(`http://localhost:8080/Picture/${PictureName}`,{ responseType:'arraybuffer'});
-      const blob=new Blob([response.data],{type:response.headers['Content-Type']});
-      return (URL.createObjectURL(blob));
-  }catch(error){
-      return console.log(error);
-      return [];
   }
 }
 export const fetch_popularEvents=async()=>{
@@ -61,10 +51,10 @@ export const fetch_popularEvents=async()=>{
     const response=await axios.get(`http://localhost:8080/PopularEvents`);
     const eventwithpicture=await Promise.all(
       response.data.map(async(event)=>{
-        const picture=await fetchPicture(event.eventPicture);
+        const picture=await axios.get(`http://localhost:8080/event/pictureList/${event.eventId}`);
         return{
           ...event,
-          eventPicture:picture
+          eventPictureList:picture.data
         };
       })
     );

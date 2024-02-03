@@ -6,19 +6,24 @@ import TouristSpotComponent from '../../Components/TouristSpots/TouristSpotCompo
 import {fetch_Event_Details, fetch_popularEvents} from '../../Components/Files/Event_Details'
 import { fetch_popularSpots, fetch_spot_data } from '../../Components/Files/TouristSpotDetails'
 import { Link } from 'react-router-dom'
-import FeaturedPost from '../../Components/FeaturedPost'
 import { Button } from '@mui/material'
 function Home() {
-  const [profileAva, setProfileAva] = useState("https://trip-partner.s3.eu-north-1.amazonaws.com/login_signUp.svg");
   const [eventDetails,setEventDetails] = useState([{}])
   const [spotDetails,setSpotDetails]=useState([{}])
+  const [loading,setLoading]=useState(true);
+  const [event,setEvent]=useState({});
+  const [spot,setSpot]=useState({});
+  const [currentEvent, setCurrentEvent] = useState(0);
+  const [currentSpot,setCurrentSpot]=useState(0);
   useEffect(()=>{
     const fetchData = async () => {
       try {
         const response = await (fetch_popularEvents());
         const response1 = await (fetch_popularSpots());
+        console.log(response,response1);
         setSpotDetails(response1);
         setEventDetails(response);
+        
       } catch (error) {
         console.log("Error while fetching event data:", error);
       }
@@ -31,11 +36,6 @@ function Home() {
   useEffect(() => {
     console.log("spot", spotDetails);
   }, [spotDetails]);
-  const [event,setEvent]=useState({});
-  const [spot,setSpot]=useState({});
-
-  const [currentEvent, setCurrentEvent] = useState(0);
-  const [currentSpot,setCurrentSpot]=useState(0);
 
   useEffect(() => {
     console.log("event", eventDetails);
@@ -50,7 +50,11 @@ function Home() {
       setSpot(spotDetails[currentSpot]);
     }
   }, [spotDetails, currentSpot]);
-
+  useEffect(()=>{
+    if(event && Object.keys(event).length > 0 && spot && Object.keys(spot).length > 0){
+      setLoading(false);
+    }
+  },[event,spot])
   const nextEvent = () => {
     setCurrentEvent(currentEvent+1);
   };
@@ -63,8 +67,8 @@ const nextSpot=()=>{
   const prevSpot=()=>{
     setCurrentSpot(currentSpot-1)
   }
-  return (
-    <div className='home' style={{width:'100%'}}>
+  return !loading ? (
+      <div className='home' style={{width:'100%'}}>
       <div style={{ position: 'relative', width: '100%', height: '100%' }}>
   <video src={vid} autoPlay loop muted style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
   <div
@@ -190,7 +194,8 @@ const nextSpot=()=>{
         </div>
       </div>
         </div>
+    )
+    :(<>loading....</>)
   
-  )
 }
 export default Home

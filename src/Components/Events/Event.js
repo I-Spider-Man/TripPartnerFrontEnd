@@ -60,7 +60,16 @@ function Event() {
     <div className='content-container' style={{display:'flex', alignItems:'center', justifyContent:'center',height:'100vh'}}>
       <div className='event-content' style={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'center'}}>
     {event ? (
-          <><img src={event.eventPicture} alt={event.image_alt} />
+          <>
+          {(event.eventPictureList && event.eventPictureList.length > 0) && (
+  <>
+    {event.eventPictureList.map(({ eventPicture, image_alt }, index) => (
+      <img key={index} src={eventPicture} alt={image_alt} />
+    ))}
+  </>
+)}
+
+          
           <div className='content-details'>
             <label><strong>EVENT NAME:</strong> <h1>{event.eventName}</h1></label>
             <label><strong>EVENT HAPPENING ON: </strong><p>{event.startDate} = {event.endDate}</p></label>

@@ -7,6 +7,7 @@ import { Tooltip } from '@mui/material';
 import {LoadingButton} from '@mui/lab';
 import { CircularProgress } from '@mui/material';
 import { useUser } from '../Auth/UserContext';
+import { useNavigate } from 'react-router-dom';
 function LoginPage({ onClose , onReturn}) {
   const [otpInput, setOtpInput] = useState(false);
   const [otpProcess,setOtpProcess]=useState(false);
@@ -43,7 +44,6 @@ function LoginPage({ onClose , onReturn}) {
     console.log(userotp+"   "+otp);
     if(userotp==otp && userotp!='' && otp!=''){
       await forgotPassword(userDetails.userEmail);
-      
       showForgotPassword();
     }else{
       alert("entered otp is wrong");
@@ -62,6 +62,7 @@ function LoginPage({ onClose , onReturn}) {
     setGeneratedOtp(!generatedOtp);
     setOtpProcess(false)
 }
+const navigate=useNavigate();
 const handleLogin = async (e) => {
   e.preventDefault();
   setLoginProcess(true)
@@ -100,10 +101,12 @@ const handleChange=(e)=>{
   }))
 }
 
-const handleSubmit=async()=>{
+const handleSubmit=async(e)=>{
+  e.preventDefault();
   console.log('Current state values:', { otp, userotp, ...userDetails.userPassword, userPasswordC });
 const randomIndex = Math.floor(Math.random() * UserProfileAva.length);
-  if(otp == userotp){
+if(userotp !== ""){
+  if( otp == userotp){
       if(userDetails.userPassword === userPasswordC){
           try {
             const updatedUserDetails = {
@@ -111,6 +114,8 @@ const randomIndex = Math.floor(Math.random() * UserProfileAva.length);
               userProfile: UserProfileAva[randomIndex]
             };
               const response = await registerUser(updatedUserDetails);
+              navigate("/");
+              onClose();
             } catch (error) {
               console.error('Error registering user:', error);
             }
@@ -120,6 +125,10 @@ const randomIndex = Math.floor(Math.random() * UserProfileAva.length);
   }else{
       alert("Entered otp is wrong.");
   }
+}
+else{
+  getOtp();
+}
 }
   const validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

@@ -13,7 +13,7 @@ export const Footer = () => {
         <div className="footer" style={{backgroundColor:"black",color:'white'}}>
             <div className="section-0"style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
                 <div className="Logo-container" >
-            <Link to='/'><img src="https://trip-partner.s3.eu-north-1.amazonaws.com/MicrosoftTeams-image+(5).png"/></Link>
+            <Link to='/'><img src="https://trip-partner-main.s3.amazonaws.com/Trip+Partner+2.png"/></Link>
             </div>
             </div>
             

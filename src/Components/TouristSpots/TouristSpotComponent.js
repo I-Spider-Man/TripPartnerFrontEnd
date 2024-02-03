@@ -27,7 +27,7 @@ function TouristSpotComponent(props) {
           <CardMedia
             component="img"
             sx={{ width: 250, display: { xs: 'none', sm: 'block' } }}
-            image={post.spotPicture}
+            image={post.spotPictureList[0].spotPicture}
             alt={post.imageLabel}
           />
         </Card>
@@ -42,7 +42,7 @@ TouristSpotComponent.propTypes = {
   post: PropTypes.shape({
     date: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
+    image: PropTypes.array.isRequired,
     imageLabel: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
   }).isRequired,

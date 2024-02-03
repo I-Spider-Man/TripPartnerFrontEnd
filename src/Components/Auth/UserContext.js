@@ -18,7 +18,8 @@ export const UserProvider = ({ children }) => {
   return storedParticipantDetails ? JSON.parse(storedParticipantDetails) : null;
  })
  const updateOrganizerData=async(userData)=>{
-  try{
+  if(userData){
+    try{
     const organizer=await axios.get(`http://localhost:8080/User/Organizer/${userData.userId}`);
     console.log(organizer.data);
     localStorage.setItem('organizerDetails',JSON.stringify(organizer.data));
@@ -26,9 +27,12 @@ export const UserProvider = ({ children }) => {
   catch(error){
     console.log(error);
   }
+  }
+  
  }
  const updateParticipantData=async(userData)=>{
-  try{
+  if (userData) {
+    try{
   const participant=await axios.get(`http://localhost:8080/User/Participant/${userData.userId}`);
     console.log(participant.data);
     localStorage.setItem('participantDetails',JSON.stringify(participant.data));
@@ -36,7 +40,7 @@ export const UserProvider = ({ children }) => {
   catch(error){
     console.log(error);
   }
-
+  }
 
  }
   const setUserData = async(user) => {

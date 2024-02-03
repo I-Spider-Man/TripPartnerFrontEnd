@@ -11,33 +11,29 @@ import SingleEvent from './SingleEvent'
 const EventsHomePage = () => {
     const [eventDetails,setEventDetails]=useState([{}]);
     const [popularEvents,setPopularEvents]=useState([{}]);
-    const [slideIndex, setSlideIndex] = useState(1);
-
+    const [slideIndex, setSlideIndex] = useState(0);
+    const [loading,setLoading]=useState(true);
     const plusDivs = (n) => {
       showDivs(slideIndex + n);
     };
-  
     const showDivs = (n) => {
-      let newIndex = n;
-      const x = document.getElementsByClassName("mySlides");
-  
-      if (newIndex > x.length) {
-        newIndex = 1;
-      }
-  
-      if (newIndex < 1) {
-        newIndex = x.length;
-      }
-  
-      setSlideIndex(newIndex);
-  
-      for (let i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-      }
-  
-      x[newIndex - 1].style.display = "block";
-    };
-  
+        let newIndex = n;
+        const x = document.getElementsByClassName("mySlides");
+        if (x.length > 0) {
+          if (newIndex > x.length) {
+            newIndex = 1;
+          }
+          if (newIndex < 1) {
+            newIndex = x.length;
+          }
+          setSlideIndex(newIndex);
+          for (let i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+          }
+          x[newIndex - 1].style.display = "block";
+        }
+      };
+      
     useEffect(() => {
       showDivs(slideIndex);
     }, [slideIndex]);
@@ -53,19 +49,19 @@ const EventsHomePage = () => {
         }
     }
     fetchData();
-    })
-    
+    },[])
     useEffect(()=>{
         console.log(eventDetails);
+        setLoading(false);
     },[eventDetails])
-  return (
+  return !loading ? (
     <section className="main container section">
         <div style={{minHeight:'100vh'}}>
         <div className='top-slideshow-div' >
                 {/* <h2 className="w3-center">EVENTS TO REMEMBER</h2> */}
 
                 <div className="w3-content w3-display-container" style={{height:'80vh'}}>
-                    <img className="mySlides" src="https://images.rove.me/w_1920,q_85/cgoll6or2skcn0fsauwg/quebec-quebec-city-summer-festival-festival-dete-de-quebec.jpg" style={{ height: '100%', width: '100%' }} />
+                    
                     <img className="mySlides" src="https://wallpaperaccess.com/full/6133725.jpg" style={{ height: '100%', width: '100%' }} />
                     <img className="mySlides" src="https://liveeventproductions.co.uk/wp-content/uploads/2018/01/event-production-services-live-event-productions-banner-image-4.jpg" style={{ height: '100%', width: '100%' }} />
                     <img className="mySlides" src="https://wallpaperaccess.com/full/2489735.jpg" style={{ height: '100%', width: '100%' }} />
@@ -85,13 +81,16 @@ const EventsHomePage = () => {
         </div>
  
         <div className="secContent grid">
-            {popularEvents.length > 0 ? (<>{
-                popularEvents.map(({eventId, eventPicture, eventName, location,description})=>{
-                    return(
-                        <SingleEvent eventId={eventId} eventPicture={eventPicture} eventName={eventName} location={location} description={description}/>
-                    )
-                })
-            }<p>More places to be added soon...</p></>):(<div style={{color:'white',display:'flex',alignItems:'center',justifyContent:'center',width:'100%'}}><Loading/></div>)}
+        {popularEvents && popularEvents.length > 0 ? (
+  popularEvents.map(({ eventId, eventPictureList, eventName, location, description }) => {
+    return (
+      <SingleEvent eventId={eventId} eventPictureList={eventPictureList} eventName={eventName} location={location} description={description} />
+    );
+  })
+) : (
+  <p>More places to be added soon...</p>
+)}
+
         </div>
  
         <br />
@@ -103,18 +102,21 @@ const EventsHomePage = () => {
             </h1>
         </div>
         <div className="secContent grid">
-            {eventDetails.length > 0 ? (<>{
-                eventDetails.map(({eventId, eventPicture, eventName, location, description})=>{
-                    return(
-                        <SingleEvent eventId={eventId} eventPicture={eventPicture} eventName={eventName} location={location} description={description}/>
-                    )
-                })
-            }
- 
-            <p>More events to be added soon</p></>):(<div style={{color:'white',display:'flex',alignItems:'center',justifyContent:'center',width:'100%'}}><Loading/></div>)}
+        {eventDetails && eventDetails.length > 0 ? (
+  eventDetails.map(( { eventId, eventPictureList, eventName, location, description }) => {
+    return (
+      <SingleEvent eventId={eventId} eventPictureList={eventPictureList} eventName={eventName} location={location} description={description} />
+    );
+  })
+) : (
+  <p>More events to be added soon</p>
+)}
+
             
         </div></div>
     </section>
+  ):(
+    <>loading....</>
   )
 }
  

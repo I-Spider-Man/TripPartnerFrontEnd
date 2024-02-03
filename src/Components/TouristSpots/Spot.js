@@ -3,11 +3,14 @@ import { HiOutlineLocationMarker } from 'react-icons/hi'
 import { IoMdRadioButtonOn } from 'react-icons/io'
 import { Link } from 'react-router-dom'
 
-function Spot({spotId,spotName,spotPicture,location,description}) {
+function Spot({spotId,spotName,spotPictureList,location,description}) {
   return (
     <div key={spotId} className="singleDestination" style={{padding:'5px'}}>
                             <div className="imageDiv">
-                                <img src={spotPicture} alt={spotName} />
+                                {(spotPictureList && spotPictureList.length > 0) && (<>
+                                {spotPictureList.map(spotPicture=>(<img src={spotPicture.spotPicture} alt={spotName} />))}
+                                </>) }
+                                
                             </div>
  
                             <div className="cardInfo" style={{display:'flex', flexDirection:'column',gap:'5px', justifyContent:'center'}}>
