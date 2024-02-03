@@ -1,7 +1,6 @@
 import "./single.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import Chart from "../../components/chart/Chart";
 import List from "../../components/table/Table";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -9,15 +8,13 @@ import { fetchPicture, fetchSpotDataById } from "../../DataStorage";
 
 const SpotDetails = () => {
   const [spotDetails,setSpotDetails]=useState({});
-  const [spotPicture,setSpotPicture]=useState(null);
   const {spotId}=useParams();
   useEffect(()=>{
     const fetchSpotDetails=async()=>{
       try{
         const response=await fetchSpotDataById(spotId);
+        console.log(response);
       setSpotDetails(response);
-      const picture=await fetchPicture(response.spotPicture);
-      setSpotPicture(picture);
       }catch(error){
         console.log(error);
       }
@@ -31,12 +28,15 @@ const SpotDetails = () => {
         <Navbar />
         <div className="top">
           <div className="left">
-            <img
-                src={spotPicture}
+            {spotDetails.spotPictureList && spotDetails.spotPictureList.map(spotPicture=>(
+              <img
+                src={spotPicture.spotPicture}
                 alt="spotPicture"
                 className="itemImg"
                 style={{width:'100%',minHeight:"300px",maxHeight:'300px'}}
               />
+            ))}
+            
           </div>
           <div className="right">
           

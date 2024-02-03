@@ -9,34 +9,33 @@ import { fetchPicture, fetchEventDataByEventId } from "../../DataStorage";
 
 const EventDetails = () => {
   const [eventDetails,setEventDetails]=useState({});
-  const [eventPicture,setEventPicture]=useState(null);
   const {eventId}=useParams();
   useEffect(()=>{
     const fetchEventDetails=async()=>{
       try{
         const response=await fetchEventDataByEventId(eventId);
+        console.log(response);
       setEventDetails(response);
-      const picture=await fetchPicture(response.eventPicture);
-      setEventPicture(picture);
       }catch(error){
         console.log(error);
       }
     }
     fetchEventDetails();
   },[eventId])
-  return (
+  return eventDetails ? (
     <div className="single">
       <Sidebar />
       <div className="singleContainer">
         <Navbar />
         <div className="top">
           <div className="left">
-            <img
-                src={eventPicture}
+        {eventDetails.eventPictureList && eventDetails.eventPictureList.map(eventPicture=>(<img
+                src={eventPicture.eventPicture}
                 alt="eventPicture"
                 className="itemImg"
                 style={{width:'100%',minHeight:"300px",maxHeight:'300px',objectFit:'fill',objectPosition:'center'}}
-              />
+              />))}
+            
           </div>
           <div className="right">
           
@@ -85,7 +84,7 @@ const EventDetails = () => {
         </div>
       </div>
     </div>
-  );
+  ):(<>loading....</>);
 };
 
 export default EventDetails;

@@ -230,7 +230,11 @@ export const fetchTouristSpotsData = async () => {
 export const fetchSpotDataById=async(spotId)=>{
   try{
     const response=await axios.get(`http://localhost:8080/spots/${spotId}`);
-    return response.data;
+    const response1=await axios.get(`http://localhost:8080/spot/pictureList/${spotId}`);
+    return {
+      ...response.data,
+      spotPictureList:response1.data,
+    }
   }catch(error){
     return console.log(error);
   }
@@ -238,7 +242,13 @@ export const fetchSpotDataById=async(spotId)=>{
 export const fetchEventDataByEventId=async(eventId)=>{
   try{
     const response=await axios.get(`http://localhost:8080/activeEvents/${eventId}`);
-    return response.data;
+    const response1=await axios.get(`http://localhost:8080/event/pictureList/${eventId}`);
+    const event={
+      ...response.data,
+      eventPictureList:response1.data,
+    }
+    console.log(event);
+    return event;
   }catch(error){
     return console.log(error);
   }
