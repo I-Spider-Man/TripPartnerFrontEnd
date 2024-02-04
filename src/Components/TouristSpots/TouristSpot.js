@@ -8,9 +8,12 @@ import { useEffect, useState } from 'react';
 import GroupOrganizeForm from '../Group/GroupOrganizeForm';
 import { useUser } from '../Auth/UserContext';
 import GroupJoinPage from '../Group/GroupJoinPage';
+import { Alert } from '@mui/material';
+import AlertCom from '../AlertCom';
 function TouristSpot() {
   const {userDetails,participantData,organizerData}=useUser();
   const [spot,setSpots]=useState({});
+  const [alert,setAlert]=useState(false);
   const [open, setOpen] = useState(false);
   const {spotName} = useParams();
   useEffect(()=>{
@@ -25,21 +28,34 @@ function TouristSpot() {
     fetchData();
   },[spotName])
 
-
+ const handleAlertClose=()=>{
+  setAlert(false);
+ }
   useEffect(()=>{
   console.log(spot);
   },[spot])
 
 
   const handleClickListItem = () => {
-    setOpen(true);
+    if((!organizerData && !participantData)||((organizerData && organizerData.organizerStatus=="Free") && (participantData && participantData.participantStatus=="Free"))){
+      setOpen(true);
+    }
+    else{
+      setAlert(true);
+    }
+    
   };
   const handleClose = () => {
     setOpen(false);
     setOrganizeFormVisible(false);
   }
   const handleOrganizeClick = () => {
-    setOrganizeFormVisible(true);
+    if((!organizerData && !participantData)||((organizerData && organizerData.organizerStatus=="Free") && (participantData && participantData.participantStatus=="Free"))){
+      setOrganizeFormVisible(true);
+    }
+    else{
+      setAlert(true);
+    }
   };
   const [organizeFormVisible, setOrganizeFormVisible] = useState(false);
 
@@ -114,6 +130,9 @@ const handleOrganizeSubmit = (formData) => {
         </div>
         
     </div>
+    {alert && (
+      <AlertCom onOpen={true} onClose={handleAlertClose} title={"Alert"} body={"You are already busy in other groups."}/>
+    )}
     </div>
   );
 }

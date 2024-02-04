@@ -6,14 +6,27 @@ import { useEffect, useState } from 'react';
 import GroupOrganizeForm from '../Group/GroupOrganizeForm';
 import { useUser } from '../Auth/UserContext';
 import GroupJoinPage from '../Group/GroupJoinPage';
+import AlertCom from '../AlertCom';
 function Event() {
   const [event,setEvent]=useState({});
-  const {userDetails}=useUser();
+  const {userDetails,participantData,organizerData}=useUser();
+  const [alert,setAlert]=useState(false);
   const [organizeFormVisible, setOrganizeFormVisible] = useState(false);
   const [open, setOpen] = useState(false);
+  const handleAlert=()=>{
+    setAlert(!alert);
+  }
   const handleClickListItem = () => {
-    setOpen(true);
+    if((!organizerData && !participantData)||((organizerData && organizerData.organizerStatus=="Free") && (participantData && participantData.participantStatus=="Free"))){
+      setOpen(true);
+    }
+    else{
+      setAlert(true);
+    }
   };
+  const handleCloseAlert=()=>{
+    setAlert(false);
+  }
   console.log(userDetails?.userId||'null');
   const handleClose = () => {
     setOpen(false);
@@ -45,9 +58,13 @@ function Event() {
   },[event])
 
   const handleOrganizeClick = () => {
-    setOrganizeFormVisible(true);
+    if((!organizerData && !participantData)||((organizerData && organizerData.organizerStatus=="Free") && (participantData && participantData.participantStatus=="Free"))){
+      setOrganizeFormVisible(true);
+    }
+    else{
+      setAlert(true);
+    }
   };
-
 
   const handleOrganizeSubmit = (formData) => {
     console.log('Organize Form Data:', formData);
@@ -105,6 +122,9 @@ function Event() {
         )}
         </div></div>
     </div>
+    {alert && (
+        <AlertCom onOpen={true} onClose={handleCloseAlert} title={"Alert"} body={"You are already busy with your group."} />
+      )}
     </div>
     
   );

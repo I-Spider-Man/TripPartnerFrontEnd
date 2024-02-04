@@ -1,12 +1,16 @@
 // ParticipantList.js
-import React from 'react';
+import { Avatar, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import React, { useState } from 'react';
 
 
 const ParticipantList = ({ participants }) => {
-    const handleViewMore = (participant) => {
-        console.log(`View More clicked for ${participant}`);
+  const [alert,setAlert]=useState(false);
+    const handleViewMore = () => {
+        setAlert(true);
       };
-  
+  const handleClose=()=>{
+    setAlert(false);
+  }
   
     return (
 
@@ -27,10 +31,23 @@ const ParticipantList = ({ participants }) => {
           <span className="participant-name">{participant.userData.userName}</span>
           <br />
              
-          <button className="button-85" onClick={() => handleViewMore(participant)}>
+          <button className="button-85" onClick={() => handleViewMore()}>
             View More
           </button>
           </div>
+          <Dialog open={alert} onClose={()=>setAlert(false)}>
+          <DialogTitle>Profile</DialogTitle>
+          <DialogContent>
+            <div style={{display:'flex',flexDirection:'column',gap:"10px"}}>
+              <Avatar src={participant.userData.userProfile}/>
+              <label>User Name: {participant.userData.userName}</label>
+              <label>Gender: {participant.userData.gender}</label>
+              <label>Age: {participant.userData.dateOfBirth}</label>
+              <label>Participated Count: {participant.participationCount}</label>
+            </div>
+          </DialogContent>
+          <DialogActions><Button onClick={()=>{handleClose()}}>Ok</Button></DialogActions>
+          </Dialog>
         </li>
       ))}
     </ul>
