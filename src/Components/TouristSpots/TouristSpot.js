@@ -5,11 +5,11 @@ import {fetchSpotBySpotName, fetch_spot_data, fetch_spots_by_id } from '../Files
 import Footer from '../Footer/Footer';
 import Loading from '../LoadingComponents/Loading';
 import { useEffect, useState } from 'react';
-import EventsJoinPage from '../Events/EventsJoinPage';
 import GroupOrganizeForm from '../Group/GroupOrganizeForm';
 import { useUser } from '../Auth/UserContext';
+import GroupJoinPage from '../Group/GroupJoinPage';
 function TouristSpot() {
-  const {userDetails}=useUser();
+  const {userDetails,participantData,organizerData}=useUser();
   const [spot,setSpots]=useState({});
   const [open, setOpen] = useState(false);
   const {spotName} = useParams();
@@ -68,6 +68,7 @@ const handleOrganizeSubmit = (formData) => {
   console.log('Organize Form Data:', formData);
   setOrganizeFormVisible(false);
 };
+
   return (
     <div className='front-page'>
        <div className='spot-page' style={{minHeight:'100vh'}}>
@@ -87,11 +88,12 @@ const handleOrganizeSubmit = (formData) => {
             <label><strong>SPOT LOCATION:</strong> {spot.location}</label>
             <label><strong>SPOT DESCRIPTION:</strong> {spot.description}</label>
             <label><strong>PEOPLE COUNT:</strong> {getStatus()}</label>
-            <div className='join-organize-button'>
-              <button onClick={handleClickListItem}>Join</button>
-              <button onClick={handleOrganizeClick}>Organize</button>
+            <div className='join-organize-button' >
+              <button onClick={handleClickListItem} >Join</button>
+              <button onClick={handleOrganizeClick} >Organize</button>
             </div>
-            </div><EventsJoinPage
+            </div>
+            <GroupJoinPage
           id="ringtone-menu"
           keepMounted
           eventName={null}

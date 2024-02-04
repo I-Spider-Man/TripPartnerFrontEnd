@@ -10,7 +10,7 @@ import { participantJoining } from '../Files/Participant_Details';
 import { useUser } from '../Auth/UserContext';
 import { useNavigate } from 'react-router-dom';
 
-function EventsJoinPage(props) {
+function GroupJoinPage(props) {
     const {userDetails}=useUser();
   const { onClose, open, eventName, spotName, ...other } = props;
 console.log(userDetails);
@@ -43,12 +43,6 @@ const openLogin=()=>{
 
 const handleJoin=(e)=>{
   navigate(`/GroupPage/${e.target.value}`)
-  // setjoinDetails({
-  //   ...joinDetails,
-  //   userId:userDetails.userId,
-  //   groupId:e.target.value
-  // });
-  // Participation();
 }
 const Participation=async()=>{
   const response=await participantJoining(joinDetails);
@@ -98,10 +92,10 @@ const Participation=async()=>{
   );
 }
 
-EventsJoinPage.propTypes = {
+GroupJoinPage.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   value: PropTypes.string.isRequired,
 };
 
-export default EventsJoinPage;
+export default GroupJoinPage;

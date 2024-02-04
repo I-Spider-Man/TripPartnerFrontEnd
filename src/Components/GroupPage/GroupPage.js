@@ -126,7 +126,7 @@ const handleLeaveClick = () => {
       </div>
     </div>
     <div className='chat-system'>
-      <ChatBox groupId={groupId}/>
+      <ChatBox group={groupDetails} organizer={organizer}/>
     </div>
     </div>
   )

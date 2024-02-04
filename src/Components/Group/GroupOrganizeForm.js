@@ -66,7 +66,7 @@ console.log(userDetails);
       dateFrom:'',
       eventName:'',
       spotName:'',
-      participantsLimit:0
+      participantsLimit:''
     })
     onClose();
   };
@@ -119,6 +119,15 @@ console.log(userDetails);
       }));
     }
   };
+  const handleParticipantLimit = (e) => {
+    let value = e.target.value;
+  
+    // Check if the entered value is less than 0, and if so, set it to 0
+    value = Math.max(1, value);
+  
+    // Update the state with the new value
+    setGroupForm({ ...groupForm, participantsLimit: value });
+  };
   const handleEntering = () => {
     if (radioGroupRef.current != null) {
       radioGroupRef.current.focus();
@@ -135,10 +144,10 @@ console.log(userDetails);
       <DialogTitle> <h2>Organize Group</h2></DialogTitle>
       <DialogContent sx={{display:'flex',flexDirection:'column',gap:"12"}}>
           <label>Group Name:</label>
-          <input type="text" name='groupName' value={groupForm.groupName} onChange={handleChange} style={{color:'black'}}/>
+          <input type="text" name='groupName' placeholder='Enter Your Group Name' value={groupForm.groupName} onChange={handleChange} style={{color:'black'}}/>
 
           <label>Group Description:</label>
-          <textarea name='about' value={groupForm.about} onChange={handleChange} style={{color:'black'}}/>
+          <textarea name='about' value={groupForm.about} onChange={handleChange} style={{color:'black'}} placeholder='Enter About Your Group'/>
 
           <label>
                   Start Date:<br></br>
@@ -146,6 +155,7 @@ console.log(userDetails);
                     <DatePicker className='akash1' 
                       value={groupForm.dateFrom}
                       onChange={handleStartDateChange}
+                      
                       disablePast
                       format="YYYY-MM-DD"
                       style={{color:'black'}}
@@ -164,7 +174,7 @@ console.log(userDetails);
                   </LocalizationProvider>
                 </label>
           <label>No. of Participants:</label>
-          <input type="number" name='participantsLimit' style={{color:'black'}} value={groupForm.participantsLimit} onChange={handleChange} />
+          <input type="number" name='participantsLimit' placeholder="Enter Participant Limit" style={{color:'black',padding:'5px'}} value={groupForm.participantsLimit} onChange={handleParticipantLimit} />
       </DialogContent>
         <DialogActions>
         <Button onClick={() => handleOk()} disabled={!isAllFieldsFilled()}>

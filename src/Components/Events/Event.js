@@ -3,9 +3,9 @@ import './Event.css'
 import {Event_Details, fetchEventByEventName, fetch_Event_By_id} from '../Files/Event_Details';
 import Loading from '../LoadingComponents/ContentLoading';
 import { useEffect, useState } from 'react';
-import EventsJoinPage from './EventsJoinPage';
 import GroupOrganizeForm from '../Group/GroupOrganizeForm';
 import { useUser } from '../Auth/UserContext';
+import GroupJoinPage from '../Group/GroupJoinPage';
 function Event() {
   const [event,setEvent]=useState({});
   const {userDetails}=useUser();
@@ -80,7 +80,7 @@ function Event() {
               <button onClick={()=>handleClickListItem()}>Join</button>
               <button onClick={()=>handleOrganizeClick()}>Organize</button>
             </div>
-        <EventsJoinPage
+        <GroupJoinPage
           id="ringtone-menu"
           keepMounted
           open={open}

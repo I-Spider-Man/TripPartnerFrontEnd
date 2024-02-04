@@ -16,6 +16,16 @@
     justify-content: space-around;
     width: 100%;
   }
+  .dot {
+    border: 2px solid #fff; /* Set the color of the dot */
+    background-color: #f00; /* Set the background color of the dot */
+    border-radius: 50%;
+    width: 6px; /* Set the width and height of the dot */
+    height: 6px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
   
   .group-container {
     width: 550px;
