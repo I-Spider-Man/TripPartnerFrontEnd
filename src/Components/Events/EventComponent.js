@@ -27,7 +27,7 @@ function EventComponent(props) {
           <CardMedia
             component="img"
             sx={{ width: 250, display: { xs: 'none', sm: 'block' } }}
-            image={post.eventPictureList[0].eventPicture}
+            image={post.eventPictureList[0]}
             alt={post.imageLabel}
           />
         </Card>

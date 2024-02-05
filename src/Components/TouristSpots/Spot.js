@@ -8,9 +8,8 @@ function Spot({spotId,spotName,spotPictureList,location,description}) {
     <div key={spotId} className="singleDestination" style={{padding:'5px'}}>
                             <div className="imageDiv">
                                 {(spotPictureList && spotPictureList.length > 0) && (<>
-                                {spotPictureList.map(spotPicture=>(<img src={spotPicture.spotPicture} alt={spotName} />))}
+                                {spotPictureList.map(spotPicture=>(<img src={spotPicture} alt={spotName} />))}
                                 </>) }
-                                
                             </div>
  
                             <div className="cardInfo" style={{display:'flex', flexDirection:'column',gap:'5px', justifyContent:'center'}}>

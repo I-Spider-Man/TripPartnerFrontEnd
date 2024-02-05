@@ -1,5 +1,7 @@
 import axios from "axios"
-
+export const pictureUrl = (image) => {
+  return `data:image/jpeg;base64,${image}`;
+};
 export const UserProfileAva=[
     'https://trip-partner-main.s3.amazonaws.com/bird-2-11.png'
     ,
@@ -35,8 +37,11 @@ export const updateUserDetails=async(value)=>{
 export const getUserDetailsById=async(value)=>{
   try{
     const fetchUser=await axios.get(`http://localhost:8080/User/${value}`);
-    const picture=await axios.get(`http://localhost:8080/User/profile/`)
-    return fetchUser.data;
+    const picture=await axios.get(`http://localhost:8080/User/profile/${value}`);
+    return {
+      ...fetchUser.data,
+      userProfile:pictureUrl(picture.data.userProfile)
+    };
   }catch(error){
     console.log(error);
   }
@@ -44,7 +49,11 @@ export const getUserDetailsById=async(value)=>{
 export const getUserDetails=async(value)=>{
   try{
     const fetchUser=await axios.get(`http://localhost:8080/User/email/${value}`);
-    return fetchUser.data;
+    const picture=await axios.get(`http://localhost:8080/User/profile/${fetchUser.data.userId}`);
+    return {
+      ...fetchUser.data,
+      userProfile:pictureUrl(picture.data.userProfile)
+    };
   }catch(error){
     console.log("error occured while fetching user data :", error);
   }

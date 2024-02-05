@@ -4,13 +4,13 @@ import { IoMdRadioButtonOn } from 'react-icons/io'
 import { Link } from 'react-router-dom'
 
 function SingleEvent({eventId, eventName, eventPictureList, description, location}) {
-    console.log("akfjaf",eventPictureList);
+    
   return (
     <div key={eventId} className="singleDestination" style={{padding:'5px'}}>
                             <div className="imageDiv">
                                 {(eventPictureList && eventPictureList.length > 0) && (
                                     <>
-                                    {eventPictureList.map(eventPicture=>(<img src={eventPicture.eventPicture} alt={eventName} />))}
+                                    {eventPictureList.map(eventPicture=>(<img src={eventPicture} alt={eventName} />))}
                                     </>
                                 )
                                     
