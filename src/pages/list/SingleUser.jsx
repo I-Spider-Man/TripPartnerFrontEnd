@@ -18,8 +18,6 @@ const SingleUser = () => {
       try {
         const response = await fetchUserDataById(userId) // Use the dynamic userId
         setUserData(response);
-        const picture =await fetchPicture(response.userProfile);
-        setUserPicture(picture);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }

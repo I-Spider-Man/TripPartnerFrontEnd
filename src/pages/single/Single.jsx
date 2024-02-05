@@ -21,7 +21,8 @@ const SpotDetails = () => {
     }
     fetchSpotDetails();
   },[spotId])
-  return (
+  
+  return spotDetails && (
     <div className="single">
       <Sidebar />
       <div className="singleContainer">
@@ -30,7 +31,7 @@ const SpotDetails = () => {
           <div className="left">
             {spotDetails.spotPictureList && spotDetails.spotPictureList.map(spotPicture=>(
               <img
-                src={spotPicture.spotPicture}
+                src={spotPicture}
                 alt="spotPicture"
                 className="itemImg"
                 style={{width:'100%',minHeight:"300px",maxHeight:'300px'}}

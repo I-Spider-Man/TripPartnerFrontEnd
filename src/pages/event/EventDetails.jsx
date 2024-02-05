@@ -30,7 +30,7 @@ const EventDetails = () => {
         <div className="top">
           <div className="left">
         {eventDetails.eventPictureList && eventDetails.eventPictureList.map(eventPicture=>(<img
-                src={eventPicture.eventPicture}
+                src={eventPicture}
                 alt="eventPicture"
                 className="itemImg"
                 style={{width:'100%',minHeight:"300px",maxHeight:'300px',objectFit:'fill',objectPosition:'center'}}

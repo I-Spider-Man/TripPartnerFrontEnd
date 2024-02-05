@@ -1,5 +1,6 @@
 import axios from "axios";
 import Alert from '@mui/material/Alert';
+import btoa from 'btoa-lite';
 export const fetchUserData = async () => {
   try {
     const response = await axios.get("http://localhost:8080/Admin/users");
@@ -9,16 +10,7 @@ export const fetchUserData = async () => {
     return [];
   }
 };
-export const fetchPicture=async(PictureName)=>{
-  try{
-    console.log(PictureName);
-    const response=await axios.get(`http://localhost:8080/Picture/${PictureName}`,{responseType:'arraybuffer',});
-    const blob=new Blob([response.data],{type:response.headers['Content-Type']});
-    return (URL.createObjectURL(blob));
-  }catch(error){
-    return console.log(error);
-  }
-}
+
 export const fetchUserDataById = async (Id) => {
   try {
     const response = await axios.get(`http://localhost:8080/Admin/users/${Id}`);
@@ -227,25 +219,42 @@ export const fetchTouristSpotsData = async () => {
     return [];
   }
 };
-export const fetchSpotDataById=async(spotId)=>{
-  try{
-    const response=await axios.get(`http://localhost:8080/spots/${spotId}`);
-    const response1=await axios.get(`http://localhost:8080/spot/pictureList/${spotId}`);
+
+export const pictureUrl = (image) => {
+  return `data:image/jpeg;base64,${image}`;
+};
+
+export const fetchSpotDataById = async (spotId) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/spots/${spotId}`);
+    const response1 = await axios.get(`http://localhost:8080/spot/pictureList/${spotId}`);
+    console.log(response.data, response1);
+    const imageUrlList = response1.data.map(image => {
+      console.log(image);
+      return pictureUrl(image);
+    });
+    console.log(imageUrlList);
     return {
       ...response.data,
-      spotPictureList:response1.data,
+      spotPictureList:imageUrlList,
     }
-  }catch(error){
-    return console.log(error);
+
+  } catch (error) {
+    console.error(error);
+    return null;
   }
-}
+};
+
 export const fetchEventDataByEventId=async(eventId)=>{
   try{
     const response=await axios.get(`http://localhost:8080/activeEvents/${eventId}`);
     const response1=await axios.get(`http://localhost:8080/event/pictureList/${eventId}`);
+    const imageList=response1.data.map(image=>{
+      return pictureUrl(image);
+    })
     const event={
       ...response.data,
-      eventPictureList:response1.data,
+      eventPictureList:imageList,
     }
     console.log(event);
     return event;
