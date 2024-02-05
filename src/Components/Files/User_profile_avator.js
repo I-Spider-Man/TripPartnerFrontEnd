@@ -35,6 +35,7 @@ export const updateUserDetails=async(value)=>{
 export const getUserDetailsById=async(value)=>{
   try{
     const fetchUser=await axios.get(`http://localhost:8080/User/${value}`);
+    const picture=await axios.get(`http://localhost:8080/User/profile/`)
     return fetchUser.data;
   }catch(error){
     console.log(error);
