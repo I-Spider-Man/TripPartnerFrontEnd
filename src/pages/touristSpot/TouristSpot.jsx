@@ -7,6 +7,7 @@ import { spotDelete } from '../../components/DeleteStorage';
 import { Link } from 'react-router-dom';
 import { Button, Stack } from '@mui/material';
 import New from '../new/New';
+import './tou.css';
 function TouristSpot() {
     const [spotRows,setSpotRows]=useState([]);
     const [visible,setVisible]=useState(false);
@@ -31,8 +32,8 @@ function TouristSpot() {
         { field: "spotId", headerName: "ID", width: 70 },
         {
           field: "spotName",
-          headerName: "spot",
-          width: 850,
+          headerName: "Tourist Spot",
+          width: 700,
         },
 
       ];
@@ -54,7 +55,7 @@ function TouristSpot() {
         {
           field: "action",
           headerName: "Action",
-          width: 150,
+          width: 250,
           renderCell: (params) => {
             return (
               <div className="cellAction">
@@ -63,6 +64,9 @@ function TouristSpot() {
                 </Link>
                 <div className="deleteButton" onClick={() => handleDelete(params.row.spotId)}>
                   Delete
+                </div>
+                <div className="aadpotho">
+                  Add Images
                 </div>
               </div>
             );

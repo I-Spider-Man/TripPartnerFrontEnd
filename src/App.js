@@ -9,7 +9,7 @@ import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import TouristSpot from "./pages/touristSpot/TouristSpot";
-import { Group } from "@mui/icons-material";
+
 import Groups from "./pages/group/Groups";
 import Organizers from "./pages/Organzier/Organizers";
 import SingleUser from "./pages/list/SingleUser";
@@ -18,6 +18,7 @@ import Eventdatatable from "./pages/event/Event";
 import NewEventForm from "./pages/event/NewEventForm";
 import SpotDetails from "./pages/single/Single";
 import Participants from "./pages/participants/Participants";
+import GroupDetails from "./pages/group/GroupDetails";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -61,6 +62,7 @@ function App() {
             </Route>
             <Route path="group">
               <Route index element={<Groups/>}/>
+              <Route path=":groupId" element={<GroupDetails />} />
             </Route>
           </Route>
         </Routes>
