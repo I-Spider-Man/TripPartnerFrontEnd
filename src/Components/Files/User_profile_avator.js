@@ -37,7 +37,7 @@ export const updateUserDetails=async(value)=>{
 export const getUserDetailsById=async(value)=>{
   try{
     const fetchUser=await axios.get(`http://localhost:8080/User/${value}`);
-    const picture=await axios.get(`http://localhost:8080/User/profile/${value}`);
+    const picture=await axios.get(`http://localhost:8080/User/userProfile/${value}`);
     return {
       ...fetchUser.data,
       userProfile:pictureUrl(picture.data.userProfile)
@@ -49,10 +49,10 @@ export const getUserDetailsById=async(value)=>{
 export const getUserDetails=async(value)=>{
   try{
     const fetchUser=await axios.get(`http://localhost:8080/User/email/${value}`);
-    const picture=await axios.get(`http://localhost:8080/User/profile/${fetchUser.data.userId}`);
+    const picture=await axios.get(`http://localhost:8080/User/userProfile/${fetchUser.data.userId}`);
     return {
       ...fetchUser.data,
-      userProfile:pictureUrl(picture.data.userProfile)
+      userProfile:pictureUrl(picture.data)
     };
   }catch(error){
     console.log("error occured while fetching user data :", error);

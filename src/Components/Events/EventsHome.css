@@ -146,9 +146,9 @@
   cursor: pointer;
 }
 
-.imageDiv:hover {
-  transform: translateX(-33.33%); /* Adjust the value based on the number of images */
-}
+/* .imageDiv:hover {
+  transform: translateX(-33.33%); /* Adjust the value based on the number of images 
+} */
 
 .main .secContent .singleDestination .imageDiv:hover img {
   transform: scale(1.1);

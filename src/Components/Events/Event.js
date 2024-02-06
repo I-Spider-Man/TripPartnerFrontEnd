@@ -27,7 +27,7 @@ function Event() {
   const handleCloseAlert=()=>{
     setAlert(false);
   }
-  console.log(userDetails?.userId||'null');
+  // console.log(userDetails?.userId||'null');
   const handleClose = () => {
     setOpen(false);
     setOrganizeFormVisible(false);
@@ -48,7 +48,6 @@ function Event() {
   useEffect(()=>{
     const fetchData=async ()=>{
       const response= await fetchEventByEventName(eventName);
-      console.log(response)
       setEvent(response);
     }
     fetchData();
@@ -80,8 +79,8 @@ function Event() {
           <>
           {(event.eventPictureList && event.eventPictureList.length > 0) && (
   <>
-    {event.eventPictureList.map(({ eventPicture, image_alt }, index) => (
-      <img key={index} src={eventPicture} alt={image_alt} />
+    {event.eventPictureList.map((eventPicture, index) => (
+      <img key={index} src={eventPicture} alt={eventName} />
     ))}
   </>
 )}

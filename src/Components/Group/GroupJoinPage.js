@@ -13,7 +13,6 @@ import { useNavigate } from 'react-router-dom';
 function GroupJoinPage(props) {
     const {userDetails}=useUser();
   const { onClose, open, eventName, spotName, ...other } = props;
-console.log(userDetails);
   const [groupDetails,setGroupDetails]=React.useState([{}]);
   const radioGroupRef = React.useRef(null);
   const [joinDetails,setjoinDetails]=React.useState({})

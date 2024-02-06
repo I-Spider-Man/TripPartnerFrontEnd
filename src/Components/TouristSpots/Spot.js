@@ -8,7 +8,7 @@ function Spot({spotId,spotName,spotPictureList,location,description}) {
     <div key={spotId} className="singleDestination" style={{padding:'5px'}}>
                             <div className="imageDiv">
                                 {(spotPictureList && spotPictureList.length > 0) && (<>
-                                {spotPictureList.map(spotPicture=>(<img src={spotPicture} alt={spotName} />))}
+                                <img src={spotPictureList[0]} alt={spotName} />
                                 </>) }
                             </div>
  

@@ -18,6 +18,7 @@ export const fetch_Event_Details = async() => {
         };
       })
     );
+    console.log(eventwithpicture);
     return eventwithpicture;
   }catch(error){
     console.log(error);

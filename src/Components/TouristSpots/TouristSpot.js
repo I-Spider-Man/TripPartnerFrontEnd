@@ -92,7 +92,7 @@ const handleOrganizeSubmit = (formData) => {
           <div className='spot-content' style={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'center'}}>
     {spot ? (
           <>
-          {(spot.spotPictureList && spot.spotPictureList.length > 0) && (<>{spot.spotPictureList.map(({spotPicture})=>(
+          {(spot.spotPictureList && spot.spotPictureList.length > 0) && (<>{spot.spotPictureList.map((spotPicture)=>(
             <img src={spotPicture} alt={spot.spotName} />
           ))}
           

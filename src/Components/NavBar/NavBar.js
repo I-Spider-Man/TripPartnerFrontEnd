@@ -9,7 +9,9 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Slide from '@mui/material/Slide';
 import { useUser } from '../Auth/UserContext';
+import {Avatar} from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import logo from '../../Assests/MicrosoftTeams-image (9).png';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -29,9 +31,6 @@ const navigate=useNavigate();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  useEffect(()=>{
-    console.log(profileAva)
-  },[profileAva])
   
   const handleClose1 = () => {
     setAnchorEl(null);
@@ -61,7 +60,7 @@ const navigate=useNavigate();
       <div className='nav-bar'>
       <div className='Trip-Logo-Container' style={{display:'flex',alignItems:'center'}}>
         <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-          <img className='Trip-Logo' src="https://trip-partner-main.s3.amazonaws.com/Trip+Partner+2.png"/>
+          <img className='Trip-Logo' src={logo}/>
         </Link>
       </div>
       <div className='search-container' >
@@ -79,8 +78,8 @@ const navigate=useNavigate();
               margin: 0,
               padding: 0,
               cursor:'pointer'
-      }}>{userDetails ? (<img src={profileAva} style={{
-      objectFit:'scale-down'}}></img>):(<AccountCircleIcon sx={{width:'100%',height:'100%'}}/>)} </div>
+      }}>{userDetails ? (<
+        Avatar src={profileAva}sx={{objectFit:'scale-down'}}></Avatar>):(<AccountCircleIcon sx={{width:'100%',height:'100%'}}/>)} </div>
       </div>
       {!login ? <Dialog
         open={visible}

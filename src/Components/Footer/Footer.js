@@ -1,6 +1,7 @@
 import React from "react";
 import "./footer.css";
 import { Link } from "react-router-dom";
+import logo from '../../Assests/MicrosoftTeams-image (9).png'
 export const Footer = () => {
     const contactDetail={
         display:'flex',
@@ -13,7 +14,7 @@ export const Footer = () => {
         <div className="footer" style={{backgroundColor:"black",color:'white'}}>
             <div className="section-0"style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
                 <div className="Logo-container" >
-            <Link to='/'><img src="https://trip-partner-main.s3.amazonaws.com/Trip+Partner+2.png"/></Link>
+            <Link to='/'><img src={logo}/></Link>
             </div>
             </div>
             

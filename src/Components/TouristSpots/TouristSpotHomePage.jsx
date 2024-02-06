@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './TouristSpotHomePage.css'
-import {HiOutlineLocationMarker} from 'react-icons/hi'
-import {IoMdRadioButtonOn} from 'react-icons/io'
-import {Link} from 'react-router-dom'
-import { fetchPicture, fetch_popularSpots, fetch_spot_data } from '../Files/TouristSpotDetails'
+
+import { fetch_popularSpots, fetch_spot_data } from '../Files/TouristSpotDetails'
 import Loading from '../LoadingComponents/Loading'
 import Spot from './Spot'
 

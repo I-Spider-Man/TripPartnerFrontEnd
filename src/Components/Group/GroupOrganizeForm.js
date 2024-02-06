@@ -18,7 +18,6 @@ const GroupOrganizeForm = ({eventName, spotName, ...props }) => {
       userId:userDetails?.userId.toString()||null
     }
   })
-console.log(userDetails);
   const [groupForm,setGroupForm]=useState({
     groupName:"",
     about:"",
@@ -42,8 +41,6 @@ console.log(userDetails);
       group: groupForm,
     });
   }, [groupForm]);
-  console.log("form data ",organizerFrom);
-  console.log(groupForm);
   React.useEffect(() => {
     if (eventName !== undefined) {
       setGroupForm({
