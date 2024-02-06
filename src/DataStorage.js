@@ -248,6 +248,7 @@ export const fetchEventDataByEventId=async(eventId)=>{
   try{
     const response=await axios.get(`http://localhost:8080/activeEvents/${eventId}`);
     const response1=await axios.get(`http://localhost:8080/event/pictureList/${eventId}`);
+    console.log(response1.data);
     const imageList=response1.data.map(image=>{
       return pictureUrl(image);
     })
