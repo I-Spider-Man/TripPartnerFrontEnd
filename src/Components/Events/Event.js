@@ -108,6 +108,7 @@ function Event() {
           <GroupOrganizeForm
             id="ringtone-menu"
             keepMounted
+            event={event}
             eventName={event.eventName}
             open={organizeFormVisible}
             onClose={() => handleClose()}

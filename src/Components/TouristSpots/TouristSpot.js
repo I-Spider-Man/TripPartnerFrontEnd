@@ -119,6 +119,7 @@ const handleOrganizeSubmit = (formData) => {
         />
           <GroupOrganizeForm id="ringtone-menu"
           keepMounted
+          
           spotName={spot.spotName}
           open={organizeFormVisible}
           onClose={()=>handleClose()} onSubmit={()=>handleOrganizeSubmit()} />

@@ -1,4 +1,5 @@
 import axios from "axios"
+import { getUserDetailsById } from "./User_profile_avator";
 
 export const postGroup=async(value)=>{
     try{
@@ -23,10 +24,11 @@ export const getAllParticipantsById=async(grpId)=>{
     try{
         const response=await axios.get(`http://localhost:8080/Participant/group/${grpId}`);
         const participantWithUserData=await Promise.all(response.data.map(async(participant)=>{
-            const userData=await axios.get(`http://localhost:8080/User/${participant.userId}`);
+            const userData=await getUserDetailsById(participant.userId);
+            console.log(userData);
             return{
                 ...participant,
-                userData:userData.data,
+                userData:userData,
             }
         }));
         return participantWithUserData;
