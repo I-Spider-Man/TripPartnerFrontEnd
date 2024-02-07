@@ -69,7 +69,7 @@ function Organizers() {
           renderCell: (params) => {
             return (
               <div className="cellAction">
-                <Link to={`/Organizers/${params.row.spotId}`} style={{ textDecoration: "none" }}>
+                <Link to={`/Organizer/${params.row.organizerId}`} style={{ textDecoration: "none" }}>
                   <div className="viewButton">View</div>
                 </Link>
                 <div className="deleteButton" onClick={() => handleDelete(params.row.organizerId)}>
