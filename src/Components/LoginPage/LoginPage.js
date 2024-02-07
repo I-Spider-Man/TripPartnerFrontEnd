@@ -8,6 +8,7 @@ import {LoadingButton} from '@mui/lab';
 import { CircularProgress } from '@mui/material';
 import { useUser } from '../Auth/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { message } from 'antd';
 function LoginPage({ onClose , onReturn}) {
   const [otpInput, setOtpInput] = useState(false);
   const [otpProcess,setOtpProcess]=useState(false);
@@ -103,6 +104,10 @@ const handleChange=(e)=>{
 
 const handleSubmit=async(e)=>{
   e.preventDefault();
+  if(isPasswordValid){
+    message.error("Enter strong password");
+    return ;
+  }
   console.log('Current state values:', { otp, userotp, ...userDetails.userPassword, userPasswordC });
 const randomIndex = Math.floor(Math.random() * UserProfileAva.length);
 if(userotp !== ""){
@@ -114,16 +119,17 @@ if(userotp !== ""){
               userProfile: UserProfileAva[randomIndex]
             };
               const response = await registerUser(updatedUserDetails);
+              message.success("User registered successfully.");
               navigate("/");
               onClose();
             } catch (error) {
               console.error('Error registering user:', error);
             }
 }else{
-  alert("check password");
+  message.warning("Check password");
 }
   }else{
-      alert("Entered otp is wrong.");
+      message.error("Entered otp is wrong.");
   }
 }
 else{

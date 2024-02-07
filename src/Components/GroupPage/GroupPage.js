@@ -11,6 +11,7 @@ import { LoadingButton } from '@mui/lab';
 import { Avatar, CircularProgress } from '@mui/material';
 import ChatBox from './ChatBox';
 import { AccessAlarmOutlined } from '@mui/icons-material';
+import { Button, Result } from 'antd';
 
 const GroupPage = () => {
   const {organizerData,participantData,userDetails}=useUser();
@@ -20,10 +21,13 @@ const [participants,setParticipants]=useState(null);
 const {groupId}=useParams();
 const [joinDetails,setjoinDetails]=React.useState({})
 const [joining,setJoining]=useState(false);
-console.log(organizerData,groupId);
-console.log(organizerData.groupId===groupId);
-const isOrganizer = organizerData.groupId == groupId;
-const isParticipant = participantData.groupId == groupId;
+let isOrganizer;
+let isParticipant;
+if(organizerData && participantData){
+  isOrganizer = organizerData.groupId == groupId;
+  isParticipant = participantData.groupId == groupId;
+}
+
 console.log(userDetails,participantData,organizerData);
 const Participation=async()=>{
   try{
@@ -73,13 +77,16 @@ useEffect(()=>{
   fetchParticipant();
 },[groupDetails]);
 console.log(groupDetails,participants,organizer);
+
 useEffect(()=>{
+  if(userDetails){
   if((!organizerData && !participantData) || (organizerData.groupId !== groupId && participantData.groupId !== groupId)){
     setjoinDetails({
     ...joinDetails,
     userId:userDetails.userId,
     groupId:groupId
   });
+  }
   }
 },[]);
 
@@ -93,7 +100,7 @@ const handleLeaveClick = () => {
 
 
   return (
-    groupDetails && participants && organizer && (
+    groupDetails && participants && organizer ? (
     <div className='body1' >
         <div className="group-container">
       <div className="header1">
@@ -127,9 +134,16 @@ const handleLeaveClick = () => {
       </div>
     </div>
     <div className='chat-system'>
-      <ChatBox group={groupDetails} organizer={organizer}/>
+      {userDetails && <ChatBox group={groupDetails} organizer={organizer}/>}
     </div>
     </div>
+  ):(
+    <Result
+    status="403"
+    title="403"
+    subTitle="Sorry, you are not authorized to access this page."
+    extra={<Button type="primary">Back Home</Button>}
+  />
   )
   );
 };

@@ -21,7 +21,7 @@ function Event() {
   }
 
   const handleClickListItem = () => {
-    if ((!organizerData && !participantData) || ((organizerData && organizerData.organizerStatus == "Free") && (participantData && participantData.participantStatus == "Free"))) {
+    if ((!organizerData && !participantData) || ((organizerData && (organizerData.organizerStatus == "Free")) && (participantData && (participantData.participantStatus == "Free")))) {
       setOpen(true);
     } else {
       setAlert(true);

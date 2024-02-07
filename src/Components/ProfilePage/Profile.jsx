@@ -14,6 +14,7 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { useUser } from '../Auth/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { Button, Result } from 'antd';
 
 const PopupForm = lazy(() => import('../PopupForm/PopupForm'));
 
@@ -49,8 +50,8 @@ const handleGroup=()=>{
     return alert("nothing");
   }
 }
-  return (
-    <section style={{ backgroundColor: 'rgb(151, 235, 207)' }}>
+  return userDetails ? (
+    <section style={{ backgroundColor: 'rgb(151, 235, 207)', marginTop:'10vh' }}>
       <MDBContainer className="py-5">
         <MDBRow>
           <MDBCol lg="4 profile-left-info">
@@ -177,5 +178,10 @@ const handleGroup=()=>{
         </Suspense>
       )}
     </section>
-  );
+  ):( <Result
+    status="404"
+    title="404"
+    subTitle="Sorry, the page you visited does not exist."
+    extra={<Button type="primary" onClick={()=>navigate("/")}>Back Home</Button>}
+  />);
 }
