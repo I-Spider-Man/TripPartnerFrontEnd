@@ -98,6 +98,7 @@ function TouristSpot() {
   };
 
   return (
+<<<<<<< HEAD
     <div className="front-page">
       <div className="spot-page" style={{ minHeight: "100vh" }}>
         <div
@@ -168,6 +169,50 @@ function TouristSpot() {
               <Loading />
             )}
           </div>
+=======
+    <div className='front-page'>
+       <div className='spot-page' style={{minHeight:'100vh'}}>
+        <div className='content-container' style={{display:'flex', alignItems:'center', justifyContent:'center',height:'100vh'}}>
+          <div className='spot-content' style={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'center'}}>
+    {spot ? (
+          <>
+          {(spot.spotPictureList && spot.spotPictureList.length > 0) && (<>{spot.spotPictureList.map((spotPicture)=>(
+            <img src={spotPicture} alt={spot.spotName} />
+          ))}
+          
+          </>) }
+          
+          
+          <div className='content-details'>
+            <label><strong>SPOT NAME: </strong><h1>{spot.spotName}</h1></label>
+            <label><strong>SPOT LOCATION:</strong> {spot.location}</label>
+            <label><strong>SPOT DESCRIPTION:</strong> {spot.description}</label>
+            <label><strong>PEOPLE COUNT:</strong> {getStatus()}</label>
+            <div className='join-organize-button' >
+              <button onClick={handleClickListItem} >Join</button>
+              <button onClick={handleOrganizeClick} >Organize</button>
+            </div>
+            </div>
+            <GroupJoinPage
+          id="ringtone-menu"
+          keepMounted
+          eventName={null}
+          spotName={spot.spotName}
+          open={open}
+          onClose={()=>handleClose()}
+        />
+          <GroupOrganizeForm id="ringtone-menu"
+          keepMounted
+          
+          spotName={spot.spotName}
+          open={organizeFormVisible}
+          onClose={()=>handleClose()} onSubmit={()=>handleOrganizeSubmit()} />
+          </> 
+        ) : (
+          <Loading/>
+        )}
+    </div>
+>>>>>>> 0e02d63053523a544665be162ba97b0174a98eb0
         </div>
       </div>
       {alert && (

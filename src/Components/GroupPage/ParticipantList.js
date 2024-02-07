@@ -1,9 +1,11 @@
 // ParticipantList.js
+import { AccessAlarmOutlined } from '@mui/icons-material';
 import { Avatar, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import React, { useState } from 'react';
 
 
 const ParticipantList = ({ participants }) => {
+  console.log(participants);
   const [alert,setAlert]=useState(false);
     const handleViewMore = () => {
         setAlert(true);
@@ -39,7 +41,7 @@ const ParticipantList = ({ participants }) => {
           <DialogTitle>Profile</DialogTitle>
           <DialogContent>
             <div style={{display:'flex',flexDirection:'column',gap:"10px"}}>
-              <Avatar src={participant.userData.userProfile}/>
+              {participant.userData.userProfile ? <Avatar src={participant.userData.userProfile}/>:<AccessAlarmOutlined/>}
               <label>User Name: {participant.userData.userName}</label>
               <label>Gender: {participant.userData.gender}</label>
               <label>Age: {participant.userData.dateOfBirth}</label>

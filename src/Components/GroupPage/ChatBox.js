@@ -45,7 +45,7 @@ function ChatBox({group,organizer}) {
   }
   console.log(group,message);
   return (
-    <div className='chatBox' style={{width:"85vh",height:'70vh',borderRadius:'5px', backgroundColor:'white', display:'flex', flexDirection:'column',padding:'5px', justifyContent:'flex-end'}}>
+    <div className='chatBox' style={{width:"85vh",height:'70vh',borderRadius:'5px', backgroundColor:'white', display:'flex', flexDirection:'column',padding:'10px', justifyContent:'flex-end'}}>
       {groupMessages.length > 0 ? (<div className='messages-box' style={{display:'flex',flexDirection:'column',justifyItems:'flex-end',overflow:'hidden', overflowY:'scroll'}}>
       {groupMessages.map((message, index) => (
         <>
@@ -82,8 +82,8 @@ function ChatBox({group,organizer}) {
       <Divider/>
       <div className='message-text-area' style={{display:'flex',flexDirection:'row',backgroundColor:'white',alignItems:'center',padding:'5px'}}> 
       <Avatar src={userDetails.userProfile} sx={{width:25,height:25, marginRight: '5px'}}/>
-        <textarea style={{ width: '100%', height: '30px', border: 'none',resize:'none',outline:'none', padding:'0px 4px 0px 4px' , marginRight:'10px'}}  placeholder='type your message here' value={message} onChange={(e)=>setMessage(e.target.value)} onBlur={handleMessage}/>
-      <Button variant='outlined' sx={{}} onClick={sendMessage}><LoadingButton loading={messageProcess} loadingIndicator={<CircularProgress sx={{color:'blue'}}/>}><SendIcon sx={{color:'blue'}}/></LoadingButton></Button>
+      <textarea style={{ width: '100%', height: '30px', border: 'none',resize:'none',outline:'none',backgroundColor:'white', padding:'0px 4px 0px 4px' , marginRight:'10px'}}  placeholder='type your message here' value={message} onChange={(e)=>setMessage(e.target.value)} onBlur={handleMessage}/>
+      <Button variant='outlined' sx={{}} onClick={sendMessage} disabled={!message.trim()}><LoadingButton loading={messageProcess} loadingIndicator={<CircularProgress sx={{color:'blue',height:'15px',width:'15px'}}/>}><SendIcon sx={{color:'blue'}}/></LoadingButton></Button>
       </div>
     </div>
   )

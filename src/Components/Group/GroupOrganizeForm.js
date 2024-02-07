@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import { postGroup } from '../Files/Group_Details';
 import { useUser } from '../Auth/UserContext';
 import { LoadingButton } from '@mui/lab';
-const GroupOrganizeForm = ({eventName, spotName, ...props }) => {
+const GroupOrganizeForm = ({event,eventName, spotName, ...props }) => {
   const {userDetails}=useUser();
   const [submitProcess,setSubmitProcess]=useState(false);
   const { onClose, onSubmit, open, ...other } = props;
@@ -91,6 +91,7 @@ const GroupOrganizeForm = ({eventName, spotName, ...props }) => {
     }));
   };
 
+  
 
 
   const handleStartDateChange = (newStartDate) => {
@@ -152,10 +153,14 @@ const GroupOrganizeForm = ({eventName, spotName, ...props }) => {
                     <DatePicker className='akash1' 
                       value={groupForm.dateFrom}
                       onChange={handleStartDateChange}
-                      
                       disablePast
+                      minDate={dayjs(event.startDate)}
+                      maxDate={dayjs(event.endDate)}
                       format="YYYY-MM-DD"
                       style={{color:'black'}}
+                      inputProps={{
+                        readOnly:true
+                      }}
                     />
                   </LocalizationProvider>
                 </label>
@@ -164,9 +169,12 @@ const GroupOrganizeForm = ({eventName, spotName, ...props }) => {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker  className='akash1'
                       value={groupForm.dateTo}
+                      minDate={dayjs(event.startDate)}
+                      maxDate={dayjs(event.endDate)}
                       onChange={handleEndDateChange}
                       format="YYYY-MM-DD"
                       disablePast
+                      
                     />
                   </LocalizationProvider>
                 </label>

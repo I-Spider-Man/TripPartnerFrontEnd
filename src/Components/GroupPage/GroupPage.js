@@ -8,8 +8,9 @@ import { participantJoining } from '../Files/Participant_Details';
 import { useUser } from '../Auth/UserContext';
 import ParticipantList from './ParticipantList';
 import { LoadingButton } from '@mui/lab';
-import { CircularProgress } from '@mui/material';
+import { Avatar, CircularProgress } from '@mui/material';
 import ChatBox from './ChatBox';
+import { AccessAlarmOutlined } from '@mui/icons-material';
 
 const GroupPage = () => {
   const {organizerData,participantData,userDetails}=useUser();
@@ -113,7 +114,7 @@ const handleLeaveClick = () => {
         }
       </div>
       <div className="organizer-info">
-        <img src={organizer.userData.userProfile} alt="Organizer Profile" className="profile-pic" />
+        {organizer.userData.userProfile ? <Avatar src={organizer.userData.userProfile} alt="Organizer Profile" className="profile-pic" />: <AccessAlarmOutlined/>}
         <div>
           <h2 className="organizer-text">{organizer.userData.userName}</h2>
         </div>

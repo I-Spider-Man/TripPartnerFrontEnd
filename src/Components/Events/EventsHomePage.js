@@ -6,37 +6,13 @@ import {IoMdRadioButtonOn} from 'react-icons/io'
 import {fetch_Event_Details, fetch_popularEvents} from '../Files/Event_Details'
 import Loading from '../LoadingComponents/Loading'
 import SingleEvent from './SingleEvent'
+import { Carousel } from 'antd'
 
 
 const EventsHomePage = () => {
     const [eventDetails,setEventDetails]=useState([{}]);
     const [popularEvents,setPopularEvents]=useState([{}]);
-    const [slideIndex, setSlideIndex] = useState(0);
     const [loading,setLoading]=useState(true);
-    const plusDivs = (n) => {
-      showDivs(slideIndex + n);
-    };
-    const showDivs = (n) => {
-        let newIndex = n;
-        const x = document.getElementsByClassName("mySlides");
-        if (x.length > 0) {
-          if (newIndex > x.length) {
-            newIndex = 1;
-          }
-          if (newIndex < 1) {
-            newIndex = x.length;
-          }
-          setSlideIndex(newIndex);
-          for (let i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
-          }
-          x[newIndex - 1].style.display = "block";
-        }
-      };
-      
-    useEffect(() => {
-      showDivs(slideIndex);
-    }, [slideIndex]);
     useEffect(()=>{
         const fetchData=async()=>{
         try{
@@ -54,25 +30,41 @@ const EventsHomePage = () => {
         console.log(eventDetails);
         setLoading(false);
     },[eventDetails])
+    const contentStyle = {
+      height: '500px',
+      width: '100%',
+      color: '#fff',
+      lineHeight: '160px',
+      textAlign: 'center',
+      background: '#364d79',
+    };
   return !loading ? (
     <section className="main container section">
         <div style={{minHeight:'100vh'}}>
         <div className='top-slideshow-div' >
-                {/* <h2 className="w3-center">EVENTS TO REMEMBER</h2> */}
-
-                <div className="w3-content w3-display-container" style={{height:'80vh'}}>
-                    
-                    <img className="mySlides" src="https://wallpaperaccess.com/full/6133725.jpg" style={{ height: '100%', width: '100%' }} />
-                    <img className="mySlides" src="https://liveeventproductions.co.uk/wp-content/uploads/2018/01/event-production-services-live-event-productions-banner-image-4.jpg" style={{ height: '100%', width: '100%' }} />
-                    <img className="mySlides" src="https://wallpaperaccess.com/full/2489735.jpg" style={{ height: '100%', width: '100%' }} />
-                    <img className="mySlides" src="https://th.bing.com/th/id/R.57ea724bd5e16a37ccd1e54966169406?rik=gqlJFPll8guZCg&riu=http%3a%2f%2fwww.stagingdimensions.com.au%2fcontent%2fimages%2fthumbs%2f0001272_cotton-club-gatsby.jpeg&ehk=XFAQOwnAYOqxO45G704BTIak9sD6SIQQT7Uq9ZP9pFU%3d&risl=&pid=ImgRaw&r=0" style={{ height: '100%', width: '100%' }} />
-                    <img className="mySlides" src="https://wallpapercave.com/wp/wp7488400.jpg" style={{ height: '100%', width: '100%' }} />
-                    <img className="mySlides" src="https://s3-media1.fl.yelpcdn.com/bphoto/oPVG4wXUdpyYXfJ4jg5-Mw/o.jpg" style={{ height: '100%', width: '100%' }} />
-                    <img className="mySlides" src="https://www.jettext.net/wp-content/uploads/2021/11/Creamfields-10-Worlds-Wildest-Parties-Jet-Text-Blog.jpg" style={{ height: '100%', width: '100%' }} />
-
-                    <button className="w3-button w3-black w3-display-left" onClick={() => plusDivs(-1)}>&#10094;</button>
-                    <button className="w3-button w3-black w3-display-right" onClick={() => plusDivs(1)}>&#10095;</button>
-                </div>
+                    <Carousel autoplay>
+                      <div>
+                        <img className="mySlides" src="https://wallpaperaccess.com/full/6133725.jpg" style={contentStyle} />
+                      </div>
+                      <div>
+                        <img className="mySlides" src="https://liveeventproductions.co.uk/wp-content/uploads/2018/01/event-production-services-live-event-productions-banner-image-4.jpg" style={contentStyle} />
+                      </div>
+                      <div>
+                        <img className="mySlides" src="https://wallpaperaccess.com/full/2489735.jpg" style={contentStyle} />
+                      </div>
+                      <div>
+                        <img className="mySlides" src="https://th.bing.com/th/id/R.57ea724bd5e16a37ccd1e54966169406?rik=gqlJFPll8guZCg&riu=http%3a%2f%2fwww.stagingdimensions.com.au%2fcontent%2fimages%2fthumbs%2f0001272_cotton-club-gatsby.jpeg&ehk=XFAQOwnAYOqxO45G704BTIak9sD6SIQQT7Uq9ZP9pFU%3d&risl=&pid=ImgRaw&r=0" style={contentStyle} />
+                      </div>
+                      <div>
+                        <img className="mySlides" src="https://wallpapercave.com/wp/wp7488400.jpg" style={contentStyle} />
+                      </div>
+                      <div>
+                        <img className="mySlides" src="https://s3-media1.fl.yelpcdn.com/bphoto/oPVG4wXUdpyYXfJ4jg5-Mw/o.jpg" style={contentStyle} />
+                      </div>
+                      <div>
+                        <img className="mySlides" src="https://www.jettext.net/wp-content/uploads/2021/11/Creamfields-10-Worlds-Wildest-Parties-Jet-Text-Blog.jpg" style={contentStyle} />
+                      </div>
+                    </Carousel>
             </div>
         <div className="secTitle" >
             <h1 data-aos='fade-right' className="title">
