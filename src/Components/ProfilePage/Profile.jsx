@@ -1,5 +1,8 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import './Profile.css';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { TabView, TabPanel } from 'primereact/tabview';
+import { message, Upload } from 'antd';
 import {
   MDBCol,
   MDBContainer,
@@ -37,7 +40,55 @@ console.log(organizerData);
   const handleEditProfileToggle = () => {
     setIsEditProfileOpen(!isEditProfileOpen);
   };
-
+  const getBase64 = (img, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(img);
+  };
+  const beforeUpload = (file) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('You can only upload JPG/PNG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error('Image must smaller than 2MB!');
+    }
+    return isJpgOrPng && isLt2M;
+  };
+  const [loading, setLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState();
+  const handleChange = (info) => {
+    if (info.file.status === 'uploading') {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === 'done') {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, (url) => {
+        setLoading(false);
+        setImageUrl(url);
+      });
+    }
+  };
+  const uploadButton = (
+    <button
+      style={{
+        border: 0,
+        background: 'none',
+      }}
+      type="button"
+    >
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </button>
+  );
   // useEffect(() => {
   //   localStorage.setItem('userInfo', JSON.stringify(userInfo));
   // }, [userInfo]);
@@ -57,12 +108,25 @@ const handleGroup=()=>{
           <MDBCol lg="4 profile-left-info">
             <MDBCard className="mb-4" style={{height:"50%"}}>
               <MDBCardBody className="text-center">
-                <MDBCardImage
+                <div style={{width:'100%',height:'85%',display:'flex',alignItems:'center'}}>
+                  {userDetails.userProfile ===" " ? (<MDBCardImage
                   src={userDetails.userProfile}
                   alt="avatar"
                   className="rounded-circle mx-auto"
                   style={{ width: '175px', height: '175px', display: 'flex', marginBottom: '15px', justifyContent: 'center', alignItems: 'center' }}
-                  fluid />
+                  fluid />):(<Upload
+                    name="avatar"
+                    listType="picture-circle"
+                    className="avatar-uploader"
+                    showUploadList={false}
+                    beforeUpload={beforeUpload}
+                    onChange={handleChange}
+                  >
+                    {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+                  </Upload>)}
+                </div>
+                
+                
                 
                 <div className="d-flex justify-content-center mb-2">
                   <MDBBtn onClick={handleEditProfileToggle} className="edit-profile-button">
@@ -137,9 +201,9 @@ const handleGroup=()=>{
                 </MDBRow>
               </MDBCardBody>
             </MDBCard>
-
-            <MDBRow>
-              <MDBCol md="6">
+                    
+            {/* <MDBRow>
+              {/* <MDBCol md="6">
                 <MDBCard className="mb-4 mb-md-0">
                   <MDBCardBody>
                     <div>
@@ -164,8 +228,8 @@ const handleGroup=()=>{
                     </div>
                   </MDBCardBody>
                 </MDBCard>
-              </MDBCol>
-            </MDBRow>
+              </MDBCol> 
+            </MDBRow> */}
           </MDBCol>
         </MDBRow>
       </MDBContainer>

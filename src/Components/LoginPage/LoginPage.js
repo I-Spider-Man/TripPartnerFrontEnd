@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './LoginPage.css';
-import {UserProfileAva, registerUser, generateOtp, getUserDetails} from '../Files/User_profile_avator'
+import {registerUser, generateOtp, getUserDetails} from '../Files/User_profile_avator'
 import { forgotPassword } from '../Files/Other_DataBase';
 import Button from '@mui/material/Button';
 import { Tooltip } from '@mui/material';
@@ -34,8 +34,7 @@ function LoginPage({ onClose , onReturn}) {
       userId:'',
       userName: "",
       userEmail: "",
-      userPassword: "",
-      userProfile: ""
+      userPassword: ""
     });
 
     setForgotPassword(!isforgotPassword);
@@ -47,7 +46,7 @@ function LoginPage({ onClose , onReturn}) {
       await forgotPassword(userDetails.userEmail);
       showForgotPassword();
     }else{
-      alert("entered otp is wrong");
+      message.error("entered otp is wrong");
     }
   }
   console.log(userDetails);
@@ -88,10 +87,12 @@ const handleLogin = async (e) => {
       onReturn(userData);
       onClose();
     } else {
-      alert('Incorrect password');
+      message.error('Incorrect password');
+      setLoginProcess(false);
     }
   } catch (error) {
-    alert('Email not found. Register!!!');
+    message.error('Email not found. Register!!!');
+    setLoginProcess(false);
   }
 };
 const handleChange=(e)=>{
@@ -101,22 +102,22 @@ const handleChange=(e)=>{
     [name]:value
   }))
 }
-
+const passwordRegx = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]{8,}$/ ;
+const isPasswordValid=passwordRegx.test(userDetails.userPassword);
+console.log(isPasswordValid);
 const handleSubmit=async(e)=>{
   e.preventDefault();
-  if(isPasswordValid){
+  if(!isPasswordValid){
     message.error("Enter strong password");
     return ;
   }
   console.log('Current state values:', { otp, userotp, ...userDetails.userPassword, userPasswordC });
-const randomIndex = Math.floor(Math.random() * UserProfileAva.length);
 if(userotp !== ""){
   if( otp == userotp){
       if(userDetails.userPassword === userPasswordC){
           try {
             const updatedUserDetails = {
               ...userDetails,
-              userProfile: UserProfileAva[randomIndex]
             };
               const response = await registerUser(updatedUserDetails);
               message.success("User registered successfully.");
@@ -146,8 +147,7 @@ else{
     }
   };
   
-  const passwordRegx = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]{8,}$/ ;
-  const isPasswordValid=passwordRegx.test(userDetails.userPassword);
+ 
   const closePopup = () => {
     setPopupVisible(false);
   };
