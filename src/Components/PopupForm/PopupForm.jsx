@@ -6,6 +6,7 @@ import { updateUserDetails } from '../Files/User_profile_avator';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
+import { message } from 'antd';
 const EditProfilePage = ({onClose,onReturn}) => {
   const {userDetails,setUserData}=useUser();
   console.log(userDetails);
@@ -31,6 +32,8 @@ const EditProfilePage = ({onClose,onReturn}) => {
     try {
       const updatedUser = await updateUserDetails(updateUser);
       onReturn(updatedUser);
+      message.success("User data updated");
+      window.location.reload();
       onClose()
     } catch (error) {
       console.log(error);
