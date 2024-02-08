@@ -42,6 +42,11 @@ export const UserProvider = ({ children }) => {
 
  }
   const setUserData = async(user) => {
+    if(user===null){
+      console.log("null need only on logout");
+      localStorage.setItem('participantDetails',JSON.stringify(user));
+      localStorage.setItem('organizerDetails',JSON.stringify(user));
+    }
     localStorage.setItem('userDetails', JSON.stringify(user));
   };
   return (
@@ -55,6 +60,7 @@ export const useUser = () => {
   const { userDetails,organizerData,participantData, setUserData ,updateOrganizerData,updateParticipantData} = useContext(UserContext);
   const storedUserDetails = localStorage.getItem('userDetails');
   updateOrganizerData(JSON.parse(storedUserDetails));
+  console.log(organizerData,participantData,userDetails);
   updateParticipantData(JSON.parse(storedUserDetails));
   useEffect(() => {
    

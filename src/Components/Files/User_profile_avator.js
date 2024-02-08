@@ -2,28 +2,6 @@ import axios from "axios"
 export const pictureUrl = (image) => {
   return `data:image/jpeg;base64,${image}`;
 };
-export const UserProfileAva=[
-    'https://trip-partner-main.s3.amazonaws.com/bird-2-11.png'
-    ,
-    'https://trip-partner-main.s3.amazonaws.com/boar-2.png'
-    ,
-    'https://trip-partner-main.s3.amazonaws.com/cat-3.png'
-    ,
-    'https://trip-partner-main.s3.amazonaws.com/chipmunk-7.png'
-    ,
-    'https://trip-partner-main.s3.amazonaws.com/chipmunk-7.png'
-    ,
-     'https://trip-partner-main.s3.amazonaws.com/dolphin-4.png'
-    ,
-      'https://trip-partner-main.s3.amazonaws.com/fox-face-1-2.png'
-    ,
-      'https://trip-partner-main.s3.amazonaws.com/goat-1.png'
-      ,
-      'https://trip-partner-main.s3.amazonaws.com/mouse-9.png',
-      'https://trip-partner-main.s3.amazonaws.com/ox-6.png',
-      'https://trip-partner-main.s3.amazonaws.com/rabbit-8.png',
-      'https://trip-partner-main.s3.amazonaws.com/tiger-10.png'
-]
 
 export const updateUserDetails=async(value)=>{
   try{
