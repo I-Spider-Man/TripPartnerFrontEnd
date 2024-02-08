@@ -6,7 +6,7 @@ import {IoMdRadioButtonOn} from 'react-icons/io'
 import {fetch_Event_Details, fetch_popularEvents} from '../Files/Event_Details'
 import Loading from '../LoadingComponents/Loading'
 import SingleEvent from './SingleEvent'
-import { Carousel } from 'antd'
+import { Carousel, Empty } from 'antd'
 
 
 const EventsHomePage = () => {
@@ -80,7 +80,7 @@ const EventsHomePage = () => {
     );
   })
 ) : (
-  <p>More places to be added soon...</p>
+  <Empty/>
 )}
 
         </div>
@@ -101,11 +101,9 @@ const EventsHomePage = () => {
     );
   })
 ) : (
-  <p>More events to be added soon</p>
+  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={false} />
 )}
-
-            
-        </div></div>
+     </div></div>
     </section>
   ):(
     <>loading....</>

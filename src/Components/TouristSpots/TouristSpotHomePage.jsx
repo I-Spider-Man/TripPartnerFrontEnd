@@ -4,7 +4,7 @@ import './TouristSpotHomePage.css'
 import { fetch_popularSpots, fetch_spot_data } from '../Files/TouristSpotDetails'
 import Loading from '../LoadingComponents/Loading'
 import Spot from './Spot'
-import { Carousel } from 'antd'
+import { Carousel, Empty } from 'antd'
 
 
 const TouristSpotHomePage = () => {
@@ -85,7 +85,7 @@ const TouristSpotHomePage = () => {
                     
                 })
             }</>
-                ):(<div style={{color:'white',display:'flex',alignItems:'center',justifyContent:'center',width:'100%'}}><Loading/></div>)}
+                ):(<Empty/>)}
             
         </div>
  
@@ -104,7 +104,7 @@ const TouristSpotHomePage = () => {
                         <Spot spotId={spotId} spotName={spotName} spotPictureList={spotPictureList} location={location} description={description}/>
                     )
                 })
-            }<p>More places to be added soon</p></>):(<div style={{color:'white',display:'flex',alignItems:'center',justifyContent:'center',width:'100%'}}><Loading/></div>)}
+            }<p>More places to be added soon</p></>):(<Empty/>)}
             
  
             

@@ -187,7 +187,7 @@ console.log(organizerData);
                 </MDBRow>
               </MDBCardBody>
             </MDBCard>
-                    <ProfileBottom/>
+                   
             {/* <MDBRow>
               {/* <MDBCol md="6">
                 <MDBCard className="mb-4 mb-md-0">
@@ -218,6 +218,10 @@ console.log(organizerData);
             </MDBRow> */}
           </MDBCol>
         </MDBRow>
+        <div style={{marginTop:'10px', padding:'10px'}}>
+           <ProfileBottom/>
+        </div>
+       
       </MDBContainer>
       {isEditProfileOpen && (
         <Suspense fallback={<div>Loading...</div>}>

@@ -7,11 +7,12 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { Link } from 'react-router-dom';
+import { Empty } from 'antd';
 
 function EventComponent(props) {
   const { post } = props;
   console.log(post);
-  return post?.eventPictureList?.[0] && (
+  return post?.eventPictureList?.[0] ? (
     <Grid item xs={12} md={6}>
       <Link  to={`/Events/${post.eventName}`}>
       <CardActionArea component="Link">
@@ -35,6 +36,8 @@ function EventComponent(props) {
       </Link>
       
     </Grid>
+  ):(
+    <Empty/>
   );
 }
 
