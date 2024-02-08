@@ -103,11 +103,11 @@ const handleGroup=()=>{
   }
 }
   return userDetails ? (
-    <section style={{ backgroundColor: 'rgb(151, 235, 207)', marginTop:'10vh' }}>
+    <section style={{ backgroundColor: 'rgb(151, 235, 207)', marginTop:'10vh', height:'80vh', width:'100%' }}>
       <MDBContainer className="py-5">
         <MDBRow>
           <MDBCol lg="4 profile-left-info">
-            <MDBCard className="mb-4" style={{height:"50%"}}>
+            <MDBCard className="mb-4" style={{height:"100%"}}>
               <MDBCardBody className="text-center">
                 <div style={{width:'100%',height:'85%',display:'flex',alignItems:'center'}}>
                   {userDetails.userProfile ===" " ? (<MDBCardImage
@@ -154,7 +154,7 @@ const handleGroup=()=>{
           </MDBCol>
 
           <MDBCol lg="8">
-            <MDBCard className="mb-4">
+            <MDBCard className="mb-4" style={{height:'100%'}}>
               <MDBCardBody>
                 <MDBRow>
                   <MDBCol sm="3">
