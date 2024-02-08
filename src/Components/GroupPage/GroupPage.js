@@ -24,7 +24,7 @@ const [joinDetails,setjoinDetails]=React.useState({})
 const [joining,setJoining]=useState(false);
 let isOrganizer;
 let isParticipant;
-if(organizerData && participantData){
+if(organizerData || participantData){
   isOrganizer = organizerData.groupId == groupId;
   isParticipant = participantData.groupId == groupId;
 }
