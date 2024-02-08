@@ -1,10 +1,10 @@
 // GroupPage.js
 import React, { useEffect, useState } from 'react';
 import './GroupPage.css';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getAllParticipantsById, getGroupById } from '../Files/Group_Details';
 import { fetchOrganizerDataById } from '../Files/Organzier_Details';
-import { participantJoining } from '../Files/Participant_Details';
+import { participantJoining, participantLeaving } from '../Files/Participant_Details';
 import { useUser } from '../Auth/UserContext';
 import ParticipantList from './ParticipantList';
 import { LoadingButton } from '@mui/lab';
@@ -16,6 +16,7 @@ import { Button, Result } from 'antd';
 const GroupPage = () => {
   const {organizerData,participantData,userDetails}=useUser();
 const [groupDetails,setGroupDetails]=useState(null);
+const navigate=useNavigate();
 const [organizer,setOrganizer]=useState(null);
 const [participants,setParticipants]=useState(null);
 const {groupId}=useParams();
@@ -93,8 +94,14 @@ useEffect(()=>{
 const handleJoinClick = async() => {
   Participation();
 };
-const handleLeaveClick = () => {
+const handleLeaveClick = async() => {
   alert('Leave button clicked!');
+  try{
+    const response=await participantLeaving(participantData.participantId,groupId);
+    navigate("/");
+  }catch(error){
+    console.log(error);
+  }
   // Add your leave logic here
 };
 
@@ -109,13 +116,13 @@ const handleLeaveClick = () => {
         </h1>
         {(isParticipant && !isOrganizer) && (
               <div className='button-32'>
-                <button onClick={handleLeaveClick}>Leave</button>
+                <button onClick={()=>handleLeaveClick()}>Leave</button>
               </div>
             ) }
       {
            (!isOrganizer && !isParticipant)  && (
                 <div className='button-32'>
-                    <button onClick={handleJoinClick}><LoadingButton variant='none' loading={joining} loadingIndicator={<CircularProgress sx={{color:'white'}}/>}>Join</LoadingButton></button>
+                    <button onClick={()=>handleJoinClick()}><LoadingButton variant='none' loading={joining} loadingIndicator={<CircularProgress sx={{color:'white'}}/>}>Join</LoadingButton></button>
                 </div>
             )
         }

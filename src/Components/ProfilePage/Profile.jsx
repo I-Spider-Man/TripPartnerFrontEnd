@@ -18,6 +18,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import { useUser } from '../Auth/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { Button, Result } from 'antd';
+import ProfileBottom from './ProfileBottom';
 
 const PopupForm = lazy(() => import('../PopupForm/PopupForm'));
 
@@ -201,7 +202,7 @@ const handleGroup=()=>{
                 </MDBRow>
               </MDBCardBody>
             </MDBCard>
-                    
+                    <ProfileBottom/>
             {/* <MDBRow>
               {/* <MDBCol md="6">
                 <MDBCard className="mb-4 mb-md-0">
