@@ -67,7 +67,7 @@ const nextSpot=()=>{
   const prevSpot=()=>{
     setCurrentSpot(currentSpot-1)
   }
-  return !loading ? (
+  return  (
       <div className='home' style={{width:'100%'}}>
       <div style={{ position: 'relative', width: '100%', height: '100%' }}>
   <video src={vid} autoPlay loop muted style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -92,11 +92,14 @@ const nextSpot=()=>{
           <p>Unlock the magic of travel! Immerse yourself in vibrant events at breathtaking tourist spots. From cultural festivals to culinary delights, join us for unforgettable experiences that go beyond sightseeing. Embrace the journey, forge global connections, and make every moment extraordinary. Explore. Connect. Celebrate.</p>
         </div>
         <div className="slider-container" style={{padding:'20px'}}>
-        {currentEvent !==0 && <Button variant='contained' onClick={prevEvent} style={{color:'white',padding:'5px'}}>Prev</Button>}
+          {event? (<>{currentEvent !==0 && <Button variant='contained' onClick={prevEvent} style={{color:'white',padding:'5px'}}>Prev</Button>}
         <div className="slider">
         <EventComponent key={event.event_id} post={event} />
         </div>
-        {(currentEvent < eventDetails.length-1) && <Button variant='contained' onClick={nextEvent} style={{color:'white',padding:'5px'}}>Next</Button>}
+        {(currentEvent < eventDetails.length-1) && <Button variant='contained' onClick={nextEvent} style={{color:'white',padding:'5px'}}>Next</Button>}</>)
+        :(<>No Active Events</>)
+        }
+        
       </div>
               <Link to='/EventsHomePage' style={{ textDecoration: 'none'}}>
                 <Button variant='outlined' style={{ textDecoration: 'none', display: 'flex',alignItems:'center',justifyContent:'center', flexDirection: 'column',textTransform:'uppercase',backgroundColor:'black',color:'whitesmoke' }}><div style={{ marginRight: '5px' }}>v</div>
@@ -127,11 +130,14 @@ const nextSpot=()=>{
                             </Button>
                           </Link>
                         <div className="slider-container">
-                      {currentSpot !==0 && <Button variant='contained' onClick={prevSpot} style={{color:'white'}}>Prev</Button>}
+                          {spot?(<>
+                          {currentSpot !==0 && <Button variant='contained' onClick={prevSpot} style={{color:'white'}}>Prev</Button>}
                       <div className="slider">
-                      <TouristSpotComponent key={spot.spot_id} post={spot} />
+                      <TouristSpotComponent key={spot?.spot_id} post={spot} />
                       </div>
                       {(currentSpot < spotDetails.length-1) && <Button variant='contained' onClick={nextSpot} style={{color:'white'}}>Next</Button>}
+                          </>):(<>spots to be added</>)}
+                      
                     </div>
           </div>
           
@@ -195,7 +201,6 @@ const nextSpot=()=>{
       </div>
         </div>
     )
-    :(<>loading....</>)
   
 }
 export default Home

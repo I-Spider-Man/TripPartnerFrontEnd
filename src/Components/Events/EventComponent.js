@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 function EventComponent(props) {
   const { post } = props;
   console.log(post);
-  return (
+  return post?.eventPictureList?.[0] && (
     <Grid item xs={12} md={6}>
       <Link  to={`/Events/${post.eventName}`}>
       <CardActionArea component="Link">
@@ -27,7 +27,7 @@ function EventComponent(props) {
           <CardMedia
             component="img"
             sx={{ width: 250, display: { xs: 'none', sm: 'block' } }}
-            image={post.eventPictureList[0]}
+            image={post?.eventPictureList?.[0]}
             alt={post.imageLabel}
           />
         </Card>

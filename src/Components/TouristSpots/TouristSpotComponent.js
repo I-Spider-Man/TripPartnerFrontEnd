@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 function TouristSpotComponent(props) {
   const { post } = props;
   console.log(post)
-  return (
+  return post && (
     <Grid item xs={12} md={6}>
       <Link  to={`/Spot/${post.spotName}`}>
       <CardActionArea component="Link">
@@ -27,7 +27,7 @@ function TouristSpotComponent(props) {
           <CardMedia
             component="img"
             sx={{ width: 250, display: { xs: 'none', sm: 'block' } }}
-            image={post.spotPictureList[0]}
+            image={post?.spotPictureList?.[0]}
             alt={post.imageLabel}
           />
         </Card>

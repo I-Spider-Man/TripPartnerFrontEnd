@@ -150,18 +150,20 @@ const GroupOrganizeForm = ({event,eventName, spotName, ...props }) => {
           <label>
                   Start Date:<br></br>
                   <LocalizationProvider dateAdapter={AdapterDayjs} >
-                    <DatePicker className='akash1' 
-                      value={groupForm.dateFrom}
-                      onChange={handleStartDateChange}
-                      disablePast
-                      minDate={dayjs(event.startDate)}
-                      maxDate={dayjs(event.endDate)}
-                      format="YYYY-MM-DD"
-                      style={{color:'black'}}
-                      inputProps={{
-                        readOnly:true
-                      }}
-                    />
+                  <DatePicker
+                    className='akash1' 
+                    value={groupForm.dateFrom}
+                    onChange={handleStartDateChange}
+                    disablePast
+                    minDate={event && dayjs(event.startDate)}
+                    maxDate={event && dayjs(event.endDate)}
+                    format="YYYY-MM-DD"
+                    style={{color:'black'}}
+                    inputProps={{
+                      readOnly:true
+                    }}
+                  />
+
                   </LocalizationProvider>
                 </label>
                 <label>
@@ -169,8 +171,8 @@ const GroupOrganizeForm = ({event,eventName, spotName, ...props }) => {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker  className='akash1'
                       value={groupForm.dateTo}
-                      minDate={dayjs(event.startDate)}
-                      maxDate={dayjs(event.endDate)}
+                      minDate={event && dayjs(event.startDate)}
+                      maxDate={event && dayjs(event.endDate)}
                       onChange={handleEndDateChange}
                       format="YYYY-MM-DD"
                       disablePast

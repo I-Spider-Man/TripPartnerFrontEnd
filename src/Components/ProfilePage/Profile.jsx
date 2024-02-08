@@ -93,15 +93,6 @@ console.log(organizerData);
   // useEffect(() => {
   //   localStorage.setItem('userInfo', JSON.stringify(userInfo));
   // }, [userInfo]);
-const handleGroup=()=>{
-  if(organizerData){
-    navigate(`/GroupPage/${organizerData.groupId}`)
-  }else if(participantData){
-    navigate(`/GroupPage/${participantData.groupId}`)
-  }else{
-    return alert("nothing");
-  }
-}
   return userDetails ? (
     <section style={{ backgroundColor: 'rgb(151, 235, 207)', marginTop:'10vh', height:'80vh', width:'100%' }}>
       <MDBContainer className="py-5">
@@ -145,12 +136,6 @@ const handleGroup=()=>{
                 </div>
               </MDBCardBody>
             </MDBCard>
-
-            <MDBRow>
-              <MDBBtn style={{marginBottom:"20px", width:"50%", marginLeft:"25%"}} className="edit-profile-button" onClick={()=>{handleGroup()}}>
-                View Group
-              </MDBBtn>
-            </MDBRow>
           </MDBCol>
 
           <MDBCol lg="8">

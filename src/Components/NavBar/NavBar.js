@@ -12,6 +12,8 @@ import { useUser } from '../Auth/UserContext';
 import {Avatar} from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import logo from '../../Assests/MicrosoftTeams-image (9).png';
+import { DisabledByDefault } from '@mui/icons-material';
+import { message } from 'antd';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -20,20 +22,34 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 function NavBar() {
-const navigate=useNavigate();
-  const {userDetails,setUserData} = useUser();
+  const navigate=useNavigate();
+  const {userDetails,setUserData,participantData,organizerData} = useUser();
   const [anchorEl, setAnchorEl] = useState(null);
+
   const [visible, setvisible] = useState(false);
   const [login,setLogin]=useState(false);
-  const [userId,setUserId]=useState(0);
   const open = Boolean(anchorEl);
   const [profileAva,setProfileAva]=useState(userDetails?userDetails.userProfile:(<AccountCircleIcon/>));
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  
-  const handleClose1 = () => {
+  const handleProfile=()=>{
     setAnchorEl(null);
+    navigate(`/profile/${userDetails?.userId}`);
+
+  }
+  const handleClose1= ()=>{
+    setAnchorEl(null);
+  }
+  const handleGroup = () => {
+    setAnchorEl(null);
+    if(organizerData){
+      navigate(`/GroupPage/${organizerData.groupId}`)
+    }else if(participantData){
+      navigate(`/GroupPage/${participantData.groupId}`)
+    }else{
+      return message.error("You are currently not in any group.");
+    }
   };
   const log = () => {
     setvisible(!visible);
@@ -100,9 +116,8 @@ const navigate=useNavigate();
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem >
-        <Link to={`/profile/${userDetails.userId}`}>Profile</Link></MenuItem>
-        <MenuItem onClick={handleClose1}>My account</MenuItem>
+        <MenuItem onClick={handleProfile}>Profile</MenuItem>
+        {(participantData?.participantStatus==="Busy" || organizerData?.organizerStatus==="Busy") && <MenuItem onClick={()=>handleGroup()}>My Group</MenuItem>}
         <MenuItem onClick={()=>handleLogout()} >Logout</MenuItem>
       </Menu>
       </>}
@@ -111,6 +126,6 @@ const navigate=useNavigate();
     </React.Fragment>
     
   );
-}
+};
 
 export default NavBar;
