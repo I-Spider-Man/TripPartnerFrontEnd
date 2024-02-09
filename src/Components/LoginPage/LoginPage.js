@@ -13,6 +13,7 @@ function LoginPage({ onClose , onReturn}) {
   const [otpInput, setOtpInput] = useState(false);
   const [otpProcess,setOtpProcess]=useState(false);
   const [loginProcess,setLoginProcess]=useState(false);
+  const [registeringProcess,setRegisteringProcess]=useState(false);
   const [userDetails,setUserDetails]=useState({
     userId:'',
     userName:"",
@@ -107,13 +108,14 @@ const isPasswordValid=passwordRegx.test(userDetails.userPassword);
 console.log(isPasswordValid);
 const handleSubmit=async(e)=>{
   e.preventDefault();
+  setRegisteringProcess(true);
   if(!isPasswordValid){
     message.error("Enter strong password");
     return ;
   }
   console.log('Current state values:', { otp, userotp, ...userDetails.userPassword, userPasswordC });
-if(userotp !== ""){
-  if( otp == userotp){
+// if(userotp !== ""){
+  // if( otp == userotp){
       if(userDetails.userPassword === userPasswordC){
           try {
             const updatedUserDetails = {
@@ -126,16 +128,17 @@ if(userotp !== ""){
             } catch (error) {
               console.error('Error registering user:', error);
             }
+            setRegisteringProcess(false);
 }else{
   message.warning("Check password");
 }
-  }else{
-      message.error("Entered otp is wrong.");
-  }
-}
-else{
-  getOtp();
-}
+//   }else{
+//       message.error("Entered otp is wrong.");
+//   }
+// }
+// else{
+//   getOtp();
+// }
 }
   const validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -279,7 +282,7 @@ else{
     </div>
     </div>
         <input className="reg-input" type="password" value={userPasswordC} name="cpswd" placeholder="Confirm Password" required onChange={(e)=>setUserPasswordC(e.target.value)}/>
-        <button className='reg-button' type='submit'>Register</button>
+        <button className='reg-button' type='submit' disabled={registeringProcess}><LoadingButton loading={registeringProcess} variant='contained' loadingIndicator={<>Registering....</>}>Register</LoadingButton></button>
       </form>
     </div>
     </div>

@@ -1,5 +1,6 @@
 import { message } from "antd";
 import axios from "axios";
+import { fetchOrganizerDataById } from "./Organzier_Details";
 export const participantJoining=async(value)=>{
     try{
         const response=await axios.post("http://localhost:8080/Participant",value);
@@ -14,6 +15,24 @@ export const participantJoining=async(value)=>{
             console.log(error)
             return alert(error.response.data);
         }
+    }
+}
+export const fetchParticipatedGroups=async(userId)=>{
+    try{
+        const response=await axios.get(`http://localhost:8080/Participant/allGroupsParticipated/${userId}`);
+        const groupWithOrganizerData=await Promise.all(
+            response.data.map(async(group)=>{
+                const res=await fetchOrganizerDataById(group.organizerId);
+                return {
+                    ...group,
+                    organizerData: res,
+                }
+            })
+        )
+        return groupWithOrganizerData;
+    }catch(error){
+        console.log(error);
+        return [];
     }
 }
 export const participantLeaving=async(participantId,groupId)=>{

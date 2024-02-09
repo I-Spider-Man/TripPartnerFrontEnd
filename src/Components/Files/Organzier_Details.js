@@ -17,3 +17,22 @@ export const fetchOrganizerDataById = async(id)=>{
       console.log("error while fetching organizer by Id :" + error);
     }
   }
+
+  export const fetchOrganizedGroups=async(userId)=>{
+    try{
+        const response=await axios.get(`http://localhost:8080/organizer/allGroupsOrganizedByOrganizer/${userId}`);
+        const groupWithOrganizerData=await Promise.all(
+          response.data.map(async(group)=>{
+              const res=await fetchOrganizerDataById(group.organizerId);
+              return {
+                  ...group,
+                  organizerData: res,
+              }
+          })
+      )
+      return groupWithOrganizerData;
+    }catch(error){
+        console.log(error);
+        return [];
+    }
+}
