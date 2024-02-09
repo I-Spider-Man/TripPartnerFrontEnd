@@ -1,27 +1,23 @@
 import { Divider, Table } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from '@mui/material';
+import { useUser } from '../Auth/UserContext';
+import { getAllBlocked } from '../Files/User_profile_avator';
 function BlockedList() {
-  const [BlockedList,setBlockedList]=useState([]);
-  const dataSource = [
-    {
-      key: '1',
-      name: 'Mike',
-      age: 32,
-      address: '10 Downing Street',
-    },
-    {
-      key: '2',
-      name: 'John',
-      button: <Button> view</Button>
-    },
-  ];
-  
+  const {userDetails}=useUser();
+  const [dataSource,setDataSource]=useState([])
+  useEffect(()=>{
+    const fetch=async()=>{
+      const res=await getAllBlocked(userDetails.userId);
+      setDataSource(res);
+    }
+    fetch();
+  },[])
   const columns = [
     {
       title: 'Name',
-      dataIndex: 'name',
+      dataIndex: 'userName',
       key: 'name',
     },
     {
@@ -31,14 +27,14 @@ function BlockedList() {
   ]
   return (
     <div style={{display:'flex',flexDirection:'row',height:'100%',justifyContent:'space-evenly'}}>
-    <div style={{display:'flex',alignItems:'center',justifyContent:'center',width:'20%'}}>
-      {BlockedList?.length}
+      <div style={{display:'flex',alignItems:'center',justifyContent:'center',width:'20%'}}>
+        {dataSource?.length}
+      </div>
+      <Divider type='vertical' style={{borderWidth:'3px'}}/>
+      <div style={{width:'100%', height:'100%'}}>
+      <Table dataSource={dataSource} columns={columns}/>
+      </div>
     </div>
-    <Divider type='vertical' style={{borderWidth:'3px'}}/>
-    <div>
-    <Table dataSource={dataSource} columns={columns} style={{width:'100%', height:'100%'}}/>;
-    </div>
-  </div>
   )
 }
 

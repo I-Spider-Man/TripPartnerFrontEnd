@@ -12,6 +12,33 @@ export const updateUserDetails=async(value)=>{
     return null;
   }
 }
+export const getAllFollowers=async(userId)=>{
+  try{
+    const response=await axios.get(`http://localhost:8080/User/getAllFollowers/${userId}`)
+    return response.data;
+  }catch(error){
+    console.log(error);
+    return [];
+  }
+}
+export const getAllFollowing=async(userId)=>{
+  try{
+    const response=await axios.get(`http://localhost:8080/User/getAllFollowing/${userId}`)
+    return response.data;
+  }catch(error){
+    console.log(error);
+    return [];
+  }
+}
+export const getAllBlocked=async(userId)=>{
+  try{
+    const response=await axios.get(`http://localhost:8080/User/getAllBlocked/${userId}`)
+    return response.data;
+  }catch(error){
+    console.log(error);
+    return [];
+  }
+}
 export const getUserDetailsById=async(value)=>{
   try{
     const fetchUser=await axios.get(`http://localhost:8080/User/${value}`);
