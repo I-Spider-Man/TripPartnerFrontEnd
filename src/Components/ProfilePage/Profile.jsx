@@ -94,7 +94,7 @@ console.log(organizerData);
   //   localStorage.setItem('userInfo', JSON.stringify(userInfo));
   // }, [userInfo]);
   return userDetails ? (
-    <section style={{ backgroundColor: 'rgb(151, 235, 207)', marginTop:'10vh', height:'80vh', width:'100%' }}>
+    <section style={{ backgroundColor: 'rgb(151, 235, 207)', marginTop:'10vh',minHeight:'100%', width:'100%' }}>
       <MDBContainer className="py-5">
         <MDBRow>
           <MDBCol lg="4 profile-left-info">
@@ -187,38 +187,9 @@ console.log(organizerData);
                 </MDBRow>
               </MDBCardBody>
             </MDBCard>
-                   
-            {/* <MDBRow>
-              {/* <MDBCol md="6">
-                <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                    <div>
-                      <h2>Number of times you were a participant:</h2>
-                    </div>
-                    <div className='user-count text-muted'>
-                      
-                      {participantData?participantData.participationCount:"0"}
-                    </div>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-
-              <MDBCol md="6">
-                <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                    <div>
-                      <h2>Number of times you were an organizer:</h2>
-                    </div>
-                    <div className='user-count text-muted'>
-                    {organizerData?organizerData.organizedCount:"0"}
-                    </div>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol> 
-            </MDBRow> */}
           </MDBCol>
         </MDBRow>
-        <div style={{marginTop:'10px', padding:'10px'}}>
+        <div style={{marginTop:'10px', padding:'10px',height:'400px',width:'100%'}}>
            <ProfileBottom/>
         </div>
        
