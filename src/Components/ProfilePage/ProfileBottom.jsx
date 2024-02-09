@@ -6,36 +6,42 @@ import FollowersList from './FollowersList';
 import FollowingList from './FollowingList';
 import BlockedList from './BlockedList';
 import UpdateProfile from './UpdateProfile';
+import Posts from './Posts';
 function ProfileBottom() {
   const { TabPane } = Tabs;
   const items = [
     {
-      key: '1',
+      key:'1',
+      label:'Posts',
+      children: <Posts/>
+    },
+    {
+      key: '2',
       label: 'Organized Details',
       children: <UserOrganizedDetails/>,
     },
     {
-      key: '2',
+      key: '3',
       label: 'Participant Details',
       children: <UserParticipantDetails/>,
     },
     {
-      key: '3',
+      key: '4',
       label: 'Followers',
       children: <FollowersList/>,
     },
     {
-      key: '4',
+      key: '5',
       label: 'Following',
       children: <FollowingList/>,
     },
     {
-      key: '5',
+      key: '6',
       label: 'Blocked',
       children: <BlockedList/>,
     },
     {
-      key: '6',
+      key: '7',
       label: 'Update Profile',
       children: <UpdateProfile/>,
     },
