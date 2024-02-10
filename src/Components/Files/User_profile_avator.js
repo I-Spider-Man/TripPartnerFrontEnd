@@ -6,7 +6,11 @@ export const pictureUrl = (image) => {
 export const updateUserDetails=async(value)=>{
   try{
     const updateUser=await axios.put(`http://localhost:8080/User/updateUser/${value.userId}`,value);
-    return updateUser.data;
+    const picture=await axios.get(`http://localhost:8080/User/userProfile/${updateUser.data.userId}`);
+    return {
+      ...updateUser.data,
+      userProfile:pictureUrl(picture.data)
+    };
   }catch(error){
     console.log(error);
     return null;
@@ -45,7 +49,7 @@ export const getUserDetailsById=async(value)=>{
     const picture=await axios.get(`http://localhost:8080/User/userProfile/${value}`);
     return {
       ...fetchUser.data,
-      userProfile:pictureUrl(picture.data.userProfile)
+      userProfile:pictureUrl(picture.data)
     };
   }catch(error){
     console.log(error);
