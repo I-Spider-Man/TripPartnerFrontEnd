@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Password } from 'primereact/password';
 import { useUser } from '../Auth/UserContext';
 import { Box, Button, Divider, TextField, Tooltip } from '@mui/material';
 import { message } from 'antd';
-        
-function ChangePassword() {
-    const {userDetails}=useUser();
+import { updatePassword } from '../Files/User_profile_avator';
+
+function ChangePassword({ onClose }) {
+    const {userDetails,updateUserData}=useUser();
     const [oldPassword,setOldPassword]=useState('');
     const [newPassword,setNewPassword]=useState('');
     const [confirmPassword,setConfirmPassword]=useState('');
@@ -15,11 +15,18 @@ function ChangePassword() {
         setIsPasswordValid(passwordRegx.test(newPassword));
     },[newPassword]);
 
-    const ChangeUserPassword=(e)=>{
+    const ChangeUserPassword=async(e)=>{
         e.preventDefault();
         if(oldPassword==userDetails.userPassword){
             if(newPassword===confirmPassword){
-                message.success("change password");
+                try{
+                    await updatePassword(userDetails.userId,newPassword);
+                    updateUserData();
+                    onClose();
+                }catch(error){
+                    console.log(error);
+                }
+                
             }else{
                 message.error("new password and confirm password are not same")
             }

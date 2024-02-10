@@ -1,3 +1,4 @@
+import { message } from "antd";
 import axios from "axios"
 export const pictureUrl = (image) => {
   return `data:image/jpeg;base64,${image}`;
@@ -16,6 +17,29 @@ export const updateUserDetails=async(value)=>{
     return null;
   }
 }
+export const updatePassword = async (userId, password) => {
+  try {
+    const updateUser = await axios.put(`http://localhost:8080/User/changePassword/${userId}`,null, {params:{
+      userPassword: password,
+    }
+    });
+    message.success(updateUser.data);
+  } catch (error) {
+    console.log(error) // Accessing error response data directly
+  }
+};
+
+export const updateEmail = async (userId, email) => {
+  try {
+    const updateUser = await axios.put(`http://localhost:8080/User/updateEmail/${userId}`, {
+      userEmail: email
+    });
+    message.success(updateUser.data);
+  } catch (error) {
+    message.error(error.response.data); // Accessing error response data directly
+  }
+};
+
 export const getAllFollowers=async(userId)=>{
   try{
     const response=await axios.get(`http://localhost:8080/User/getAllFollowers/${userId}`)

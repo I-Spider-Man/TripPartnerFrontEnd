@@ -1,13 +1,13 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react'
-import { generateOtp } from '../Files/User_profile_avator';
+import { generateOtp, updateEmail } from '../Files/User_profile_avator';
 import { useUser } from '../Auth/UserContext';
 import { message } from 'antd';
 
-function ChangeEmail() {
+function ChangeEmail({ onClose }) {
     const [password,setPassword]=useState('');
-    const {userDetails}=useUser();
+    const {userDetails,updateUserData}=useUser();
     const [newEmail,setNewEmail]=useState('');
     const [sentOtp,setSentOtp]=useState('');
     const [otpRecived,setOtpRecived]=useState('');
@@ -27,11 +27,18 @@ function ChangeEmail() {
         }
         setCheckingProcess(false);
     }
-    const ChangeUserEmail=(e)=>{
+    const ChangeUserEmail=async(e)=>{
         e.preventDefault();
         if(password==userDetails.userPassword){
             if(otpRecived==sentOtp){
-                message.success("change email");
+                try{
+                    await updateEmail(userDetails.userId,newEmail);
+                    updateUserData();
+                    onClose();
+                    
+                }catch(error){
+                    console.log(error);
+                }
             }
             else{
                 message.error("otp mis-match");

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { createContext, useState, useContext, useEffect } from "react";
+import { getUserDetailsById } from "../Files/User_profile_avator";
  
 const UserContext = createContext();
  
@@ -60,6 +61,13 @@ export const UserProvider = ({ children }) => {
     }
   }
  }
+ const updateUserData=async()=>{
+  if(userDetails.userId){
+    const response=await getUserDetailsById(userDetails.userId);
+    setUserData(response);
+  }
+
+ }
  const updateUserBlockedList=async(userData)=>{
   if(userData){
     try{
@@ -91,17 +99,17 @@ export const UserProvider = ({ children }) => {
     localStorage.setItem('userDetails', JSON.stringify(user));
   };
   return (
-    <UserContext.Provider value={{ userDetails, organizerData, participantData, setUserData, updateOrganizerData,updateParticipantData,updateUserBlockedList,updateUserFollowersList,updateUserFollowingList }}>
+    <UserContext.Provider value={{ userDetails, organizerData, participantData, setUserData, updateOrganizerData,updateParticipantData,updateUserBlockedList,updateUserFollowersList,updateUserFollowingList,updateUserData }}>
       {children}
     </UserContext.Provider>
   );
 };
 
 export const useUser = () => {
-  const { userDetails,organizerData,participantData, setUserData ,updateOrganizerData,updateParticipantData,updateUserFollowersList,updateUserBlockedList,updateUserFollowingList} = useContext(UserContext);
+  const { userDetails,organizerData,participantData, setUserData ,updateOrganizerData,updateParticipantData,updateUserFollowersList,updateUserBlockedList,updateUserFollowingList,updateUserData} = useContext(UserContext);
   const storedUserDetails = localStorage.getItem('userDetails');
   updateOrganizerData(JSON.parse(storedUserDetails));
-  console.log(organizerData,participantData,userDetails);
+  
   updateParticipantData(JSON.parse(storedUserDetails));
   useEffect(() => {
    
@@ -110,5 +118,5 @@ export const useUser = () => {
     }
   }, [userDetails, setUserData]);
  
-  return { userDetails,organizerData,participantData, setUserData ,updateOrganizerData,updateParticipantData,updateUserBlockedList,updateUserFollowersList,updateUserFollowingList};
+  return { userDetails,organizerData,participantData, setUserData ,updateOrganizerData,updateParticipantData,updateUserBlockedList,updateUserFollowersList,updateUserFollowingList,updateUserData};
 };

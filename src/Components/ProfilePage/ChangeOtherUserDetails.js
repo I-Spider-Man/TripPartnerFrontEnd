@@ -7,8 +7,8 @@ import dayjs from 'dayjs';
 import { updateUserDetails } from '../Files/User_profile_avator';
 import { useNavigate } from 'react-router-dom';
 
-function ChangeOtherUserDetails() {
-  const {userDetails,setUserData}=useUser();
+function ChangeOtherUserDetails({onClose}) {
+  const {userDetails,setUserData,updateUserData}=useUser();
   const navigate=useNavigate();
   const [updatedUserDetails,setUpdatedUserDetails]=useState(userDetails);
   const updateUser=async(e)=>{
@@ -16,7 +16,8 @@ function ChangeOtherUserDetails() {
     try{
       const response=await updateUserDetails(updatedUserDetails);
       setUserData(response);
-      window.location.reload();
+      updateUserData();
+      onclose();
     }catch(error){
       console.log(error);
     }

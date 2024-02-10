@@ -64,10 +64,10 @@ function UpdateProfile() {
     <div style={{display:'flex',alignItems:'center',justifyContent:'center',height:'200px',gap:'5px'}}>
       {verification?(
         <div>
-          <Button onClick={()=>{setRenderComponent(<ChangePassword/>);showModal()}}>Change Password</Button>
-          <Button onClick={()=>{setRenderComponent(<ChangeEmail/>);showModal()}}>Change Email</Button>
-          <Button onClick={()=>{setRenderComponent(<ChangeProfile/>);showModal()}}>Profile Image</Button>
-          <Button onClick={()=>{setRenderComponent(<ChangeOtherUserDetails/>);showModal()}}>Other Details</Button>
+          <Button onClick={()=>{setRenderComponent(<ChangePassword onClose={handleOk}/>);showModal()}}>Change Password</Button>
+          <Button onClick={()=>{setRenderComponent(<ChangeEmail onClose={handleOk}/>);showModal()}}>Change Email</Button>
+          <Button onClick={()=>{setRenderComponent(<ChangeProfile onClose={handleOk}/>);showModal()}}>Profile Image</Button>
+          <Button onClick={()=>{setRenderComponent(<ChangeOtherUserDetails onClose={handleOk} />);showModal()}}>Other Details</Button>
         </div>
       ):(
       <div style={{display:'flex',flexDirection:'column',gap:'5px'}}>

@@ -5,8 +5,8 @@ import React, { useState } from 'react';
 import { useUser } from '../Auth/UserContext';
 import { UploadUserProfile } from '../Files/User_profile_avator';
 
-function ChangeProfile() {
-  const {userDetails}=useUser();
+function ChangeProfile({onClose}) {
+  const {userDetails,updateUserData}=useUser();
   const [previewImage, setPreviewImage] = useState(userDetails.userProfile);
   const [profileImage,setProfileImage] = useState(null);
   const [UploadProcess,setUploadProcess]=useState(false);
@@ -30,6 +30,8 @@ function ChangeProfile() {
     try{
       setUploadProcess(true);
       const upload=await UploadUserProfile(userDetails.userId,formData);
+      updateUserData();
+      onClose();
     }catch(error){
       console.log(error);
     }
