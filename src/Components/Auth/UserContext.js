@@ -12,10 +12,22 @@ export const UserProvider = ({ children }) => {
  const [organizerData,setOrganizerData]=useState(()=>{
   const storedOrganizerDetails=localStorage.getItem('organizerDetails');
   return storedOrganizerDetails ? JSON.parse(storedOrganizerDetails) : null;
- })
+ });
  const [participantData,setParticipantData]=useState(()=>{
   const storedParticipantDetails=localStorage.getItem('participantDetails');
   return storedParticipantDetails ? JSON.parse(storedParticipantDetails) : null;
+ });
+ const [followersData,setFollowersData]=useState(()=>{
+  const storedFollowersData=localStorage.getItem('FollowersList');
+  return storedFollowersData ? JSON.parse(storedFollowersData):null;
+ })
+ const [followingData,setFollowingData]=useState(()=>{
+  const storedFollowingData=localStorage.getItem('FollowingList');
+  return storedFollowingData ? JSON.parse(storedFollowingData):null;
+ })
+ const [blockedData,setBlockedData]=useState(()=>{
+  const storedBlockedData=localStorage.getItem('BlockedList');
+  return storedBlockedData ? JSON.parse(storedBlockedData):null;
  })
  const updateOrganizerData=async(userData)=>{
   if(userData){
@@ -27,7 +39,36 @@ export const UserProvider = ({ children }) => {
     console.log(error);
   }
   }
-  
+ }
+ const updateUserFollowersList=async(userData)=>{
+  if(userData){
+    try{
+      const follwers=await axios.get(`http://localhost:8080/User/followersId/${userData.userId}`);
+      localStorage.setItem('FollowersList',JSON.stringify(follwers.data));
+    }catch(error){
+      console.log(error);
+    }
+  }
+ }
+ const updateUserFollowingList=async(userData)=>{
+  if(userData){
+    try{
+      const following=await axios.get(`http://localhost:8080/User/followingId/${userData.userId}`);
+      localStorage.setItem('FollowingList',JSON.stringify(following.data));
+    }catch(error){
+      console.log(error);
+    }
+  }
+ }
+ const updateUserBlockedList=async(userData)=>{
+  if(userData){
+    try{
+      const blocked=await axios.get(`http://localhost:8080/User/blockedId/${userData.userId}`);
+      localStorage.setItem('BlockedList',JSON.stringify(blocked.data));
+    }catch(error){
+      console.log(error);
+    }
+  }
  }
  const updateParticipantData=async(userData)=>{
   if (userData) {
@@ -50,14 +91,14 @@ export const UserProvider = ({ children }) => {
     localStorage.setItem('userDetails', JSON.stringify(user));
   };
   return (
-    <UserContext.Provider value={{ userDetails, organizerData, participantData, setUserData, updateOrganizerData,updateParticipantData }}>
+    <UserContext.Provider value={{ userDetails, organizerData, participantData, setUserData, updateOrganizerData,updateParticipantData,updateUserBlockedList,updateUserFollowersList,updateUserFollowingList }}>
       {children}
     </UserContext.Provider>
   );
 };
 
 export const useUser = () => {
-  const { userDetails,organizerData,participantData, setUserData ,updateOrganizerData,updateParticipantData} = useContext(UserContext);
+  const { userDetails,organizerData,participantData, setUserData ,updateOrganizerData,updateParticipantData,updateUserFollowersList,updateUserBlockedList,updateUserFollowingList} = useContext(UserContext);
   const storedUserDetails = localStorage.getItem('userDetails');
   updateOrganizerData(JSON.parse(storedUserDetails));
   console.log(organizerData,participantData,userDetails);
@@ -69,5 +110,5 @@ export const useUser = () => {
     }
   }, [userDetails, setUserData]);
  
-  return { userDetails,organizerData,participantData, setUserData ,updateOrganizerData,updateParticipantData};
+  return { userDetails,organizerData,participantData, setUserData ,updateOrganizerData,updateParticipantData,updateUserBlockedList,updateUserFollowersList,updateUserFollowingList};
 };

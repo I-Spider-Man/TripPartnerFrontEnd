@@ -55,6 +55,7 @@ export const getUserDetails=async(value)=>{
   try{
     const fetchUser=await axios.get(`http://localhost:8080/User/email/${value}`);
     const picture=await axios.get(`http://localhost:8080/User/userProfile/${fetchUser.data.userId}`);
+    console.log(picture.data);
     return {
       ...fetchUser.data,
       userProfile:pictureUrl(picture.data)
@@ -79,5 +80,14 @@ export const generateOtp=async(value)=>{
     return otp
   }catch(error){
     console.log("error while sending otp :",error)
+  }
+}
+export const UploadUserProfile=async(userId,profile)=>{
+  try{
+    console.log(profile);
+    const response=await axios.post(`http://localhost:8080/User/updateProfile/${userId}`,profile);
+    return response.data
+  }catch(error){
+    console.log(error);
   }
 }
