@@ -20,8 +20,6 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Result } from 'antd';
 import ProfileBottom from './ProfileBottom';
 
-const PopupForm = lazy(() => import('../PopupForm/PopupForm'));
-
 export default function ProfilePage() {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false); // Define isEditProfileOpen state
@@ -112,14 +110,6 @@ console.log(organizerData);
         </div>
        
       </MDBContainer>
-      {isEditProfileOpen && (
-        <Suspense fallback={<div>Loading...</div>}>
-          <PopupForm
-          onClose={closeEditProfile}
-          onReturn={updateUser}
-          />
-        </Suspense>
-      )}
     </section>
   ):( <Result
     status="404"

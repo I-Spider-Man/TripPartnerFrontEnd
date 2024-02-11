@@ -29,7 +29,7 @@ function ChatBox({group,organizer}) {
       }
     }
     getMessages();
-  })
+  },[])
 
   console.log(groupMessages);
   const sendMessage=async()=>{

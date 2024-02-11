@@ -27,7 +27,7 @@ function FollowersList() {
   ]
   return (
     <div style={{display:'flex',flexDirection:'row',height:'100%',justifyContent:'space-evenly'}}>
-      <div style={{display:'flex',alignItems:'center',justifyContent:'center',width:'20%'}}>
+      <div style={{display:'flex',alignItems:'center',justifyContent:'center',width:'20%',fontSize:'50px',backgroundColor:'whitesmoke'}}>
         {dataSource?.length}
       </div>
       <Divider type='vertical' style={{borderWidth:'3px'}}/>

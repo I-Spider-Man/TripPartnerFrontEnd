@@ -55,12 +55,12 @@ function UserOrganizedDetails() {
   ]
   return (
     <div style={{display:'flex',flexDirection:'row',height:'100%'}}>
-      <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
-        {organizerData? organizerData.organizedCount: "You have'nt organized any group."}
+      <div style={{display:'flex',alignItems:'center',justifyContent:'center',width:'20%',fontSize:'50px',backgroundColor:'whitesmoke'}}>
+        {organizerData? organizerData.organizedCount: "0"}
       </div>
       <Divider type='vertical' style={{borderWidth:'3px'}}/>
-      <div>
-      <Table dataSource={dataSource} columns={columns} style={{width:'100%', height:'100%'}}/>;
+      <div style={{width:'100%', height:'300px'}}>
+      <Table dataSource={dataSource} columns={columns}/>
       </div>
     </div>
   )

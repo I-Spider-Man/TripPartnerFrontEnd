@@ -99,17 +99,19 @@ export const UserProvider = ({ children }) => {
     localStorage.setItem('userDetails', JSON.stringify(user));
   };
   return (
-    <UserContext.Provider value={{ userDetails, organizerData, participantData, setUserData, updateOrganizerData,updateParticipantData,updateUserBlockedList,updateUserFollowersList,updateUserFollowingList,updateUserData }}>
+    <UserContext.Provider value={{ userDetails, organizerData, participantData,followersData,followingData,blockedData, setUserData, updateOrganizerData,updateParticipantData,updateUserBlockedList,updateUserFollowersList,updateUserFollowingList,updateUserData }}>
       {children}
     </UserContext.Provider>
   );
 };
 
 export const useUser = () => {
-  const { userDetails,organizerData,participantData, setUserData ,updateOrganizerData,updateParticipantData,updateUserFollowersList,updateUserBlockedList,updateUserFollowingList,updateUserData} = useContext(UserContext);
+  const { userDetails,organizerData,participantData, setUserData, followersData, followingData,blockedData ,updateOrganizerData,updateParticipantData,updateUserFollowersList,updateUserBlockedList,updateUserFollowingList,updateUserData} = useContext(UserContext);
   const storedUserDetails = localStorage.getItem('userDetails');
   updateOrganizerData(JSON.parse(storedUserDetails));
-  
+  updateUserBlockedList(JSON.parse(storedUserDetails));
+  updateUserFollowersList(JSON.parse(storedUserDetails));
+  updateUserFollowingList(JSON.parse(storedUserDetails));
   updateParticipantData(JSON.parse(storedUserDetails));
   useEffect(() => {
    
@@ -118,5 +120,5 @@ export const useUser = () => {
     }
   }, [userDetails, setUserData]);
  
-  return { userDetails,organizerData,participantData, setUserData ,updateOrganizerData,updateParticipantData,updateUserBlockedList,updateUserFollowersList,updateUserFollowingList,updateUserData};
+  return { userDetails,organizerData,participantData,followersData,followingData,blockedData, setUserData ,updateOrganizerData,updateParticipantData,updateUserBlockedList,updateUserFollowersList,updateUserFollowingList,updateUserData};
 };

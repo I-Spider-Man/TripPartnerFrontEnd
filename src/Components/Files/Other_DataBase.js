@@ -82,3 +82,29 @@ export const deleteUserPost=async(userId,post)=>{
         console.log(error);
     }
 }
+
+export const userFollowParticipant=async(userId,participantId)=>{
+    try{
+        const response=await axios.post("http://localhost:8080/User/userFollowing",null,{params:{userId:userId,followingId:participantId,},});
+        message.success(response.data);
+    }catch(error){
+        message.error(error.response.data);
+    }
+}
+
+export const userUnfollowParticipant=async(userId,participantId)=>{
+    try{
+        const response=await axios.post("http://localhost:8080/User/userUnfollowing",null,{params:{userId:userId,followingId:participantId,},});
+        message.success(response.data);
+    }catch(error){
+        message.error(error.response.data);
+    }
+}
+export const userBlockingParticipant=async(userId,participantId)=>{
+    try{
+        const response=await axios.post("http://localhost:8080/User/userBlocking",null,{params:{userId:userId,blockingId:participantId,},});
+        message.success(response.data);
+    }catch(error){
+        message.error(error.response.data);
+    }
+}

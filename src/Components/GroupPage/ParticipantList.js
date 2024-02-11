@@ -2,10 +2,14 @@
 import { AccessAlarmOutlined } from '@mui/icons-material';
 import { Avatar, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import React, { useState } from 'react';
+import { useUser } from '../Auth/UserContext';
+import { userFollowParticipant, userUnfollowParticipant } from '../Files/Other_DataBase';
 
 
 const ParticipantList = ({ participants }) => {
   console.log(participants);
+  const {followersData,followingData,blockedData,userDetails}=useUser();
+  console.log(followersData,followingData)
   const [alert,setAlert]=useState(false);
     const handleViewMore = () => {
         setAlert(true);
@@ -13,7 +17,22 @@ const ParticipantList = ({ participants }) => {
   const handleClose=()=>{
     setAlert(false);
   }
-  
+  const handleFollow=async(participantId)=>{
+    try{
+      await userFollowParticipant(userDetails.userId,participantId);
+      window.location.reload();
+    }catch(error){
+      console.log(error);
+    }
+  }
+  const handleUnfollow=async(participantId)=>{
+    try{
+      await userUnfollowParticipant(userDetails.userId,participantId);
+      window.location.reload();
+    }catch(error){
+      console.log(error);
+    }
+  }
     return (
 
     <div>
@@ -48,7 +67,15 @@ const ParticipantList = ({ participants }) => {
               <label>Participated Count: {participant.participationCount}</label>
             </div>
           </DialogContent>
-          <DialogActions><Button onClick={()=>{handleClose()}}>Ok</Button></DialogActions>
+          <DialogActions>
+            {(followingData.includes(participant.userId)) ?(<>
+            <Button variant='contained' onClick={()=>handleUnfollow(participant.userId)}>Unfollow</Button>
+            </>):(<>
+            <Button variant='contained' onClick={()=>handleFollow(participant.userId)}>Follow</Button>
+            </>)}
+            
+            <Button onClick={()=>{handleClose()}}>Ok</Button>
+          </DialogActions>
           </Dialog>
         </li>
       ))}

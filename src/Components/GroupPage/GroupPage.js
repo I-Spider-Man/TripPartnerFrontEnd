@@ -95,13 +95,15 @@ const handleJoinClick = async() => {
   Participation();
 };
 const handleLeaveClick = async() => {
-  alert('Leave button clicked!');
-  try{
+  if(window.confirm("Are you sure you want to leave?")){
+    try{
     const response=await participantLeaving(participantData.participantId,groupId);
     navigate("/");
   }catch(error){
     console.log(error);
   }
+  }
+  
   // Add your leave logic here
 };
 

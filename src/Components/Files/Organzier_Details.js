@@ -1,13 +1,14 @@
 import axios from "axios";
+import { getUserDetailsById } from "./User_profile_avator";
 export const fetchOrganizerDataById = async(id)=>{
     try{
       const organizer = await axios.get(`http://localhost:8080/Admin/organizers/${id}`)
     .then(async (organizer) => {
-      return axios.get(`http://localhost:8080/User/${organizer.data.userId}`)
+      return getUserDetailsById(organizer.data.userId)
         .then((userData) => {
           return {
             ...organizer.data,
-            userData: userData.data
+            userData: userData
           };
         });
     });
