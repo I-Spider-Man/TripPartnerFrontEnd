@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { getUserDetailsById } from "./User_profile_avator";
+import { message } from "antd";
 
 export const forgotPassword=async(userEmail)=>{
     try{
@@ -71,5 +72,13 @@ export const allEventTitle=async()=>{
     }catch(error){
         console.log(error);
         return [];
+    }
+}
+export const deleteUserPost=async(userId,post)=>{
+    try{
+        const response=await axios.post(`http://localhost:8080/User/deletePost/${userId}`,post,{headers:{"Content-Type":'application/form-data'}});
+        message.success(response.data);
+    }catch(error){
+        console.log(error);
     }
 }

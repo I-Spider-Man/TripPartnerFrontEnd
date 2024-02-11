@@ -40,13 +40,13 @@ const openLogin=()=>{
     onClose();
   };
 
-const handleJoin=(e)=>{
-  navigate(`/GroupPage/${e.target.value}`)
-}
-const Participation=async()=>{
+  const handleJoin=(e)=>{
+    navigate(`/GroupPage/${e.target.value}`)
+  }
+  const Participation=async()=>{
   const response=await participantJoining(joinDetails);
   onClose();
-}
+  }
   return userDetails? (
     
     <Dialog

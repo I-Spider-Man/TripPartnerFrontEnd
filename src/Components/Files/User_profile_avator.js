@@ -39,7 +39,22 @@ export const updateEmail = async (userId, email) => {
     message.error(error.response.data); // Accessing error response data directly
   }
 };
-
+export const getUserPosts=async(userId)=>{
+  try{
+    const posts=await axios.get(`http://localhost:8080/User/userPost/${userId}`);
+    const postsUrl=posts.data.map(post=>{
+      const postUrl=pictureUrl(post.post)
+      return {
+        ...post,
+        postUrl:postUrl
+      };
+    })
+    return postsUrl;
+  }catch(error){
+    console.log(error);
+    return []
+  }
+}
 export const getAllFollowers=async(userId)=>{
   try{
     const response=await axios.get(`http://localhost:8080/User/getAllFollowers/${userId}`)
@@ -117,5 +132,13 @@ export const UploadUserProfile=async(userId,profile)=>{
     return response.data
   }catch(error){
     console.log(error);
+  }
+}
+export const uploadUserPost=async(userId,formdata)=>{
+  try{
+    const response=await axios.post(`http://localhost:8080/User/userPost/${userId}`,formdata,{headers:{'Content-Type':'multipart/form-data',},});
+    message.success(response.data);
+  }catch(error){
+    message.error(error.response.data);
   }
 }
