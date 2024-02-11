@@ -21,7 +21,7 @@ function LoginPage({ onClose , onReturn}) {
     userPassword:"",
     userProfile:""
   })
-
+  const [sendingNewPassword,setSendingNewPassword]=useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [isforgotPassword,setForgotPassword]=useState(false);
@@ -42,13 +42,17 @@ function LoginPage({ onClose , onReturn}) {
   }
   console.log(userDetails);
   const handleForgotPassword=async()=>{
-    console.log(userotp+"   "+otp);
+    setSendingNewPassword(true);
+
     if(userotp==otp && userotp!='' && otp!=''){
       await forgotPassword(userDetails.userEmail);
+      setSendingNewPassword(false);
       showForgotPassword();
     }else{
+      setSendingNewPassword(false);
       message.error("entered otp is wrong");
     }
+    
   }
   console.log(userDetails);
   const getOtp=async()=>{
@@ -223,7 +227,7 @@ const handleSubmit=async(e)=>{
         />}
         <span className='back-to-sign-in' onClick={()=>showForgotPassword()}>Back to sign in</span>
         {userotp ? (
-          <> <Button variant='contained' onClick={()=>handleForgotPassword()}>Generate Password</Button>
+          <> <LoadingButton variant='contained' loading={sendingNewPassword} loadingIndicator={<>Generating new password...</>} onClick={()=>handleForgotPassword()}>Generate Password</LoadingButton>
           </>
         ) : (<div onClick={()=>getOtp()} style={{width:'100%',display:'flex',alignItems:'center'}} disabled={!userDetails.userEmail?.trim()}>
         <LoadingButton loading={otpProcess} loadingIndicator={<div style={{display:'flex',alignItems:'center',color:'white',gap:'10px' }}>Sending OTP<CircularProgress color="primary" size={16} /></div>}> Get OTP</LoadingButton>
