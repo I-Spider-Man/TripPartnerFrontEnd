@@ -4,11 +4,13 @@ import { Avatar, Button, Dialog, DialogActions, DialogContent, DialogTitle } fro
 import React, { useState } from 'react';
 import { useUser } from '../Auth/UserContext';
 import { userFollowParticipant, userUnfollowParticipant } from '../Files/Other_DataBase';
+import { LoadingButton } from '@mui/lab';
 
 
 const ParticipantList = ({ participants }) => {
   console.log(participants);
   const {followersData,followingData,blockedData,userDetails}=useUser();
+  const [followUnfollowProcess,setFollowUnfollowProcess]=useState(false);
   console.log(followersData,followingData)
   const [alert,setAlert]=useState(false);
     const handleViewMore = () => {
@@ -19,18 +21,24 @@ const ParticipantList = ({ participants }) => {
   }
   const handleFollow=async(participantId)=>{
     try{
+      setFollowUnfollowProcess(true);
       await userFollowParticipant(userDetails.userId,participantId);
       window.location.reload();
     }catch(error){
       console.log(error);
+    }finally{
+      setFollowUnfollowProcess(false);
     }
   }
   const handleUnfollow=async(participantId)=>{
     try{
+      setFollowUnfollowProcess(true);
       await userUnfollowParticipant(userDetails.userId,participantId);
       window.location.reload();
     }catch(error){
       console.log(error);
+    }finally{
+      setFollowUnfollowProcess(false);
     }
   }
     return (
@@ -69,11 +77,10 @@ const ParticipantList = ({ participants }) => {
           </DialogContent>
           <DialogActions>
             {(followingData.includes(participant.userId)) ?(<>
-            <Button variant='contained' onClick={()=>handleUnfollow(participant.userId)}>Unfollow</Button>
+            <LoadingButton loading={followUnfollowProcess} loadingIndicator={<>Sending Unfollow Request...</>} variant='contained' onClick={()=>handleUnfollow(participant.userId)}>Unfollow</LoadingButton>
             </>):(<>
-            <Button variant='contained' onClick={()=>handleFollow(participant.userId)}>Follow</Button>
+            <LoadingButton loading={followUnfollowProcess} loadingIndicator={<>Sending Follow Request...</>} variant='contained' onClick={()=>handleFollow(participant.userId)}>Follow</LoadingButton>
             </>)}
-            
             <Button onClick={()=>{handleClose()}}>Ok</Button>
           </DialogActions>
           </Dialog>
