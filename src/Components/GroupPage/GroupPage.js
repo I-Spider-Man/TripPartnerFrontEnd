@@ -8,10 +8,11 @@ import { participantJoining, participantLeaving } from '../Files/Participant_Det
 import { useUser } from '../Auth/UserContext';
 import ParticipantList from './ParticipantList';
 import { LoadingButton } from '@mui/lab';
-import { Avatar, CircularProgress } from '@mui/material';
+import { Avatar, CircularProgress,DialogActions } from '@mui/material';
 import ChatBox from './ChatBox';
 import { AccessAlarmOutlined } from '@mui/icons-material';
 import { Button, Result } from 'antd';
+import { userFollowOrganizer, userUnfollowOrganizer } from '../Files/Other_DataBase';
 
 const GroupPage = () => {
   const {organizerData,participantData,userDetails}=useUser();
@@ -108,6 +109,32 @@ const handleLeaveClick = async() => {
 };
 
 
+
+
+const {followersData,followingData,blockedData}=useUser();
+console.log(followersData,followingData)
+const [alert,setAlert]=useState(false);
+  
+const handleClose=()=>{
+  setAlert(false);
+}
+const handleFollow=async(organizerId)=>{
+  try{
+    await userFollowOrganizer(userDetails.userId,organizerId);
+    window.location.reload();
+  }catch(error){
+    console.log(error);
+  }
+}
+const handleUnfollow=async(organizerId)=>{
+  try{
+    await userUnfollowOrganizer(userDetails.userId,organizerId);
+    window.location.reload();
+  }catch(error){
+    console.log(error);
+  }
+}
+
   return (
     groupDetails && participants && organizer ? (
     <div className='body1' >
@@ -129,11 +156,28 @@ const handleLeaveClick = async() => {
             )
         }
       </div>
+   
       <div className="organizer-info">
         {organizer.userData.userProfile ? <Avatar src={organizer.userData.userProfile} alt="Organizer Profile" className="profile-pic" />: <AccessAlarmOutlined/>}
-        <div>
-          <h2 className="organizer-text">{organizer.userData.userName}</h2>
-        </div>
+        <div className='organizer-container'>
+  <h2 className="organizer-text">{organizer.userData.userName}</h2>
+  <DialogActions>
+ 
+      {(followingData.includes(organizer.userId)) ? (
+        <Button variant='contained' className="unfollow-button" onClick={() => handleUnfollow(organizer.userId)}>
+          Unfollow
+        </Button>
+      ) : (
+        <Button variant='contained' className="follow-button" onClick={() => handleFollow(organizer.userId)}>
+          Follow
+        </Button>
+      )}
+    
+    
+  </DialogActions>
+  </div>
+
+
       </div>
       <div className='date-format'>
         <marquee><p>Date From: {groupDetails.dateFrom} Date To: {groupDetails.dateTo}</p></marquee>

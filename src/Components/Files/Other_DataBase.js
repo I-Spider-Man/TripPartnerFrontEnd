@@ -108,3 +108,29 @@ export const userBlockingParticipant=async(userId,participantId)=>{
         message.error(error.response.data);
     }
 }
+
+export const userFollowOrganizer=async(userId,organizerId)=>{
+    try{
+        const response=await axios.post("http://localhost:8080/User/userFollowing",null,{params:{userId:userId,followingId:organizerId,},});
+        message.success(response.data);
+    }catch(error){
+        message.error(error.response.data);
+    }
+}
+
+export const userUnfollowOrganizer=async(userId,organizerId)=>{
+    try{
+        const response=await axios.post("http://localhost:8080/User/userUnfollowing",null,{params:{userId:userId,followingId:organizerId,},});
+        message.success(response.data);
+    }catch(error){
+        message.error(error.response.data);
+    }
+}
+export const userBlockingOrganizer=async(userId,organizerId)=>{
+    try{
+        const response=await axios.post("http://localhost:8080/User/userBlocking",null,{params:{userId:userId,blockingId:organizerId,},});
+        message.success(response.data);
+    }catch(error){
+        message.error(error.response.data);
+    }
+}
