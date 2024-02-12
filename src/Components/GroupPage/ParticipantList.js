@@ -9,7 +9,7 @@ import { LoadingButton } from '@mui/lab';
 
 const ParticipantList = ({ participants }) => {
   console.log(participants);
-  const {followersData,followingData,blockedData,userDetails}=useUser();
+  const {followersData,followingData,blockedData,userDetails,updateUserBlockedList,updateUserFollowersList,updateUserFollowingList}=useUser();
   const [followUnfollowProcess,setFollowUnfollowProcess]=useState(false);
   console.log(followersData,followingData)
   const [alert,setAlert]=useState(false);
@@ -23,6 +23,7 @@ const ParticipantList = ({ participants }) => {
     try{
       setFollowUnfollowProcess(true);
       await userFollowParticipant(userDetails.userId,participantId);
+      updateUserFollowingList();
       window.location.reload();
     }catch(error){
       console.log(error);
@@ -34,6 +35,7 @@ const ParticipantList = ({ participants }) => {
     try{
       setFollowUnfollowProcess(true);
       await userUnfollowParticipant(userDetails.userId,participantId);
+      updateUserFollowingList();
       window.location.reload();
     }catch(error){
       console.log(error);

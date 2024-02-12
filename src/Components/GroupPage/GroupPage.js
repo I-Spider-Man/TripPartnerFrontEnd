@@ -23,6 +23,7 @@ const [participants,setParticipants]=useState(null);
 const {groupId}=useParams();
 const [joinDetails,setjoinDetails]=React.useState({})
 const [joining,setJoining]=useState(false);
+const [render,setRender]=useState(false);
 let isOrganizer;
 let isParticipant;
 if(organizerData || participantData){
@@ -55,7 +56,7 @@ useEffect(()=>{
     }
   }
   fetchData();
-},[groupId])
+},[groupId,render])
 useEffect(()=>{
   const fetchOrganizer=async()=>{
     try{
@@ -66,7 +67,7 @@ useEffect(()=>{
     }
   }
   fetchOrganizer();
-},[groupDetails]);
+},[groupDetails,render]);
 useEffect(()=>{
   const fetchParticipant=async()=>{
     try{
@@ -77,7 +78,7 @@ useEffect(()=>{
     }
   }
   fetchParticipant();
-},[groupDetails]);
+},[groupDetails,render]);
 console.log(groupDetails,participants,organizer);
 
 useEffect(()=>{
@@ -90,7 +91,7 @@ useEffect(()=>{
   });
   }
   }
-},[]);
+},[render]);
 
 const handleJoinClick = async() => {
   Participation();
@@ -99,6 +100,7 @@ const handleLeaveClick = async() => {
   if(window.confirm("Are you sure you want to leave?")){
     try{
     const response=await participantLeaving(participantData.participantId,groupId);
+    
     navigate("/");
   }catch(error){
     console.log(error);
