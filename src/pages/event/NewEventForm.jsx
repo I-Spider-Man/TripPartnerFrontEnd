@@ -10,6 +10,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Button, CircularProgress, styled } from '@mui/material';
+import { message } from 'antd';
 const NewEventForm = () => {
   const [submitProcess,setSubmitProcess]=useState(false);
   const [eventData, setEventData] = useState({
@@ -46,15 +47,17 @@ const NewEventForm = () => {
     try {
       const response=await postEvent(formData);
       if(response.status===200){
-        alert(response.data);
+        message.success(response.data);
         window.location.reload();
       }
       else{
-        alert(response.data);
+        message.error(response.data);
         return null;
       }
     } catch (error) {
       console.error('Error creating event:', error);
+    }finally{
+      setSubmitProcess(false);
     }
   };
   const handleStartDateChange = (newStartDate) => {
@@ -172,7 +175,7 @@ const NewEventForm = () => {
                   <VisuallyHiddenInput type="file" onChange={handlePicture}/>
                 </Button>
                 {privewURL && (<><img src={privewURL} alt='preview' style={{width:"100%",height:"300px"}}/></>)}
-                <button className='aa' type="submit"><LoadingButton variant='none' sx={{width:'100%'}} loading={submitProcess} loadingIndicator={<CircularProgress sx={{color:'white' }}/>}>Submit</LoadingButton></button>
+                <LoadingButton type="submit" variant='contained' sx={{width:'100%',height:'80px'}} loading={submitProcess} loadingIndicator={<CircularProgress sx={{color:'white',height:15,width:15 }}/>}>Submit</LoadingButton>
             </form>
     </div>
     </div>

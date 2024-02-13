@@ -142,7 +142,7 @@ const New = ({ inputs, title }) => {
                     />
                 </label>
 
-              <LoadingButton variant="none" sx={{width:'100%',height:'100%'}} loading={submitProcess} loadingIndicator={<CircularProgress sx={{color:'white'}}/>} onClick={handleSendClick}>Send</LoadingButton>
+              <LoadingButton variant="none" sx={{width:'100%',height:'100%'}} loading={submitProcess} loadingIndicator={<>uploading new spot <CircularProgress sx={{color:'white'}}/></>} onClick={handleSendClick}>Send</LoadingButton>
 
             </form>
           </div>
