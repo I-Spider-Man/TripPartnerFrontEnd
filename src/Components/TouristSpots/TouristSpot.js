@@ -60,15 +60,7 @@ function TouristSpot() {
   };
   const [organizeFormVisible, setOrganizeFormVisible] = useState(false);
 
-const backgroundImageStyle = {
-  backgroundImage: `url('https://trip-partner.s3.eu-north-1.amazonaws.com/pexels-kwnos-iv-16785282+(1)+(1).jpg')`,
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-  height: '100%',
-  width:'100%', // Adjust this based on your design
-  margin: 0,       // Remove default margin
-  padding: 0,      // Remove default padding
-};
+
 const getStatus = () => {
   const lowThreshold = 50;
   const mediumThreshold = 100;
