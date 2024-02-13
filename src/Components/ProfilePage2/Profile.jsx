@@ -148,30 +148,32 @@ export default function ProfilePage2() {
                 </MDBRow>
                 <MDBRow style={{marginTop:'50px'}}>
                   <MDBCol sm="3">
+                    <>
+                    {(followersData.includes(parseInt(userId)) && !followingData.includes(parseInt(userId))) &&  <LoadingButton variant='contained' loading={followUnfollowProcess} onClick={()=>{handleFollow()}}> Follow Back </LoadingButton>}
+                    {(!followersData.includes(parseInt(userId)) && !followingData.includes(parseInt(userId))) && <LoadingButton variant='contained' loading={followUnfollowProcess} onClick={()=>{handleFollow()}}>Follow</LoadingButton>}
+                    {(followingData.includes(parseInt(userId))) && <LoadingButton variant='contained' loading={followUnfollowProcess} onClick={()=>(handleUnfollow())}>Unfollow</LoadingButton>}
+                    </>
                     
-                    {(followersData.includes(userId) && !followingData.includes(userId)) &&  <LoadingButton variant='contained' loading={followUnfollowProcess} onClick={()=>{handleFollow()}}> Follow Back </LoadingButton>}
-                    {(!followersData.includes(userId) && !followingData.includes(userId)) && <LoadingButton variant='contained' loading={followUnfollowProcess} onClick={()=>{handleFollow()}}>Follow</LoadingButton>}
-                    {(followingData.includes(userId)) && <LoadingButton variant='contained' loading={followUnfollowProcess} onClick={()=>(handleUnfollow())}>Unfollow</LoadingButton>}
                   </MDBCol>
                   <MDBCol sm="3" >
                    
-                  {(blockedData?.includes(userId)) ? (
-  <LoadingButton
-  variant='contained'
-  loading={blockedProcess}
-  loadingIndicator={<p>Blocking user...</p>}
-  onClick={handleBlocked}
->
-  Block
-</LoadingButton>
-) : (
-  <LoadingButton
+                  {(blockedData?.includes(parseInt(userId))) ? (
+ <LoadingButton
   variant='contained'
   loading={blockedProcess}
   loadingIndicator={<p>Unblocking user...</p>}
   onClick={handleUnblocked}
 >
   Unblock
+</LoadingButton>  
+) : (
+ <LoadingButton
+  variant='contained'
+  loading={blockedProcess}
+  loadingIndicator={<p>Blocking user...</p>}
+  onClick={handleBlocked}
+>
+  Block
 </LoadingButton>
 )}
 
