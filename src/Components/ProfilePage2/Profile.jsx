@@ -24,12 +24,14 @@ export default function ProfilePage2() {
   const [followUnfollowProcess,setFollowUnfollowProcess]=useState(false);
   const [blockedProcess,setBlockedProcess]=useState(false);
   const {userDetails,followersData,followingData,blockedData,updateUserBlockedList,updateUserFollowersList,updateUserFollowingList} =useUser();
-  const handleFollow=async(participantId)=>{
+  console.log(blockedData);
+  const handleFollow=async()=>{
+    
     try{
       setFollowUnfollowProcess(true);
       await userFollowParticipant(userDetails.userId,userId);
       updateUserFollowingList();
-      window.location.reload();
+      // window.location.reload();
     }catch(error){
       console.log(error);
     }finally{
@@ -83,7 +85,7 @@ export default function ProfilePage2() {
   },[userId]);
   const navigate=useNavigate();
 
-  return userDetails ? (
+  return (userDetails.userId != userId) ? (
     <section style={{ backgroundColor: 'rgb(151, 235, 207)', marginTop:'10vh',minHeight:'100%', width:'100%' }}>
       <MDBContainer className="py-5">
         <MDBRow>
@@ -144,11 +146,36 @@ export default function ProfilePage2() {
                     <MDBCardText className="text-muted">{userDetails1?.aboutUser}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
-                <MDBRow>
+                <MDBRow style={{marginTop:'50px'}}>
                   <MDBCol sm="3">
-                    {(followersData.includes(userId) && !followingData.includes(userId)) &&  <LoadingButton loading={followUnfollowProcess} onClick={()=>{handleFollow()}}> Follow Back </LoadingButton>}
-                    {(!followersData.includes(userId) && !followingData.includes(userId)) && <LoadingButton loading={followUnfollowProcess} onClick={()=>{handleUnfollow()}}>Follow</LoadingButton>}
-                    {(blockedData.includes(userId)) ? <LoadingButton loading={blockedProcess} loadingIndicator={<>UnBlocking user...</>} onClick={()=>{handleUnblocked()}}>UnBlock</LoadingButton>:<LoadingButton loading={blockedProcess} loadingIndicator={<>blocking user...</>} onClick={()=>{handleBlocked()}}>Block</LoadingButton>}
+                    
+                    {(followersData.includes(userId) && !followingData.includes(userId)) &&  <LoadingButton variant='contained' loading={followUnfollowProcess} onClick={()=>{handleFollow()}}> Follow Back </LoadingButton>}
+                    {(!followersData.includes(userId) && !followingData.includes(userId)) && <LoadingButton variant='contained' loading={followUnfollowProcess} onClick={()=>{handleFollow()}}>Follow</LoadingButton>}
+                    {(followingData.includes(userId)) && <LoadingButton variant='contained' loading={followUnfollowProcess} onClick={()=>(handleUnfollow())}>Unfollow</LoadingButton>}
+                  </MDBCol>
+                  <MDBCol sm="3" >
+                   
+                  {(blockedData?.includes(userId)) ? (
+  <LoadingButton
+  variant='contained'
+  loading={blockedProcess}
+  loadingIndicator={<p>Blocking user...</p>}
+  onClick={handleBlocked}
+>
+  Block
+</LoadingButton>
+) : (
+  <LoadingButton
+  variant='contained'
+  loading={blockedProcess}
+  loadingIndicator={<p>Unblocking user...</p>}
+  onClick={handleUnblocked}
+>
+  Unblock
+</LoadingButton>
+)}
+
+
                   </MDBCol>
                 </MDBRow>
               </MDBCardBody>

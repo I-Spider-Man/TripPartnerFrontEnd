@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react'
 import { useUser } from '../Auth/UserContext'
 import { Button } from '@mui/material';
 import { fetchOrganizedGroups } from '../Files/Organzier_Details';
+import { useParams } from 'react-router';
 
 function UserOrganizedDetails() {
-  const {organizerData}=useUser();
+  const {userId}=useParams();
   const [dataSource,setDataSource]=useState([]);
   useEffect(()=>{
     const fetchData=async()=>{
-      const response=await fetchOrganizedGroups(organizerData.userId);
+      const response=await fetchOrganizedGroups(userId);
       setDataSource(response);
     }
     fetchData();
@@ -56,7 +57,7 @@ function UserOrganizedDetails() {
   return (
     <div style={{display:'flex',flexDirection:'row',height:'100%'}}>
       <div style={{display:'flex',alignItems:'center',justifyContent:'center',width:'20%',fontSize:'50px',backgroundColor:'whitesmoke'}}>
-        {organizerData? organizerData.organizedCount: "0"}
+        {dataSource? dataSource.length: "0"}
       </div>
       <Divider type='vertical' style={{borderWidth:'3px'}}/>
       <div style={{width:'100%', height:'300px'}}>

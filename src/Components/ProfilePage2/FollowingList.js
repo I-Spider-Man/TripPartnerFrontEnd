@@ -2,12 +2,13 @@ import { Divider, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { getAllFollowing } from '../Files/User_profile_avator';
 import { useUser } from '../Auth/UserContext';
+import { useParams } from 'react-router';
 function FollowingList() {
-  const {userDetails}=useUser();
+  const {userId}=useParams();
   const [dataSource,setDataSource]=useState([])
   useEffect(()=>{
     const fetch=async()=>{
-      const res=await getAllFollowing(userDetails.userId);
+      const res=await getAllFollowing(userId);
       setDataSource(res);
     }
     fetch();

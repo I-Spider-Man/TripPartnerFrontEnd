@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Divider, Table } from 'antd'
 import { useUser } from '../Auth/UserContext'
 import { fetchParticipatedGroups } from '../Files/Participant_Details';
+import { useParams } from 'react-router';
 function UserParticipantDetails() {
   
-  const {participantData}=useUser();
+  const {userId}=useParams();
   const [dataSource,setDataSource]=useState([]);
   useEffect(()=>{
     const fetchData=async()=>{
-      const response=await fetchParticipatedGroups(participantData.userId);
+      const response=await fetchParticipatedGroups(userId);
       setDataSource(response);
     }
     fetchData();
@@ -53,7 +54,7 @@ function UserParticipantDetails() {
   return (
     <div style={{display:'flex',flexDirection:'row',height:'100%'}}>
       <div style={{display:'flex',alignItems:'center',justifyContent:'center',width:'20%',fontSize:'50px',backgroundColor:'whiteSmoke'}}>
-        {participantData? participantData.participationCount: "0"}
+        {dataSource? dataSource.length: "0"}
       </div>
       <Divider type='vertical' style={{borderWidth:'3px'}}/>
       <div style={{width:'100%', height:'300px'}}>

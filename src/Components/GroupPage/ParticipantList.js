@@ -54,7 +54,7 @@ const ParticipantList = ({ participants }) => {
         <li key={index}>
           <div className="participant-info">
             <div className="profile-pic">
-              <img
+              <Avatar
                 src={participant.userData.userProfile}
                 alt="Profile Pic"
                 width="40" // Adjust the width as needed
@@ -63,10 +63,10 @@ const ParticipantList = ({ participants }) => {
             </div>  
           <span className="participant-name">{participant.userData.userName}</span>
           <br />
-             
-          <button className="button-85" onClick={() => navigate(`/profileFollow/${participant.userId}`)}>
+             {!(userDetails.userId==participant.userId) &&  <button className="button-85" onClick={() => navigate(`/profileFollow/${participant.userId}`)}>
             View More
-          </button>
+          </button>}
+          
           </div>
         </li>
       ))}

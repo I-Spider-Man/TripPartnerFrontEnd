@@ -38,7 +38,7 @@ function TouristSpot() {
 
 
   const handleClickListItem = () => {
-    if((!organizerData && !participantData)||((organizerData && organizerData.organizerStatus=="Free") && (participantData && participantData.participantStatus=="Free"))){
+    if(((!organizerData || organizerData.organizerStatus=="Free") && (!participantData || participantData.participantStatus=="Free"))){
       setOpen(true);
     }
     else{
@@ -51,7 +51,7 @@ function TouristSpot() {
     setOrganizeFormVisible(false);
   }
   const handleOrganizeClick = () => {
-    if((!organizerData && !participantData)||((organizerData && organizerData.organizerStatus=="Free") && (participantData && participantData.participantStatus=="Free"))){
+    if(((!organizerData || organizerData.organizerStatus=="Free") && (!participantData || participantData.participantStatus=="Free"))){
       setOrganizeFormVisible(true);
     }
     else{

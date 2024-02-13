@@ -10,12 +10,12 @@ import ParticipantList from './ParticipantList';
 import { LoadingButton } from '@mui/lab';
 import { Avatar, CircularProgress,DialogActions } from '@mui/material';
 import ChatBox from './ChatBox';
-import { AccessAlarmOutlined } from '@mui/icons-material';
+import { AccessAlarmOutlined, AccountCircleOutlined } from '@mui/icons-material';
 import { Button, Result } from 'antd';
 import { userFollowOrganizer, userUnfollowOrganizer } from '../Files/Other_DataBase';
 
 const GroupPage = () => {
-  const {organizerData,participantData,userDetails}=useUser();
+  const {organizerData,participantData,userDetails,updateOrganizerData,updateParticipantData}=useUser();
 const [groupDetails,setGroupDetails]=useState(null);
 const navigate=useNavigate();
 const [organizer,setOrganizer]=useState(null);
@@ -25,7 +25,7 @@ const {groupId}=useParams();
 const [joinDetails,setjoinDetails]=React.useState({})
 const [joining,setJoining]=useState(false);
 const [render,setRender]=useState(false);
-const {leavingProcess,setLeavingProcess}=useState(false);
+const [leavingProcess,setLeavingProcess]=useState(false);
 let isOrganizer;
 let isParticipant;
 if(organizerData || participantData){
@@ -106,7 +106,10 @@ const handleLeaveClick = async() => {
     setLeavingProcess(true);
     try{
     const response=await participantLeaving(participantData.participantId,groupId);
-    
+    const updatedParticipants = participants.filter(participant => participant.participantId !== participantData.participantId);
+      setParticipants(updatedParticipants);
+      // Assuming you have a function to update participant data in the context
+      updateParticipantData();
     navigate("/");
   }catch(error){
     console.log(error);
@@ -155,7 +158,7 @@ const handleUnfollow=async(organizerId)=>{
         </h1>
         {(isParticipant && !isOrganizer) && (
               <div className='button-32'>
-                <LoadingButton loading={leavingProcess} loadingIndicator={<>Leaving...</>} onClick={()=>handleLeaveClick()}>Leave</LoadingButton>
+                <LoadingButton variant='none' loading={leavingProcess} loadingIndicator={<p style={{color:'white'}}>Leaving...</p>} onClick={()=>handleLeaveClick()}>Leave</LoadingButton>
               </div>
             ) }
       {
@@ -168,12 +171,16 @@ const handleUnfollow=async(organizerId)=>{
       </div>
    
       <div className="organizer-info">
-        {organizer.userData.userProfile ? <Avatar src={organizer.userData.userProfile} alt="Organizer Profile" className="profile-pic" />: <AccessAlarmOutlined/>}
+        {organizer.userData.userProfile ? <Avatar src={organizer.userData.userProfile} alt="Organizer Profile" className="profile-pic" />: <AccountCircleOutlined/>}
         <div className='organizer-container'>
   <h2 className="organizer-text">{organizer.userData.userName}</h2>
   <DialogActions>
- 
-      {(followingData.includes(organizer.userId)) ? (
+        {
+          (userDetails.userId!=organizer.userId) && <button className="button-85" style={{marginLeft:'5px'}} onClick={() => navigate(`/profileFollow/${organizer.userId}`)}>
+          View More
+        </button>}
+        
+      {/* {(followingData.includes(organizer.userId)) ? (
         <LoadingButton variant='contained' loading={userFollowingProcess} loadingIndicator={<>Sending unfollow request...</>} className="unfollow-button" onClick={() => handleUnfollow(organizer.userId)}>
           Unfollow
         </LoadingButton>
@@ -181,7 +188,7 @@ const handleUnfollow=async(organizerId)=>{
         <LoadingButton variant='contained' loading={userFollowingProcess} loadingIndicator={<>Sending follow request...</>} className="follow-button" onClick={() => handleFollow(organizer.userId)}>
           Follow
         </LoadingButton>
-      )}
+      )} */}
     
     
   </DialogActions>
@@ -197,7 +204,7 @@ const handleUnfollow=async(organizerId)=>{
       </div>
     </div>
     <div className='chat-system'>
-      {userDetails && <ChatBox group={groupDetails} organizer={organizer}/>}
+      {((participantData.groupId==groupId) || (groupDetails.organizerId==organizerData.organizerId)) && <ChatBox group={groupDetails} organizer={organizer}/>}
     </div>
     </div>
   ):(

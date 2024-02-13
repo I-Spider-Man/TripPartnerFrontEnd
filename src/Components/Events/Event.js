@@ -20,9 +20,9 @@ function Event() {
   const handleAlert = () => {
     setAlert(!alert);
   }
-
+console.log(participantData,organizerData)
   const handleClickListItem = () => {
-    if ((!organizerData && !participantData) || ((organizerData && (organizerData.organizerStatus == "Free")) && (participantData && (participantData.participantStatus == "Free")))) {
+    if (((!organizerData || (organizerData.organizerStatus == "Free")) && (!participantData || (participantData.participantStatus == "Free")))) {
       setOpen(true);
     } else {
       setAlert(true);
@@ -62,7 +62,7 @@ function Event() {
   }, [eventName])
 
   const handleOrganizeClick = () => {
-    if ((!organizerData && !participantData) || ((organizerData && organizerData.organizerStatus == "Free") && (participantData && participantData.participantStatus == "Free"))) {
+    if (((!organizerData || (organizerData.organizerStatus == "Free")) && (!participantData || (participantData.participantStatus == "Free")))) {
       setOrganizeFormVisible(true);
     } else {
       setAlert(true);
