@@ -7,6 +7,7 @@ import GroupOrganizeForm from '../Group/GroupOrganizeForm';
 import { useUser } from '../Auth/UserContext';
 import GroupJoinPage from '../Group/GroupJoinPage';
 import AlertCom from '../AlertCom';
+import { Galleria } from 'primereact/galleria';
 
 function Event() {
   const [event, setEvent] = useState({});
@@ -68,18 +69,33 @@ function Event() {
     }
   };
 
+  const responsiveOptions = [
+    {
+        breakpoint: '100px',
+        numVisible: 4
+    },
+    {
+        breakpoint: '100px',
+        numVisible: 3
+    },
+    {
+        breakpoint: '100px',
+        numVisible: 1
+    }
+];
+
   const handleOrganizeSubmit = (formData) => {
     console.log('Organize Form Data:', formData);
     setOrganizeFormVisible(false);
   };
 
-  const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % event.eventPictureList.length);
-  };
+  const itemTemplate = (item) => {
+    return <img src={item} alt={item} style={{ width: '100%',height:'500px',objectFit:'cover' }} />
+}
 
-  const handlePreviousImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? event.eventPictureList.length - 1 : prevIndex - 1));
-  };
+const thumbnailTemplate = (item) => {
+    return <img src={item} alt={item} style={{height:'70px',width:'100%'}}/>
+}
 
   return (
     <div className='front-page'>
@@ -88,14 +104,7 @@ function Event() {
           <div className='event-content' style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center', position: 'relative' }}>
             {event ? (
               <>
-                {(event.eventPictureList && event.eventPictureList.length > 0) && (
-                  <>
-                  <button className="prev-btn" onClick={handlePreviousImage}>&lt;</button>
-                    <img src={event.eventPictureList[currentImageIndex]} alt={eventName} />
-                    
-                    <button className="next-btn" onClick={handleNextImage}>&gt;</button>
-                  </>
-                )}
+               <Galleria value={event.eventPictureList} responsiveOptions={responsiveOptions} circular numVisible={3} autoPlay transitionInterval={3000} style={{maxWidth: '640px',}} item={itemTemplate} thumbnail={thumbnailTemplate}/>
 
                 <div className='content-details'>
                   <label><strong>EVENT NAME:</strong> <h1>{event.eventName}</h1></label>

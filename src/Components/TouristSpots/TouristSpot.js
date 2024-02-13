@@ -10,6 +10,7 @@ import { useUser } from '../Auth/UserContext';
 import GroupJoinPage from '../Group/GroupJoinPage';
 import { Alert } from '@mui/material';
 import AlertCom from '../AlertCom';
+import { Galleria } from 'primereact/galleria';
 function TouristSpot() {
   const {userDetails,participantData,organizerData}=useUser();
   const [spot,setSpots]=useState({});
@@ -84,7 +85,27 @@ const handleOrganizeSubmit = (formData) => {
   console.log('Organize Form Data:', formData);
   setOrganizeFormVisible(false);
 };
+const responsiveOptions = [
+  {
+      breakpoint: '100px',
+      numVisible: 4
+  },
+  {
+      breakpoint: '100px',
+      numVisible: 3
+  },
+  {
+      breakpoint: '100px',
+      numVisible: 1
+  }
+];
+const itemTemplate = (item) => {
+  return <img src={item} alt={item} style={{ minWidth: '500px',height:'500px',objectFit:'cover' }} />
+}
 
+const thumbnailTemplate = (item) => {
+  return <img src={item} alt={item} style={{height:'70px',width:'100%'}}/>
+}
   return (
     <div className='front-page'>
        <div className='spot-page' style={{minHeight:'100vh'}}>
@@ -92,11 +113,7 @@ const handleOrganizeSubmit = (formData) => {
           <div className='spot-content' style={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'center'}}>
     {spot ? (
           <>
-          {(spot.spotPictureList && spot.spotPictureList.length > 0) && (<>{spot.spotPictureList.map((spotPicture)=>(
-            <img src={spotPicture} alt={spot.spotName} />
-          ))}
-          
-          </>) }
+          <Galleria value={spot.spotPictureList} responsiveOptions={responsiveOptions} circular numVisible={3} autoPlay transitionInterval={3000} style={{maxWidth: '640px',}} item={itemTemplate} thumbnail={thumbnailTemplate}/>
           
           
           <div className='content-details'>
