@@ -4,11 +4,15 @@ import { Avatar, Button, Dialog, DialogActions, DialogContent, DialogTitle } fro
 import React, { useState } from 'react';
 import { useUser } from '../Auth/UserContext';
 import { userFollowParticipant, userUnfollowParticipant } from '../Files/Other_DataBase';
+import { LoadingButton } from '@mui/lab';
+import { useNavigate } from 'react-router';
 
 
 const ParticipantList = ({ participants }) => {
   console.log(participants);
-  const {followersData,followingData,blockedData,userDetails}=useUser();
+  const navigate=useNavigate();
+  const {followersData,followingData,blockedData,userDetails,updateUserBlockedList,updateUserFollowersList,updateUserFollowingList}=useUser();
+  const [followUnfollowProcess,setFollowUnfollowProcess]=useState(false);
   console.log(followersData,followingData)
   const [alert,setAlert]=useState(false);
     const handleViewMore = () => {
@@ -19,18 +23,26 @@ const ParticipantList = ({ participants }) => {
   }
   const handleFollow=async(participantId)=>{
     try{
+      setFollowUnfollowProcess(true);
       await userFollowParticipant(userDetails.userId,participantId);
+      updateUserFollowingList();
       window.location.reload();
     }catch(error){
       console.log(error);
+    }finally{
+      setFollowUnfollowProcess(false);
     }
   }
   const handleUnfollow=async(participantId)=>{
     try{
+      setFollowUnfollowProcess(true);
       await userUnfollowParticipant(userDetails.userId,participantId);
+      updateUserFollowingList();
       window.location.reload();
     }catch(error){
       console.log(error);
+    }finally{
+      setFollowUnfollowProcess(false);
     }
   }
     return (
@@ -52,31 +64,10 @@ const ParticipantList = ({ participants }) => {
           <span className="participant-name">{participant.userData.userName}</span>
           <br />
              
-          <button className="button-85" onClick={() => handleViewMore()}>
+          <button className="button-85" onClick={() => navigate(`/profileFollow/${participant.userId}`)}>
             View More
           </button>
           </div>
-          <Dialog open={alert} onClose={()=>setAlert(false)}>
-          <DialogTitle>Profile</DialogTitle>
-          <DialogContent>
-            <div style={{display:'flex',flexDirection:'column',gap:"10px"}}>
-              {participant.userData.userProfile ? <Avatar src={participant.userData.userProfile}/>:<AccessAlarmOutlined/>}
-              <label>User Name: {participant.userData.userName}</label>
-              <label>Gender: {participant.userData.gender}</label>
-              <label>Age: {participant.userData.dateOfBirth}</label>
-              <label>Participated Count: {participant.participationCount}</label>
-            </div>
-          </DialogContent>
-          <DialogActions>
-            {(followingData.includes(participant.userId)) ?(<>
-            <Button variant='contained' onClick={()=>handleUnfollow(participant.userId)}>Unfollow</Button>
-            </>):(<>
-            <Button variant='contained' onClick={()=>handleFollow(participant.userId)}>Follow</Button>
-            </>)}
-            
-            <Button onClick={()=>{handleClose()}}>Ok</Button>
-          </DialogActions>
-          </Dialog>
         </li>
       ))}
     </ul>

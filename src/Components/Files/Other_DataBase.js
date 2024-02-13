@@ -126,11 +126,20 @@ export const userUnfollowOrganizer=async(userId,organizerId)=>{
         message.error(error.response.data);
     }
 }
-export const userBlockingOrganizer=async(userId,organizerId)=>{
+export const userBlockingUser=async(userId,userId2)=>{
     try{
-        const response=await axios.post("http://localhost:8080/User/userBlocking",null,{params:{userId:userId,blockingId:organizerId,},});
+        const response=await axios.post("http://localhost:8080/User/userBlocking",null,{params:{userId:userId,blockingId:userId2,},});
         message.success(response.data);
     }catch(error){
         message.error(error.response.data);
+    }
+}
+export const userUnBlockingUser=async(userId,userId2)=>{
+    try{
+        const response=await axios.post("http://localhost:8080/User/userUnBlocking",null,{params:{userId:userId,blockedUserId:userId2}});
+        message.success(response.data);
+    }catch(error){
+        message.error(error.response.data);
+        console.log(error);
     }
 }
