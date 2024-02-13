@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './LoginPage.css';
 import {registerUser, generateOtp, getUserDetails} from '../Files/User_profile_avator'
 import { forgotPassword } from '../Files/Other_DataBase';
-import Button from '@mui/material/Button';
 import { Tooltip } from '@mui/material';
 import {LoadingButton} from '@mui/lab';
 import { CircularProgress } from '@mui/material';
-import { useUser } from '../Auth/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 function LoginPage({ onClose , onReturn}) {
@@ -202,7 +200,7 @@ const handleSubmit=async(e)=>{
         />
         <span className='forgot-password' onClick={()=>showForgotPassword()}>Forgot password?</span>
         {/* <Button variant='contained' onClick={(e)=>handleLogin(e)}>Login In</Button> */}
-        <div style={{width:'100%',display:'flex',alignItems:'center'}} onClick={(e)=>handleLogin(e)} disabled={!userDetails.userEmail?.trim()}><LoadingButton loading={loginProcess} loadingIndicator={<div style={{display:'flex',alignItems:'center',color:'white',gap:'10px' }}>Checking User<CircularProgress color="primary" size={16} /></div>}> Login </LoadingButton></div>
+        <div style={{width:'100%',display:'flex',alignItems:'center'}} ><LoadingButton loading={loginProcess} onClick={(e)=>handleLogin(e)} disabled={!userDetails.userEmail?.trim()} loadingIndicator={<div style={{display:'flex',alignItems:'center',color:'white',gap:'10px' }}>Checking User<CircularProgress color="primary" size={16} /></div>}> Login </LoadingButton></div>
         
       </form>
       </>) 
@@ -286,7 +284,20 @@ const handleSubmit=async(e)=>{
     </div>
     </div>
         <input className="reg-input" type="password" value={userPasswordC} name="cpswd" placeholder="Confirm Password" required onChange={(e)=>setUserPasswordC(e.target.value)}/>
-        <button className='reg-button' type='submit' disabled={registeringProcess}><LoadingButton loading={registeringProcess} variant='contained' loadingIndicator={<>Registering....</>}>Register</LoadingButton></button>
+        <div className='reg-button'  style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <LoadingButton  
+          loading={registeringProcess} 
+          sx={{width:'100%'}} 
+          type='submit' 
+          disabled={registeringProcess} 
+          variant='none' 
+          loadingIndicator={
+          <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+             Registering....
+             <CircularProgress sx={{height:'10px',width:'10px'}}/> 
+            </div>}
+          >Register</LoadingButton>
+          </div>
       </form>
     </div>
     </div>

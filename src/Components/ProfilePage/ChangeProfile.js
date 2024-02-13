@@ -31,6 +31,7 @@ function ChangeProfile({onClose}) {
       setUploadProcess(true);
       const upload=await UploadUserProfile(userDetails.userId,formData);
       updateUserData();
+      
       onClose();
     }catch(error){
       console.log(error);

@@ -20,10 +20,12 @@ const [groupDetails,setGroupDetails]=useState(null);
 const navigate=useNavigate();
 const [organizer,setOrganizer]=useState(null);
 const [participants,setParticipants]=useState(null);
+const [userFollowingProcess,setUserFollowingProcess]=useState(false);
 const {groupId}=useParams();
 const [joinDetails,setjoinDetails]=React.useState({})
 const [joining,setJoining]=useState(false);
 const [render,setRender]=useState(false);
+const {leavingProcess,setLeavingProcess}=useState(false);
 let isOrganizer;
 let isParticipant;
 if(organizerData || participantData){
@@ -41,6 +43,9 @@ const Participation=async()=>{
   }
   catch(error){
     console.log(error);
+  }
+  finally{
+    setJoining(false);
   }
 }
 useEffect(()=>{
@@ -98,12 +103,15 @@ const handleJoinClick = async() => {
 };
 const handleLeaveClick = async() => {
   if(window.confirm("Are you sure you want to leave?")){
+    setLeavingProcess(true);
     try{
     const response=await participantLeaving(participantData.participantId,groupId);
     
     navigate("/");
   }catch(error){
     console.log(error);
+  }finally{
+    setLeavingProcess(false);
   }
   }
   
@@ -147,13 +155,13 @@ const handleUnfollow=async(organizerId)=>{
         </h1>
         {(isParticipant && !isOrganizer) && (
               <div className='button-32'>
-                <button onClick={()=>handleLeaveClick()}>Leave</button>
+                <LoadingButton loading={leavingProcess} loadingIndicator={<>Leaving...</>} onClick={()=>handleLeaveClick()}>Leave</LoadingButton>
               </div>
             ) }
       {
            (!isOrganizer && !isParticipant)  && (
                 <div className='button-32'>
-                    <button onClick={()=>handleJoinClick()}><LoadingButton variant='none' loading={joining} loadingIndicator={<CircularProgress sx={{color:'white'}}/>}>Join</LoadingButton></button>
+                    <LoadingButton variant='none' loading={joining} onClick={()=>handleJoinClick()} loadingIndicator={<CircularProgress sx={{color:'white'}}/>}>Join</LoadingButton>
                 </div>
             )
         }
@@ -166,13 +174,13 @@ const handleUnfollow=async(organizerId)=>{
   <DialogActions>
  
       {(followingData.includes(organizer.userId)) ? (
-        <Button variant='contained' className="unfollow-button" onClick={() => handleUnfollow(organizer.userId)}>
+        <LoadingButton variant='contained' loading={userFollowingProcess} loadingIndicator={<>Sending unfollow request...</>} className="unfollow-button" onClick={() => handleUnfollow(organizer.userId)}>
           Unfollow
-        </Button>
+        </LoadingButton>
       ) : (
-        <Button variant='contained' className="follow-button" onClick={() => handleFollow(organizer.userId)}>
+        <LoadingButton variant='contained' loading={userFollowingProcess} loadingIndicator={<>Sending follow request...</>} className="follow-button" onClick={() => handleFollow(organizer.userId)}>
           Follow
-        </Button>
+        </LoadingButton>
       )}
     
     

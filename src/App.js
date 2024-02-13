@@ -11,6 +11,7 @@ import Footer from './Components/Footer/Footer';
 import ProfilePage from './Components/ProfilePage/Profile';
 import { UserProvider } from './Components/Auth/UserContext';
 import GroupPage from './Components/GroupPage/GroupPage';
+import ProfilePage2 from './Components/ProfilePage2/Profile';
 function App() {
   
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path='/Spot/:spotName' element={<TouristSpot/>}/>
         <Route path='/profile/:userId' element={<ProfilePage/>}/>
         <Route path='/GroupPage/:groupId' element={<GroupPage/>}/>
+        <Route path='/profileFollow/:userId' element={<ProfilePage2/>}/>
       </Routes></div>
       <div className='footer'><Footer/></div>
     </div>

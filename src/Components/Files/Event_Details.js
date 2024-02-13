@@ -1,4 +1,3 @@
-import { AssistWalker } from "@mui/icons-material";
 import axios from "axios";
 export const pictureUrl = (image) => {
   return `data:image/jpeg;base64,${image}`;
