@@ -4,8 +4,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Button } from '@mui/material';
 import { getAllFollowing } from '../Files/User_profile_avator';
 import { useUser } from '../Auth/UserContext';
+import { useNavigate } from 'react-router';
 function FollowingList() {
   const {userDetails}=useUser();
+  const navigate=useNavigate();
   const [dataSource,setDataSource]=useState([])
   useEffect(()=>{
     const fetch=async()=>{
@@ -22,7 +24,10 @@ function FollowingList() {
     },
     {
       title: 'Action',
-      dataIndex: 'button'
+      dataIndex: 'button',
+      render: (text, record) => (
+        <Button onClick={() =>navigate(`/profileFollow/${record.userId}`)}>View</Button>
+      ),
     }
   ]
   return (
