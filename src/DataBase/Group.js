@@ -1,12 +1,13 @@
 import axios from "axios";
 import { fetchOrganizerDataById } from "./Organizer";
+import { fetchUserDataById } from "./User";
 
 export const fetchGrpDataById= async(id)=>{
     try{
       const response=await axios.get(`http://localhost:8080/Admin/groups/${id}`);
-      const organizerData=await fetchOrganizerDataById(response.organizerId);
+      const organizerData=await fetchOrganizerDataById(response.data.organizerId);
       return {
-        ...response,
+        ...response.data,
         organizerData:organizerData
       }
     }catch(error){
@@ -18,13 +19,14 @@ export const fetchGrpDataById= async(id)=>{
     try{
         const response=await axios.get(`http://localhost:8080/Participant/group/${grpId}`);
         const participantWithUserData=await Promise.all(response.data.map(async(participant)=>{
-            const userData=await getUserDetailsById(participant.userId);
+            const userData=await fetchUserDataById(participant.userId);
             console.log(userData);
             return{
                 ...participant,
                 userData:userData,
             }
         }));
+
         return participantWithUserData;
     }catch(error){
         console.log(error);

@@ -3,9 +3,6 @@ import { Link } from "react-router-dom";
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Divider, Stack } from '@mui/material';
-import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
 import { groupDelete } from '../../components/DeleteStorage';
 import { fetchGroupsData } from '../../DataBase/Group';
 
@@ -42,9 +39,9 @@ function Groups() {
   }
   console.log(groupData);
   const columnData = [
-    { field: 'groupId', headerName: 'Group Id', width: 80 },
-    { field: 'groupName', headerName: 'Group Name', width: 120 },
-    { field: 'organizerName', headerName: 'Organizer Name', width: 130 ,renderCell:(params)=>(params.row.organizerData.userData.userName)},
+    { field: 'groupId', headerName: 'Group Id', width: 100 },
+    { field: 'groupName', headerName: 'Group Name', width: 200 },
+    { field: 'organizerName', headerName: 'Organizer Name', width: 180 ,renderCell:(params)=>(params.row.organizerData.userData.userName)},
     {
       field: 'event/spot',
       headerName: 'eventName/spotName',
@@ -60,7 +57,7 @@ function Groups() {
       ),
     },
 
-    { field: 'groupStatus', headerName: 'Group Status', renderCell: (params) => (
+    { field: 'groupStatus', headerName: 'Group Status',width:150, renderCell: (params) => (
       <span className={`status ${params.value}`}>{params.value}</span>
     )},
   ];

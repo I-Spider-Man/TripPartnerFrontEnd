@@ -8,23 +8,30 @@ import axios from 'axios';
 import './singleuser.scss';
 import { Avatar } from 'antd';
 import { fetchUserDataById } from '../../DataBase/User';
+import { fetchOrganizerDataById, fetchOrganizerDataByUserId } from '../../DataBase/Organizer';
+import { fetchParticipantDetailsByUserId, fetchParticipatedGroups } from '../../DataBase/Participant';
 
 const SingleUser = () => {
   const [userData, setUserData] = useState({});
-  const { userId } = useParams(); // Use useParams to get the dynamic parameter from the URL
-
+  const { userId } = useParams(); 
+  const [ParticipantData,setParticipantData]=useState();
+  const [organizerData,setOrganizerData]=useState();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetchUserDataById(userId) // Use the dynamic userId
+        const response = await fetchUserDataById(userId);
+        const participant=await fetchParticipantDetailsByUserId(userId);
+        const organizer=await fetchOrganizerDataByUserId(userId)
         setUserData(response);
+        setParticipantData(participant);
+        setOrganizerData(organizer);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
     };
 
     fetchData();
-  }, [userId]); // Include userId in the dependency array to fetch data when it changes
+  }, [userId]); 
 
   return (
     <div className="single">
@@ -33,7 +40,7 @@ const SingleUser = () => {
         <Navbar />
         <div className="top">
           <div className="left">
-            <div className="editButton">Edit</div>
+            
             <h1 className="title">Information</h1>
             <div className="item">
               <Avatar
@@ -48,16 +55,31 @@ const SingleUser = () => {
                   <span className="itemValue">{userData.userEmail}</span>
                 </div>
                 <div className="detailItem">
+                  <span className="itemKey">Date of Birth:</span>
+                  <span className="itemValue">{userData.dateOfBirth}</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Gender:</span>
+                  <span className="itemValue">{userData.gender}</span>
+                </div>
+                <div className="detailItem">
                   <span className="itemKey">About User:</span>
                   <span className="itemValue">{userData.aboutUser? userData.aboutUser : 'none'}</span>
                 </div>
               </div>
             </div>
           </div>
-          {/* <div className="right">
-            <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" />
-          </div> */}
-        </div>
+        </div> 
+        <div style={{display:'flex',flexDirection:'row',padding:'10px',gap:'5px'}}>
+            <div style={{height:'100px',width:'50%',display:'flex',flexDirection:'column',alignItems:'center',gap:'10px',backgroundColor:'whitesmoke'}}>
+            <h2>Organizer Details</h2>
+            {organizerData ? organizerData.organizedCount : 0}
+            </div>
+            <div style={{height:'100px',width:'50%',display:'flex',flexDirection:'column',alignItems:'center',gap:'10px',backgroundColor:'whitesmoke'}}>
+            <h2>ParticipantDetails</h2>
+            {ParticipantData ? ParticipantData.participationCount : 0}
+            </div>
+          </div>
       </div>
     </div>
   );

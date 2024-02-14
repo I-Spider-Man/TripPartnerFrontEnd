@@ -8,7 +8,11 @@ export const pictureUrl = (image) => {
   export const fetchParticipantDetailsById = async (participantId) => {
     try {
       const response = await axios.get(`http://localhost:8080/Admin/participants/${participantId}`);
-      return response.data;
+      const userData=await fetchUserDataById(response.data.userId);
+      return {
+        ...response.data,
+        userData:userData,
+      }
     } catch (error) {
       console.error('Error fetching participant details:', error);
     }
@@ -41,6 +45,15 @@ export const fetchParticipantsData=async ()=>{
       console.log(error);
       return []
     }
+  }
+  export const fetchParticipantDetailsByUserId=async(id)=>{
+    try{
+      const participant=await axios.get(`http://localhost:8080/User/Participant/${id}`);
+        return participant.data;
+      }
+      catch(error){
+        console.log(error);
+      }
   }
   export const fetchParticipatedGroups=async(userId)=>{
     try{

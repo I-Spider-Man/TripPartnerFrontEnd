@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
@@ -12,17 +12,63 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { fetchParticipantDetailsById, fetchParticipatedGroups } from '../../DataBase/Participant';
+import { DataGrid } from '@mui/x-data-grid';
+
 const ParticipantDetail = () => {
   const { participantId } = useParams();
   const [participantDetails, setParticipantDetails] = useState({});
-  const [participantHistory,setParticipantHistory]=useState([]);
-  useEffect(async() => {
-    const data=await fetchParticipantDetailsById(participantId);
-    setParticipantDetails(data);
-    const history=await fetchParticipatedGroups(data.userId);
-    setParticipantHistory(history);
-  }, [participantId]);
+  const [participantHistory, setParticipantHistory] = useState([]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchParticipantDetailsById(participantId);
+      setParticipantDetails(data);
+      const history = await fetchParticipatedGroups(data.userId);
+      const grpWithId = history.map((grp) => ({
+        ...grp,
+        id: grp.groupId,
+      }));
+      setParticipantHistory(grpWithId);
+    };
 
+    fetchData();
+  }, [participantId]);
+  const columnData = [
+    { field: 'groupId', headerName: 'Group Id', width: 100 },
+    { field: 'groupName', headerName: 'Group Name', width: 150 },
+    { field: 'organizerName', headerName: 'Organizer Name', width: 150 ,renderCell:(params)=>(params.row.organizerData.userData.userName)},
+    {
+      field: 'event/spot',
+      headerName: 'eventName/spotName',
+      width:210,
+      renderCell: (params) => (
+        <div>
+          {params.row.eventName ? (
+            <>{params.row.eventName}</>
+          ) : (
+            <>{params.row.spotName}</>
+          )}
+        </div>
+      ),
+    },
+
+    { field: 'groupStatus',width:300, headerName: 'Group Status', renderCell: (params) => (
+      <span className={`status ${params.value}`}>{params.value}</span>
+    )},
+  ];
+  const actionColumn=[
+    {field:"Action",
+    headerName:"Action",
+    width:150,
+    renderCell:(params)=>{
+      return(
+        <div className="cellAction">
+          <Link to={`/group/${params.row.groupId}`} style={{ textDecoration: "none" }}>
+          <div className="viewButton">View</div>
+          </Link>
+        </div>
+      )
+    }}]
   return (
     <div className="list">
       <Sidebar />
@@ -31,63 +77,42 @@ const ParticipantDetail = () => {
 
         <div className="participant-details-content">
           <h2>Participant Details</h2>
-          <div className="participant-info">
-            <p>
-              <strong>Participant ID:</strong> {participantDetails.participantId}
-            </p>
-            <p>
-              <strong>User ID:</strong> {participantDetails.userId}
-            </p>
-            <p>
-              <strong>User Name:</strong> {participantDetails.userData?.userName}
-            </p>
-            <p>
-              <strong>Participated Count:</strong> {participantDetails.participationCount}
-            </p>
-            <p>
-              <strong>Status:</strong> {participantDetails.participantStatus}
-            </p>
-            {/* Add more fields as needed */}
-          </div>
-          <div className="bottom">
-          <h1 className="title">Events List</h1>
-          <TableContainer component={Paper} className="table">
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell className="tableCell">Group ID</TableCell>
-            <TableCell className="tableCell">Active Events</TableCell>
-            <TableCell className="tableCell">Organizer</TableCell>
-            <TableCell className="tableCell">Till Date</TableCell>
-            <TableCell className="tableCell">No. Of Participants</TableCell>
-            <TableCell className="tableCell">Status</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {participantHistory.length > 0 ? <>{participantHistory?.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell className="tableCell">{row.groupId}</TableCell>
-              <TableCell className="tableCell">
-                <div className="cellWrapper">
-                  {row.groupName}
-                </div>
-              </TableCell>
-              <TableCell className="tableCell">{row.organizerData.userData.userName}</TableCell>
-              <TableCell className="tableCell">{row.dateTo}</TableCell>
-              <TableCell className="tableCell">{row.participantsLimit}</TableCell>
-              {/* <TableCell className="tableCell">{row.method}</TableCell> */}
-              <TableCell className="tableCell">
-                <span className={`status ${row.groupStatus}`}>{row.groupStatus}</span>
-              </TableCell>
-            </TableRow>
-          ))}</> :(
-            <TableRow><TableCell>NO ACTIVE GROUPS</TableCell></TableRow>
-          )
-        }
-        </TableBody>
-      </Table>
-    </TableContainer>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell><strong>Participant ID:</strong></TableCell>
+                  <TableCell>{participantDetails.participantId}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell><strong>User ID:</strong></TableCell>
+                  <TableCell>{participantDetails.userId}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell><strong>User Name:</strong></TableCell>
+                  <TableCell>{participantDetails.userData?.userName}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell><strong>Participated Count:</strong></TableCell>
+                  <TableCell>{participantDetails.participationCount}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell><strong>Status:</strong></TableCell>
+                  <TableCell>{participantDetails.participantStatus}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
         </div>
+        <div className="datatable">
+          <DataGrid
+            className="datagrid"
+            rows={participantHistory} 
+            columns={columnData.concat(actionColumn)}  
+            pageSize={9}
+            rowsPerPageOptions={[9]}
+            checkboxSelection
+          />
         </div>
       </div>
     </div>
