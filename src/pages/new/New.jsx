@@ -3,9 +3,11 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import { useEffect, useState } from "react";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { Button, styled } from '@mui/material';
+import { Button, CircularProgress, styled } from '@mui/material';
 import { postSpot } from "../../PostData";
+import { LoadingButton } from "@mui/lab";
 const New = ({ inputs, title }) => {
+  const [submitProcess,setSubmitProcess]=useState(false);
   const [spotData, setspotData] = useState({
     spotName:"",
     location:"",
@@ -45,7 +47,8 @@ const New = ({ inputs, title }) => {
     }
   }
   const handleSendClick = async (e) => {
-    e.preventDefault(e);
+    e.preventDefault();
+    
     const formData=new FormData();
     if(spotPicture){
       formData.append('spotPicture',spotPicture);
@@ -61,10 +64,12 @@ const New = ({ inputs, title }) => {
     
     try {
       console.log(spotData);
+      setSubmitProcess(true);
       const response = await postSpot(formData);
       console.log(response.data);
       if(response.status===201){
         alert(response.data);
+        setSubmitProcess(false);
         window.location.reload();
       }
       else{
@@ -73,6 +78,7 @@ const New = ({ inputs, title }) => {
       
     } catch (error) {
       console.error("Error sending spot data:", error);
+      setSubmitProcess(false);
     }
   };
   const VisuallyHiddenInput = styled('input')({
@@ -130,12 +136,13 @@ const New = ({ inputs, title }) => {
                         name="description"
                         placeholder="A stunning white marble mausoleum built by the Mughal emperor Shah Jahan."
                         value={spotData.description}
+                        style={{width:'100%', marginRight:'35px'}}
                         onChange={handleDes}
                         required
                     />
                 </label>
 
-              <Button variant="contained" onClick={handleSendClick}>Send</Button>
+              <LoadingButton variant="none" sx={{width:'100%',height:'100%'}} loading={submitProcess} loadingIndicator={<CircularProgress sx={{color:'white'}}/>} onClick={handleSendClick}>Send</LoadingButton>
 
             </form>
           </div>

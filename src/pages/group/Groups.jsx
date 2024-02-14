@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 import { fetchGroupsData } from '../../DataStorage';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
@@ -7,6 +8,7 @@ import { Button, Divider, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import { groupDelete } from '../../components/DeleteStorage';
+
 function Groups() {
   const [groupData, setGroupData] = useState([]);
   useEffect(() => {
@@ -42,7 +44,7 @@ function Groups() {
   const columnData = [
     { field: 'groupId', headerName: 'Group Id', width: 80 },
     { field: 'groupName', headerName: 'Group Name', width: 120 },
-    { field: 'organizerName', headerName: 'Organizer Name', width: 130 ,renderCell:(params)=>(params.row.organizerData?.userData.userName || 'deleted')},
+    { field: 'organizerName', headerName: 'Organizer Name', width: 130 ,renderCell:(params)=>(params.row.organizerData.userData.userName)},
     {
       field: 'event/spot',
       headerName: 'eventName/spotName',
@@ -57,8 +59,7 @@ function Groups() {
         </div>
       ),
     },
-    { field: 'participantsLimit', headerName: 'Participant Limit',width:150},
-    { field: 'participantsCount', headerName: 'Participant Count',width:150 },
+
     { field: 'groupStatus', headerName: 'Group Status', renderCell: (params) => (
       <span className={`status ${params.value}`}>{params.value}</span>
     )},
@@ -70,7 +71,9 @@ function Groups() {
     renderCell:(params)=>{
       return(
         <div className="cellAction">
+          <Link to={`/group/${params.row.groupId}`} style={{ textDecoration: "none" }}>
           <div className="viewButton">View</div>
+          </Link>
           <div className='deleteButton' onClick={()=>handleDelete(params.row.groupId)}>Delete</div>
         </div>
       )

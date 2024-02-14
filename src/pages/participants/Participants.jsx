@@ -69,7 +69,7 @@ function Participants() {
           renderCell: (params) => {
             return (
               <div className="cellAction">
-                <Link to={`/participants/${params.row.spotId}`} style={{ textDecoration: "none" }}>
+                <Link to={`/participants/${params.row.participantId}`} style={{ textDecoration: "none" }}>
                   <div className="viewButton">View</div>
                 </Link>
                 <div className="deleteButton" onClick={() => handleDelete(params.row.participantId)}>

@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import './NewEventForm.scss';
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
+import {LoadingButton} from '@mui/lab';
 import { postEvent } from '../../PostData';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { Button, styled } from '@mui/material';
+import { Button, CircularProgress, styled } from '@mui/material';
 const NewEventForm = () => {
+  const [submitProcess,setSubmitProcess]=useState(false);
   const [eventData, setEventData] = useState({
     eventName: '',
     location: '',
@@ -29,6 +31,7 @@ const NewEventForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitProcess(true);
     const formData=new FormData();
     if(eventPicture){
       formData.append('eventPicture',eventPicture);
@@ -169,7 +172,7 @@ const NewEventForm = () => {
                   <VisuallyHiddenInput type="file" onChange={handlePicture}/>
                 </Button>
                 {privewURL && (<><img src={privewURL} alt='preview' style={{width:"100%",height:"300px"}}/></>)}
-                <button className='aa' type="submit">Create Event</button>
+                <button className='aa' type="submit"><LoadingButton variant='none' sx={{width:'100%'}} loading={submitProcess} loadingIndicator={<CircularProgress sx={{color:'white' }}/>}>Submit</LoadingButton></button>
             </form>
     </div>
     </div>

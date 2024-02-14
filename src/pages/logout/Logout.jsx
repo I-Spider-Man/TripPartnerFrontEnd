@@ -1,8 +1,15 @@
-const Logout = () => {
-  return (
-    <div>You have sucessfully Logout </div>
-    
-  )
-}
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default Logout
+const Logout = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.removeItem('jwt');
+    navigate('/');
+  }, [navigate]);
+
+  return null;
+};
+
+export default Logout;

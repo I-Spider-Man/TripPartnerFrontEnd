@@ -1,5 +1,5 @@
 import Home from "./pages/home/Home";
-import Login from "./pages/login/Login";
+import SignInSide from "./pages/login/Login";
 import Logout from "./pages/logout/Logout";
 import List from "./pages/list/List";
 import New from "./pages/new/New";
@@ -9,7 +9,7 @@ import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import TouristSpot from "./pages/touristSpot/TouristSpot";
-import { Group } from "@mui/icons-material";
+
 import Groups from "./pages/group/Groups";
 import Organizers from "./pages/Organzier/Organizers";
 import SingleUser from "./pages/list/SingleUser";
@@ -18,6 +18,10 @@ import Eventdatatable from "./pages/event/Event";
 import NewEventForm from "./pages/event/NewEventForm";
 import SpotDetails from "./pages/single/Single";
 import Participants from "./pages/participants/Participants";
+import GroupDetails from "./pages/group/GroupDetails";
+import OrganizerDetail from "./pages/Organzier/OrganizerDetail";
+import ParticipantDetail from "./pages/participants/ParticipantDetails";
+import AdminRegistration from "./pages/login/Rigistration"
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -27,8 +31,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/">
-            <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
+            <Route path="/dashboard" element={<Home />} />
+            <Route path="api/login/reg" element={<AdminRegistration />}/>
+            <Route index element={<SignInSide />} />
             <Route path="logout" element={<Logout />} />
 
             <Route path="users">
@@ -45,7 +50,7 @@ function App() {
             </Route>
             <Route path="participants">
               <Route index element={<Participants/>}/>
-              <Route path=":participantId" element={<EventDetails/>}/> 
+              <Route path=":participantId" element={<ParticipantDetail />}/> 
             </Route>
             <Route path="touristspots">
               <Route index element={<TouristSpot/>}/>
@@ -57,10 +62,11 @@ function App() {
             </Route>
             <Route path="organizer">
               <Route index element={<Organizers/>}/>
-              <Route path=":spotId" element={<SpotDetails />} />
+              <Route path=":organizerId" element={<OrganizerDetail />} />
             </Route>
             <Route path="group">
               <Route index element={<Groups/>}/>
+              <Route path=":groupId" element={<GroupDetails />} />
             </Route>
           </Route>
         </Routes>

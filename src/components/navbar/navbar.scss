@@ -5,6 +5,7 @@
   align-items: center;
   font-size: 14px;
   color: #555;
+  
 
   .wrapper {
     width: 100%;
@@ -46,8 +47,9 @@
 
         .avatar {
           width: 30px;
-          height: 30px;
+          height: 30px; /* Set a specific size for the image */
           border-radius: 50%;
+          cursor: pointer;
         }
 
         .counter {
@@ -64,6 +66,29 @@
           position: absolute;
           top: -5px;
           right: -5px;
+        }
+
+        .dropdown {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background-color: white;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          border-radius: 5px;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          z-index: 1;
+
+          .dropdownItem {
+            padding: 10px;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #f0f0f0;
+            }
+
+          }
         }
       }
     }
