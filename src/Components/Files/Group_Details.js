@@ -9,7 +9,6 @@ export const postGroup=async(value)=>{
             alert("you have created a group successfully")
             return true;
         }
-        
     }
     catch(error){
         if(error.response.status===409){

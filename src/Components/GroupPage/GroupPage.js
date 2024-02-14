@@ -169,8 +169,11 @@ const handleUnfollow=async(organizerId)=>{
             )
         }
       </div>
-   
+        <div>
+          {groupDetails.participantsCount}/{groupDetails.participantsLimit}
+        </div>
       <div className="organizer-info">
+        <h3>Organizer</h3>
         {organizer.userData.userProfile ? <Avatar src={organizer.userData.userProfile} alt="Organizer Profile" className="profile-pic" />: <AccountCircleOutlined/>}
         <div className='organizer-container'>
   <h2 className="organizer-text">{organizer.userData.userName}</h2>

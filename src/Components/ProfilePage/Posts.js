@@ -52,7 +52,13 @@ function Posts() {
   }
   const handleFileChange = (event) => {
     const file=event.target.files[0];
-    console.log(file);
+    if(file){
+      const fileSize=file.size;
+      if(fileSize >(500*1024)){
+        message.error("post needs to be below 500kb.")
+        return;
+      }
+    }
     setUploadPost(event.target.files[0]);
     if(file){
       setUploadf(true);

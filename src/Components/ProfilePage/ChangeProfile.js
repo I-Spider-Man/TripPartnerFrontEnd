@@ -4,6 +4,7 @@ import { upload } from '@testing-library/user-event/dist/upload';
 import React, { useState } from 'react';
 import { useUser } from '../Auth/UserContext';
 import { UploadUserProfile } from '../Files/User_profile_avator';
+import { Avatar, message } from 'antd';
 
 function ChangeProfile({onClose}) {
   const {userDetails,updateUserData}=useUser();
@@ -11,7 +12,16 @@ function ChangeProfile({onClose}) {
   const [profileImage,setProfileImage] = useState(null);
   const [UploadProcess,setUploadProcess]=useState(false);
   const handleFileChange = (event) => {
+
     const file = event.target.files[0];
+    if(file){
+      const filesize=file.size;
+    if(filesize > (500 * 1024)){
+      message.error("Image should be below 500kb.")
+      return 
+    }
+    }
+    
     setProfileImage(file);
     if (file) {
       const reader = new FileReader();
@@ -47,7 +57,7 @@ function ChangeProfile({onClose}) {
       {previewImage && (
         <>
           <h2>Preview</h2>
-          <img src={previewImage} alt="Preview" style={{ width: '200px', height: '200px', borderRadius:'50%',objectFit:'cover' }} />
+          <Avatar src={previewImage} alt="Preview" style={{ width: '200px', height: '200px', borderRadius:'50%',objectFit:'cover' }} />
           <LoadingButton variant='contained' style={{padding:'10px',marginTop:'10px'}} loading={UploadProcess} onClick={()=>{beforeUpload()}} disabled={previewImage===userDetails.userProfile}>Upload</LoadingButton> 
         </>
       )}

@@ -6,20 +6,25 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { updateUserDetails } from '../Files/User_profile_avator';
 import { useNavigate } from 'react-router-dom';
+import { LoadingButton } from '@mui/lab';
 
 function ChangeOtherUserDetails({onClose}) {
   const {userDetails,setUserData,updateUserData}=useUser();
+  const [submitProcess,setSubmitingProcess]=useState(false);
   const navigate=useNavigate();
   const [updatedUserDetails,setUpdatedUserDetails]=useState(userDetails);
   const updateUser=async(e)=>{
     e.preventDefault();
+    setSubmitingProcess(true);
     try{
       const response=await updateUserDetails(updatedUserDetails);
       setUserData(response);
       updateUserData();
-      onclose();
+      onClose();
     }catch(error){
       console.log(error);
+    }finally{
+      setSubmitingProcess(false);
     }
   }
   const [otherGender, setOtherGender] = useState('');
@@ -93,7 +98,7 @@ function ChangeOtherUserDetails({onClose}) {
 
                   </LocalizationProvider>
             <TextField label="About" value={updatedUserDetails.aboutUser} onChange={(e)=>setUpdatedUserDetails({...updatedUserDetails,aboutUser:e.target.value})}/>
-            <Button type='Submit' disabled={!updatedUserDetails.userName.trim()}>Submit</Button>
+            <LoadingButton type='Submit' loading={submitProcess} loadingIndicator={<>Updating....</>} disabled={!updatedUserDetails.userName.trim()}>Submit</LoadingButton>
           
             
         </Box>
