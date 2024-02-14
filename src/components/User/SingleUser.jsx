@@ -6,11 +6,11 @@ import Chart from '../../components/chart/Chart';
 import List from '../../components/table/Table';
 import axios from 'axios';
 import './singleuser.scss';
-import { fetchPicture, fetchUserData, fetchUserDataById } from '../../DataStorage';
+import { Avatar } from 'antd';
+import { fetchUserDataById } from '../../DataBase/User';
 
 const SingleUser = () => {
   const [userData, setUserData] = useState({});
-  const [userPicture,setUserPicture]=useState(null);
   const { userId } = useParams(); // Use useParams to get the dynamic parameter from the URL
 
   useEffect(() => {
@@ -36,9 +36,9 @@ const SingleUser = () => {
             <div className="editButton">Edit</div>
             <h1 className="title">Information</h1>
             <div className="item">
-              <img
-                src={userPicture}
-                alt=""
+              <Avatar
+                src={userData.userProfile}
+                alt={userData.userName}
                 className="itemImg"
               />
               <div className="details">
@@ -57,10 +57,6 @@ const SingleUser = () => {
           {/* <div className="right">
             <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" />
           </div> */}
-        </div>
-        <div className="bottom">
-          <h1 className="title">Events List</h1>
-          <List />
         </div>
       </div>
     </div>

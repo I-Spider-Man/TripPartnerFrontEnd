@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
-import { fetchGroupsData } from '../../DataStorage';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import { DataGrid } from '@mui/x-data-grid';
@@ -8,6 +7,7 @@ import { Button, Divider, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import { groupDelete } from '../../components/DeleteStorage';
+import { fetchGroupsData } from '../../DataBase/Group';
 
 function Groups() {
   const [groupData, setGroupData] = useState([]);

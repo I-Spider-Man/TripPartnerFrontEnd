@@ -1,3 +1,5 @@
+import { Avatar } from "@mui/material";
+
 export const userColumns = [
   { field: "userId", headerName: "ID", width: 70 },
   {
@@ -6,7 +8,7 @@ export const userColumns = [
     width: 230,
     renderCell:(params)=>{
       return(<div className="cellWithImg">
-      <img className="cellImg" src={params.row.userProfile} alt="avatar" />
+      <Avatar className="cellImg" src={params.row.userProfile} alt={params.row.userName} />
       {params.row.userName}
       </div>);
     }

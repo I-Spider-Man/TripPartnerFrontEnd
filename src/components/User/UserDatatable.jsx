@@ -3,10 +3,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import { userColumns } from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchUserData } from "../../DataStorage";
 import { userDelete } from "../DeleteStorage";
+import { fetchUserData } from "../../DataBase/User";
 
-const Datatable = () => {
+const UserDatatable = () => {
   const [userRows, setUserRows] = useState([]);
 
   useEffect(() => {
@@ -72,4 +72,4 @@ const Datatable = () => {
   );
 };
 
-export default Datatable;
+export default UserDatatable;

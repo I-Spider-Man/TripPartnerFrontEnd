@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { DataGrid } from "@mui/x-data-grid";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import { fetchTouristSpotsData } from '../../DataStorage';
 import { spotDelete } from '../../components/DeleteStorage';
 import { Link } from 'react-router-dom';
 import { Button, Stack } from '@mui/material';
 import axios from 'axios';
 import { Modal, Upload, Space, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { fetchTouristSpotsData } from '../../DataBase/Spot';
 
 function TouristSpot() {
     const [spotRows, setSpotRows] = useState([]);

@@ -6,7 +6,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Button, CircularProgress, styled } from '@mui/material';
 import { postSpot } from "../../PostData";
 import { LoadingButton } from "@mui/lab";
-const New = ({ inputs, title }) => {
+const NewSpot = ({ inputs, title }) => {
   const [submitProcess,setSubmitProcess]=useState(false);
   const [spotData, setspotData] = useState({
     spotName:"",
@@ -152,4 +152,4 @@ const New = ({ inputs, title }) => {
   );
 };
  
-export default New;
+export default NewSpot;

@@ -4,22 +4,15 @@ import axios from 'axios';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import './OrganizerDetail.scss';
+import { fetchOrganizerDetailsById } from '../../DataBase/Organizer';
 
 const OrganizerDetail = () => {
   const { organizerId } = useParams();
   const [organizerDetails, setOrganizerDetails] = useState({});
 
-  useEffect(() => {
-    const fetchOrganizerDetails = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/Admin/organizers/${organizerId}`);
-        setOrganizerDetails(response.data);
-      } catch (error) {
-        console.error('Error fetching organizer details:', error);
-      }
-    };
-
-    fetchOrganizerDetails();
+  useEffect(async() => {
+    const data=await fetchOrganizerDetailsById(organizerId);
+    setOrganizerDetails(data);
   }, [organizerId]);
 
   return (

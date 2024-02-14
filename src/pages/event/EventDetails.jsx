@@ -3,10 +3,10 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import List from "../../components/table/Table";
 import { useParams } from "react-router-dom";
-import { fetchEventDataByEventId } from "../../DataStorage";
 import { Modal, Upload, Button, Space, message } from "antd";
 import { UploadOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { fetchEventDataByEventId } from "../../DataBase/Event";
 
 const EventDetails = () => {
   const [eventDetails, setEventDetails] = useState({});

@@ -6,8 +6,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { fetchActiveGroupsData, fetchCorrespondingGroupData } from "../../DataStorage";
 import { useEffect, useState } from "react";
+import { fetchCorrespondingGroupData } from "../../DataBase/Group";
 const List = ({eventName,spotName}) => {
   const [activeGrp,setActiveGrp]=useState([]);
   useEffect(async()=>{

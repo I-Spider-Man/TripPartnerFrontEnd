@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { DataGrid } from "@mui/x-data-grid";
 import Sidebar from "../../components/sidebar/Sidebar"
 import Navbar from "../../components/navbar/Navbar"
-import { fetchOrganziersData, fetchParticipantsData } from '../../DataStorage';
 import { organizerDelete, organizersDelete, participantDelete } from '../../components/DeleteStorage';
 import { Link } from 'react-router-dom';
+import { fetchParticipantsData } from '../../DataBase/Participant';
 function Participants() {
     const [participantRows,setParticipantRows]=useState([]);
     useEffect(()=>{

@@ -3,10 +3,10 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import List from "../../components/table/Table";
 import { useParams } from "react-router-dom";
-import { fetchSpotDataById } from "../../DataStorage";
 import { Modal, Upload, Button, Space, message } from "antd";
 import { UploadOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import axios from 'axios';
+import { fetchSpotDataById } from "../../DataBase/Spot";
 
 const SpotDetails = () => {
   const [spotDetails, setSpotDetails] = useState({});

@@ -1,26 +1,37 @@
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Logout from "./pages/logout/Logout";
-import List from "./pages/list/List";
-import New from "./pages/new/New";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { productInputs, spotInputs, userInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
-import TouristSpot from "./pages/touristSpot/TouristSpot";
+
 
 import Groups from "./pages/group/Groups";
+import GroupDetails from "./pages/group/GroupDetails";
+
+
 import Organizers from "./pages/Organzier/Organizers";
-import SingleUser from "./pages/list/SingleUser";
+import OrganizerDetail from "./pages/Organzier/OrganizerDetail";
+
+
 import EventDetails from "./pages/event/EventDetails";
 import Eventdatatable from "./pages/event/Event";
 import NewEventForm from "./pages/event/NewEventForm";
-import SpotDetails from "./pages/single/Single";
+
+
 import Participants from "./pages/participants/Participants";
-import GroupDetails from "./pages/group/GroupDetails";
-import OrganizerDetail from "./pages/Organzier/OrganizerDetail";
 import ParticipantDetail from "./pages/participants/ParticipantDetails";
+
+
+
+import UserList from "./components/User/UserList";
+import SingleUser from "./components/User/SingleUser";
+
+import TouristSpot from "./pages/touristSpot/TouristSpot";
+import NewSpot from "./pages/touristSpot/NewSpot";
+import SpotDetails from "./pages/touristSpot/SpotDetails";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -35,7 +46,7 @@ function App() {
             <Route path="logout" element={<Logout />} />
 
             <Route path="users">
-              <Route index element={<List />} />
+              <Route index element={<UserList />} />
               <Route path=":userId" element={<SingleUser />} />
             </Route>
             <Route path="Event">
@@ -54,7 +65,7 @@ function App() {
               <Route index element={<TouristSpot/>}/>
               <Route
                 path="newSpot"
-                element={<New inputs={spotInputs} title="Add New Tourist spots" />}
+                element={<NewSpot inputs={spotInputs} title="Add New Tourist spots" />}
               />
               <Route path=":spotId" element={<SpotDetails />} />
             </Route>

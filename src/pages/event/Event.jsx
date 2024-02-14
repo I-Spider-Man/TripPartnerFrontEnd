@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import './EventData.scss';
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { fetchEventsData } from "../../DataStorage";
 import { eventDelete } from "../../components/DeleteStorage";
 import { Button, Modal, Upload, Space, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { fetchEventsData } from "../../DataBase/Event";
 
 const Eventdatatable = () => {
     const [data, setData] = useState([]);

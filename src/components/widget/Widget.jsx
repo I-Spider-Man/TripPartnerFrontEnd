@@ -5,9 +5,11 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import EventIcon from '@mui/icons-material/Event';
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import { Link } from "react-router-dom";
-import { fetchEventsData, fetchGroupsData, fetchUserData } from "../../DataStorage"; 
 import { useEffect, useState } from "react";
 import { useScrollTrigger } from "@mui/material";
+import { fetchUserData } from "../../DataBase/User";
+import { fetchActiveEventsData } from "../../DataBase/Event";
+import { fetchActiveGroupsData } from "../../DataBase/Group";
 const Widget = ({ type }) => {
   let data;
   const[count,setcount]=useState(0);
@@ -47,7 +49,7 @@ const Widget = ({ type }) => {
 
     const fetchEvents=async()=>{
       try{
-        const users=await fetchEventsData();
+        const users=await fetchActiveEventsData();
         setcount(users.length);
       }catch(error){
         console.log(error);
@@ -74,7 +76,7 @@ const Widget = ({ type }) => {
     case "groups":
       const fetchGroups=async()=>{
         try{
-          const users=await fetchGroupsData();
+          const users=await fetchActiveGroupsData();
           setcount(users.length);
         }catch(error){
           console.log(error);

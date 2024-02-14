@@ -6,23 +6,18 @@ import axios from 'axios';
 import Navbar from '../../components/navbar/Navbar';
 import Sidebar from '../../components/sidebar/Sidebar';
 import './GroupDetails.scss';
+import { fetchGrpDataById, getAllParticipantsByGroupId } from '../../DataBase/Group';
 
 const GroupDetails = () => {
   const { groupId } = useParams();
   const [groupDetails, setGroupDetails] = useState({});
-
-  useEffect(() => {
-    const fetchGroupDetails = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/Admin/groups/${groupId}`);
-        setGroupDetails(response.data);
-      } catch (error) {
-        console.error('Error fetching group details:', error);
-      }
-    };
-
-    fetchGroupDetails();
-  }, [groupId]);
+  const [participantData,setParticipantData]=useState([]);
+  useEffect(async() => {  
+    const data=await fetchGrpDataById(groupId);
+    const participants=await getAllParticipantsByGroupId(groupId);
+    setParticipantData(participants);
+    setGroupDetails(data);
+  }, []);
 
   return (
     <div className="list">
