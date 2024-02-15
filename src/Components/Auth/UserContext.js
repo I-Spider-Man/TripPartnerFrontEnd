@@ -33,7 +33,7 @@ export const UserProvider = ({ children }) => {
  const updateOrganizerData=async(userData)=>{
   if(userData){
     try{
-    const organizer=await axios.get(`http://localhost:8080/User/Organizer/${userData.userId}`);
+    const organizer=await axios.get(`${BaseUrl}/User/Organizer/${userData.userId}`);
     localStorage.setItem('organizerDetails',JSON.stringify(organizer.data));
   }
   catch(error){
@@ -44,7 +44,7 @@ export const UserProvider = ({ children }) => {
  const updateUserFollowersList=async(userData)=>{
   if(userData){
     try{
-      const follwers=await axios.get(`http://localhost:8080/User/followersId/${userData.userId}`);
+      const follwers=await axios.get(`${BaseUrl}/User/followersId/${userData.userId}`);
       localStorage.setItem('FollowersList',JSON.stringify(follwers.data));
     }catch(error){
       console.log(error);
@@ -54,7 +54,7 @@ export const UserProvider = ({ children }) => {
  const updateUserFollowingList=async(userData)=>{
   if(userData){
     try{
-      const following=await axios.get(`http://localhost:8080/User/followingId/${userData.userId}`);
+      const following=await axios.get(`${BaseUrl}/User/followingId/${userData.userId}`);
       localStorage.setItem('FollowingList',JSON.stringify(following.data));
     }catch(error){
       console.log(error);
@@ -71,7 +71,7 @@ export const UserProvider = ({ children }) => {
  const updateUserBlockedList=async(userData)=>{
   if(userData){
     try{
-      const blocked=await axios.get(`http://localhost:8080/User/blockedId/${userData.userId}`);
+      const blocked=await axios.get(`${BaseUrl}/User/blockedId/${userData.userId}`);
       localStorage.setItem('BlockedList',JSON.stringify(blocked.data));
     }catch(error){
       console.log(error);
@@ -81,7 +81,7 @@ export const UserProvider = ({ children }) => {
  const updateParticipantData=async(userData)=>{
   if (userData) {
     try{
-  const participant=await axios.get(`http://localhost:8080/User/Participant/${userData.userId}`);
+  const participant=await axios.get(`${BaseUrl}/User/Participant/${userData.userId}`);
     localStorage.setItem('participantDetails',JSON.stringify(participant.data));
   }
   catch(error){

@@ -1,13 +1,14 @@
 import { message } from "antd";
 import axios from "axios"
+import { BaseUrl } from "../config/BaseUrl";
 export const pictureUrl = (image) => {
   return `data:image/jpeg;base64,${image}`;
 };
 
 export const updateUserDetails=async(value)=>{
   try{
-    const updateUser=await axios.put(`http://localhost:8080/User/updateUser/${value.userId}`,value);
-    const picture=await axios.get(`http://localhost:8080/User/userProfile/${updateUser.data.userId}`);
+    const updateUser=await axios.put(`${BaseUrl}/User/updateUser/${value.userId}`,value);
+    const picture=await axios.get(`${BaseUrl}/User/userProfile/${updateUser.data.userId}`);
     return {
       ...updateUser.data,
       userProfile:pictureUrl(picture.data)
@@ -19,7 +20,7 @@ export const updateUserDetails=async(value)=>{
 }
 export const updatePassword = async (userId, password) => {
   try {
-    const updateUser = await axios.put(`http://localhost:8080/User/changePassword/${userId}`,null, {params:{
+    const updateUser = await axios.put(`${BaseUrl}/User/changePassword/${userId}`,null, {params:{
       userPassword: password,
     }
     });
@@ -31,7 +32,7 @@ export const updatePassword = async (userId, password) => {
 
 export const updateEmail = async (userId, email) => {
   try {
-    const updateUser = await axios.put(`http://localhost:8080/User/updateEmail/${userId}`, {
+    const updateUser = await axios.put(`${BaseUrl}/User/updateEmail/${userId}`, {
       userEmail: email
     });
     message.success(updateUser.data);
@@ -41,7 +42,7 @@ export const updateEmail = async (userId, email) => {
 };
 export const getUserPosts=async(userId)=>{
   try{
-    const posts=await axios.get(`http://localhost:8080/User/userPost/${userId}`);
+    const posts=await axios.get(`${BaseUrl}/User/userPost/${userId}`);
     const postsUrl=posts.data.map(post=>{
       const postUrl=pictureUrl(post.post)
       return {
@@ -57,7 +58,7 @@ export const getUserPosts=async(userId)=>{
 }
 export const getAllFollowers=async(userId)=>{
   try{
-    const response=await axios.get(`http://localhost:8080/User/getAllFollowers/${userId}`)
+    const response=await axios.get(`${BaseUrl}/User/getAllFollowers/${userId}`)
     return response.data;
   }catch(error){
     console.log(error);
@@ -66,7 +67,7 @@ export const getAllFollowers=async(userId)=>{
 }
 export const getAllFollowing=async(userId)=>{
   try{
-    const response=await axios.get(`http://localhost:8080/User/getAllFollowing/${userId}`)
+    const response=await axios.get(`${BaseUrl}/User/getAllFollowing/${userId}`)
     return response.data;
   }catch(error){
     console.log(error);
@@ -75,7 +76,7 @@ export const getAllFollowing=async(userId)=>{
 }
 export const getAllBlocked=async(userId)=>{
   try{
-    const response=await axios.get(`http://localhost:8080/User/getAllBlocked/${userId}`)
+    const response=await axios.get(`${BaseUrl}/User/getAllBlocked/${userId}`)
     return response.data;
   }catch(error){
     console.log(error);
@@ -84,8 +85,8 @@ export const getAllBlocked=async(userId)=>{
 }
 export const getUserDetailsById=async(value)=>{
   try{
-    const fetchUser=await axios.get(`http://localhost:8080/User/${value}`);
-    const picture=await axios.get(`http://localhost:8080/User/userProfile/${value}`);
+    const fetchUser=await axios.get(`${BaseUrl}/User/${value}`);
+    const picture=await axios.get(`${BaseUrl}/User/userProfile/${value}`);
     return {
       ...fetchUser.data,
       userProfile:pictureUrl(picture.data)
@@ -96,8 +97,8 @@ export const getUserDetailsById=async(value)=>{
 }
 export const getUserDetails=async(value)=>{
   try{
-    const fetchUser=await axios.get(`http://localhost:8080/User/email/${value}`);
-    const picture=await axios.get(`http://localhost:8080/User/userProfile/${fetchUser.data.userId}`);
+    const fetchUser=await axios.get(`${BaseUrl}/User/email/${value}`);
+    const picture=await axios.get(`${BaseUrl}/User/userProfile/${fetchUser.data.userId}`);
     console.log(picture.data);
     return {
       ...fetchUser.data,
@@ -109,7 +110,7 @@ export const getUserDetails=async(value)=>{
 }
 export const registerUser=async(value)=>{
   try{
-    await axios.post("http://localhost:8080/User",value).then((response)=>{return (response.status)})
+    await axios.post(`${BaseUrl}/User`,value).then((response)=>{return (response.status)})
   }catch(error){
     console.log("error occured while registering user :", error)
   }
@@ -117,7 +118,7 @@ export const registerUser=async(value)=>{
 export const generateOtp=async(value)=>{
   console.log(" otp rendered")
   try{
-    const response=await axios.get(`http://localhost:8080/User/otp/${value}`);
+    const response=await axios.get(`${BaseUrl}/User/otp/${value}`);
     const otp=response.data;
     console.log("otp obtained "+otp+ "response obtained "+response);
     return otp
@@ -128,7 +129,7 @@ export const generateOtp=async(value)=>{
 export const UploadUserProfile=async(userId,profile)=>{
   try{
     console.log(profile);
-    const response=await axios.post(`http://localhost:8080/User/updateProfile/${userId}`,profile);
+    const response=await axios.post(`${BaseUrl}/User/updateProfile/${userId}`,profile);
     return response.data
   }catch(error){
     console.log(error);
@@ -136,7 +137,7 @@ export const UploadUserProfile=async(userId,profile)=>{
 }
 export const uploadUserPost=async(userId,formdata)=>{
   try{
-    const response=await axios.post(`http://localhost:8080/User/userPost/${userId}`,formdata,{headers:{'Content-Type':'multipart/form-data',},});
+    const response=await axios.post(`${BaseUrl}/User/userPost/${userId}`,formdata,{headers:{'Content-Type':'multipart/form-data',},});
     message.success(response.data);
   }catch(error){
     message.error(error.response.data);

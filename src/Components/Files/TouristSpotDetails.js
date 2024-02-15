@@ -1,15 +1,16 @@
 import { type } from "@testing-library/user-event/dist/type";
 import axios from "axios";
+import { BaseUrl } from "../config/BaseUrl";
 export const pictureUrl = (image) => {
   return `data:image/jpeg;base64,${image}`;
 };
 export const fetchSpotBySpotName = async (spotName) => {
   try {
     console.log(spotName);
-    const response = await axios.get(`http://localhost:8080/spot/${spotName}`);
+    const response = await axios.get(`${BaseUrl}/spot/${spotName}`);
     console.log(response);
     const picture = await axios.get(
-      `http://localhost:8080/spot/pictureList/${response.data.spotId}`
+      `${BaseUrl}/spot/pictureList/${response.data.spotId}`
     );
     const imageList = picture.data.map((pic) => {
       return pictureUrl(pic);
@@ -25,11 +26,11 @@ export const fetchSpotBySpotName = async (spotName) => {
 };
 export const fetch_spot_data = async () => {
   try {
-    const response = await axios.get("http://localhost:8080/spots");
+    const response = await axios.get(`${BaseUrl}/spots`);
     const spotwithpicture = await Promise.all(
       response.data.map(async (spot) => {
         const picture = await axios.get(
-          `http://localhost:8080/spot/pictureList/${spot.spotId}`
+          `${BaseUrl}/spot/pictureList/${spot.spotId}`
         );
         const imageList = picture.data.map((pic) => {
           return pictureUrl(pic);
@@ -50,11 +51,11 @@ export const fetch_spot_data = async () => {
 
 export const fetch_popularSpots = async () => {
   try {
-    const response = await axios.get("http://localhost:8080/PopularSpots");
+    const response = await axios.get(`${BaseUrl}/PopularSpots`);
     const spotwithpicture = await Promise.all(
       response.data.map(async (spot) => {
         const picture = await axios.get(
-          `http://localhost:8080/spot/pictureList/${spot.spotId}`
+          `${BaseUrl}/spot/pictureList/${spot.spotId}`
         );
         const imageList = picture.data.map((pic) => {
           return pictureUrl(pic);
@@ -75,9 +76,9 @@ export const fetch_popularSpots = async () => {
 
 export const fetch_spots_by_id = async (id) => {
   try {
-    const response = await axios.get(`http://localhost:8080/spots/${id}`);
+    const response = await axios.get(`${BaseUrl}/spots/${id}`);
     const picture = await axios.get(
-      `http://localhost:8080/spot/pictureList/${response.data.spotId}`
+      `${BaseUrl}/spot/pictureList/${response.data.spotId}`
     );
     const imageList = picture.data.map((pic) => {
       return pictureUrl(pic);

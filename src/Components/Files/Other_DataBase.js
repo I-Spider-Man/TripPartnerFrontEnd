@@ -2,10 +2,11 @@ import axios from "axios";
 import { useState } from "react";
 import { getUserDetailsById } from "./User_profile_avator";
 import { message } from "antd";
+import { BaseUrl } from "../config/BaseUrl";
 
 export const forgotPassword=async(userEmail)=>{
     try{
-        await axios.post("http://localhost:8080/User/forgotPassword",null,{
+        await axios.post(`${BaseUrl}/User/forgotPassword`,null,{
             params:{
                 userEmail:userEmail
             }
@@ -20,7 +21,7 @@ export const forgotPassword=async(userEmail)=>{
 export const allSpotTitle=async()=>{
     console.log('renders')
     try{
-        const getTitle=await axios.get("http://localhost:8080/spots");
+        const getTitle=await axios.get(`${BaseUrl}/spots`);
         const title=getTitle.data.map((spot)=>{
             return{
                 ...spot,
@@ -36,7 +37,7 @@ export const allSpotTitle=async()=>{
 }
 export const getMessagesOfGroupId=async(groupId)=>{
     try{
-        const response=await axios.get(`http://localhost:8080/Group/messages/${groupId}`);
+        const response=await axios.get(`${BaseUrl}/Group/messages/${groupId}`);
         const response1= await Promise.all(response.data.map(async(message)=>{
             const user=await getUserDetailsById(message.userId);
             return {
@@ -52,7 +53,7 @@ export const getMessagesOfGroupId=async(groupId)=>{
 }
 export const sendingMessage=async(groupId,messageContent)=>{
     try{
-        const response=await axios.post(`http://localhost:8080/Group/messages/${groupId}`,messageContent);
+        const response=await axios.post(`${BaseUrl}/Group/messages/${groupId}`,messageContent);
     }catch(error){
         console.log(error);
     }
@@ -60,7 +61,7 @@ export const sendingMessage=async(groupId,messageContent)=>{
 export const allEventTitle=async()=>{
     console.log('renders')
     try{
-        const getTitle=await axios.get("http://localhost:8080/activeEvents");
+        const getTitle=await axios.get(`${BaseUrl}/activeEvents`);
         const title=getTitle.data.map((event)=>{
             return{
                 ...event,
@@ -76,7 +77,7 @@ export const allEventTitle=async()=>{
 }
 export const deleteUserPost=async(userId,post)=>{
     try{
-        const response=await axios.post(`http://localhost:8080/User/deletePost/${userId}`,post,{headers:{"Content-Type":'application/form-data'}});
+        const response=await axios.post(`${BaseUrl}/User/deletePost/${userId}`,post,{headers:{"Content-Type":'application/form-data'}});
         message.success(response.data);
     }catch(error){
         console.log(error);
@@ -85,7 +86,7 @@ export const deleteUserPost=async(userId,post)=>{
 
 export const userFollowParticipant=async(userId,participantId)=>{
     try{
-        const response=await axios.post("http://localhost:8080/User/userFollowing",null,{params:{userId:userId,followingId:participantId,},});
+        const response=await axios.post(`${BaseUrl}/User/userFollowing`,null,{params:{userId:userId,followingId:participantId,},});
         message.success(response.data);
     }catch(error){
         message.error(error.response.data);
@@ -94,7 +95,7 @@ export const userFollowParticipant=async(userId,participantId)=>{
 
 export const userUnfollowParticipant=async(userId,participantId)=>{
     try{
-        const response=await axios.post("http://localhost:8080/User/userUnfollowing",null,{params:{userId:userId,followingId:participantId,},});
+        const response=await axios.post(`${BaseUrl}/User/userUnfollowing`,null,{params:{userId:userId,followingId:participantId,},});
         message.success(response.data);
     }catch(error){
         message.error(error.response.data);
@@ -102,7 +103,7 @@ export const userUnfollowParticipant=async(userId,participantId)=>{
 }
 export const userBlockingParticipant=async(userId,participantId)=>{
     try{
-        const response=await axios.post("http://localhost:8080/User/userBlocking",null,{params:{userId:userId,blockingId:participantId,},});
+        const response=await axios.post(`${BaseUrl}/User/userBlocking`,null,{params:{userId:userId,blockingId:participantId,},});
         message.success(response.data);
     }catch(error){
         message.error(error.response.data);
@@ -111,7 +112,7 @@ export const userBlockingParticipant=async(userId,participantId)=>{
 
 export const userFollowOrganizer=async(userId,organizerId)=>{
     try{
-        const response=await axios.post("http://localhost:8080/User/userFollowing",null,{params:{userId:userId,followingId:organizerId,},});
+        const response=await axios.post(`${BaseUrl}/User/userFollowing`,null,{params:{userId:userId,followingId:organizerId,},});
         message.success(response.data);
     }catch(error){
         message.error(error.response.data);
@@ -120,7 +121,7 @@ export const userFollowOrganizer=async(userId,organizerId)=>{
 
 export const userUnfollowOrganizer=async(userId,organizerId)=>{
     try{
-        const response=await axios.post("http://localhost:8080/User/userUnfollowing",null,{params:{userId:userId,followingId:organizerId,},});
+        const response=await axios.post(`${BaseUrl}/User/userUnfollowing`,null,{params:{userId:userId,followingId:organizerId,},});
         message.success(response.data);
     }catch(error){
         message.error(error.response.data);
@@ -128,7 +129,7 @@ export const userUnfollowOrganizer=async(userId,organizerId)=>{
 }
 export const userBlockingUser=async(userId,userId2)=>{
     try{
-        const response=await axios.post("http://localhost:8080/User/userBlocking",null,{params:{userId:userId,blockingId:userId2,},});
+        const response=await axios.post(`${BaseUrl}/User/userBlocking`,null,{params:{userId:userId,blockingId:userId2,},});
         message.success(response.data);
     }catch(error){
         message.error(error.response.data);
@@ -136,7 +137,7 @@ export const userBlockingUser=async(userId,userId2)=>{
 }
 export const userUnBlockingUser=async(userId,userId2)=>{
     try{
-        const response=await axios.post("http://localhost:8080/User/userUnBlocking",null,{params:{userId:userId,blockedUserId:userId2}});
+        const response=await axios.post(`${BaseUrl}/User/userUnBlocking`,null,{params:{userId:userId,blockedUserId:userId2}});
         message.success(response.data);
     }catch(error){
         message.error(error.response.data);

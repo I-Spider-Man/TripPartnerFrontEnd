@@ -1,9 +1,10 @@
 import axios from "axios";
 import { getUserDetailsById } from "./User_profile_avator";
+import { BaseUrl } from "../config/BaseUrl";
 
 export const postGroup = async (value) => {
   try {
-    const response = await axios.post("http://localhost:8080/organizer", value);
+    const response = await axios.post(`${BaseUrl}/organizer`, value);
 
     if (response.status === 201) {
       alert("you have created a group successfully");
@@ -20,7 +21,7 @@ export const postGroup = async (value) => {
 export const getAllParticipantsById = async (grpId) => {
   try {
     const response = await axios.get(
-      `http://localhost:8080/Participant/group/${grpId}`
+      `${BaseUrl}/Participant/group/${grpId}`
     );
     const participantWithUserData = await Promise.all(
       response.data.map(async (participant) => {
@@ -42,7 +43,7 @@ export const getGroupById = async (grpId) => {
   console.log(grpId);
   try {
     const response = await axios.get(
-      `http://localhost:8080/Group/groupId/${grpId}`
+      `${BaseUrl}/Group/groupId/${grpId}`
     );
     console.log(response.data);
     return response.data;
@@ -55,13 +56,13 @@ export const getGroup = async (eventName, spotName) => {
   try {
     if (eventName) {
       const response = await axios.get(
-        `http://localhost:8080/event/group/${eventName}`
+        `${BaseUrl}/event/group/${eventName}`
       );
 
       return response.data;
     } else if (spotName) {
       const response = await axios.get(
-        `http://localhost:8080/spot/group/${spotName}`
+        `${BaseUrl}/spot/group/${spotName}`
       );
       return response.data;
     } else {
