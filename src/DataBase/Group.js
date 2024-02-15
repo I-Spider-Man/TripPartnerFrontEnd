@@ -1,10 +1,11 @@
 import axios from "axios";
 import { fetchOrganizerDataById } from "./Organizer";
 import { fetchUserDataById } from "./User";
+import { BaseUrl } from "../components/config/BaseUrl";
 
 export const fetchGrpDataById= async(id)=>{
     try{
-      const response=await axios.get(`http://localhost:8080/Admin/groups/${id}`);
+      const response=await axios.get(`${BaseUrl}/Admin/groups/${id}`);
       const organizerData=await fetchOrganizerDataById(response.data.organizerId);
       return {
         ...response.data,
@@ -17,7 +18,7 @@ export const fetchGrpDataById= async(id)=>{
   }
   export const getAllParticipantsByGroupId=async(grpId)=>{
     try{
-        const response=await axios.get(`http://localhost:8080/Participant/group/${grpId}`);
+        const response=await axios.get(`${BaseUrl}/Participant/group/${grpId}`);
         const participantWithUserData=await Promise.all(response.data.map(async(participant)=>{
             const userData=await fetchUserDataById(participant.userId);
             console.log(userData);
@@ -35,7 +36,7 @@ export const fetchGrpDataById= async(id)=>{
 }
   export const fetchGroupsData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/Admin/groups");
+        const response = await axios.get(`${BaseUrl}/Admin/groups`);
         const groupWithOrganizerData=await Promise.all(
             response.data.map(async(group)=>{
               const organizerWithUserData=await fetchOrganizerDataById(group.organizerId);
@@ -57,15 +58,15 @@ export const fetchGrpDataById= async(id)=>{
     try{
         if(eventName){
             console.log(eventName);
-            response=await axios.get(`http://localhost:8080/event/group/${eventName}`);
+            response=await axios.get(`${BaseUrl}/event/group/${eventName}`);
             console.log("renders",response.data)
             
         }else if(spotName){
             console.log("renders")
-            response=await axios.get(`http://localhost:8080/spot/group/${spotName}`);
+            response=await axios.get(`${BaseUrl}/spot/group/${spotName}`);
             
         }else{
-            response=await axios.get("http://localhost:8080/Admin/ActiveGroups");
+            response=await axios.get(`${BaseUrl}/Admin/ActiveGroups`);
             
         }
         const groupWithOrganizerData=await Promise.all(
@@ -89,7 +90,7 @@ export const fetchGrpDataById= async(id)=>{
   
   export const fetchActiveGroupsData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/Admin/ActiveGroups");
+        const response = await axios.get(`${BaseUrl}/Admin/ActiveGroups`);
         const groupWithOrganizerData=await Promise.all(
           response.data.map(async(group)=>{
             const organizerWithUserData=await fetchOrganizerDataById(group.organizerId);
@@ -108,7 +109,7 @@ export const fetchGrpDataById= async(id)=>{
   
   export const fetchInActiveGroupsData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/Admin/InActiveGroups");
+        const response = await axios.get(`${BaseUrl}/Admin/InActiveGroups`);
         return response.data;
       } catch (error) {
         console.error("Error fetching data:", error);

@@ -1,9 +1,10 @@
 import axios from "axios";
+import { BaseUrl } from "./components/config/BaseUrl";
 
 
 export const postEvent=async (formData)=>{
     try{
-        await axios.post("http://localhost:8080/Admin/events", formData, {headers:{'Content-Type':'multipart/form-data',},}).then((response)=>{
+        await axios.post(`${BaseUrl}/Admin/events`, formData, {headers:{'Content-Type':'multipart/form-data',},}).then((response)=>{
         console.log(response); 
         if(response.status===201){
             alert(response.data);
@@ -18,7 +19,7 @@ export const postEvent=async (formData)=>{
 
 export const postSpot=async (formData)=>{
     try{
-        await axios.post("http://localhost:8080/Admin/touristSpot",formData,{headers:{'Content-Type':'multipart/form-data',},}).then((response)=>{
+        await axios.post(`${BaseUrl}/Admin/touristSpot`,formData,{headers:{'Content-Type':'multipart/form-data',},}).then((response)=>{
         console.log(response);
         if(response.status===201){
             alert(response.data);

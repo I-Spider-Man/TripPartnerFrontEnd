@@ -67,7 +67,7 @@ function TouristSpot() {
             fileList.forEach(file => {
                 formData.append("picture", file.originFileObj);
             });
-            await axios.post("http://localhost:8080/updateSpotPicture", formData);
+            await axios.post("${BaseUrl}/updateSpotPicture", formData);
             setIsModalVisible(false);
             setFileList([]);
             setSelectedSpotId(null);

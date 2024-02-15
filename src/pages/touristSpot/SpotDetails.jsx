@@ -48,7 +48,7 @@ const SpotDetails = () => {
       });
 
       // Your API endpoint for uploading spot images
-      await axios.post("http://localhost:8080/updateSpotPicture", formData);
+      await axios.post("${BaseUrl}/updateSpotPicture", formData);
 
       setIsModalVisible(false);
       setFileList([]);

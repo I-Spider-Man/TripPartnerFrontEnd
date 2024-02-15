@@ -48,7 +48,7 @@ const EventDetails = () => {
       });
 
       // Your API endpoint for uploading event images
-      await axios.post("http://localhost:8080/updateEventPicture", formData);
+      await axios.post("${BaseUrl}/updateEventPicture", formData);
 
       setIsModalVisible(false);
       setFileList([]);

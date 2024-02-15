@@ -65,7 +65,7 @@ const Eventdatatable = () => {
                 formData.append("picture", file.originFileObj);
             });
     console.log(formData);
-            await axios.post("http://localhost:8080/updateEventPicture", formData);
+            await axios.post("${BaseUrl}/updateEventPicture", formData);
             setIsModalVisible(false);
             setFileList([]);
             setSelectedEventId(null);

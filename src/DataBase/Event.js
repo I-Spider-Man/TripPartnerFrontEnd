@@ -1,8 +1,9 @@
 import axios from "axios";
+import { BaseUrl } from "../components/config/BaseUrl";
 
 export const fetchEventsData = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/Admin/events");
+      const response = await axios.get(`${BaseUrl}/Admin/events`);
       return response.data;
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -12,7 +13,7 @@ export const fetchEventsData = async () => {
   
 export const fetchActiveEventsData = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/Admin/ActiveEvents");
+      const response = await axios.get(`${BaseUrl}/Admin/ActiveEvents`);
       return response.data;
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -22,7 +23,7 @@ export const fetchActiveEventsData = async () => {
 
 export const fetchInavtiveEventsData = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/Admin/inActiveEvents");
+      const response = await axios.get(`${BaseUrl}/Admin/inActiveEvents`);
       return response.data;
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -37,8 +38,8 @@ export const pictureUrl = (image) => {
 
 export const fetchEventDataByEventId=async(eventId)=>{
     try{
-      const response=await axios.get(`http://localhost:8080/activeEvents/${eventId}`);
-      const response1=await axios.get(`http://localhost:8080/event/pictureList/${eventId}`);
+      const response=await axios.get(`${BaseUrl}/activeEvents/${eventId}`);
+      const response1=await axios.get(`${BaseUrl}/event/pictureList/${eventId}`);
       console.log(response1.data);
       const imageList=response1.data.map(image=>{
         return pictureUrl(image);
