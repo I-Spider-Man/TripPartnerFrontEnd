@@ -74,7 +74,7 @@ const GroupPage = () => {
       }
     };
     fetchData();
-  }, [groupId, render]);
+  }, []);
   useEffect(() => {
     const fetchOrganizer = async () => {
       try {
@@ -175,29 +175,38 @@ const GroupPage = () => {
           <h1 className="headerh1">
             <span className="group-icon">👥</span> {groupDetails.groupName}
           </h1>
-          {isParticipant && !isOrganizer && (
-            <div className="button-32">
-              <LoadingButton
-                variant="none"
-                loading={leavingProcess}
-                loadingIndicator={<p style={{ color: "white" }}>Leaving...</p>}
-                onClick={() => handleLeaveClick()}
-              >
-                Leave
-              </LoadingButton>
-            </div>
-          )}
-          {!isOrganizer && !isParticipant && (
-            <div className="button-32">
-              <LoadingButton
-                variant="none"
-                loading={joining}
-                onClick={() => handleJoinClick()}
-                loadingIndicator={<CircularProgress sx={{ color: "white" }} />}
-              >
-                Join
-              </LoadingButton>
-            </div>
+          {groupDetails.participantsCount !==
+            groupDetails.participantsLimit && (
+            <>
+              {isParticipant && !isOrganizer && (
+                <div className="button-32">
+                  <LoadingButton
+                    variant="none"
+                    loading={leavingProcess}
+                    loadingIndicator={
+                      <p style={{ color: "white" }}>Leaving...</p>
+                    }
+                    onClick={() => handleLeaveClick()}
+                  >
+                    Leave
+                  </LoadingButton>
+                </div>
+              )}
+              {!isOrganizer && !isParticipant && (
+                <div className="button-32">
+                  <LoadingButton
+                    variant="none"
+                    loading={joining}
+                    onClick={() => handleJoinClick()}
+                    loadingIndicator={
+                      <CircularProgress sx={{ color: "white" }} />
+                    }
+                  >
+                    Join
+                  </LoadingButton>
+                </div>
+              )}
+            </>
           )}
         </div>
         <div>
