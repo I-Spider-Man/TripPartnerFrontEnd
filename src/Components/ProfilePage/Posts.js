@@ -128,7 +128,7 @@ function Posts() {
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "column",
+                  flexDirection: "column", 
                   backgroundColor: "white",
                   width: "250px",
                   height: "320px",
