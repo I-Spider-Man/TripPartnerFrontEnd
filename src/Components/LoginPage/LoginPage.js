@@ -116,8 +116,8 @@ const handleSubmit=async(e)=>{
     return ;
   }
   console.log('Current state values:', { otp, userotp, ...userDetails.userPassword, userPasswordC });
-// if(userotp !== ""){
-  // if( otp == userotp){
+if(userotp !== ""){
+  if( otp == userotp){
       if(userDetails.userPassword === userPasswordC){
           try {
             const updatedUserDetails = {
@@ -134,13 +134,13 @@ const handleSubmit=async(e)=>{
 }else{
   message.warning("Check password");
 }
-//   }else{
-//       message.error("Entered otp is wrong.");
-//   }
-// }
-// else{
-//   getOtp();
-// }
+  }else{
+      message.error("Entered otp is wrong.");
+  }
+}
+else{
+  getOtp();
+}
 }
   const validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
