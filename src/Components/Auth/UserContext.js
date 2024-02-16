@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { getUserDetailsById } from "../Files/User_profile_avator";
+import { BaseUrl } from "../config/BaseUrl";
  
 const UserContext = createContext();
  
