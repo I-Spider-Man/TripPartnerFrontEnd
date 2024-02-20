@@ -67,7 +67,6 @@ export const UserProvider = ({ children }) => {
     const response=await getUserDetailsById(userDetails.userId);
     setUserData(response);
   }
-
  }
  const updateUserBlockedList=async(userData)=>{
   if(userData){
@@ -115,7 +114,6 @@ export const useUser = () => {
   updateUserFollowingList(JSON.parse(storedUserDetails));
   updateParticipantData(JSON.parse(storedUserDetails));
   useEffect(() => {
-   
     if (!userDetails && storedUserDetails) {
       setUserData(JSON.parse(storedUserDetails));
     }

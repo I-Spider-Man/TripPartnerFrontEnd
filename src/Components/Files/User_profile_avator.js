@@ -130,7 +130,7 @@ export const UploadUserProfile=async(userId,profile)=>{
   try{
     console.log(profile);
     const response=await axios.post(`${BaseUrl}/User/updateProfile/${userId}`,profile);
-    return response.data
+    message.success(response.data);
   }catch(error){
     console.log(error);
   }

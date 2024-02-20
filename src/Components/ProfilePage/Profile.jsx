@@ -22,20 +22,21 @@ import ProfileBottom from './ProfileBottom';
 
 export default function ProfilePage() {
   const [isPopupOpen, setPopupOpen] = useState(false);
+  const [render,setRender]=useState(false);
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false); // Define isEditProfileOpen state
-  const {userDetails,organizerData,participantData,setUserData}=useUser();
+  const {userDetails}=useUser();
   const openPopup = () => setPopupOpen(true);
   const closePopup = () => setPopupOpen(false);
+  const [userdata,setUserData]=useState()
   const navigate=useNavigate();
   const openEditProfile = () => setIsEditProfileOpen(true);
-console.log(organizerData);
+  useEffect(()=>{
+    console.log(userDetails);
+  },[userDetails])
   const setCoverPhoto = (photo) => {
     console.log('Setting cover photo:', photo);
   };
   const closeEditProfile = () => setIsEditProfileOpen(false);
-  const updateUser=(value)=>{
-    setUserData(value);
-  }
   const handleEditProfileToggle = () => {
     setIsEditProfileOpen(!isEditProfileOpen);
   };
@@ -106,7 +107,7 @@ console.log(organizerData);
           </MDBCol>
         </MDBRow>
         <div style={{marginTop:'10px', padding:'10px',height:'400px',width:'100%'}}>
-           <ProfileBottom/>
+           <ProfileBottom />
         </div>
        
       </MDBContainer>

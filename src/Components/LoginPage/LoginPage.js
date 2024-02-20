@@ -110,7 +110,7 @@ const isPasswordValid=passwordRegx.test(userDetails.userPassword);
 console.log(isPasswordValid);
 const handleSubmit=async(e)=>{
   e.preventDefault();
-  setRegisteringProcess(true);
+  
   if(!isPasswordValid){
     message.error("Enter strong password");
     return ;
@@ -122,15 +122,17 @@ if(userotp !== ""){
           try {
             const updatedUserDetails = {
               ...userDetails,
-            };
+            };setRegisteringProcess(true);
               const response = await registerUser(updatedUserDetails);
               message.success("User registered successfully.");
               navigate("/");
               onClose();
             } catch (error) {
               console.error('Error registering user:', error);
+            }finally{
+              setRegisteringProcess(false);
             }
-            setRegisteringProcess(false);
+            
 }else{
   message.warning("Check password");
 }
@@ -262,7 +264,6 @@ else{
       type="text"
       name="otpreg"
       placeholder="Enter OTP"
-      pattern="\d{6}" 
       onChange={(e)=>setOtp(e.target.value)}
       style={{ paddingRight: '40px' }}
       required
