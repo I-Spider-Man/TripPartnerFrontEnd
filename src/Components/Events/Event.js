@@ -8,6 +8,7 @@ import { useUser } from '../Auth/UserContext';
 import GroupJoinPage from '../Group/GroupJoinPage';
 import AlertCom from '../AlertCom';
 import { Galleria } from 'primereact/galleria';
+import FeedBack from '../Feedback/FeedBack';
 
 function Event() {
   const [event, setEvent] = useState({});
@@ -98,21 +99,26 @@ const thumbnailTemplate = (item) => {
 }
 
   return (
-    <div className='front-page'>
+    <div className='front-page' style={{marginTop: '50px'}}>
       <div className='event-page' style={{ minHeight: '100vh' }}>
-        <div className='content-container' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-          <div className='event-content' style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center', position: 'relative' }}>
+        <div className='content-container' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className='event-content' style={{ display: 'flex', flexDirection: 'column', width: '200vh', justifyContent: 'center', position: 'relative' }}>
             {event ? (
               <>
-               <Galleria value={event.eventPictureList} responsiveOptions={responsiveOptions} circular numVisible={3} autoPlay transitionInterval={3000} style={{maxWidth: '640px',}} item={itemTemplate} thumbnail={thumbnailTemplate}/>
+              <div style={{width:'100%'}}>
+                <Galleria value={event.eventPictureList} responsiveOptions={responsiveOptions} circular numVisible={3} autoPlay transitionInterval={3000} style={{width:'100%',objectFit:'cover'}} item={itemTemplate} thumbnail={thumbnailTemplate}/>
+              </div>
+               
 
-                <div className='content-details'>
-                  <label><strong>EVENT NAME:</strong> <h1>{event.eventName}</h1></label>
+                <div className='content-details' style={{backgroundColor:'#b1f2f2',color:'black',display:'flex',flexDirection:'row',borderRadius:'10px',justifyContent:'space-between',padding:"30px 180px 30px 180px",alignItems:'center'}}>
+                  <div style={{}}>
+                    <label><strong>EVENT NAME:</strong> <h1>{event.eventName}</h1></label>
                   <label><strong>EVENT HAPPENING ON: </strong><p>{event.startDate} = {event.endDate}</p></label>
                   <label><strong>EVENT DESCRIPTION:</strong> <p>{event.description}</p></label>
                   <label><strong>EVENT ADDRESS:</strong> <p>{event.location}</p></label>
                   <label><strong>PEOPLE COUNT:</strong> {getStatus()}</label>
-                  <div className='join-organize-button'>
+                  </div>
+                  <div className='join-organize-button' style={{height:'50px'}}>
                     <button onClick={handleClickListItem}>Join</button>
                     <button onClick={handleOrganizeClick}>Organize</button>
                   </div>
@@ -135,6 +141,9 @@ const thumbnailTemplate = (item) => {
                       onSubmit={handleOrganizeSubmit}
                     />
                   )}
+                </div>
+                <div style={{padding:'5px'}}>
+                  <FeedBack eventId={event?.eventId}/>
                 </div>
               </>
             ) : (

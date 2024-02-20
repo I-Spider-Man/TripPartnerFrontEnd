@@ -1,6 +1,6 @@
 import NavBar from '../NavBar/NavBar'
 import { useParams } from 'react-router-dom'
-import './TouristSpot.css'
+import '../Events/Event.css'
 import {fetchSpotBySpotName, fetch_spot_data, fetch_spots_by_id } from '../Files/TouristSpotDetails';
 import Footer from '../Footer/Footer';
 import Loading from '../LoadingComponents/Loading';
@@ -11,6 +11,7 @@ import GroupJoinPage from '../Group/GroupJoinPage';
 import { Alert } from '@mui/material';
 import AlertCom from '../AlertCom';
 import { Galleria } from 'primereact/galleria';
+import FeedBack from '../Feedback/FeedBack';
 function TouristSpot() {
   const {userDetails,participantData,organizerData}=useUser();
   const [spot,setSpots]=useState({});
@@ -99,16 +100,18 @@ const thumbnailTemplate = (item) => {
   return <img src={item} alt={item} style={{height:'70px',width:'100%'}}/>
 }
   return (
-    <div className='front-page'>
-       <div className='spot-page' style={{minHeight:'100vh'}}>
-        <div className='content-container' style={{display:'flex', alignItems:'center', justifyContent:'center',height:'100vh'}}>
-          <div className='spot-content' style={{display:'flex',flexDirection:'row',width:'100%',justifyContent:'center'}}>
+    <div className='front-page' style={{marginTop:'50px'}}>
+       <div className='event-page' style={{minHeight:'100vh'}}>
+        <div className='content-container' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className='event-content' style={{ display: 'flex', flexDirection: 'column', width: '200vh', justifyContent: 'center', position: 'relative' }}>
     {spot ? (
           <>
-          <Galleria value={spot.spotPictureList} responsiveOptions={responsiveOptions} circular numVisible={3} autoPlay transitionInterval={3000} style={{maxWidth: '640px',}} item={itemTemplate} thumbnail={thumbnailTemplate}/>
+          <div style={{width:'100%'}}>
+          <Galleria value={spot.spotPictureList} responsiveOptions={responsiveOptions} circular numVisible={3} autoPlay transitionInterval={3000} item={itemTemplate} thumbnail={thumbnailTemplate}/>
+          </div>
           
           
-          <div className='content-details'>
+          <div className='content-details' style={{backgroundColor:'#b1f2f2',color:'black',display:'flex',flexDirection:'row',borderRadius:'10px',justifyContent:'space-between',padding:"30px 180px 30px 180px",alignItems:'center'}}>
             <label><strong>SPOT NAME: </strong><h1>{spot.spotName}</h1></label>
             <label><strong>SPOT LOCATION:</strong> {spot.location}</label>
             <label><strong>SPOT DESCRIPTION:</strong> {spot.description}</label>
@@ -132,6 +135,9 @@ const thumbnailTemplate = (item) => {
           spotName={spot.spotName}
           open={organizeFormVisible}
           onClose={()=>handleClose()} onSubmit={()=>handleOrganizeSubmit()} />
+          <div style={{padding:'5px'}}>
+                  <FeedBack spotId={spot?.spotId}/>
+                </div>
           </> 
         ) : (
           <Loading/>

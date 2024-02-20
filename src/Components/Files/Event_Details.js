@@ -1,5 +1,7 @@
 import axios from "axios";
 import { BaseUrl } from "../config/BaseUrl";
+import { message } from "antd";
+import { getUserDetailsById } from "./User_profile_avator";
 export const pictureUrl = (image) => {
   return `data:image/jpeg;base64,${image}`;
 };
@@ -77,5 +79,31 @@ export const fetch_popularEvents=async()=>{
   }catch(error){
     console.error(error);
     return [];
+  }
+}
+export const postEventComment=async(eventId,userId,comment,rating)=>{
+  try{
+    const response=axios.post(`${BaseUrl}/event/${eventId}/feedback`,{userId:userId,feedback:comment,ratings:rating});
+    message.success(response.data);
+  }catch(error){
+    console.log(error);
+  }
+}
+
+export const fetchEventComments=async(eventId)=>{
+  try{
+    const response=await axios.get(`${BaseUrl}/event/${eventId}/feedback`);
+    const responseWithUserData=await Promise.all(
+      response.data.map(async(comment)=>{
+        const userData=await getUserDetailsById(comment.userId);
+        return{
+          ...comment,
+          userData:userData,
+        };
+      })
+    )
+    return responseWithUserData;
+  }catch(error){
+    console.log(error);
   }
 }
