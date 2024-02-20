@@ -47,3 +47,13 @@ export const participantLeaving=async(participantId,groupId)=>{
         message.error(error.response.data);
     }
 }
+
+export const fetchParticipantByUserId=async(userId)=>{
+    try{
+        const response=await axios.get(`${BaseUrl}/Participant/userId/${userId}`);
+        const rating=await axios.get(`${BaseUrl}/Participant/rating/${response.data.participantId}`);
+        return rating.data;
+    }catch(error){
+        console.log(error);
+    }
+}

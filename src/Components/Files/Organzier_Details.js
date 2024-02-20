@@ -1,9 +1,18 @@
 import axios from "axios";
 import { getUserDetailsById } from "./User_profile_avator";
 import { BaseUrl } from "../config/BaseUrl";
+export const fetchOrganizerDataByUserId=async(userId)=>{
+  try{
+    const organizer=await axios.get(`${BaseUrl}/organizer/userId/${userId}`);
+    const rating=await axios.get(`${BaseUrl}/organizer/ratings/${organizer.data.organizerId}`);
+    return(rating.data);
+  }catch(error){
+    console.log(error);
+  }
+}
 export const fetchOrganizerDataById = async(id)=>{
     try{
-      const organizer = await axios.get(`${BaseUrl}/Admin/organizers/${id}`)
+      const organizer = await axios.get(`${BaseUrl}/organizer/organizerId/${id}`)
     .then(async (organizer) => {
       return getUserDetailsById(organizer.data.userId)
         .then((userData) => {

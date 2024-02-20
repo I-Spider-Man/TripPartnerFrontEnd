@@ -17,6 +17,8 @@ import { getUserDetailsById } from '../Files/User_profile_avator';
 import { LoadingButton } from '@mui/lab';
 import { useUser } from '../Auth/UserContext';
 import { userBlockingOrganizer, userBlockingUser, userFollowParticipant, userUnBlockingUser, userUnfollowParticipant } from '../Files/Other_DataBase';
+import { fetchOrganizerDataById, fetchOrganizerDataByUserId } from '../Files/Organzier_Details';
+import { fetchParticipantByUserId } from '../Files/Participant_Details';
 
 export default function ProfilePage2() {
   const [userDetails1,setUserDetails]=useState(null);
@@ -76,7 +78,13 @@ export default function ProfilePage2() {
     const fetchUser=async()=>{
       try{
         const response=await getUserDetailsById(userId);
-      setUserDetails(response);
+        const organizerR=await fetchOrganizerDataByUserId(userId);
+        const participantR=await fetchParticipantByUserId(userId);
+      setUserDetails({
+        userData:response,
+        organizerR:organizerR,
+        participantR:participantR,
+      });
       }catch(error){
         console.log(error);
       }
@@ -107,7 +115,7 @@ export default function ProfilePage2() {
                     <MDBCardText>Full Name</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails1?.userName}</MDBCardText>
+                    <MDBCardText className="text-muted">{userDetails1?.userData.userName}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -116,7 +124,7 @@ export default function ProfilePage2() {
                     <MDBCardText>Email</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails1?.userEmail}</MDBCardText>
+                    <MDBCardText className="text-muted">{userDetails1?.userData.userEmail}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -125,7 +133,7 @@ export default function ProfilePage2() {
                     <MDBCardText>Gender</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails1?.gender}</MDBCardText>
+                    <MDBCardText className="text-muted">{userDetails1?.userData.gender}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -134,7 +142,7 @@ export default function ProfilePage2() {
                     <MDBCardText>Date of Birth</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails1?.dateOfBirth}</MDBCardText>
+                    <MDBCardText className="text-muted">{userDetails1?.userData.dateOfBirth}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -143,7 +151,23 @@ export default function ProfilePage2() {
                     <MDBCardText>About</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails1?.aboutUser}</MDBCardText>
+                    <MDBCardText className="text-muted">{userDetails1?.userData.aboutUser}</MDBCardText>
+                  </MDBCol>
+                </MDBRow>
+                <MDBRow>
+                  <MDBCol sm="3">
+                    <MDBCardText>Organizer Ratings</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                    <MDBCardText className="text-muted">{userDetails1?.organizerR.rating}</MDBCardText>
+                  </MDBCol>
+                </MDBRow>
+                <MDBRow>
+                  <MDBCol sm="3">
+                    <MDBCardText>Participant Ratings</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                    <MDBCardText className="text-muted">{userDetails1?.participantR.rating}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <MDBRow style={{marginTop:'50px'}}>
@@ -153,10 +177,8 @@ export default function ProfilePage2() {
                     {(!followersData.includes(parseInt(userId)) && !followingData.includes(parseInt(userId))) && <LoadingButton variant='contained' loading={followUnfollowProcess} onClick={()=>{handleFollow()}}>Follow</LoadingButton>}
                     {(followingData.includes(parseInt(userId))) && <LoadingButton variant='contained' loading={followUnfollowProcess} onClick={()=>(handleUnfollow())}>Unfollow</LoadingButton>}
                     </>
-                    
                   </MDBCol>
                   <MDBCol sm="3" >
-                   
                   {(blockedData?.includes(parseInt(userId))) ? (
  <LoadingButton
   variant='contained'
