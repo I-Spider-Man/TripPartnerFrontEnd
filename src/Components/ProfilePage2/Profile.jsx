@@ -14,7 +14,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Result } from 'antd';
 import ProfileBottom from './ProfileBottom';
 import { getUserDetailsById } from '../Files/User_profile_avator';
-import { LoadingButton } from '@mui/lab';
+import { LoadingButton, Rating } from '@mui/lab';
 import { useUser } from '../Auth/UserContext';
 import { userBlockingOrganizer, userBlockingUser, userFollowParticipant, userUnBlockingUser, userUnfollowParticipant } from '../Files/Other_DataBase';
 import { fetchOrganizerDataById, fetchOrganizerDataByUserId } from '../Files/Organzier_Details';
@@ -159,7 +159,7 @@ export default function ProfilePage2() {
                     <MDBCardText>Organizer Ratings</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails1?.organizerR.rating}</MDBCardText>
+                    <MDBCardText className="text-muted"><Rating readOnly value={userDetails1?.organizerR.rating}/></MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <MDBRow>
@@ -167,7 +167,7 @@ export default function ProfilePage2() {
                     <MDBCardText>Participant Ratings</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails1?.participantR.rating}</MDBCardText>
+                    <MDBCardText className="text-muted"><Rating readOnly value={userDetails1?.participantR.rating}/></MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <MDBRow style={{marginTop:'50px'}}>
