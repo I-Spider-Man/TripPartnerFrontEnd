@@ -16,7 +16,7 @@ function Spot({spotId,spotName,spotPictureList,location,description}) {
                                 <h4 className="spotName">{spotName}</h4>
                                 <span className="continent flex">
                                 <HiOutlineLocationMarker className='icon' />
-                                <span className="name">{location}</span>
+                                <span className="name">{location?.state}</span>
                                 </span>
  
                                 <div className="desc">

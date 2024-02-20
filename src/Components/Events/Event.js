@@ -115,7 +115,7 @@ const thumbnailTemplate = (item) => {
                     <label><strong>EVENT NAME:</strong> <h1>{event.eventName}</h1></label>
                   <label><strong>EVENT HAPPENING ON: </strong><p>{event.startDate} = {event.endDate}</p></label>
                   <label><strong>EVENT DESCRIPTION:</strong> <p>{event.description}</p></label>
-                  <label><strong>EVENT ADDRESS:</strong> <p>{event.location}</p></label>
+                  <label><strong>EVENT ADDRESS:</strong> <p>{event.location?.street},{event.location?.city},{event.location?.state},{event.location?.country},{event.location?.postalCode}</p></label>
                   <label><strong>PEOPLE COUNT:</strong> {getStatus()}</label>
                   </div>
                   <div className='join-organize-button' style={{height:'50px'}}>

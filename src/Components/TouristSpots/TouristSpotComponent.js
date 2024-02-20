@@ -21,7 +21,7 @@ function TouristSpotComponent(props) {
               {post.spotName}
             </Typography>
             <Typography variant="subtitle1" color="text.secondary">
-              {post.location}
+              {post.location?.state}
             </Typography>
           </CardContent>
           <CardMedia

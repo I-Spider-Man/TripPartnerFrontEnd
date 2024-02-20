@@ -113,7 +113,7 @@ const thumbnailTemplate = (item) => {
           
           <div className='content-details' style={{backgroundColor:'#b1f2f2',color:'black',display:'flex',flexDirection:'row',borderRadius:'10px',justifyContent:'space-between',padding:"30px 180px 30px 180px",alignItems:'center'}}>
             <label><strong>SPOT NAME: </strong><h1>{spot.spotName}</h1></label>
-            <label><strong>SPOT LOCATION:</strong> {spot.location}</label>
+            <label><strong>SPOT LOCATION:</strong> {spot.location?.street},{spot.location?.city},{spot.location?.state},{spot.location?.country},{spot.location?.postalCode}</label>
             <label><strong>SPOT DESCRIPTION:</strong> {spot.description}</label>
             <label><strong>PEOPLE COUNT:</strong> {getStatus()}</label>
             <div className='join-organize-button' >

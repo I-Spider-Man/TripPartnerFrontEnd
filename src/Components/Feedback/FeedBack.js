@@ -48,7 +48,7 @@ function FeedBack({spotId,eventId}) {
   return (
     <div style={{height:'50vh'}}>
         <div style={{display:'flex',flexDirection:'row',alignItems:'center',height:'50px'}}>
-            <Avatar src={userDetails.userProfile} alt='User' sx={{position:'absolute'}}/>
+            <Avatar src={userDetails?.userProfile} alt='User' sx={{position:'absolute'}}/>
             <TextField fullWidth placeholder='Give your thougths' sx={{borderColor:'black',color:'greyText',paddingLeft:'45px',paddingRight:'5px'}} value={comment} onChange={(e)=>setComment(e.target.value)}/>
             <Button variant='contained' disabled={!comment.trim()} onClick={()=>{setRatingDialog(!ratingDialog)}}>post</Button>
         </div>
@@ -59,7 +59,6 @@ function FeedBack({spotId,eventId}) {
            <DialogTitle>
             {"give us your rating on this " + (eventId ? "event" : "tourist spot")}
             </DialogTitle>
-
             <DialogContent>
                 <p>{comment}</p>
                 <Rating value={rating} onChange={(event,newValue)=>{
@@ -76,7 +75,6 @@ function FeedBack({spotId,eventId}) {
                     <Avatar src={comments.userData.userProfile} alt=''/>
                     <Rating value={comments.ratings} readOnly/>
                 </div>
-            
             <p style={{marginLeft:'50px'}}>{comments.feedback}</p>
             </div>))}
         </div>
