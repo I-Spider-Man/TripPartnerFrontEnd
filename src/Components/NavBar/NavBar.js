@@ -35,7 +35,7 @@ function NavBar() {
   };
   const handleProfile=()=>{
     setAnchorEl(null);
-    navigate(`/profile/${userDetails?.userId}`);
+    navigate(`/profile`);
 
   }
   const handleClose1= ()=>{
@@ -116,6 +116,7 @@ function NavBar() {
           'aria-labelledby': 'basic-button',
         }}
       >
+        {console.log(participantData,organizerData)}
         <MenuItem onClick={handleProfile}>Profile</MenuItem>
         {(participantData?.participantStatus==="Busy" || organizerData?.organizerStatus==="Busy") && <MenuItem onClick={()=>handleGroup()}>My Group</MenuItem>}
         <MenuItem onClick={()=>handleLogout()} >Logout</MenuItem>

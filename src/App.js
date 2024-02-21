@@ -26,7 +26,7 @@ function App() {
         <Route path="/TouristHomePage" element={<TouristSpotHomePage/>}/>
         <Route path='/Events/:eventName' element={<Event/>}/>
         <Route path='/Spot/:spotName' element={<TouristSpot/>}/>
-        <Route path='/profile/:userId' element={<ProfilePage/>}/>
+        <Route path='/profile' element={<ProfilePage/>}/>
         <Route path='/GroupPage/:groupId' element={<GroupPage/>}/>
         <Route path='/profileFollow/:userId' element={<ProfilePage2/>}/>
       </Routes></div>

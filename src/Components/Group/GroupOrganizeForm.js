@@ -9,9 +9,11 @@ import Button from '@mui/material/Button';
 import { postGroup } from '../Files/Group_Details';
 import { useUser } from '../Auth/UserContext';
 import { LoadingButton } from '@mui/lab';
+import { useNavigate } from 'react-router-dom';
 const GroupOrganizeForm = ({event,eventName, spotName, ...props }) => {
   const {userDetails}=useUser();
   const [submitProcess,setSubmitProcess]=useState(false);
+  const navigate=useNavigate();
   const { onClose, onSubmit, open, ...other } = props;
   const [organizerFrom,setOrganizerFrom]=useState({
     organizer:{
@@ -72,9 +74,7 @@ const GroupOrganizeForm = ({event,eventName, spotName, ...props }) => {
     setSubmitProcess(true);
     try{
       const groupResponse=await postGroup(organizerFrom);
-      if(groupResponse){
-        alert("group successfully created");
-      }
+      navigate(`/GroupPage/${groupResponse.groupId}`);
       onSubmit();
     }catch(error){
       console.log(error);

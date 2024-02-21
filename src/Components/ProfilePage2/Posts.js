@@ -31,10 +31,10 @@ function Posts() {
 
   return (
     <>
-      {userPosts.slice(1).length > 0 ? (
+      {userPosts.length > 0 ? (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <ImageList sx={{ width: '100%', height: 350 }} cols={4}>
-            {userPosts?.slice(1).map((item) => (
+            {userPosts?.map((item) => (
               <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: 'white', width: '200px', height: '220px' }}>
                 <Image
                   width={200}

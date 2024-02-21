@@ -9,6 +9,7 @@ function FeedBack({spotId,eventId}) {
     const {userDetails}=useUser();
     console.log(spotId,eventId);
     const [ratingDialog,setRatingDialog]=useState(false);
+    const [render,setRender]=useState(false);
     const [comment,setComment]=useState('');
     const [rating,setRating]=useState(3);
     const [prevComment,setPrevCommnet]=useState([]);
@@ -27,7 +28,7 @@ function FeedBack({spotId,eventId}) {
         }
         }
         fetchComments();
-    },[spotId,eventId])
+    },[spotId,eventId,render])
     console.log(prevComment)
     const postComment=async()=>{
         if(userDetails){
@@ -39,6 +40,9 @@ function FeedBack({spotId,eventId}) {
             }
         }catch(error){
             console.log(error);
+        }finally{
+            setRender(!render)
+            window.location.reload();
         }
         }
         else{
@@ -46,10 +50,10 @@ function FeedBack({spotId,eventId}) {
         }
     }
   return (
-    <div style={{height:'50vh'}}>
+    <div style={{minHeight:'50vh'}}>
         <div style={{display:'flex',flexDirection:'row',alignItems:'center',height:'50px'}}>
-            <Avatar src={userDetails?.userProfile} alt='User' sx={{position:'absolute'}}/>
-            <TextField fullWidth placeholder='Give your thougths' sx={{borderColor:'black',color:'greyText',paddingLeft:'45px',paddingRight:'5px'}} value={comment} onChange={(e)=>setComment(e.target.value)}/>
+            <Avatar src={userDetails?.userProfile} alt='User' sx={{position:'absolute'}} />
+            <TextField fullWidth placeholder='Give your thougths' sx={{borderColor:'black',color:'white',paddingLeft:'45px',paddingRight:'5px'}} value={comment} onChange={(e)=>setComment(e.target.value)}/>
             <Button variant='contained' disabled={!comment.trim()} onClick={()=>{setRatingDialog(!ratingDialog)}}>post</Button>
         </div>
         <Dialog
@@ -70,13 +74,16 @@ function FeedBack({spotId,eventId}) {
             </DialogActions>
         </Dialog>
         <div style={{padding:'10px',marginTop:'20px'}}>
-            {prevComment?.map(comments=>(<div style={{display:'flex',flexDirection:'column',gap:'10px'}}>
-                <div style={{display:'flex',flexDirection:'row',alignItems:'center',gap:'10px'}}>
-                    <Avatar src={comments.userData.userProfile} alt=''/>
-                    <Rating value={comments.ratings} readOnly/>
-                </div>
-            <p style={{marginLeft:'50px'}}>{comments.feedback}</p>
-            </div>))}
+        {prevComment?.slice().reverse().map(comments => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', borderStyle: 'groove', borderWidth: '2px', padding: '5px' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
+            <Avatar src={comments.userData.userProfile} alt='' />
+            <Rating value={comments.ratings} readOnly />
+        </div>
+        <p style={{ marginLeft: '50px', color: 'white' }}>{comments.feedback}</p>
+    </div>
+))}
+
         </div>
     </div>
   )

@@ -12,42 +12,10 @@ const ParticipantList = ({ participants }) => {
   console.log(participants);
   const navigate=useNavigate();
   const {followersData,followingData,blockedData,userDetails,updateUserBlockedList,updateUserFollowersList,updateUserFollowingList}=useUser();
-  const [followUnfollowProcess,setFollowUnfollowProcess]=useState(false);
   console.log(followersData,followingData)
-  const [alert,setAlert]=useState(false);
-    const handleViewMore = () => {
-        setAlert(true);
-      };
-  const handleClose=()=>{
-    setAlert(false);
-  }
-  const handleFollow=async(participantId)=>{
-    try{
-      setFollowUnfollowProcess(true);
-      await userFollowParticipant(userDetails.userId,participantId);
-      updateUserFollowingList();
-      window.location.reload();
-    }catch(error){
-      console.log(error);
-    }finally{
-      setFollowUnfollowProcess(false);
-    }
-  }
-  const handleUnfollow=async(participantId)=>{
-    try{
-      setFollowUnfollowProcess(true);
-      await userUnfollowParticipant(userDetails.userId,participantId);
-      updateUserFollowingList();
-      window.location.reload();
-    }catch(error){
-      console.log(error);
-    }finally{
-      setFollowUnfollowProcess(false);
-    }
-  }
     return (
 
-    <div>
+    <div style={{width:'100%'}}>
       <h2>Participants</h2>
       <ul id="participants">
       {participants.map((participant, index) => (

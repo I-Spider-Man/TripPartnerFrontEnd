@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Divider, Table } from 'antd'
 import { useUser } from '../Auth/UserContext'
 import { fetchParticipatedGroups } from '../Files/Participant_Details';
+import { Rating } from '@mui/material';
 function UserParticipantDetails() {
   
   const {participantData}=useUser();
   const [dataSource,setDataSource]=useState([]);
   useEffect(()=>{
     const fetchData=async()=>{
-      const response=await fetchParticipatedGroups(participantData.userId);
+      const response=await fetchParticipatedGroups(participantData?.userId);
       setDataSource(response);
     }
     fetchData();
@@ -57,6 +58,7 @@ function UserParticipantDetails() {
       </div>
       <Divider type='vertical' style={{borderWidth:'3px'}}/>
       <div style={{width:'100%', height:'300px'}}>
+      <label style={{display:'flex',alignItems:'center',gap:'10px',padding:'10px'}} >Your Participant Rating  <Rating readOnly value={participantData?.rating?.rating}/> </label>
       <Table dataSource={dataSource} columns={columns} />
       </div>
     </div>

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./GroupPage.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAllParticipantsById, getGroupById } from "../Files/Group_Details";
-import { fetchOrganizerDataById } from "../Files/Organzier_Details";
+import { fetchOrganizerDataById, giveOrganizerRating } from "../Files/Organzier_Details";
 import {
   participantJoining,
   participantLeaving,
@@ -11,13 +11,13 @@ import {
 import { useUser } from "../Auth/UserContext";
 import ParticipantList from "./ParticipantList";
 import { LoadingButton } from "@mui/lab";
-import { Avatar, CircularProgress, DialogActions } from "@mui/material";
+import { Avatar, CircularProgress, DialogActions, Rating} from "@mui/material";
 import ChatBox from "./ChatBox";
 import {
   AccessAlarmOutlined,
   AccountCircleOutlined,
 } from "@mui/icons-material";
-import { Button, Result } from "antd";
+import { Button, Divider, Result } from "antd";
 import {
   userFollowOrganizer,
   userUnfollowOrganizer,
@@ -41,13 +41,17 @@ const GroupPage = () => {
   const [joining, setJoining] = useState(false);
   const [render, setRender] = useState(false);
   const [leavingProcess, setLeavingProcess] = useState(false);
+  const { followersData, followingData, blockedData } = useUser();
+  const [organizerRating,setOrganizerRating]=useState(2);
+  const [organizerRatingProcess,setOrganizerRatingProcess]=useState(false);
+  console.log(followersData, followingData);
+  const [alert, setAlert] = useState(false);
   let isOrganizer;
   let isParticipant;
   if (organizerData || participantData) {
-    isOrganizer = organizerData.groupId == groupId;
-    isParticipant = participantData.groupId == groupId;
+    isOrganizer = organizerData?.groupId == groupId;
+    isParticipant = participantData?.groupId == groupId;
   }
-
   console.log(userDetails, participantData, organizerData);
   const Participation = async () => {
     try {
@@ -61,6 +65,17 @@ const GroupPage = () => {
       setJoining(false);
     }
   };
+  const handleRatingOrganizer=async()=>{
+    try{
+      setOrganizerRatingProcess(true);
+      const response= await giveOrganizerRating(organizer.organizerId,userDetails.userId,organizerRating);
+      
+    }catch(error){
+      console.log(error);
+    }finally{
+      setOrganizerRatingProcess(false);
+    }
+  }
   useEffect(() => {
     console.log("renders");
     const fetchData = async () => {
@@ -75,36 +90,40 @@ const GroupPage = () => {
     };
     fetchData();
   }, []);
+
   useEffect(() => {
     const fetchOrganizer = async () => {
       try {
-        const response = await fetchOrganizerDataById(groupDetails.organizerId);
+        console.log(groupDetails);
+        const response = await fetchOrganizerDataById(groupDetails?.organizerId);
         setOrganizer(response);
       } catch (error) {
         console.log(error);
       }
     };
     fetchOrganizer();
-  }, [groupDetails, render]);
+  }, [groupDetails]);
+
   useEffect(() => {
     const fetchParticipant = async () => {
       try {
-        const response = await getAllParticipantsById(groupDetails.groupId);
+        const response = await getAllParticipantsById(groupDetails?.groupId);
         setParticipants(response);
       } catch (error) {
         console.log(error);
       }
     };
     fetchParticipant();
-  }, [groupDetails, render]);
+  }, [groupDetails]);
+
   console.log(groupDetails, participants, organizer);
 
   useEffect(() => {
     if (userDetails) {
       if (
         (!organizerData && !participantData) ||
-        (organizerData.groupId !== groupId &&
-          participantData.groupId !== groupId)
+        (organizerData?.groupId !== groupId &&
+          participantData?.groupId !== groupId)
       ) {
         setjoinDetails({
           ...joinDetails,
@@ -144,9 +163,7 @@ const GroupPage = () => {
     // Add your leave logic here
   };
 
-  const { followersData, followingData, blockedData } = useUser();
-  console.log(followersData, followingData);
-  const [alert, setAlert] = useState(false);
+
 
   const handleClose = () => {
     setAlert(false);
@@ -168,13 +185,13 @@ const GroupPage = () => {
     }
   };
 
-  return groupDetails && participants && organizer ? (
+  return (groupId && groupDetails && participants && organizer) ? (
     <div className="body1">
       <div className="group-container">
         <div className="header1">
           <h1 className="headerh1">
             <span className="group-icon">👥</span> {groupDetails.groupName}
-          </h1>
+          </h1>{console.log(groupDetails)}
           {groupDetails.participantsCount !==
             groupDetails.participantsLimit && (
             <>
@@ -210,11 +227,13 @@ const GroupPage = () => {
           )}
         </div>
         <div>
+          <span>participant count </span>
           {groupDetails.participantsCount}/{groupDetails.participantsLimit}
         </div>
-        <div className="organizer-info">
+        <div className="organizer-info" style={{display:'flex',flexDirection:'column',alignItems:'flex-start'}}>
           <h3>Organizer</h3>
-          {organizer.userData.userProfile ? (
+          <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+            {organizer.userData.userProfile ? (
             <Avatar
               src={organizer.userData.userProfile}
               alt="Organizer Profile"
@@ -223,7 +242,7 @@ const GroupPage = () => {
           ) : (
             <AccountCircleOutlined />
           )}
-          <div className="organizer-container">
+          <div className="organizer-container" style={{width:'100%'}}>
             <h2 className="organizer-text">{organizer.userData.userName}</h2>
             <DialogActions>
               {userDetails.userId != organizer.userId && (
@@ -235,24 +254,30 @@ const GroupPage = () => {
                   View More
                 </button>
               )}
-
-              {/* {(followingData.includes(organizer.userId)) ? (
-        <LoadingButton variant='contained' loading={userFollowingProcess} loadingIndicator={<>Sending unfollow request...</>} className="unfollow-button" onClick={() => handleUnfollow(organizer.userId)}>
-          Unfollow
-        </LoadingButton>
-      ) : (
-        <LoadingButton variant='contained' loading={userFollowingProcess} loadingIndicator={<>Sending follow request...</>} className="follow-button" onClick={() => handleFollow(organizer.userId)}>
-          Follow
-        </LoadingButton>
-      )} */}
             </DialogActions>
           </div>
+          </div>
+          <div style={{padding:'10px'}}>
+            { organizer?.organizerRating?.ratingsList?.some(rating=>rating.userId==userDetails.userId) || (organizer?.userId == userDetails?.userId) ?
+            <Rating readOnly value={organizer?.organizerRating?.rating ?? 0 }/> :
+            <>
+              <Rating value={organizerRating} onChange={(e)=>setOrganizerRating(e.target.value)}/>
+              <LoadingButton loading={organizerRatingProcess} loadingIndicator={<>submitting..</>} onClick={()=>{handleRatingOrganizer()}}>Submit rating</LoadingButton>
+            </>
+          }
+          </div>
+          
         </div>
-        <div className="date-format">
+        <div className="date-format" style={{display:'flex',alignItems:'center'}}>
           <marquee>
-            <p>
+            <div style={{display:'flex',alignItems:'center', padding:'10px',marginTop:'16px'}}>
+              <p >
               Date From: {groupDetails.dateFrom} Date To: {groupDetails.dateTo}
             </p>
+            <Divider type="vertical" />
+            <p>Group Description : {groupDetails.about}</p>
+            </div>
+            
           </marquee>
         </div>
         <div id="participants-list">
@@ -264,8 +289,8 @@ const GroupPage = () => {
         </div>
       </div>
       <div className="chat-system">
-        {(participantData.groupId == groupId ||
-          groupDetails.organizerId == organizerData.organizerId) && (
+        {(participantData?.groupId == groupId ||
+          groupDetails?.organizerId == organizerData?.organizerId) && (
           <ChatBox group={groupDetails} organizer={organizer} />
         )}
       </div>

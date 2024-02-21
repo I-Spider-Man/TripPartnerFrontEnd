@@ -35,7 +35,14 @@ export const UserProvider = ({ children }) => {
   if(userData){
     try{
     const organizer=await axios.get(`${BaseUrl}/User/Organizer/${userData.userId}`);
-    localStorage.setItem('organizerDetails',JSON.stringify(organizer.data));
+    if(organizer.data){
+      const organizerR=await axios.get(`${BaseUrl}/organizer/ratings/${organizer.data.organizerId}`);
+      const organizerWithRating={
+        ...organizer.data,
+        rating:organizerR.data
+      }
+      localStorage.setItem('organizerDetails',JSON.stringify(organizerWithRating));
+    }
   }
   catch(error){
     console.log(error);
@@ -82,7 +89,15 @@ export const UserProvider = ({ children }) => {
   if (userData) {
     try{
   const participant=await axios.get(`${BaseUrl}/User/Participant/${userData.userId}`);
-    localStorage.setItem('participantDetails',JSON.stringify(participant.data));
+  if(participant.data){
+    const rating=await axios.get(`${BaseUrl}/Participant/rating/${participant.data.participantId}`);
+    const participantWithRating={
+      ...participant.data,
+      rating:rating.data,
+    }
+      localStorage.setItem('participantDetails',JSON.stringify(participantWithRating));
+  }
+  
   }
   catch(error){
     console.log(error);

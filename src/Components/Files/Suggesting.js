@@ -8,7 +8,7 @@ export const eventSuggestion=async(eventId)=>{
     const eventsWithPicture=await Promise.all(
         events.data.map(async(event)=>{
             const picList=await axios.get(`${BaseUrl}/event/pictureList/${event.eventId}`);
-            const picListWithUrl=picList.map(pic=>{
+            const picListWithUrl=picList.data?.map(pic=>{
                 return pictureUrl(pic);
             });
             return {
@@ -21,7 +21,7 @@ export const eventSuggestion=async(eventId)=>{
     const spotsWithPicture=await Promise.all(
         spots.data.map(async(spot)=>{
             const picList=await axios.get(`${BaseUrl}/spot/pictureList/${spot.spotId}`);
-            const picListWithUrl=picList.map(pic=>{
+            const picListWithUrl=picList.data.map(pic=>{
                 return pictureUrl(pic);
             });
             return {
@@ -40,7 +40,7 @@ export const spotSuggestion=async(spotId)=>{
     const eventsWithPicture=await Promise.all(
         events.data.map(async(event)=>{
             const picList=await axios.get(`${BaseUrl}/event/pictureList/${event.eventId}`);
-            const picListWithUrl=picList.map(pic=>{
+            const picListWithUrl=picList.data.map(pic=>{
                 return pictureUrl(pic);
             });
             return {
@@ -53,7 +53,7 @@ export const spotSuggestion=async(spotId)=>{
     const spotsWithPicture=await Promise.all(
         spots.data.map(async(spot)=>{
             const picList=await axios.get(`${BaseUrl}/spot/pictureList/${spot.spotId}`);
-            const picListWithUrl=picList.map(pic=>{
+            const picListWithUrl=picList.data.map(pic=>{
                 return pictureUrl(pic);
             });
             return {

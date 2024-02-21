@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getUserDetailsById } from "./User_profile_avator";
 import { BaseUrl } from "../config/BaseUrl";
+import { message } from "antd";
 export const fetchOrganizerDataByUserId=async(userId)=>{
   try{
     const organizer=await axios.get(`${BaseUrl}/organizer/userId/${userId}`);
@@ -12,17 +13,14 @@ export const fetchOrganizerDataByUserId=async(userId)=>{
 }
 export const fetchOrganizerDataById = async(id)=>{
     try{
-      const organizer = await axios.get(`${BaseUrl}/organizer/organizerId/${id}`)
-    .then(async (organizer) => {
-      return getUserDetailsById(organizer.data.userId)
-        .then((userData) => {
-          return {
-            ...organizer.data,
-            userData: userData
-          };
-        });
-    });
-      return organizer;
+      const organizer = await axios.get(`${BaseUrl}/organizer/organizerId/${parseInt(id)}`)
+      const rating=await axios.get(`${BaseUrl}/organizer/ratings/${organizer.data.organizerId}`);
+      const organizerWithUserData= await getUserDetailsById(organizer.data.userId);
+      return {
+        ...organizer.data,
+        organizerRating:rating.data,
+        userData:organizerWithUserData,
+      }
       
     }catch(error){
       console.log("error while fetching organizer by Id :" + error);
@@ -46,4 +44,14 @@ export const fetchOrganizerDataById = async(id)=>{
         console.log(error);
         return [];
     }
+}
+
+export const giveOrganizerRating=async(organizerId,userId,rating)=>{
+  try{
+    const response=await axios.post(`${BaseUrl}/organizer/ratings/${organizerId}`,{userId:userId,rating:rating});
+    message.success(response.data);
+  }catch(error){
+    console.log(error);
+    message.error(error.response.data);
+  }
 }

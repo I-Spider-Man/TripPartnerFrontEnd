@@ -12,6 +12,7 @@ import { Alert } from '@mui/material';
 import AlertCom from '../AlertCom';
 import { Galleria } from 'primereact/galleria';
 import FeedBack from '../Feedback/FeedBack';
+import NearByTouristSpots from '../Suggestions/NearByTouristSpots';
 function TouristSpot() {
   const {userDetails,participantData,organizerData}=useUser();
   const [spot,setSpots]=useState({});
@@ -131,13 +132,15 @@ const thumbnailTemplate = (item) => {
         />
           <GroupOrganizeForm id="ringtone-menu"
           keepMounted
-          
           spotName={spot.spotName}
           open={organizeFormVisible}
           onClose={()=>handleClose()} onSubmit={()=>handleOrganizeSubmit()} />
+          <div>
+            <NearByTouristSpots/>
+          </div>
           <div style={{padding:'5px'}}>
-                  <FeedBack spotId={spot?.spotId}/>
-                </div>
+            <FeedBack spotId={spot?.spotId}/>
+          </div>
           </> 
         ) : (
           <Loading/>

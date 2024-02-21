@@ -9,6 +9,8 @@ import GroupJoinPage from '../Group/GroupJoinPage';
 import AlertCom from '../AlertCom';
 import { Galleria } from 'primereact/galleria';
 import FeedBack from '../Feedback/FeedBack';
+import NearByEvents from '../Suggestions/NearByEvents';
+import NearByTouristSpots from '../Suggestions/NearByTouristSpots';
 
 function Event() {
   const [event, setEvent] = useState({});
@@ -142,7 +144,10 @@ const thumbnailTemplate = (item) => {
                     />
                   )}
                 </div>
-                <div style={{padding:'5px'}}>
+                <div>
+                  <NearByEvents eventId={event?.eventId}/>
+                  </div>
+                <div style={{padding:'5px',marginTop:'20px'}}>
                   <FeedBack eventId={event?.eventId}/>
                 </div>
               </>

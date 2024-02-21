@@ -21,26 +21,10 @@ import { Button, Result } from 'antd';
 import ProfileBottom from './ProfileBottom';
 
 export default function ProfilePage() {
-  const [isPopupOpen, setPopupOpen] = useState(false);
-  const [render,setRender]=useState(false);
-  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false); // Define isEditProfileOpen state
+ 
   const {userDetails}=useUser();
-  const openPopup = () => setPopupOpen(true);
-  const closePopup = () => setPopupOpen(false);
-  const [userdata,setUserData]=useState()
   const navigate=useNavigate();
-  const openEditProfile = () => setIsEditProfileOpen(true);
-  useEffect(()=>{
-    console.log(userDetails);
-  },[userDetails])
-  const setCoverPhoto = (photo) => {
-    console.log('Setting cover photo:', photo);
-  };
-  const closeEditProfile = () => setIsEditProfileOpen(false);
-  const handleEditProfileToggle = () => {
-    setIsEditProfileOpen(!isEditProfileOpen);
-  };
-
+  
   return userDetails ? (
     <section style={{ backgroundColor: 'rgb(151, 235, 207)', marginTop:'10vh',minHeight:'100%', width:'100%' }}>
       <MDBContainer className="py-5">

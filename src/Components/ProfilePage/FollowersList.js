@@ -26,7 +26,7 @@ function FollowersList() {
       title: 'Action',
       key: 'action',
       render: (text, record) => (
-        <Button onClick={() =>navigate(`/profilePage2/${record.userId}`)}>View</Button>
+        <Button onClick={() =>navigate(`/profileFollow/${record.userId}`)}>View</Button>
       ),
     },
   ];

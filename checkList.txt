@@ -1,1 +1,5 @@
-design admin page
+Home page popular spots no data image
+
+event and spot suggestion need to add placeholder
+
+nav menu view group is not working

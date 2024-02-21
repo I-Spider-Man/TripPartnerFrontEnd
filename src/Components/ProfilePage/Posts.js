@@ -111,20 +111,16 @@ function Posts() {
   }, []);
   return (
     <>
-      {userPosts.slice(1).length > 0 ? (
+      {userPosts.length > 0 ? (
         <div style={{ display: "flex", flexDirection: "row" }}>
           <ImageList
             style={{
               overflowY: "auto",
-
-              scrollbarWidth: "none",
-              "-ms-overflow-style": "none",
-              "::-webkit-scrollbar": { display: "none" },
             }}
             sx={{ width: "1700px", height: 300 }}
             cols={4}
           >
-            {userPosts?.slice(1).map((item) => (
+            {userPosts?.map((item) => (
               <div
                 style={{
                   display: "flex",

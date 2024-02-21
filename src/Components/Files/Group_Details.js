@@ -1,14 +1,15 @@
 import axios from "axios";
 import { getUserDetailsById } from "./User_profile_avator";
 import { BaseUrl } from "../config/BaseUrl";
+import { message } from "antd";
 
 export const postGroup = async (value) => {
   try {
     const response = await axios.post(`${BaseUrl}/organizer`, value);
 
     if (response.status === 201) {
-      alert("you have created a group successfully");
-      return true;
+      message.success("You have created a group successfully.");
+      return response.data;
     }
   } catch (error) {
     if (error.response.status === 409) {
