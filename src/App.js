@@ -12,6 +12,7 @@ import ProfilePage from './Components/ProfilePage/Profile';
 import { UserProvider } from './Components/Auth/UserContext';
 import GroupPage from './Components/GroupPage/GroupPage';
 import ProfilePage2 from './Components/ProfilePage2/Profile';
+import Connect from './Components/Footer/Connect';
 function App() {
   
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path='/profile' element={<ProfilePage/>}/>
         <Route path='/GroupPage/:groupId' element={<GroupPage/>}/>
         <Route path='/profileFollow/:userId' element={<ProfilePage2/>}/>
+        <Route path='/Connect' element={<Connect/>}/>
       </Routes></div>
       <div className='footer'><Footer/></div>
     </div>

@@ -1,45 +1,74 @@
-.footer{
-    padding: 10px;
+/* Base styles */
+.footer {
+    padding: 20px;
     display: flex;
     flex-direction: row;
-    width: 100%;
-    height: fit-content;
     justify-content: space-between;
-    background-color: rgb(0, 0, 0);
-    font-family: "Poppins-Medium", Helvetica;
+    align-items: flex-start;
+    background-color: #000;
+    color: #fff;
+    font-family: "Poppins-Medium", sans-serif;
 }
-.footer h3{
+
+.footer h3 {
     text-transform: uppercase;
+    font-size: 1.1rem;
 }
-.footer .Logo-container img{
-    height: 150px;
-    width: 370px;
+
+.footer img {
+    max-width: 100%;
+    height: auto;
 }
-.footer .section-0{
-    padding: 0px 0px 0px 50px
+
+.footer section {
+    padding: 0 20px;
 }
-.footer .section-2{
-    padding: 0px 50px 0px 0px
+
+/* Sections */
+.footer .section-0,
+.footer .section-2 {
+    flex: 1;
 }
-.footer .section-1{
+
+/* Section 1 */
+.footer .section-1 {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     gap: 30px;
 }
-.footer .Pages-container, .Service-container, .Contact-container, .Socialmedia-container{
+
+/* Content containers */
+.footer .section-content {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-}
-.Contact-container .contact-details{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 4px;
-}
-.Socialmedia-container .social-icons{
-    display: flex;
-    flex-direction: row;
     gap: 10px;
+}
+
+/* Contact details */
+.footer .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Social media icons */
+.footer .social-icons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer section {
+        padding: 10px;
+    }
+
+    .footer .section-1 {
+        flex-direction: column;
+    }
 }

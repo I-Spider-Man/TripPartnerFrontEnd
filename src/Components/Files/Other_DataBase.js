@@ -17,7 +17,14 @@ export const forgotPassword=async(userEmail)=>{
         console.log("error while sending forgotPassword Request : "+error)
     }
 }
-
+export const sendAdminFeedBack=async(userId,feedBack,indicate)=>{
+    try{
+        const response=await axios.post(`${BaseUrl}/User/adminFeedBack`,{userId:userId,feedBack:feedBack,indicate:indicate});
+        message.success(response.data);
+    }catch(error){
+        console.log(error);
+    }
+}
 export const allSpotTitle=async()=>{
     console.log('renders')
     try{

@@ -1,4 +1,4 @@
-import { Avatar, Button, Dialog, DialogActions, DialogContent, DialogTitle, Rating, TextField } from '@mui/material'
+import { Avatar, Button, Dialog, DialogActions, DialogContent, DialogTitle, InputAdornment, Rating, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useUser } from '../Auth/UserContext'
 import { fetchEventComments, postEventComment } from '../Files/Event_Details';
@@ -52,8 +52,27 @@ function FeedBack({spotId,eventId}) {
   return (
     <div style={{minHeight:'50vh'}}>
         <div style={{display:'flex',flexDirection:'row',alignItems:'center',height:'50px'}}>
-            <Avatar src={userDetails?.userProfile} alt='User' sx={{position:'absolute'}} />
-            <TextField fullWidth placeholder='Give your thougths' sx={{borderColor:'black',color:'white',paddingLeft:'45px',paddingRight:'5px'}} value={comment} onChange={(e)=>setComment(e.target.value)}/>
+            
+        <TextField
+  fullWidth
+  placeholder="Give your thoughts"
+  InputProps={{
+    startAdornment: (
+      <InputAdornment position="start">
+        <Avatar src={userDetails?.userProfile} alt="User" />
+      </InputAdornment>
+    ),
+  }}
+  sx={{
+    borderColor: 'black',
+    color: 'white',
+    paddingLeft: '45px',
+    paddingRight: '5px'
+  }}
+  value={comment}
+  onChange={(e) => setComment(e.target.value)}
+/>
+
             <Button variant='contained' disabled={!comment.trim()} onClick={()=>{setRatingDialog(!ratingDialog)}}>post</Button>
         </div>
         <Dialog
