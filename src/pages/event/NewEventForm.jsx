@@ -13,13 +13,23 @@ import { Button, CircularProgress, styled } from '@mui/material';
 import { message } from 'antd';
 const NewEventForm = () => {
   const [submitProcess,setSubmitProcess]=useState(false);
+  const [location,setLocation] = useState(
+    {
+      street: '',
+      city: '',
+      state: '',
+      country: '',
+      postalCode: '',
+    }
+  )
   const [eventData, setEventData] = useState({
     eventName: '',
-    location: '',
+    location: location,
     startDate: '',
     endDate: '',
     description: ''
   });
+
   const [eventPicture,setEventPicture]=useState(null);
   const [privewURL,setPreviewURL]=useState(null);
   const handleChange = (e) => {
@@ -29,7 +39,17 @@ const NewEventForm = () => {
       [name]: value,
     }));
   };
-
+  const handleLocationChange=(e)=>{
+    const {name, value}=e.target;
+    setEventData((prevEventData) => ({
+      ...prevEventData,
+      location: {
+        ...prevEventData.location,
+        [name]: value,
+      },
+    }));
+  }
+console.log(eventData);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitProcess(true);
@@ -45,6 +65,7 @@ const NewEventForm = () => {
       return alert("provide event image");
     }
     try {
+      
       const response=await postEvent(formData);
       if(response.status===200){
         message.success(response.data);
@@ -131,13 +152,59 @@ const NewEventForm = () => {
                 </label>
                 <label>
                     Location:
-                    <input
+                    <div style={{padding:'10px', borderStyle: 'ridge'}}>
+                      <label>
+                        Street:
+                        <input
                         type="text"
-                        name="location"
-                        value={eventData.location}
-                        onChange={handleChange}
+                        name="street"
+                        value={eventData.location.street}
+                        onChange={handleLocationChange}
                         required
-                    />
+                        />
+                      </label>
+                      <label>
+                        City:
+                        <input
+                        type="text"
+                        name="city"
+                        value={eventData.location.city}
+                        onChange={handleLocationChange}
+                        required
+                        />
+                      </label>
+                      <label>
+                        State:
+                        <input
+                        type="text"
+                        name="state"
+                        value={eventData.location.state}
+                        onChange={handleLocationChange}
+                        required
+                        />
+                      </label>
+                      <label>
+                        Country:
+                        <input
+                        type="text"
+                        name="country"
+                        value={eventData.location.country}
+                        onChange={handleLocationChange}
+                        required
+                        />
+                      </label>
+                      <label>
+                        PostalCode:
+                        <input
+                        type="number"
+                        name="postalCode"
+                        value={eventData.location.postalCode}
+                        onChange={handleLocationChange}
+                        required
+                        />
+                      </label>
+                    </div>
+                    
                 </label>
                 <label>
                   Start Date:

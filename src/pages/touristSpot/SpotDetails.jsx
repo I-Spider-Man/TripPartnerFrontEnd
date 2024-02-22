@@ -94,8 +94,11 @@ const SpotDetails = () => {
           <div className="right">
             <h1 className="title">Tourist Spot Information</h1>
             <div className="item">
-              <div className="details">
+              <div className="details" style={{display:'flex',flexDirection:'column'}}>
                 <h1 className="itemTitle">{spotDetails.spotName}</h1>
+                <label>People count: {spotDetails.peopleCount}</label>
+                <label>Description: {spotDetails.description}</label>
+                <label>Location: {spotDetails.location?.street},{spotDetails.location?.city},{spotDetails.location?.state},{spotDetails.location?.country},{spotDetails.location?.postalCode}</label>
               </div>
             </div>
             <Button type="primary" onClick={showModal}>

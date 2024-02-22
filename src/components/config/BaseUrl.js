@@ -1,1 +1,1 @@
-export const BaseUrl="http://13.60.9.41:8000";
+export const BaseUrl = process.env.REACT_APP_BASE_URL || "http://localhost:8080"

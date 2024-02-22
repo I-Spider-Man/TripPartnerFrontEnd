@@ -79,7 +79,13 @@ const Eventdatatable = () => {
     const columns = [
         { field: "eventId", headerName: "Event ID", width: 100 },
         { field: "eventName", headerName: "Event Name", width: 200 },
-        { field: "location", headerName: "Location", width: 150 },
+        { field: "location", headerName: "Location", width: 150 ,renderCell:(params)=>{
+            return(
+                <>
+                {params.row.location?.state}
+                </>
+            )
+        }},
         { field: "startDate", headerName: "Start Date", width: 150 },
         { field: "endDate", headerName: "End Date", width: 150 },
         { field: "eventStatus", headerName: "Event Status", width: 150 },

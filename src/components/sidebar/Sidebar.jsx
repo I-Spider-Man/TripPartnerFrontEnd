@@ -12,6 +12,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
+import FeedbackIcon from '@mui/icons-material/Feedback';
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
@@ -76,6 +77,12 @@ const Sidebar = () => {
             <li>
             <TourIcon className="icon" />
             <span>Tourist Spots</span>
+            </li>
+          </Link>
+          <Link to="/feedBack" style={{textDecoration: "none"}}>
+            <li>
+            <FeedbackIcon className="icon" />
+            <span>FeedBack</span>
             </li>
           </Link>
           <p className="title">USER</p>

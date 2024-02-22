@@ -94,8 +94,14 @@ const EventDetails = () => {
           <div className="right">
             <h1 className="title">Event Information</h1>
             <div className="item">
-              <div className="details">
+              <div className="details" style={{display:'flex',flexDirection:'column'}}>
                 <h1 className="itemTitle">{eventDetails.eventName}</h1>
+                <label>People count: {eventDetails.peopleCount}</label>
+                <label>Event Status: {eventDetails.eventStatus}</label>
+                <label>Description: {eventDetails.description}</label>
+                <label style={{display:'flex',flexDirection:'column'}}>Happening on 
+                <label>Location: {eventDetails.location?.street},{eventDetails.location?.city},{eventDetails.location?.state},{eventDetails.location?.country},{eventDetails.location?.postalCode}</label>
+                <label>Starts on: {eventDetails.startDate}</label> <label>Ends on: {eventDetails.endDate}</label> </label>
               </div>
             </div>
             <Button type="primary" onClick={showModal}>

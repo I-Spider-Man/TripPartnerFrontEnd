@@ -32,6 +32,7 @@ import SingleUser from "./components/User/SingleUser";
 import TouristSpot from "./pages/touristSpot/TouristSpot";
 import NewSpot from "./pages/touristSpot/NewSpot";
 import SpotDetails from "./pages/touristSpot/SpotDetails";
+import FeedBack from "./pages/feedBack/FeedBack";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -68,6 +69,9 @@ function App() {
                 element={<NewSpot inputs={spotInputs} title="Add New Tourist spots" />}
               />
               <Route path=":spotId" element={<SpotDetails />} />
+            </Route>
+            <Route path="feedBack">
+              <Route index element={<FeedBack/>}/>
             </Route>
             <Route path="organizer">
               <Route index element={<Organizers/>}/>

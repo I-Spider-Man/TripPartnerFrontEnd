@@ -1,83 +1,77 @@
-import "./new.scss";
-import Sidebar from "../../components/sidebar/Sidebar";
+import React, { useState } from 'react';
+import '../event/NewEventForm.scss';
 import Navbar from "../../components/navbar/Navbar";
-import { useEffect, useState } from "react";
+import Sidebar from "../../components/sidebar/Sidebar";
+import {LoadingButton} from '@mui/lab';
+import { postSpot } from '../../PostData';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Button, CircularProgress, styled } from '@mui/material';
-import { postSpot } from "../../PostData";
-import { LoadingButton } from "@mui/lab";
-const NewSpot = ({ inputs, title }) => {
+import { message } from 'antd';
+const NewSpot = () => {
   const [submitProcess,setSubmitProcess]=useState(false);
-  const [spotData, setspotData] = useState({
-    spotName:"",
-    location:"",
-    description:"",
-  }); 
-  const [previewURL,setPreviewURL]=useState(null);
+  const [location,setLocation] = useState(
+    {
+      street: '',
+      city: '',
+      state: '',
+      country: '',
+      postalCode: '',
+    }
+  )
+  const [spotData, setSpotData] = useState({
+    spotName: '',
+    location: location,
+    description: ''
+  });
+
   const [spotPicture,setSpotPicture]=useState(null);
-  const handleInputChange = (inputId, value) => {
-    setspotData((prevData) => ({
+  const [privewURL,setPreviewURL]=useState(null);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSpotData((prevData) => ({
       ...prevData,
-      [inputId]: value,
+      [name]: value,
     }));
   };
-  const handleDes=(e)=>{
-    const {name,value}=e.target;
-    setspotData((prevData)=>({
-      ...prevData,
-      [name]:value,
-    }))
+  const handleLocationChange=(e)=>{
+    const {name, value}=e.target;
+    setSpotData((prevSpotData) => ({
+      ...prevSpotData,
+      location: {
+        ...prevSpotData.location,
+        [name]: value,
+      },
+    }));
   }
-  const handlePicture=(e)=>{
-    const file=e.target.files[0];
-    if((Math.floor(file.size/1024))<500){
-      setSpotPicture(file);
-      if(file){
-            const fileRead=new FileReader();
-            fileRead.onloadend=()=>{
-              setPreviewURL(fileRead.result);
-            };
-            fileRead.readAsDataURL(file);
-          }else{
-            setPreviewURL(null);
-          }
-    }
-    else{
-      alert("file size needs to be less then 500kb");
-    }
-  }
-  const handleSendClick = async (e) => {
+console.log(spotData);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    setSubmitProcess(true);
     const formData=new FormData();
     if(spotPicture){
       formData.append('spotPicture',spotPicture);
       if(!Object.values(spotData).some(value=>!value)){
-        formData.append('newSpot',JSON.stringify(spotData))
+        formData.append('newSpot',JSON.stringify(spotData));
       }else{
         return alert("enter all spot details");
       }
     }else{
-      return alert("provide spot picture");
+      return alert("provide spot image");
     }
-    
-    
     try {
-      console.log(spotData);
-      setSubmitProcess(true);
-      const response = await postSpot(formData);
-      console.log(response.data);
-      if(response.status===201){
-        alert(response.data);
-        setSubmitProcess(false);
+      
+      const response=await postSpot(formData);
+      if(response.status===200){
+        message.success(response.data);
         window.location.reload();
       }
       else{
-        alert(response.data);
+        message.error(response.data);
+        return null;
       }
-      
     } catch (error) {
-      console.error("Error sending spot data:", error);
+      console.error('Error creating spot:', error);
+    }finally{
       setSubmitProcess(false);
     }
   };
@@ -92,64 +86,118 @@ const NewSpot = ({ inputs, title }) => {
     whiteSpace: 'nowrap',
     width: 1,
   });
+  const handlePicture=(e)=>{
+    const file=e.target.files[0]
+    if((Math.floor(file.size/1024))<500){
+      setSpotPicture(file);
+      if(file){
+        const fileRead=new FileReader();
+        fileRead.onloadend=()=>{
+          setPreviewURL(fileRead.result)
+        }
+        fileRead.readAsDataURL(file);
+      }
+      else{
+        setPreviewURL(null);
+      }
+    }else{
+      alert("picture size needs to be less then 500kb");
+    }
+  }
   return (
-    <div className="new">
-      <Sidebar />
-      <div className="newContainer">
-        <Navbar />
-        <div className="top">
-          <h1>{title}</h1>
-        </div>
-        <div className="bottom">
-          <div className="left">
-          <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
-                  Upload file
-                  <VisuallyHiddenInput type="file" onChange={handlePicture}/>
-                </Button>
-          {previewURL && (<>
-          <div>
-            <img src={previewURL} alt="priew" style={{width:"100%",minHeight:"220px",maxHeight:"220px",paddingTop:'10px'}}/>
-          </div>
-          </>)}
-          </div>
-          <div className="right">
-            <form>
-
-              <div className="formInput">
-              
-              </div>
- 
-              {inputs.map((input) => (
-                <div className="formInput" key={input.id}>
-                  <label>{input.header}</label>
-                  <input
-                    type={input.type}
-                    placeholder={input.placeholder}
-                    onChange={(e) => handleInputChange(input.label, e.target.value)}
-                    required
-                  />
-                </div>
-              ))}
-              <label>
-                    Description:
-                    <textarea
-                        name="description"
-                        placeholder="A stunning white marble mausoleum built by the Mughal emperor Shah Jahan."
-                        value={spotData.description}
-                        style={{width:'100%', marginRight:'35px'}}
-                        onChange={handleDes}
+    <div className="list">
+            <Sidebar />
+            <div className="listContainer">
+                <Navbar />
+    <div className="newEventForm">
+      <h2>Add New Tourist Spot</h2>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Spot Name:
+                    <input
+                        type="text"
+                        name="spotName"
+                        value={spotData.spotName}
+                        onChange={handleChange}
                         required
                     />
                 </label>
-
-              <LoadingButton variant="none" sx={{width:'100%',height:'100%'}} loading={submitProcess} loadingIndicator={<>uploading new spot <CircularProgress sx={{color:'white'}}/></>} onClick={handleSendClick}>Send</LoadingButton>
-
+                <label>
+                    Location:
+                    <div style={{padding:'10px', borderStyle: 'ridge'}}>
+                      <label>
+                        Street:
+                        <input
+                        type="text"
+                        name="street"
+                        value={spotData.location.street}
+                        onChange={handleLocationChange}
+                        required
+                        />
+                      </label>
+                      <label>
+                        City:
+                        <input
+                        type="text"
+                        name="city"
+                        value={spotData.location.city}
+                        onChange={handleLocationChange}
+                        required
+                        />
+                      </label>
+                      <label>
+                        State:
+                        <input
+                        type="text"
+                        name="state"
+                        value={spotData.location.state}
+                        onChange={handleLocationChange}
+                        required
+                        />
+                      </label>
+                      <label>
+                        Country:
+                        <input
+                        type="text"
+                        name="country"
+                        value={spotData.location.country}
+                        onChange={handleLocationChange}
+                        required
+                        />
+                      </label>
+                      <label>
+                        PostalCode:
+                        <input
+                        type="number"
+                        name="postalCode"
+                        value={spotData.location.postalCode}
+                        onChange={handleLocationChange}
+                        required
+                        />
+                      </label>
+                    </div>
+                    
+                </label>
+                <label>
+                    Description:
+                    <textarea
+                        name="description"
+                        value={spotData.description}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
+                  Upload file
+                  <VisuallyHiddenInput type="file" onChange={handlePicture}/>
+                </Button>
+                {privewURL && (<><img src={privewURL} alt='preview' style={{width:"100%",height:"300px"}}/></>)}
+                <LoadingButton type="submit" variant='contained' sx={{width:'100%',height:'80px'}} loading={submitProcess} loadingIndicator={<CircularProgress sx={{color:'white',height:15,width:15 }}/>}>Submit</LoadingButton>
             </form>
-          </div>
-        </div>
-      </div>
+    </div>
+    </div>
     </div>
   );
 };
- 
+
 export default NewSpot;
