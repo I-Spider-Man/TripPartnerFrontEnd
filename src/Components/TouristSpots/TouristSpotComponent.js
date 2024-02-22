@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 function TouristSpotComponent(props) {
   const { post } = props;
   console.log(post)
-  return post && (
+  return  post?.spotPictureList?.[0] ? (
     <Grid item xs={12} md={6}>
       <Link  to={`/Spot/${post.spotName}`}>
       <CardActionArea component="Link">
@@ -35,7 +35,19 @@ function TouristSpotComponent(props) {
       </Link>
       
     </Grid>
-  );
+  ):(
+    <Grid item xs={12} md={6}>
+    <CardActionArea >
+      <Card sx={{ display: 'flex', height: 120, width: 500 }}>
+        <CardContent sx={{ flex: 1 }}>
+          <Typography component="h2" variant="h5">
+            No Tourist Spots
+          </Typography>
+        </CardContent>
+      </Card>
+    </CardActionArea>
+  </Grid>
+  )
 }
 
 TouristSpotComponent.propTypes = {

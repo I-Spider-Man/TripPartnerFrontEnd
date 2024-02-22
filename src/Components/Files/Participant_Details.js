@@ -57,3 +57,10 @@ export const fetchParticipantByUserId=async(userId)=>{
         console.log(error);
     }
 }
+export const giveParticipantRating=async(participantId,userId,rating)=>{
+    try{
+        const rasponse=await axios.post(`${BaseUrl}/Participant/rating/${participantId}`,{userId:userId,rating:rating});
+    }catch(error){
+        console.log(error);
+    }
+}

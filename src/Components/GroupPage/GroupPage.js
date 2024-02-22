@@ -163,28 +163,6 @@ const GroupPage = () => {
     // Add your leave logic here
   };
 
-
-
-  const handleClose = () => {
-    setAlert(false);
-  };
-  const handleFollow = async (organizerId) => {
-    try {
-      await userFollowOrganizer(userDetails.userId, organizerId);
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleUnfollow = async (organizerId) => {
-    try {
-      await userUnfollowOrganizer(userDetails.userId, organizerId);
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (groupId && groupDetails && participants && organizer) ? (
     <div className="body1">
       <div className="group-container">

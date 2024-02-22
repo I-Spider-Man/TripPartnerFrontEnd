@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import { Carousel } from 'primereact/carousel';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { eventSuggestion } from '../Files/Suggesting';
@@ -28,7 +29,7 @@ function NearByEvents({eventId}) {
         <div style={{padding:'10px'}}>
                   <h1>NearByEvents </h1>
                   {console.log(nbv.eventSuggestion)}
-                  {nbv?.eventSuggestion?.map(event=>
+                  {nbv?.eventSuggestion?.length >0 ? nbv?.eventSuggestion?.map(event=>
                     <Card sx={{ maxWidth: 345 }}>
                         <CardActionArea onClick={()=>{navigate(`/Events/${event?.eventName}`)}}>
                             <CardMedia
@@ -52,12 +53,22 @@ function NearByEvents({eventId}) {
                         </CardActionArea>
                     </Card>
 
+                  ):(
+                    <Card sx={{ maxWidth: 345 ,height: 350}}>
+                    <CardActionArea>
+                        <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                            No Events happening nearBy this Event.
+                        </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
                   )}
                   
                 </div>
                 <div style={{padding:'10px'}}>
                 <h1>NearByTouristSpots</h1>
-                {nbv?.spotSuggestion?.map(spot=> <Card sx={{ maxWidth: 345 }}>
+                {nbv?.spotSuggestion?.length>0 ? nbv?.spotSuggestion?.map(spot=> <Card sx={{ maxWidth: 345 }}>
                     <CardActionArea>
                         <CardMedia
                         component="img"
@@ -77,7 +88,17 @@ function NearByEvents({eventId}) {
                         </Typography>
                         </CardContent>
                     </CardActionArea>
-                    </Card>)}
+                    </Card>):(
+                         <Card sx={{ maxWidth: 345 ,height: 350}}>
+                         <CardActionArea>
+                             <CardContent>
+                             <Typography gutterBottom variant="h5" component="div">
+                                 No Tourist Spots nearBy where this event is happening.
+                             </Typography>
+                             </CardContent>
+                         </CardActionArea>
+                     </Card>
+                    )}
                 
                 </div>
     </div>

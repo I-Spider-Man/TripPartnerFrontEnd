@@ -37,7 +37,17 @@ function EventComponent(props) {
       
     </Grid>
   ):(
-    <Empty/>
+    <Grid item xs={12} md={6}>
+      <CardActionArea >
+        <Card sx={{ display: 'flex', height: 120, width: 500 }}>
+          <CardContent sx={{ flex: 1 }}>
+            <Typography component="h2" variant="h5">
+              No Events
+            </Typography>
+          </CardContent>
+        </Card>
+      </CardActionArea>
+    </Grid>
   );
 }
 

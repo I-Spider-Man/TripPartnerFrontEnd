@@ -11,7 +11,7 @@ import { useUser } from '../Auth/UserContext';
 import { LoadingButton } from '@mui/lab';
 import { useNavigate } from 'react-router-dom';
 const GroupOrganizeForm = ({event,eventName, spotName, ...props }) => {
-  const {userDetails}=useUser();
+  const {userDetails,updateOrganizerData}=useUser();
   const [submitProcess,setSubmitProcess]=useState(false);
   const navigate=useNavigate();
   const { onClose, onSubmit, open, ...other } = props;
@@ -74,8 +74,11 @@ const GroupOrganizeForm = ({event,eventName, spotName, ...props }) => {
     setSubmitProcess(true);
     try{
       const groupResponse=await postGroup(organizerFrom);
-      navigate(`/GroupPage/${groupResponse.groupId}`);
-      onSubmit();
+      if(groupResponse){
+        updateOrganizerData();
+        navigate(`/GroupPage/${groupResponse.groupId}`);
+        onSubmit();
+      }
     }catch(error){
       console.log(error);
       alert("error while sending group form");

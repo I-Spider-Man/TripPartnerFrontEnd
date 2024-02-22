@@ -24,8 +24,17 @@ export const getAllParticipantsById = async (grpId) => {
     const response = await axios.get(
       `${BaseUrl}/Participant/group/${grpId}`
     );
+    const participantR=await Promise.all(
+      response.data.map(async(participant)=>{
+        const rating=await axios.get(`${BaseUrl}/Participant/rating/${participant.participantId}`);
+        return {
+          ...participant,
+          participantRating:rating.data,
+        }
+      })
+    )
     const participantWithUserData = await Promise.all(
-      response.data.map(async (participant) => {
+      participantR.map(async (participant) => {
         const userData = await getUserDetailsById(participant.userId);
         console.log(userData);
         return {
