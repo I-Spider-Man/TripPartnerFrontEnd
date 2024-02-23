@@ -6,7 +6,6 @@ import { fetchTouristSpotsData } from '../../DataStorage';
 import { spotDelete } from '../../components/DeleteStorage';
 import { Link } from 'react-router-dom';
 import { Button, Stack } from '@mui/material';
-import axios from 'axios';
 import { Modal, Upload, Space, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axiosInstance from '../login/axiosinstance';

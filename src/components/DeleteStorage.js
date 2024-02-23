@@ -1,9 +1,10 @@
-import axios from "axios";
+
+import axiosInstance from "../pages/login/axiosinstance";
 
 export const spotDelete = async (id) => {
 
       try {
-        const response=await axios.delete(`http://localhost:8080/Admin/touristSpots/${id}`);
+        const response=await axiosInstance.delete(`/Admin/touristSpots/${id}`);
         return response;
       } catch (error) {
         console.error("Error deleting user:", error);
@@ -13,7 +14,7 @@ export const spotDelete = async (id) => {
   };
 export const participantDelete = async (id) =>{
   try{
-    const response=await axios.delete(`http://localhost:8080/Admin/participants/${id}`);
+    const response=await axiosInstance.delete(`/Admin/participants/${id}`);
     alert(response.data);
   }catch(error){
     console.log(error);
@@ -23,7 +24,7 @@ export const participantDelete = async (id) =>{
   export const eventDelete = async (id) => {
 
     try {
-      const response=await axios.delete(`http://localhost:8080/Admin/events/${id}`);
+      const response=await axiosInstance.delete(`/Admin/events/${id}`);
       return response;
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -34,7 +35,7 @@ export const participantDelete = async (id) =>{
   export const userDelete = async (id) => {
 
     try {
-      await axios.delete(`http://localhost:8080/Admin/users/${id}`);
+      await axiosInstance.delete(`/Admin/users/${id}`);
     } catch (error) {
       console.error("Error deleting user:", error);
     }
@@ -42,7 +43,7 @@ export const participantDelete = async (id) =>{
 };
   export const organizerDelete =async (organizerId)=>{
     try{
-      await axios.delete(`http://localhost:8080/Admin/organizers/${organizerId}`);
+      await axiosInstance.delete(`/Admin/organizers/${organizerId}`);
     }catch(error){
       console.error("Error occured while deleting organizer" + error);
     }
@@ -50,7 +51,7 @@ export const participantDelete = async (id) =>{
 
   export const groupDelete =async(groupId)=>{
     try{
-      await axios.delete(`http://localhost:8080/Admin/groups/${groupId}`)
+      await axiosInstance.delete(`/Admin/groups/${groupId}`)
     }catch(error){
       console.error("error on deleteing Group :",error);
     }

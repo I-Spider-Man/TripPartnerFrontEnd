@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import './OrganizerDetail.scss';
+import axiosInstance from '../login/axiosinstance';
 
 const OrganizerDetail = () => {
   const { organizerId } = useParams();
@@ -12,7 +13,7 @@ const OrganizerDetail = () => {
   useEffect(() => {
     const fetchOrganizerDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/Admin/organizers/${organizerId}`);
+        const response = await axiosInstance.get(`/Admin/organizers/${organizerId}`);
         setOrganizerDetails(response.data);
       } catch (error) {
         console.error('Error fetching organizer details:', error);

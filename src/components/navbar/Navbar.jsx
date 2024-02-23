@@ -48,13 +48,13 @@ const Navbar = () => {
             />
             {dropdownVisible && (
               <div className="dropdown">
-                 <Link to="/" style={{ textDecoration: "none" }}>
+                 <Link to="/dashboard" style={{ textDecoration: "none" }}>
                 <div className="dropdownItem">Dashboard</div>
                 </Link>
                 <Link to="/Profile/${params.row.userId}" style={{ textDecoration: "none" }}>
                 <div className="dropdownItem">Profile</div>
                 </Link>
-                <Link to="/" style={{ textDecoration: "none" }}>
+                <Link to="/Logout" style={{ textDecoration: "none" }}>
                 <div className="dropdownItem">Logout</div>
                 </Link>
               </div>

@@ -6,7 +6,8 @@ import { useParams } from "react-router-dom";
 import { fetchSpotDataById } from "../../DataStorage";
 import { Modal, Upload, Button, Space, message } from "antd";
 import { UploadOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
-import axios from 'axios';
+
+import axiosInstance from "../login/axiosinstance";
 
 const SpotDetails = () => {
   const [spotDetails, setSpotDetails] = useState({});
@@ -48,7 +49,7 @@ const SpotDetails = () => {
       });
 
       // Your API endpoint for uploading spot images
-      await axios.post("http://localhost:8080/updateSpotPicture", formData);
+      await axiosInstance.post("/updateSpotPicture", formData);
 
       setIsModalVisible(false);
       setFileList([]);

@@ -2,10 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+
 import Navbar from '../../components/navbar/Navbar';
 import Sidebar from '../../components/sidebar/Sidebar';
 import './GroupDetails.scss';
+import axiosInstance from '../login/axiosinstance';
 
 const GroupDetails = () => {
   const { groupId } = useParams();
@@ -14,7 +15,7 @@ const GroupDetails = () => {
   useEffect(() => {
     const fetchGroupDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/Admin/groups/${groupId}`);
+        const response = await axiosInstance.get(`/Admin/groups/${groupId}`);
         setGroupDetails(response.data);
       } catch (error) {
         console.error('Error fetching group details:', error);

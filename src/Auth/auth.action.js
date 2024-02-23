@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_BASE_URL } from "../config/api";
 import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS , LOGOUT } from "./auth.actiontype";
+import { message } from "antd";
 
 export const loginUserAction = (loginData) => async (dispatch) => {
     console.log(loginData);
@@ -10,18 +11,19 @@ export const loginUserAction = (loginData) => async (dispatch) => {
         console.log(response.data.token);
         if (response.data.token) {
             localStorage.setItem("jwt", response.data.token);
-            // const a=localStorage.getItem("jwt");
+            const a=localStorage.getItem("jwt");
 
             console.log(response.data.token);
-            // console.log(a);
         }
 
         console.log("login success", response.data);
+        message.success("Welcome To Admin page")
         dispatch({ type: LOGIN_SUCCESS, payload: response.data.token });
         return true;
 
     } catch (error) {
         console.log("-----", error);
+        message.error("Wrong password or email. please enter correct ca")
         dispatch({ type: LOGIN_FAILURE, payload: error });
         return false;
     }
@@ -37,6 +39,7 @@ export const registerUserAction = (registerData) => async (dispatch) => {
             localStorage.setItem("jwt", data.token);
         }
         console.log("register", data);
+        message.success("Welcome To Admin page")
         dispatch({ type: LOGIN_SUCCESS, payload: data.token });
     } catch (error) {
         console.log("-----", error);

@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate instead of useHistory
 import { useDispatch } from 'react-redux';
 import { loginUserAction } from '../../Auth/auth.action';
+import img from '../login/Trip.jpeg';
 
 const defaultTheme = createTheme();
 
@@ -27,7 +28,7 @@ const SignInSide = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const loginData = { email, password };
-    const sucess = await dispatch(loginUserAction(loginData))
+    const sucess =await dispatch(loginUserAction(loginData))
       if (sucess) {
         navigate('/dashboard');
       }
@@ -36,6 +37,7 @@ const SignInSide = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
+        
         <CssBaseline />
         <Grid
           item
@@ -50,10 +52,30 @@ const SignInSide = () => {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
+
         />
+         <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              position: 'fixed', // Position the image absolutely within the grid container
+              top: '50%', // Center the image vertically
+              left: '23%', // Center the image horizontally
+              transform: 'translate(-50%, -50%)', // Center the image both horizontally and vertically
+              zIndex: 1, // Ensure the image appears above the background grid
+            }}
+          >
+            <div className='akash'>
+              <img src={img} alt="Image" />
+            </div>
+          </Box>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
+              zIndex:2,
               my: 8,
               mx: 4,
               display: 'flex',

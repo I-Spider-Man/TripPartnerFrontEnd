@@ -4,7 +4,6 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import Chart from '../../components/chart/Chart';
 import List from '../../components/table/Table';
-import axios from 'axios';
 import './singleuser.scss';
 import { fetchPicture, fetchUserData, fetchUserDataById } from '../../DataStorage';
 

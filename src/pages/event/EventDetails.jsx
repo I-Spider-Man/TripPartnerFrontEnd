@@ -6,7 +6,8 @@ import { useParams } from "react-router-dom";
 import { fetchEventDataByEventId } from "../../DataStorage";
 import { Modal, Upload, Button, Space, message } from "antd";
 import { UploadOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
-import axios from "axios";
+
+import axiosInstance from "../login/axiosinstance";
 
 const EventDetails = () => {
   const [eventDetails, setEventDetails] = useState({});
@@ -48,7 +49,7 @@ const EventDetails = () => {
       });
 
       // Your API endpoint for uploading event images
-      await axios.post("http://localhost:8080/updateEventPicture", formData);
+      await axiosInstance.post("/updateEventPicture", formData);
 
       setIsModalVisible(false);
       setFileList([]);

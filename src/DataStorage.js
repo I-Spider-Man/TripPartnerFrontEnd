@@ -1,4 +1,3 @@
-import axios from "axios";
 import axiosInstance from "./pages/login/axiosinstance";
 
 export const fetchUserData = async () => {
@@ -34,7 +33,7 @@ export const fetchEventsData = async () => {
   
 export const fetchActiveEventsData = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/Admin/ActiveEvents");
+      const response = await axiosInstance.get("/Admin/ActiveEvents");
       return response.data;
     } catch (error) {
       console.error("Error fetching data:", error);
