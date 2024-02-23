@@ -44,14 +44,26 @@ const NewSpot = () => {
     }));
   }
 console.log(spotData);
+const trimSpotData = () => {
+  const trimmedSpotData = {};
+  for (const key in spotData) {
+    if (typeof spotData[key] === 'string') {
+      trimmedSpotData[key] = spotData[key].trim();
+    } else {
+      trimmedSpotData[key] = spotData[key];
+    }
+  }
+  return trimmedSpotData;
+};
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitProcess(true);
     const formData=new FormData();
     if(spotPicture){
       formData.append('spotPicture',spotPicture);
-      if(!Object.values(spotData).some(value=>!value)){
-        formData.append('newSpot',JSON.stringify(spotData));
+      const trimmedSpotData=trimSpotData();
+      if(!Object.values(trimmedSpotData).some(value=>!value)){
+        formData.append('newSpot',JSON.stringify(trimmedSpotData));
       }else{
         return alert("enter all spot details");
       }

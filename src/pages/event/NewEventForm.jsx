@@ -50,14 +50,26 @@ const NewEventForm = () => {
     }));
   }
 console.log(eventData);
+const trimEventData = () => {
+  const trimmedEventData = {};
+  for (const key in eventData) {
+    if (typeof eventData[key] === 'string') {
+      trimmedEventData[key] = eventData[key].trim();
+    } else {
+      trimmedEventData[key] = eventData[key];
+    }
+  }
+  return trimmedEventData;
+};
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitProcess(true);
     const formData=new FormData();
     if(eventPicture){
       formData.append('eventPicture',eventPicture);
-      if(!Object.values(eventData).some(value=>!value)){
-        formData.append('newEvent',JSON.stringify(eventData));
+      const trimedEventData=trimEventData();
+      if(!Object.values(trimedEventData).some(value=>!value)){
+        formData.append('newEvent',JSON.stringify(trimedEventData));
       }else{
         return alert("enter all event details");
       }
