@@ -19,7 +19,7 @@ function NearByTouristSpots(spotId) {
     <div>
         <div style={{padding:'10px'}}>
                   <h1>NearByEvents </h1>
-                  <div style={{display:'flex',flexDirection:'row'}}>
+                  <div style={{display:'flex',flexDirection:'row',gap:'10px'}}>
                     {nbts?.eventSuggestion?.length>0 ? nbts?.eventSuggestion?.map(event=>
                     <Card sx={{ maxWidth: 345 }}>
                         <CardActionArea onClick={()=>{navigate(`/Events/${event?.eventName}`)}}>
@@ -61,7 +61,7 @@ function NearByTouristSpots(spotId) {
                 </div>
                 <div style={{padding:'10px'}}>
                 <h1>NearByTouristSpots</h1>
-                <div style={{display:'flex',flexDirection:'row'}}>
+                <div style={{display:'flex',flexDirection:'row',gap:'10px'}}>
                 {nbts?.spotSuggestion?.length>0  ? nbts?.spotSuggestion.map(spot=> <Card sx={{ maxWidth: 345 }}>
                     <CardActionArea>
                         <CardMedia
