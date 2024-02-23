@@ -1,10 +1,8 @@
-import axios from "axios";
-import { BaseUrl } from "./components/config/BaseUrl";
-
+import axiosInstance from "./pages/login/axiosinstance";
 
 export const postEvent=async (formData)=>{
     try{
-        await axios.post(`${BaseUrl}/Admin/events`, formData, {headers:{'Content-Type':'multipart/form-data',},}).then((response)=>{
+        await axiosInstance.post(`/Admin/events`, formData, {headers:{'Content-Type':'multipart/form-data',},}).then((response)=>{
         console.log(response); 
         if(response.status===201){
             alert(response.data);
@@ -19,7 +17,7 @@ export const postEvent=async (formData)=>{
 
 export const postSpot=async (formData)=>{
     try{
-        await axios.post(`${BaseUrl}/Admin/touristSpot`,formData,{headers:{'Content-Type':'multipart/form-data',},}).then((response)=>{
+        await axiosInstance.post(`/Admin/touristSpot`,formData,{headers:{'Content-Type':'multipart/form-data',},}).then((response)=>{
         console.log(response);
         if(response.status===201){
             alert(response.data);

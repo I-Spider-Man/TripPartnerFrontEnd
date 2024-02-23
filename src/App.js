@@ -33,7 +33,8 @@ import TouristSpot from "./pages/touristSpot/TouristSpot";
 import NewSpot from "./pages/touristSpot/NewSpot";
 import SpotDetails from "./pages/touristSpot/SpotDetails";
 import FeedBack from "./pages/feedBack/FeedBack";
-
+import SignInSide from "./pages/login/Login";
+import AdminRegistration from "./pages/login/Rigistration"
 function App() {
   const { darkMode } = useContext(DarkModeContext);
 
@@ -42,8 +43,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/">
-            <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
+          <Route path="/dashboard" element={<Home />} />
+            <Route path="api/login/reg" element={<AdminRegistration />}/>
+            <Route index element={<SignInSide />} />
             <Route path="logout" element={<Logout />} />
 
             <Route path="users">

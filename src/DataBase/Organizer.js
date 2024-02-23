@@ -1,10 +1,9 @@
-import axios from "axios";
-import { fetchUserDataById } from "./User";
-import { BaseUrl } from "../components/config/BaseUrl";
+import axiosInstance from "../pages/login/axiosinstance";
+
 export const fetchOrganizerDataByUserId=async(id)=>{
   try{
     console.log(id)
-    const organizer=await axios.get(`${BaseUrl}/User/Organizer/${id}`);
+    const organizer=await axiosInstance.get(`/User/Organizer/${id}`);
     console.log(organizer)
     return organizer.data;
     }
@@ -14,9 +13,9 @@ export const fetchOrganizerDataByUserId=async(id)=>{
 }
 export const fetchOrganizerDataById = async(id)=>{
     try{
-      const organizer = await axios.get(`${BaseUrl}/Admin/organizers/${id}`)
+      const organizer = await axiosInstance.get(`/Admin/organizers/${id}`)
     .then(async (organizer) => {
-      return axios.get(`${BaseUrl}/User/${organizer.data.userId}`)
+      return axiosInstance.get(`/User/${organizer.data.userId}`)
         .then((userData) => {
           return {
             ...organizer.data,
@@ -36,10 +35,10 @@ export const fetchOrganizerDataById = async(id)=>{
   };
   export const fetchOrganziersData = async () => {
     try {
-        const response = await axios.get(`${BaseUrl}/Admin/organizers`);
+        const response = await axiosInstance.get(`/Admin/organizers`);
         const organizerWithUserData=await Promise.all(
            response.data.map(async(organizer)=>{
-          const response1=await axios.get(`${BaseUrl}/Admin/users/${organizer.userId}`)
+          const response1=await axiosInstance.get(`/Admin/users/${organizer.userId}`)
           return {
             ...organizer,
             userData:response1.data,
@@ -54,7 +53,7 @@ export const fetchOrganizerDataById = async(id)=>{
   };
   export const fetchOrganizedGroups=async(userId)=>{
     try{
-        const response=await axios.get(`${BaseUrl}/organizer/allGroupsOrganizedByOrganizer/${userId}`);
+        const response=await axiosInstance.get(`/organizer/allGroupsOrganizedByOrganizer/${userId}`);
         const groupWithOrganizerData=await Promise.all(
           response.data.map(async(group)=>{
               const res=await fetchOrganizerDataById(group.organizerId);

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import "./chart.scss";
 import {
   AreaChart,
@@ -7,17 +8,18 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { fetchEventsData } from "../../DataBase/Event";
+import { fetchTouristSpotsData } from "../../DataBase/Spot";
 
-const data = [
-  { name: "Place1", Total: 1200 },
-  { name: "place2", Total: 2100 },
-  { name: "place3", Total: 800 },
-  { name: "place4", Total: 1600 },
-  { name: "Place5", Total: 900 },
-  { name: "Place6", Total: 1700 },
-];
-
-const Chart = ({ aspect, title }) => {
+export const EventChart = ({ aspect, title }) => {
+  const [eventdata,setEventdata]=useState([]);
+  useEffect(()=>{
+    const fetch=async()=>{
+      const response=await fetchEventsData();
+      setEventdata(response);
+    }
+    fetch();
+  },[])
   return (
     <div className="chart">
       <div className="title">{title}</div>
@@ -25,7 +27,7 @@ const Chart = ({ aspect, title }) => {
         <AreaChart
           width={730}
           height={250}
-          data={data}
+          data={eventdata}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
           <defs>
@@ -34,15 +36,15 @@ const Chart = ({ aspect, title }) => {
               <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <XAxis dataKey="name" stroke="gray" />
+          <XAxis dataKey="eventName" stroke="gray" />
           <CartesianGrid strokeDasharray="3 3" className="chartGrid" />
           <Tooltip />
           <Area
             type="monotone"
-            dataKey="Total"
+            dataKey="peopleCount"
             stroke="#8884d8"
             fillOpacity={1}
-            fill="url(#total)"
+            fill="url(#peopleCount)"
           />
         </AreaChart>
       </ResponsiveContainer>
@@ -50,4 +52,44 @@ const Chart = ({ aspect, title }) => {
   );
 };
 
-export default Chart;
+
+export const SpotChart = ({ aspect, title }) => {
+  const [spotData,setSpotData]=useState([]);
+  useEffect(()=>{
+    const fetch=async()=>{
+      const response=await fetchTouristSpotsData();
+      setSpotData(response);
+    }
+    fetch();
+  },[])
+  return (
+    <div className="chart">
+      <div className="title">{title}</div>
+      <ResponsiveContainer width="100%" aspect={aspect}>
+        <AreaChart
+          width={730}
+          height={250}
+          data={spotData}
+          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+        >
+          <defs>
+            <linearGradient id="total" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <XAxis dataKey="spotName" stroke="gray" />
+          <CartesianGrid strokeDasharray="3 3" className="chartGrid" />
+          <Tooltip />
+          <Area
+            type="monotone"
+            dataKey="peopleCount"
+            stroke="#8884d8"
+            fillOpacity={1}
+            fill="url(#peopleCount)"
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
+  );
+};

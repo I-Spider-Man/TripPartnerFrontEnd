@@ -1,9 +1,8 @@
-import axios from "axios";
-import { BaseUrl } from "../components/config/BaseUrl";
+import axiosInstance from "../pages/login/axiosinstance";
 
 export const fetchTouristSpotsData = async () => {
     try {
-      const response = await axios.get(`${BaseUrl}/Admin/touristSpots`);
+      const response = await axiosInstance.get(`/Admin/touristSpots`);
       return response.data;
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -16,8 +15,8 @@ export const fetchTouristSpotsData = async () => {
   
   export const fetchSpotDataById = async (spotId) => {
     try {
-      const response = await axios.get(`${BaseUrl}/spots/${spotId}`);
-      const response1 = await axios.get(`${BaseUrl}/spot/pictureList/${spotId}`);
+      const response = await axiosInstance.get(`/spots/${spotId}`);
+      const response1 = await axiosInstance.get(`/spot/pictureList/${spotId}`);
       console.log(response.data, response1);
       const imageUrlList = response1.data.map(image => {
         console.log(image);

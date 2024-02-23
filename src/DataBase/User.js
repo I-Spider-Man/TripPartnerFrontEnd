@@ -1,12 +1,13 @@
-import axios from "axios";
-import { BaseUrl } from "../components/config/BaseUrl";
+
+
+import axiosInstance from "../pages/login/axiosinstance";
 
 export const fetchUserData = async () => {
     try {
-      const response = await axios.get(`${BaseUrl}/Admin/users`);
+      const response = await axiosInstance.get("/Admin/users");
       const responseWithPicture=await Promise.all(
         response.data.map(async(user)=>{
-          const picture=await axios.get(`${BaseUrl}/User/userProfile/${user.userId}`);
+          const picture=await axiosInstance.get(`/User/userProfile/${user.userId}`);
           return {
             ...user,
             userProfile:pictureUrl(picture.data),
@@ -22,8 +23,8 @@ export const fetchUserData = async () => {
   
   export const fetchUserDataById = async (Id) => {
     try {
-      const response = await axios.get(`${BaseUrl}/Admin/users/${Id}`);
-      const picture=await axios.get(`${BaseUrl}/User/userProfile/${response.data.userId}`);
+      const response = await axiosInstance.get(`/Admin/users/${Id}`);
+      const picture=await axiosInstance.get(`/User/userProfile/${response.data.userId}`);
       return {
         ...response.data,
         userProfile:pictureUrl(picture.data)
