@@ -1,133 +1,153 @@
-/* 3D tower content-loader made by: csozi | Website: www.csozi.hu*/
-
-.content-loader {
-  scale: 3;
-  height: 50px;
-  width: 40px;
-}
-
-.box {
+.loader {
+  --path: #fff;
+  --dot: red;
+  --duration: 3s;
+  width: 54px;
+  height: 54px;
   position: relative;
-  opacity: 0;
-  left: 10px;
 }
 
-.side-left {
+.loader:before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
   position: absolute;
-  background-color: #286cb5;
-  width: 19px;
-  height: 5px;
-  transform: skew(0deg, -25deg);
-  top: 14px;
-  left: 10px;
+  display: block;
+  background: var(--dot);
+  top: 37px;
+  left: 19px;
+  transform: translate(-18px, -18px);
+  animation: dotRect var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
 }
 
-.side-right {
-  position: absolute;
-  background-color: #2f85e0;
-  width: 19px;
-  height: 5px;
-  transform: skew(0deg, 25deg);
-  top: 14px;
-  left: -9px;
+.loader svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
-.side-top {
-  position: absolute;
-  background-color: #5fa8f5;
-  width: 20px;
-  height: 20px;
-  rotate: 45deg;
-  transform: skew(-20deg, -20deg);
+.loader svg rect, .loader svg polygon, .loader svg circle {
+  fill: none;
+  stroke: var(--path);
+  stroke-width: 10px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
 }
 
-.box-1 {
-  animation: from-left 4s infinite;
+.loader svg polygon {
+  stroke-dasharray: 145 76 145 76;
+  stroke-dashoffset: 0;
+  animation: pathTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
 }
 
-.box-2 {
-  animation: from-right 4s infinite;
-  animation-delay: 1s;
+.loader svg rect {
+  stroke-dasharray: 192 64 192 64;
+  stroke-dashoffset: 0;
+  animation: pathRect 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
 }
 
-.box-3 {
-  animation: from-left 4s infinite;
-  animation-delay: 2s;
+.loader svg circle {
+  stroke-dasharray: 150 50 150 50;
+  stroke-dashoffset: 75;
+  animation: pathCircle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
 }
 
-.box-4 {
-  animation: from-right 4s infinite;
-  animation-delay: 3s;
+.loader.triangle {
+  width: 90px;
 }
 
-@keyframes from-left {
-  0% {
-    z-index: 20;
-    opacity: 0;
-    translate: -20px -6px;
+.loader.triangle:before {
+  left: 21px;
+  transform: translate(-10px, -18px);
+  animation: dotTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+}
+
+@keyframes pathTriangle {
+  33% {
+    stroke-dashoffset: 74;
   }
 
-  20% {
-    z-index: 10;
-    opacity: 1;
-    translate: 0px 0px;
-  }
-
-  40% {
-    z-index: 9;
-    translate: 0px 4px;
-  }
-
-  60% {
-    z-index: 8;
-    translate: 0px 8px;
-  }
-
-  80% {
-    z-index: 7;
-    opacity: 1;
-    translate: 0px 12px;
+  66% {
+    stroke-dashoffset: 147;
   }
 
   100% {
-    z-index: 5;
-    translate: 0px 30px;
-    opacity: 0;
+    stroke-dashoffset: 221;
   }
 }
 
-@keyframes from-right {
-  0% {
-    z-index: 20;
-    opacity: 0;
-    translate: 20px -6px;
+@keyframes dotTriangle {
+  33% {
+    transform: translate(0, 0);
   }
 
-  20% {
-    z-index: 10;
-    opacity: 1;
-    translate: 0px 0px;
-  }
-
-  40% {
-    z-index: 9;
-    translate: 0px 4px;
-  }
-
-  60% {
-    z-index: 8;
-    translate: 0px 8px;
-  }
-
-  80% {
-    z-index: 7;
-    opacity: 1;
-    translate: 0px 12px;
+  66% {
+    transform: translate(10px, -18px);
   }
 
   100% {
-    z-index: 5;
-    translate: 0px 30px;
-    opacity: 0;
+    transform: translate(-10px, -18px);
   }
 }
+
+@keyframes pathRect {
+  25% {
+    stroke-dashoffset: 64;
+  }
+
+  50% {
+    stroke-dashoffset: 128;
+  }
+
+  75% {
+    stroke-dashoffset: 192;
+  }
+
+  100% {
+    stroke-dashoffset: 256;
+  }
+}
+
+@keyframes dotRect {
+  25% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(18px, -18px);
+  }
+
+  75% {
+    transform: translate(0, -36px);
+  }
+
+  100% {
+    transform: translate(-18px, -18px);
+  }
+}
+
+@keyframes pathCircle {
+  25% {
+    stroke-dashoffset: 125;
+  }
+
+  50% {
+    stroke-dashoffset: 175;
+  }
+
+  75% {
+    stroke-dashoffset: 225;
+  }
+
+  100% {
+    stroke-dashoffset: 275;
+  }
+}
+
+.loader {
+  display: inline-block;
+  margin: 0 16px;
+}
+
+ 

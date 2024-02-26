@@ -1,30 +1,27 @@
 import React from 'react'
 import './ContentLoading.css'
-function Loading() {
+function ContentLoading() {
   return (
-    <div className="content-loader" style={{background:'none'}}>
-  <div className="box box-1">
-    <div className="side-left"></div>
-    <div className="side-right"></div>
-    <div className="side-top"></div>
-  </div>
-  <div className="box box-2">
-    <div className="side-left"></div>
-    <div className="side-right"></div>
-    <div className="side-top"></div>
-  </div>
-  <div className="box box-3">
-    <div className="side-left"></div>
-    <div className="side-right"></div>
-    <div className="side-top"></div>
-  </div>
-  <div className="box box-4">
-    <div className="side-left"></div>
-    <div className="side-right"></div>
-    <div className="side-top"></div>
-  </div>
-</div>
+   <div>
+        <div class="loader">
+        <svg viewBox="0 0 80 80">
+            <circle r="32" cy="40" cx="40" id="test"></circle>
+        </svg>
+    </div>
+
+    <div class="loader triangle">
+        <svg viewBox="0 0 86 80">
+            <polygon points="43 8 79 72 7 72"></polygon>
+        </svg>
+    </div>
+
+    <div class="loader">
+        <svg viewBox="0 0 80 80">
+            <rect height="64" width="64" y="8" x="8"></rect>
+        </svg>
+    </div>
+   </div>
   )
 }
 
-export default Loading
+export default ContentLoading

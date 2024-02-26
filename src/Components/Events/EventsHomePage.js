@@ -7,29 +7,32 @@ import {fetch_Event_Details, fetch_popularEvents} from '../Files/Event_Details'
 import Loading from '../LoadingComponents/Loading'
 import SingleEvent from './SingleEvent'
 import { Carousel, Empty } from 'antd'
+import ContentLoading from '../LoadingComponents/ContentLoading'
 
 
 const EventsHomePage = () => {
-    const [eventDetails,setEventDetails]=useState([{}]);
-    const [popularEvents,setPopularEvents]=useState([{}]);
+    const [eventDetails,setEventDetails]=useState();
+    const [popularEvents,setPopularEvents]=useState();
     const [loading,setLoading]=useState(true);
     useEffect(()=>{
-        const fetchData=async()=>{
+       
         try{
-            const response=await fetch_Event_Details();
-            const response1=await fetch_popularEvents();
-            setEventDetails(response);
+             const fetchEvent=async()=>{
+                const response=await fetch_Event_Details();
+                setEventDetails(response);
+             }
+             fetchEvent();
+             const fetchPopular=async()=>{
+              const response1=await fetch_popularEvents();
             setPopularEvents(response1);
+             }
+             fetchPopular();
+            setLoading(false);
         }catch(error){
             console.log("error while fetching event details",error);
         }
     }
-    fetchData();
-    },[])
-    useEffect(()=>{
-        console.log(eventDetails);
-        setLoading(false);
-    },[eventDetails])
+    ,[])
     const contentStyle = {
       height: '500px',
       width: '100%',
@@ -80,7 +83,7 @@ const EventsHomePage = () => {
     );
   })
 ) : (
-  <Empty/>
+  <div class="EventCard" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>No Active Events</div>
 )}
 
         </div>
@@ -101,12 +104,12 @@ const EventsHomePage = () => {
     );
   })
 ) : (
-  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={false} />
+  <div class="EventCard" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>No Active Events</div>
 )}
      </div></div>
     </section>
   ):(
-    <>loading....</>
+    <ContentLoading/>
   )
 }
  

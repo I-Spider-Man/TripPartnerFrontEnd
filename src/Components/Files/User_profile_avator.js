@@ -95,6 +95,23 @@ export const getUserDetailsById=async(value)=>{
     console.log(error);
   }
 }
+export const userLoginIn=async(value)=>{
+  try{
+    const response=await axios.get(`${BaseUrl}/User/SignInUser`,value);
+    if(response.status===200){
+        const picture=await axios.get(`${BaseUrl}/User/userProfile/${response.data.userId}`);
+        console.log(picture.data);
+        return {
+          ...response.data,
+          userProfile:pictureUrl(picture.data)
+        };
+    }
+  }catch(error){
+    console.log(error);
+    return message.error(error.response.data);
+  }
+}
+
 export const getUserDetails=async(value)=>{
   try{
     const fetchUser=await axios.get(`${BaseUrl}/User/email/${value}`);
