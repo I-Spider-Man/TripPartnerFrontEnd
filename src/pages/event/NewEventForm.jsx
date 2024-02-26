@@ -49,7 +49,6 @@ const NewEventForm = () => {
       },
     }));
   }
-console.log(eventData);
 const trimEventData = () => {
   const trimmedEventData = {};
   for (const key in eventData) {
@@ -143,7 +142,6 @@ const trimEventData = () => {
       }));
     }
   };
-  console.log(eventData);
   return (
     <div className="list">
             <Sidebar />

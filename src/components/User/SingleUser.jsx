@@ -66,6 +66,10 @@ const SingleUser = () => {
                   <span className="itemKey">About User:</span>
                   <span className="itemValue">{userData.aboutUser? userData.aboutUser : 'none'}</span>
                 </div>
+                <div className="detailItem">
+                  <span className="itemKey">User Role:</span>
+                  <span className="itemValue">{userData.role}</span>
+                </div>
               </div>
             </div>
           </div>

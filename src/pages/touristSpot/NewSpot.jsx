@@ -43,7 +43,6 @@ const NewSpot = () => {
       },
     }));
   }
-console.log(spotData);
 const trimSpotData = () => {
   const trimmedSpotData = {};
   for (const key in spotData) {

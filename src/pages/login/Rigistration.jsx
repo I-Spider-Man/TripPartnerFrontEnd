@@ -13,7 +13,6 @@ function RegisterPage() {
     dateOfBirth: '',
     role: 'Admin_Role', // Assuming Admin role by default
     userPassword: '',
-    userProfile: ''
   });
 
   const dispatch = useDispatch(); // Corrected to useDispatch()
@@ -46,7 +45,6 @@ function RegisterPage() {
         </select>
         <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} className="input-field" />
         <input type="password" name="userPassword" value={formData.userPassword} onChange={handleChange} placeholder="Password" className="input-field" />
-        <input type="text" name="userProfile" value={formData.userProfile} onChange={handleChange} placeholder="Profile URL" className="input-field" />
         <button type="submit" className="register-button">Register</button>
       </form>
     </div>

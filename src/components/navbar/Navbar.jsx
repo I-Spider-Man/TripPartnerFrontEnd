@@ -9,12 +9,18 @@ import FullscreenExitOutlinedIcon from "@mui/icons-material/FullscreenExitOutlin
 // import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { Link } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { logoutUserAction } from "../../Auth/auth.action";
+import { message } from "antd";
 const Navbar = () => {
+  const dispatch1=useDispatch();
   const { dispatch } = useContext(DarkModeContext);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const dropdownRef = useRef();
-
+  const handleLogout=()=>{
+    dispatch1(logoutUserAction());
+    message.success("user logout success.");
+  }
   const handleAvatarClick = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -48,14 +54,14 @@ const Navbar = () => {
             />
             {dropdownVisible && (
               <div className="dropdown">
-                 <Link to="/" style={{ textDecoration: "none" }}>
+                 <Link to="/dashboard" style={{ textDecoration: "none" }}>
                 <div className="dropdownItem">Dashboard</div>
                 </Link>
                 <Link to="/Profile/${params.row.userId}" style={{ textDecoration: "none" }}>
                 <div className="dropdownItem">Profile</div>
                 </Link>
                 <Link to="/" style={{ textDecoration: "none" }}>
-                <div className="dropdownItem">Logout</div>
+                <div className="dropdownItem" onClick={()=>handleLogout()}>Logout</div>
                 </Link>
               </div>
             )}

@@ -10,9 +10,12 @@ import { useEffect, useState } from "react";
 import { fetchCorrespondingGroupData } from "../../DataBase/Group";
 const List = ({eventName,spotName}) => {
   const [activeGrp,setActiveGrp]=useState([]);
-  useEffect(async()=>{
-    const response=await fetchCorrespondingGroupData(eventName,spotName);
+  useEffect(()=>{
+    async function fetchActiveGrp(){
+          const response=await fetchCorrespondingGroupData(eventName,spotName);
     setActiveGrp(response);
+    }
+    fetchActiveGrp();
   },[eventName,spotName])
   console.log(activeGrp);
    return (
