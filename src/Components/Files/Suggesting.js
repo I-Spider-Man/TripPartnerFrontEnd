@@ -4,7 +4,8 @@ export const pictureUrl = (image) => {
     return `data:image/jpeg;base64,${image}`;
   };
 export const eventSuggestion=async(eventId)=>{
-    const events=await axios.get(`${BaseUrl}/nearByEventsForEvents/${eventId}`);
+    try{
+        const events=await axios.get(`${BaseUrl}/nearByEventsForEvents/${eventId}`);
     const eventsWithPicture=await Promise.all(
         events.data.map(async(event)=>{
             const picList=await axios.get(`${BaseUrl}/event/pictureList/${event.eventId}`);
@@ -34,9 +35,14 @@ export const eventSuggestion=async(eventId)=>{
         eventSuggestion:eventsWithPicture,
         spotSuggestion:spotsWithPicture
     }
+    }catch(error){
+        console.log(error);
+    }
+    
 }
 export const spotSuggestion=async(spotId)=>{
-    const events=await axios.get(`${BaseUrl}/nearByEventsForSpots/${spotId}`);
+    try{
+        const events=await axios.get(`${BaseUrl}/nearByEventsForSpots/${spotId}`);
     const eventsWithPicture=await Promise.all(
         events.data.map(async(event)=>{
             const picList=await axios.get(`${BaseUrl}/event/pictureList/${event.eventId}`);
@@ -66,4 +72,8 @@ export const spotSuggestion=async(spotId)=>{
         eventSuggestion:eventsWithPicture,
         spotSuggestion:spotsWithPicture
     }
+    }catch(error){
+        console.log(error);
+    }
+    
 }

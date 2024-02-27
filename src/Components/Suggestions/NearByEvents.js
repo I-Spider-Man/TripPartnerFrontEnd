@@ -31,11 +31,12 @@ function NearByEvents({eventId}) {
                   
                   <div style={{display:'flex',flexDirection:'row',gap:'10px'}}>
                     {nbv?.eventSuggestion?.length >0 ? nbv?.eventSuggestion?.map(event=>
-                    <Card sx={{ maxWidth: 345 }}>
+                    <Card sx={{ maxWidth: 345,minWidth: 345 }}>
                         <CardActionArea onClick={()=>{navigate(`/Events/${event?.eventName}`)}}>
                             <CardMedia
                             component="img"
                             height="140"
+                            sx={{minHeight:240,maxHeight:240}}
                             image={event.pictureList[0]}
                             alt="green iguana"
                             />
@@ -73,11 +74,12 @@ function NearByEvents({eventId}) {
                 <div style={{padding:'10px'}}>
                 <h1>NearByTouristSpots</h1>
                 <div style={{display:'flex',flexDirection:'row',gap:'10px'}}>
-                    {nbv?.spotSuggestion?.length>0 ? nbv?.spotSuggestion?.map(spot=> <Card sx={{ maxWidth: 345 }}>
-                    <CardActionArea>
+                    {nbv?.spotSuggestion?.length>0 ? nbv?.spotSuggestion?.map(spot=> <Card sx={{ maxWidth: 345, minWidth: 345 }}>
+                    <CardActionArea  onClick={()=>{navigate(`/Spot/${spot?.spotName}`)}}>
                         <CardMedia
                         component="img"
                         height="140"
+                        sx={{minHeight:240,maxHeight:240}}
                         image={spot?.pictureList[0]}
                         alt="green iguana"
                         />

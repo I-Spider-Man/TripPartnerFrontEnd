@@ -93,11 +93,11 @@ const nextSpot=()=>{
           <div className='container'>
           <h3>Events</h3>
           <div className="slider-container" style={{padding:'20px',display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-          {event? (<>{currentEvent !==0 && <Button variant='contained' onClick={prevEvent} style={{color:'white',padding:'5px'}}>Prev</Button>}
+          {event? (<div style={{display:'flex',flexDirection:'column',alignItems:'flex-end'}}>{currentEvent !==0 && <Button variant='contained' onClick={prevEvent} style={{color:'white',padding:'5px',width:'100px'}}>Prev</Button>}
         <div className="slider">
         <EventComponent key={event?.event_id} post={event} />
         </div>
-        {(currentEvent < eventDetails.length-1) && <Button variant='contained' onClick={nextEvent} style={{color:'white',padding:'5px'}}>Next</Button>}</>)
+        {(currentEvent < eventDetails.length-1) && <Button variant='contained' onClick={nextEvent} style={{color:'white',padding:'5px',width:'100px'}}>Next</Button>}</div>)
         :(<>No Active Events</>)
         }
         
@@ -148,11 +148,11 @@ const nextSpot=()=>{
                           </Link>
                         <div className="slider-container">
                           {spot?(<>
-                          {currentSpot !==0 && <Button variant='contained' onClick={prevSpot} style={{color:'white'}}>Prev</Button>}
+                          {currentSpot !==0 && <Button variant='contained' onClick={prevSpot} style={{color:'white',padding:'5px',width:'100px'}}>Prev</Button>}
                       <div className="slider">
                       <TouristSpotComponent key={spot?.spot_id} post={spot} />
                       </div>
-                      {(currentSpot < spotDetails.length-1) && <Button variant='contained' onClick={nextSpot} style={{color:'white'}}>Next</Button>}
+                      {(currentSpot < spotDetails.length-1) && <Button variant='contained' onClick={nextSpot} style={{color:'white',padding:'5px',width:'100px'}}>Next</Button>}
                           </>):(<>spots to be added</>)}
                       
                     </div>

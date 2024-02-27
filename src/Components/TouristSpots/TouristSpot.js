@@ -14,13 +14,13 @@ import { Galleria } from 'primereact/galleria';
 import FeedBack from '../Feedback/FeedBack';
 import NearByTouristSpots from '../Suggestions/NearByTouristSpots';
 function TouristSpot() {
-  const {userDetails,participantData,organizerData}=useUser();
+  const {participantData,organizerData}=useUser();
   const [spot,setSpots]=useState({});
   const [alert,setAlert]=useState(false);
   const [open, setOpen] = useState(false);
   const {spotName} = useParams();
   useEffect(()=>{
-      const fetchData = async () => {
+      async function fetchData(){
       try {
         const response1 = await fetchSpotBySpotName(spotName);
         setSpots(response1);
@@ -100,11 +100,11 @@ const itemTemplate = (item) => {
 const thumbnailTemplate = (item) => {
   return <img src={item} alt={item} style={{height:'70px',width:'100%'}}/>
 }
-  return (
+  return spot && (
     <div className='front-page' style={{marginTop:'50px'}}>
        <div className='event-page' style={{minHeight:'100vh'}}>
         <div className='content-container' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div className='event-content' style={{ display: 'flex', flexDirection: 'column', width: '200vh', justifyContent: 'center', position: 'relative' }}>
+          <div className='event-content' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
     {spot ? (
           <>
           <div style={{width:'100%'}}>
@@ -112,7 +112,7 @@ const thumbnailTemplate = (item) => {
           </div>
           
           
-          <div className='content-details' style={{backgroundColor:'#b1f2f2',color:'black',display:'flex',flexDirection:'row',borderRadius:'10px',justifyContent:'space-between',padding:"30px 180px 30px 180px",alignItems:'center'}}>
+          <div className='content-details' style={{backgroundColor:'#b1f2f2',color:'black',gap:'20px',display:'flex',flexDirection:'row',borderRadius:'10px',justifyContent:'space-between',padding:"30px 90px",margin:'20px',alignItems:'center'}}>
             <label><strong>SPOT NAME: </strong><h1>{spot.spotName}</h1></label>
             <label><strong>SPOT LOCATION:</strong> {spot.location?.street},{spot.location?.city},{spot.location?.state},{spot.location?.country},{spot.location?.postalCode}</label>
             <label><strong>SPOT DESCRIPTION:</strong> {spot.description}</label>
@@ -126,17 +126,17 @@ const thumbnailTemplate = (item) => {
           id="ringtone-menu"
           keepMounted
           eventName={null}
-          spotName={spot.spotName}
+          spotName={spot?.spotName}
           open={open}
           onClose={()=>handleClose()}
         />
           <GroupOrganizeForm id="ringtone-menu"
           keepMounted
-          spotName={spot.spotName}
+          spotName={spot?.spotName}
           open={organizeFormVisible}
           onClose={()=>handleClose()} onSubmit={()=>handleOrganizeSubmit()} />
           <div>
-            <NearByTouristSpots/>
+            <NearByTouristSpots spotId={spot?.spotId}/>
           </div>
           <div style={{padding:'5px'}}>
             <FeedBack spotId={spot?.spotId}/>

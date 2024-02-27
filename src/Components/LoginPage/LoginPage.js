@@ -206,7 +206,17 @@ else{
         />
         <span className='forgot-password' onClick={()=>showForgotPassword()}>Forgot password?</span>
         {/* <Button variant='contained' onClick={(e)=>handleLogin(e)}>Login In</Button> */}
-        <div style={{width:'100%',display:'flex',alignItems:'center'}} ><LoadingButton loading={loginProcess} onClick={(e)=>handleLogin(e)} disabled={!userDetails.userEmail?.trim()} loadingIndicator={<div style={{display:'flex',alignItems:'center',color:'white',gap:'10px' }}>Checking User<CircularProgress color="primary" size={16} /></div>}> Login </LoadingButton></div>
+        <div style={{width:'100%',display:'flex',alignItems:'center'}} >
+          <LoadingButton 
+          loading={loginProcess} 
+          sx={{color:'white'}}
+          onClick={(e)=>handleLogin(e)} 
+          disabled={!userDetails.userEmail?.trim()} 
+          loadingIndicator={<div style={{display:'flex',alignItems:'center',color:'white',gap:'10px' }}>Checking User<CircularProgress color="primary" size={16} /></div>}
+          > 
+          Login 
+          </LoadingButton>
+          </div>
         
       </form>
       </>) 
@@ -231,7 +241,7 @@ else{
         />}
         <span className='back-to-sign-in' onClick={()=>showForgotPassword()}>Back to sign in</span>
         {userotp ? (
-          <> <LoadingButton variant='contained' loading={sendingNewPassword} loadingIndicator={<>Generating new password...</>} onClick={()=>handleForgotPassword()}>Generate Password</LoadingButton>
+          <> <LoadingButton variant='contained' sx={{color:'white'}} loading={sendingNewPassword} loadingIndicator={<div style={{color:'white'}}>Generating new password...</div>} onClick={()=>handleForgotPassword()}>Generate Password</LoadingButton>
           </>
         ) : (<div onClick={()=>getOtp()} style={{width:'100%',display:'flex',alignItems:'center'}} disabled={!userDetails.userEmail?.trim()}>
         <LoadingButton loading={otpProcess} loadingIndicator={<div style={{display:'flex',alignItems:'center',color:'white',gap:'10px' }}>Sending OTP<CircularProgress color="primary" size={16} /></div>}> Get OTP</LoadingButton>
@@ -297,9 +307,9 @@ else{
           disabled={registeringProcess} 
           variant='none' 
           loadingIndicator={
-          <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+          <div style={{display:'flex',flexDirection:'row',color:'white',alignItems:'center'}}>
              Registering....
-             <CircularProgress sx={{height:'10px',width:'10px'}}/> 
+             <CircularProgress size={12}/> 
             </div>}
           >Register</LoadingButton>
           </div>

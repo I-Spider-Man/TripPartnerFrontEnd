@@ -10,8 +10,9 @@ import { postGroup } from '../Files/Group_Details';
 import { useUser } from '../Auth/UserContext';
 import { LoadingButton } from '@mui/lab';
 import { useNavigate } from 'react-router-dom';
+import { updateUserDetails } from '../Files/User_profile_avator';
 const GroupOrganizeForm = ({event,eventName, spotName, ...props }) => {
-  const {userDetails,updateOrganizerData}=useUser();
+  const {userDetails,updateOrganizerData,updateUserData}=useUser();
   const [submitProcess,setSubmitProcess]=useState(false);
   const navigate=useNavigate();
   const { onClose, onSubmit, open, ...other } = props;
@@ -75,6 +76,7 @@ const GroupOrganizeForm = ({event,eventName, spotName, ...props }) => {
     try{
       const groupResponse=await postGroup(organizerFrom);
       if(groupResponse){
+        updateUserData();
         updateOrganizerData();
         navigate(`/GroupPage/${groupResponse.groupId}`);
         onSubmit();

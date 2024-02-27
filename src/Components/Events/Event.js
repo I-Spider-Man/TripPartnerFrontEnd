@@ -104,7 +104,7 @@ const thumbnailTemplate = (item) => {
     <div className='front-page' style={{marginTop: '50px'}}>
       <div className='event-page' style={{ minHeight: '100vh' }}>
         <div className='content-container' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div className='event-content' style={{ display: 'flex', flexDirection: 'column', width: '200vh', justifyContent: 'center', position: 'relative' }}>
+          <div className='event-content' style={{ display: 'flex', flexDirection: 'column', width: '170vh', justifyContent: 'center', position: 'relative' }}>
             {event ? (
               <>
               <div style={{width:'100%'}}>
