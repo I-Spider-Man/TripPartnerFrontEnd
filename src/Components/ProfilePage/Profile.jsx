@@ -19,12 +19,20 @@ import { useUser } from '../Auth/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { Button, Result } from 'antd';
 import ProfileBottom from './ProfileBottom';
+import { getUserDetailsById } from '../Files/User_profile_avator';
 
 export default function ProfilePage() {
  
   const {userDetails}=useUser();
   const navigate=useNavigate();
-  
+  const [userData,setUserData]=useState();
+  useEffect(()=>{
+    const fetchUser=async()=>{
+      const response=await getUserDetailsById(userDetails.userId);
+      setUserData(response);
+    }
+    fetchUser();
+  },[userDetails]);
   return userDetails ? (
     <section style={{ backgroundColor: 'rgb(151, 235, 207)', marginTop:'10vh',minHeight:'100%', width:'100%' }}>
       <MDBContainer className="py-5">
@@ -33,7 +41,7 @@ export default function ProfilePage() {
             <MDBCard className="mb-4" style={{height:"100%"}}>
               <MDBCardBody className="text-center">
                 <div style={{width:'100%',height:'100%',display:'flex',alignItems:'center',justifyContent:'center'}}>
-                  <img src={userDetails.userProfile} style={{height:'300px',width:'300px',borderRadius:'50%'}}/>
+                  <img src={userData?.userProfile} alt='UserProfile' style={{height:'300px',width:'300px',borderRadius:'50%'}}/>
                 </div>
               </MDBCardBody>
             </MDBCard>
@@ -47,7 +55,7 @@ export default function ProfilePage() {
                     <MDBCardText>Full Name</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails.userName}</MDBCardText>
+                    <MDBCardText className="text-muted">{userData?.userName}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -56,7 +64,7 @@ export default function ProfilePage() {
                     <MDBCardText>Email</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails.userEmail}</MDBCardText>
+                    <MDBCardText className="text-muted">{userData?.userEmail}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -65,7 +73,7 @@ export default function ProfilePage() {
                     <MDBCardText>Gender</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails.gender}</MDBCardText>
+                    <MDBCardText className="text-muted">{userData?.gender}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -74,7 +82,7 @@ export default function ProfilePage() {
                     <MDBCardText>Date of Birth</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails.dateOfBirth}</MDBCardText>
+                    <MDBCardText className="text-muted">{userData?.dateOfBirth}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -83,7 +91,7 @@ export default function ProfilePage() {
                     <MDBCardText>About</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userDetails.aboutUser}</MDBCardText>
+                    <MDBCardText className="text-muted">{userData?.aboutUser}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
               </MDBCardBody>

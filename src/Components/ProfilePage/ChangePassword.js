@@ -4,7 +4,7 @@ import { Box, Button, Divider, TextField, Tooltip } from '@mui/material';
 import { message } from 'antd';
 import { updatePassword } from '../Files/User_profile_avator';
 
-function ChangePassword({ onClose }) {
+function ChangePassword({ onClose}) {
     const {userDetails,updateUserData}=useUser();
     const [oldPassword,setOldPassword]=useState('');
     const [newPassword,setNewPassword]=useState('');

@@ -2,7 +2,7 @@ import { LoadingButton } from '@mui/lab';
 import { Backdrop, Box, Button, Fade, Modal, Typography} from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useUser } from '../Auth/UserContext';
-import { generateOtp } from '../Files/User_profile_avator';
+import { generateOtp, userLoginIn } from '../Files/User_profile_avator';
 import { message } from 'antd';
 import ChangePassword from './ChangePassword';
 import ChangeEmail from './ChangeEmail';
@@ -24,13 +24,23 @@ function UpdateProfile() {
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const checkPassword=()=>{
-    if(password==userDetails.userPassword){
+  const formdata=new FormData();
+  useEffect(()=>{
+    formdata.append('email',userDetails.userEmail);
+    formdata.append('password',password);
+  },[password]);
+  const checkPassword=async()=>{
+    try{
+      const response=await userLoginIn(formdata);
+    if(response){
       message.success("Verification success.");
       setVerification(true);
     }
     else{
       message.error("Wrong Password");
+    }
+    }catch(error){
+      console.log(error);
     }
   }
   const handleOk = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './LoginPage.css';
-import {registerUser, generateOtp, getUserDetails} from '../Files/User_profile_avator'
+import {registerUser, generateOtp, getUserDetails, userLoginIn} from '../Files/User_profile_avator'
 import { forgotPassword } from '../Files/Other_DataBase';
 import { Tooltip } from '@mui/material';
 import {LoadingButton} from '@mui/lab';
@@ -38,7 +38,6 @@ function LoginPage({ onClose , onReturn}) {
 
     setForgotPassword(!isforgotPassword);
   }
-  console.log(userDetails);
   const handleForgotPassword=async()=>{
     setSendingNewPassword(true);
 
@@ -52,7 +51,6 @@ function LoginPage({ onClose , onReturn}) {
     }
     
   }
-  console.log(userDetails);
   const getOtp=async()=>{
     if(!userDetails.userEmail?.trim()){
       return null;
@@ -65,13 +63,20 @@ function LoginPage({ onClose , onReturn}) {
     setGeneratedOtp(!generatedOtp);
     setOtpProcess(false)
 }
+
 const navigate=useNavigate();
+  const formdata=new FormData();
+useEffect(()=>{
+  formdata.append('email',userDetails.userEmail);
+  formdata.append('password',userDetails.userPassword);
+},[userDetails.userEmail,userDetails.userPassword]);
+
 const handleLogin = async (e) => {
   e.preventDefault();
   setLoginProcess(true)
   try {
-    const userData = await getUserDetails(userDetails.userEmail);
-    if (userData.userPassword === userDetails.userPassword) {
+    const userData = await userLoginIn(formdata);
+    if (userData) {
       console.log("login success");
       setUserDetails((prevState) => ({
         ...prevState,
@@ -107,7 +112,6 @@ const handleChange=(e)=>{
 }
 const passwordRegx = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]{8,}$/ ;
 const isPasswordValid=passwordRegx.test(userDetails.userPassword);
-console.log(isPasswordValid);
 const handleSubmit=async(e)=>{
   e.preventDefault();
   

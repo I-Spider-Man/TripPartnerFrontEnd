@@ -97,7 +97,7 @@ export const getUserDetailsById=async(value)=>{
 }
 export const userLoginIn=async(value)=>{
   try{
-    const response=await axios.get(`${BaseUrl}/User/SignInUser`,value);
+    const response=await axios.post(`${BaseUrl}/User/SignInUser`,value,{headers:{"Content-Type":'application/json'}});
     if(response.status===200){
         const picture=await axios.get(`${BaseUrl}/User/userProfile/${response.data.userId}`);
         console.log(picture.data);
@@ -108,7 +108,7 @@ export const userLoginIn=async(value)=>{
     }
   }catch(error){
     console.log(error);
-    return message.error(error.response.data);
+    return null
   }
 }
 
