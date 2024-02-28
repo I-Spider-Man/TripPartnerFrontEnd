@@ -1,8 +1,8 @@
-section{
+section {
     font-weight: bold;
 }
 
-.user-count{
+.user-count {
     /* border: 2px solid black; */
     width: 200px;
     height: 200px;
@@ -14,7 +14,7 @@ section{
     font-size: 3rem;
     /* color: white; */
     font-weight: bold;
-    background-color: rgb(151, 235, 207);
+    /* background-color: rgb(151, 235, 207); */
     margin-top: 7%;
 }
 
@@ -27,5 +27,3 @@ section{
     justify-content: center;
     align-items: center;
 } */
-
-

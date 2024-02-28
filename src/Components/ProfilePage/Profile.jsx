@@ -34,7 +34,7 @@ export default function ProfilePage() {
     fetchUser();
   },[userDetails]);
   return userDetails ? (
-    <section style={{ backgroundColor: 'rgb(151, 235, 207)', marginTop:'10vh',minHeight:'100%', width:'100%' }}>
+    <section style={{  marginTop:'10vh',minHeight:'100%', width:'100%' }}>
       <MDBContainer className="py-5">
         <MDBRow>
           <MDBCol lg="4 profile-left-info">
